@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<title>Andata.lab* studio</title>
+<title>Andata Lab | Video Mapping & Creative Technology Studio</title>
+<meta name="description" content="Andata Lab specializes in architectural video mapping, generative art, and immersive installations. Based in Mexico, serving global clients at the intersection of art and high-end technology."/>
 <link rel="icon" type="image/png" href="Imagenes/logo.png"/>
 <link rel="apple-touch-icon" href="Imagenes/logo.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -380,6 +381,89 @@ canvas#bg{
   align-self:flex-start;
   margin-top:auto;
 }
+.capabilities-grid-home{
+  margin-top:clamp(.85rem,1.8vh,1.3rem);
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.4rem,.9vw,.62rem);
+}
+.capability-card{
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:12px;
+  background:rgba(11,14,24,.34);
+  padding:clamp(.52rem,.9vw,.72rem);
+}
+.capability-card h3{
+  margin:0 0 .4rem;
+  font-family:'Syne','Space Grotesk',system-ui,sans-serif;
+  font-size:clamp(.66rem,.58rem+.2vw,.82rem);
+  line-height:1.2;
+  letter-spacing:.02em;
+  color:rgba(250,253,255,.98);
+}
+.capability-card p{
+  margin:0;
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',Helvetica,sans-serif;
+  font-size:clamp(.56rem,.48rem+.2vw,.7rem);
+  line-height:1.4;
+  color:rgba(228,236,252,.85);
+}
+.capability-card .cap-keywords{
+  margin-top:.45rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.44rem,.39rem+.12vw,.52rem);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(184,211,255,.82);
+}
+.whatwedo-reel{
+  margin-top:clamp(.65rem,1.6vh,1.05rem);
+  display:grid;
+  gap:clamp(.55rem,1.2vh,.9rem);
+}
+.whatwedo-pillars{
+  margin:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.62rem,.52rem+.2vw,.76rem);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(236,244,255,.9);
+  line-height:1.45;
+}
+.whatwedo-pillars--top{text-align:right;}
+.whatwedo-pillars--bottom{
+  text-align:right;
+  color:rgba(200,219,248,.9);
+  letter-spacing:.08em;
+}
+.whatwedo-video{
+  position:relative;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;
+  overflow:hidden;
+  background:rgba(7,10,18,.7);
+  box-shadow:0 14px 34px rgba(0,0,0,.3);
+}
+.whatwedo-video video{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:16/9;
+  object-fit:cover;
+}
+.tech-spec-bar{
+  max-width:min(980px,92vw);
+  margin:clamp(1.3rem,3.2vh,2.1rem) auto 0;
+  padding:clamp(.75rem,1.5vh,1rem) clamp(.9rem,2.6vw,1.35rem);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  background:rgba(255,255,255,.03);
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.56rem,.48rem+.22vw,.7rem);
+  letter-spacing:.08em;
+  color:rgba(236,243,255,.9);
+  text-align:center;
+}
 /* WORK focus: hide heavy particle/3D layers for cleaner playback (sin !important para respetar transición) */
 body.work-focus #bg,
 body.work-focus #s01-particles-gl,
@@ -519,6 +603,32 @@ body.work-focus #hud{
   .site-closure__links{justify-content:flex-end;}
   .site-closure__copy{text-align:right;}
   .nav-logo-float{display:none;}
+  .capabilities-grid-home{grid-template-columns:1fr;}
+  .capabilities-grid-home{
+    margin-top:clamp(.55rem,1.2vh,.9rem);
+    gap:clamp(.42rem,.9vh,.62rem);
+  }
+  .capability-card{
+    padding:clamp(.62rem,1.6vw,.86rem);
+    background:rgba(8,12,22,.62);
+    border-color:rgba(255,255,255,.24);
+  }
+  .capability-card h3{
+    font-size:clamp(.86rem,2.9vw,1.02rem);
+    margin-bottom:.3rem;
+  }
+  .capability-card p{
+    font-size:clamp(.74rem,2.4vw,.9rem);
+    line-height:1.42;
+  }
+  .capability-card .cap-keywords{
+    font-size:clamp(.58rem,1.9vw,.7rem);
+    letter-spacing:.06em;
+  }
+  .whatwedo-pillars{
+    font-size:clamp(.62rem,2.2vw,.76rem);
+    text-align:left;
+  }
 }
 /* Narrativa: 01 Interactivity a la izquierda; 02 Sensor a la derecha.
    IMPORTANTE: sin transform en el contenedor — cualquier transform crea nuevo containing-block
@@ -643,6 +753,21 @@ body.work-focus #hud{
   overflow-wrap:normal;
   hyphens:none;
   transition:color .22s ease,text-shadow .22s ease,transform .22s ease;
+}
+.scene-skill-link{
+  color:inherit;
+  text-decoration:none;
+  display:inline-block;
+}
+.scene-skill-link--cta{
+  padding:.2rem .46rem;
+  border:1px solid rgba(255,255,255,.26);
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+}
+.scene-skill-link--cta:hover{
+  border-color:rgba(255,255,255,.48);
+  background:rgba(255,255,255,.1);
 }
 /* Hover editorial: texto responde al mouse */
 .scene-block:hover .scene-title{
@@ -792,7 +917,8 @@ body.work-focus #hud{
   text-shadow:0 1px 12px rgba(0,0,0,.55),0 0 20px rgba(255,255,255,.06);
   margin-bottom:clamp(.85rem,2vh,1.35rem);
 }
-#scene-block-1 .scene-desc--services{
+#scene-block-1 .scene-desc--services,
+#scene-block-2 .scene-vision-copy .scene-desc--services{
   font-family:'Syne','Space Grotesk',system-ui,sans-serif;
   font-weight:800;
   font-size:clamp(.58rem,.48rem+.28vw,.76rem);
@@ -809,7 +935,8 @@ body.work-focus #hud{
   color:rgba(255,255,255,.96);
   text-shadow:0 0 18px rgba(120,200,255,.12),0 1px 10px rgba(0,0,0,.45);
 }
-#scene-block-1 .scene-skills--whatwedo{
+#scene-block-1 .scene-skills--whatwedo,
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo{
   margin-top:clamp(.55rem,1.1vh,.85rem);
   margin-right:0;
   margin-left:0;
@@ -819,7 +946,8 @@ body.work-focus #hud{
   align-items:flex-end;
   gap:clamp(.48rem,.75vh,.58rem);
 }
-#scene-block-1 .scene-skills--whatwedo .scene-skill{
+#scene-block-1 .scene-skills--whatwedo .scene-skill,
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill{
   --svc-h:200;
   font-family:'Syne','Space Grotesk',system-ui,sans-serif;
   font-weight:600;
@@ -831,11 +959,16 @@ body.work-focus #hud{
   cursor:pointer;
   pointer-events:auto;
 }
-#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(1){--svc-h:204;}
-#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(2){--svc-h:332;}
-#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(3){--svc-h:32;}
-#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(4){--svc-h:192;}
-#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(5){--svc-h:148;}
+#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(1),
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(1){--svc-h:204;}
+#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(2),
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(2){--svc-h:332;}
+#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(3),
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(3){--svc-h:32;}
+#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(4),
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(4){--svc-h:192;}
+#scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(5),
+#scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(5){--svc-h:148;}
 #scene-block-1:hover .scene-title{
   transform:translateX(-2px);
 }
@@ -876,6 +1009,12 @@ body.work-focus #hud{
   margin:0;
   text-align:left;
 }
+#scene-block-2{
+  --services-title-size:clamp(1.9rem,8.4vw,4.4rem);
+  --services-kicker-size:clamp(.9rem,.62rem + .72vw,1.28rem);
+  --services-item-size:clamp(1.08rem,.84rem + .7vw,1.56rem);
+  --services-dream-size:clamp(2.6rem,8.8vw,7.2rem);
+}
 #scene-block-2 .scene-vision-copy .scene-title{margin-bottom:.72rem;}
 #scene-block-2 .scene-vision-copy .scene-subtitle,
 #scene-block-2 .scene-vision-copy .scene-desc{
@@ -896,7 +1035,7 @@ body.work-focus #hud{
   font-weight:800;
   letter-spacing:.08em;
   line-height:.92;
-  font-size:clamp(2.6rem,8.8vw,7.2rem);
+  font-size:var(--services-dream-size);
   color:transparent;
   background-image:
     linear-gradient(112deg,#fff6ea 0%,#ffd2a6 14%,#ff9f45 34%,#ff5f2a 52%,#ff7f2f 72%,#ffe08a 88%,#fff6ea 100%);
@@ -974,27 +1113,105 @@ body.work-focus #hud{
 }
 #scene-block-2.is-vision{
   inset:auto;
-  margin:0;
-  left:clamp(.2rem,1vw,.75rem);
-  right:auto;
-  top:13.8%;
-  width:var(--zz-w);
-  max-width:48%;
-  min-width:min(16rem,88vw);
-  padding-left:calc(var(--zz-pad-left) + clamp(.45rem,1.6vw,1.2rem));
-  padding-right:0.75rem;
-  text-align:left;
+  margin:0 auto;
+  left:0;
+  right:0;
+  top:max(0rem, env(safe-area-inset-top));
+  width:min(68rem,94vw);
+  max-width:94vw;
+  min-width:min(18rem,90vw);
+  padding-left:clamp(1rem,3vw,2rem);
+  padding-right:clamp(1rem,3vw,2rem);
+  padding-top:clamp(.15rem,.5vh,.55rem);
+  text-align:center;
 }
 #scene-block-2.is-vision .scene-vision-copy{
   display:block;
   opacity:1;
   transform:translateY(0);
-  transition:opacity .22s ease,transform .22s ease;
+  max-width:min(62rem,94vw);
+  margin:0 auto;
+  text-align:center;
+  transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-title--act{
+  font-family:'Syne','Space Grotesk',system-ui,sans-serif;
+  font-weight:800;
+  font-size:var(--services-title-size);
+  line-height:.94;
+  letter-spacing:-.045em;
+  text-transform:uppercase;
+  text-shadow:0 1px 14px rgba(0,0,0,.58),0 0 24px rgba(255,255,255,.32),0 0 52px rgba(255,255,255,.14);
+  transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .55s cubic-bezier(.16,1,.3,1),letter-spacing .25s ease,text-shadow .25s ease;
+  margin-bottom:clamp(1rem,1.8vh,1.8rem);
+}
+#scene-block-2.is-vision:hover .scene-vision-copy .scene-title--act{
+  letter-spacing:-.04em;
+  text-shadow:0 1px 14px rgba(0,0,0,.52),0 0 28px rgba(255,255,255,.38),0 0 56px rgba(255,255,255,.18);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-desc--services{
+  margin-top:0;
+  margin-bottom:clamp(.75rem,1.3vh,1.15rem);
+  font-size:var(--services-kicker-size);
+  letter-spacing:.24em;
+  text-align:center;
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo{
+  align-items:center;
+  gap:clamp(.52rem,1vh,.86rem);
+  margin-bottom:clamp(1.15rem,2vh,1.8rem);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill{
+  text-align:center;
+  font-size:var(--services-item-size);
+  line-height:1.3;
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill{
+  width:min(46rem,100%);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  border:none;
+  border-radius:0;
+  background:transparent;
+  padding:0;
+  transition:color .22s ease,text-shadow .22s ease,transform .22s ease;
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link:hover{
+  color:rgba(235,246,255,1);
+  text-shadow:0 0 16px rgba(170,220,255,.24);
+  transform:translateY(-1px);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill h3{
+  margin:0;
+  font-family:'Syne','Space Grotesk',system-ui,sans-serif;
+  font-weight:700;
+  font-size:clamp(.82rem,.68rem+.42vw,1.05rem);
+  letter-spacing:.01em;
+  line-height:1.24;
+  color:rgba(246,251,255,.98);
+}
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-meta{
+  margin-top:.24rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.5rem,.42rem+.2vw,.64rem);
+  letter-spacing:.05em;
+  line-height:1.35;
+  color:rgba(184,211,255,.9);
+}
+.services-status-line{
+  margin-top:clamp(.5rem,1vh,.9rem);
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.54rem,.48rem+.18vw,.68rem);
+  letter-spacing:.08em;
+  color:rgba(220,235,255,.88);
 }
 #scene-block-2:not(.is-vision) .scene-vision-copy{
   display:none;
   opacity:0;
-  transform:translateY(8px);
+  transform:translateY(14px);
 }
 #scene-block-2 .hero-copy.hero-head--grid{
   display:grid;grid-template-columns:1fr;
@@ -1056,6 +1273,12 @@ body.work-focus #hud{
 #scene-block-2 .hero-cta-row{justify-content:center!important;}
 #scene-block-2 .hero-cta-vline{margin-left:auto!important;margin-right:auto!important;}
 @media (max-width:900px){
+  #scene-block-2{
+    --services-title-size:clamp(1.2rem,7.2vw,2.6rem);
+    --services-kicker-size:clamp(.68rem,2.5vw,.9rem);
+    --services-item-size:clamp(.86rem,3.7vw,1.05rem);
+    --services-dream-size:clamp(2.05rem,10vw,4.1rem);
+  }
   #scene-block-2.scene-block--zz-left{
     width:min(94vw,36rem);
     left:0;
@@ -1091,13 +1314,51 @@ body.work-focus #hud{
     margin-left:0;
   }
   #scene-block-2.is-vision{
-    left:clamp(0.75rem,4vw,1.25rem);
-    width:min(92%,22rem);
-    max-width:none;
+    left:0;
+    right:0;
+    top:max(0rem, env(safe-area-inset-top));
+    width:min(94vw,34rem);
+    max-width:94vw;
     min-width:0;
-    padding-left:calc(clamp(1.25rem,5vw,1.8rem) + clamp(.25rem,1.2vw,.6rem));
-    padding-right:0.75rem;
-    top:14.5%;
+    padding-left:clamp(.8rem,4vw,1.25rem);
+    padding-right:clamp(.8rem,4vw,1.25rem);
+  }
+}
+@media (max-width:640px){
+  #scene-block-2{
+    --services-title-size:clamp(1.05rem,7.4vw,2.2rem);
+    --services-kicker-size:clamp(.62rem,3.1vw,.8rem);
+    --services-item-size:clamp(.98rem,4.6vw,1.26rem);
+    --services-dream-size:clamp(1.7rem,11vw,3rem);
+  }
+  #scene-block-2.is-vision{
+    top:max(-.15rem, env(safe-area-inset-top));
+  }
+  #scene-block-2.is-vision .scene-vision-copy{
+    max-width:min(94vw,30rem);
+  }
+  #scene-block-2.is-vision .scene-vision-copy .scene-title,
+  #scene-block-2.is-vision .scene-vision-copy .scene-title--act{
+    font-size:clamp(.92rem,4.7vw,1.34rem);
+    letter-spacing:.04em;
+    margin-bottom:clamp(.45rem,.85vh,.72rem);
+  }
+  #scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo{
+    gap:clamp(.36rem,.8vh,.56rem);
+    margin-bottom:clamp(.5rem,1vh,.72rem);
+  }
+  #scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill h3{
+    font-size:clamp(.66rem,3.35vw,.86rem);
+    line-height:1.22;
+  }
+  #scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-meta{
+    font-size:clamp(.48rem,2.5vw,.6rem);
+    line-height:1.3;
+    margin-top:.16rem;
+  }
+  .services-status-line{
+    font-size:clamp(.46rem,2.45vw,.58rem);
+    margin-top:clamp(.24rem,.55vh,.45rem);
   }
 }
 /* Contenedor del carrusel vertical: posición en .hero-tech-marquee.hero-tech-marquee--vertical (tras reglas base) */
@@ -1510,6 +1771,29 @@ nav{
   text-shadow:0 0 12px rgba(255,255,255,.26),0 1px 2px rgba(0,0,0,.48);
   transition:color .2s ease,text-shadow .2s ease,transform .18s ease;
 }
+.hero-base-line--immersive{
+  color:#eaf8ff;
+  -webkit-text-fill-color:#eaf8ff;
+  text-shadow:
+    0 0 10px rgba(180,235,255,.55),
+    0 0 24px rgba(120,205,255,.48),
+    0 0 46px rgba(120,150,255,.34);
+  filter:none;
+  animation:immersiveGlowPulse 2.6s ease-in-out infinite;
+  transition:color .28s ease,text-shadow .28s ease,filter .28s ease,transform .24s cubic-bezier(.22,1,.36,1);
+}
+.hero-base-line--immersive:hover{
+  color:#f2fcff;
+  -webkit-text-fill-color:#f2fcff;
+  text-shadow:
+    0 0 12px rgba(214,250,255,.85),
+    0 0 28px rgba(150,225,255,.78),
+    0 0 54px rgba(126,186,255,.62),
+    0 0 84px rgba(170,186,255,.36);
+  filter:saturate(1.2) brightness(1.12);
+  transform:translateY(-1px) scale(1.02);
+  animation:none;
+}
 .hero-living-row{
   display:block;
   margin-top:.02em;
@@ -1549,11 +1833,12 @@ nav{
   background-clip:text;
   color:transparent;
   -webkit-text-fill-color:transparent;
-  animation:livingDrift1 5s ease-in-out infinite,
-    livingDrift2 6.5s ease-in-out infinite,
-    livingDrift3 4s ease-in-out infinite,
-    livingDrift4 5.8s ease-in-out infinite,
-    livingScaleBreath 6.2s cubic-bezier(.42,0,.58,1) infinite .28s;
+  animation:livingDrift1 3.2s ease-in-out infinite,
+    livingDrift2 4.1s ease-in-out infinite,
+    livingDrift3 2.8s ease-in-out infinite,
+    livingDrift4 3.5s ease-in-out infinite,
+    livingScaleBreath 3.6s cubic-bezier(.42,0,.58,1) infinite .18s,
+    livingNeonPulse 2.1s ease-in-out infinite;
   filter:
     url(#livingLiquidNoise)
     drop-shadow(1px 1px 0 #000)
@@ -1569,6 +1854,7 @@ nav{
   position:relative;
   display:inline-block;
   transform-origin:0 52%;
+  margin-left:.42em;
   font-family:'Syne','Space Grotesk',system-ui,sans-serif;
   font-weight:700;
   letter-spacing:-0.02em;
@@ -1605,6 +1891,46 @@ nav{
   52%{--liv-x4:66%;--liv-y4:36%;}
   78%{--liv-x4:44%;--liv-y4:62%;}
   100%{--liv-x4:54%;--liv-y4:40%;}
+}
+@keyframes immersiveChromaticDrift{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+@keyframes immersiveGlowPulse{
+  0%,100%{
+    text-shadow:
+      0 0 10px rgba(180,235,255,.55),
+      0 0 24px rgba(120,205,255,.48),
+      0 0 46px rgba(120,150,255,.34);
+  }
+  50%{
+    text-shadow:
+      0 0 14px rgba(210,245,255,.78),
+      0 0 32px rgba(145,220,255,.62),
+      0 0 58px rgba(138,170,255,.44);
+  }
+}
+@keyframes livingNeonPulse{
+  0%,100%{
+    filter:
+      url(#livingLiquidNoise)
+      drop-shadow(1px 1px 0 #000)
+      drop-shadow(-1px -1px 0 #000)
+      drop-shadow(0 2px 5px rgba(0,0,0,.9))
+      drop-shadow(0 0 12px rgba(255,80,180,.26))
+      contrast(1.24) saturate(2.24) brightness(1.08);
+  }
+  50%{
+    filter:
+      url(#livingLiquidNoise)
+      drop-shadow(1px 1px 0 #000)
+      drop-shadow(-1px -1px 0 #000)
+      drop-shadow(0 2px 5px rgba(0,0,0,.9))
+      drop-shadow(0 0 20px rgba(255,66,122,.42))
+      drop-shadow(0 0 28px rgba(0,220,255,.24))
+      contrast(1.28) saturate(2.35) brightness(1.12);
+  }
 }
 .living-art-row:hover .living-art-plain{
   text-shadow:
@@ -1989,8 +2315,8 @@ nav{
     gap:.34rem;
   }
   #scene-block-0 .scene-skill{
-    font-size:clamp(.62rem,.54rem + .28vw,.78rem);
-    line-height:1.28;
+    font-size:clamp(.86rem,2.8vw,1.06rem);
+    line-height:1.34;
   }
   #scene-block-1 .scene-title--act{
     font-size:clamp(1.02rem,5.2vw,1.65rem);
@@ -1999,17 +2325,67 @@ nav{
     font-size:clamp(.82rem,.76rem + .34vw,.95rem);
     margin-bottom:clamp(.75rem,1.6vh,1.1rem);
   }
-  #scene-block-1 .scene-desc--services{
+  #scene-block-1 .scene-desc--services,
+  #scene-block-2 .scene-vision-copy .scene-desc--services{
     margin-top:clamp(.85rem,1.8vh,1.25rem);
     margin-bottom:.38rem;
     font-size:clamp(.54rem,.46rem + .26vw,.68rem);
   }
-  #scene-block-1 .scene-skills--whatwedo{
+  #scene-block-1 .scene-skills--whatwedo,
+  #scene-block-2 .scene-vision-copy .scene-skills--whatwedo{
     gap:.4rem;
   }
-  #scene-block-1 .scene-skills--whatwedo .scene-skill{
+  #scene-block-1 .scene-skills--whatwedo .scene-skill,
+  #scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill{
     font-size:clamp(.68rem,.56rem + .32vw,.84rem);
     line-height:1.3;
+  }
+}
+@media (max-width:640px){
+  #scene-block-2 .hero-base-line{
+    font-size:clamp(1.88rem,10.1vw,2.72rem);
+    line-height:.9;
+  }
+  #scene-block-2 .living-art-kinetic{
+    font-size:clamp(1.9rem,10vw,2.66rem);
+    letter-spacing:-0.03em;
+  }
+  #scene-block-2 .living-art-plain{
+    font-size:clamp(1.72rem,8.9vw,2.42rem);
+    margin-left:.24em;
+    letter-spacing:-0.028em;
+  }
+  .capabilities-grid-home{
+    margin-top:.55rem;
+    gap:.5rem;
+  }
+  .capability-card{
+    padding:.72rem .78rem;
+  }
+  .capability-card h3{
+    font-size:clamp(.94rem,4.2vw,1.1rem);
+  }
+  .capability-card p{
+    font-size:clamp(.82rem,3.8vw,.98rem);
+  }
+  .capability-card .cap-keywords{
+    font-size:clamp(.64rem,3.1vw,.78rem);
+  }
+  .whatwedo-pillars{
+    font-size:clamp(.62rem,3.2vw,.78rem);
+    line-height:1.42;
+  }
+  .whatwedo-pillars--top,
+  .whatwedo-pillars--bottom{
+    text-align:left;
+  }
+  #scene-block-0 .scene-skill{
+    font-size:clamp(1rem,4.8vw,1.28rem);
+    line-height:1.38;
+    letter-spacing:-.01em;
+  }
+  #scene-block-0 .scene-skills--interact{
+    gap:clamp(.48rem,1.6vh,.9rem);
   }
 }
 @media (max-width:520px){
@@ -2062,7 +2438,7 @@ nav{
   <ul class="links" id="top-nav-links">
     <li><a href="#section0" class="nav-anchor">Who we are</a></li>
     <li><a href="#section1" class="nav-anchor">What we do</a></li>
-    <li><a href="#section2" class="nav-anchor">Vision</a></li>
+    <li><a href="/videomapping/">VIDEOMAPPING</a></li>
     <li><a href="#section3" class="nav-anchor">Work</a></li>
     <li><a href="mailto:airolaxx@gmail.com">Contact</a></li>
   </ul>
@@ -2106,27 +2482,23 @@ nav{
 <div id="scene-narrative" aria-live="polite">
   <div class="scene-block scene-block--zz-left" id="scene-block-0" data-scene="0">
     <h2 class="scene-title scene-title--act">WHO WE ARE</h2>
-    <p class="scene-subtitle scene-subtitle--sensor">Immersive storytelling studio.</p>
-    <p class="scene-desc">We focus on museums, cultural spaces, and brands—physical experiences built for audiences in the room.</p>
-    <p class="scene-desc scene-desc--services">Approach</p>
+    <p class="scene-desc">We bridge the gap between architecture and digital art through large-scale video mapping, generative visuals, and interactive installations.</p>
     <ul class="scene-skills scene-skills--interact" aria-label="Studio approach">
       <li class="scene-skill" data-preview-video="videos/export11-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">Experiential design</li>
-      <li class="scene-skill" data-preview-video="PROJECTS/6.mp4" data-preview-poster="Imagenes/OHM2.png">Audiovisual installations</li>
+      <li class="scene-skill" data-preview-video="PROJECTS/1.mp4" data-preview-poster="Imagenes/OHM2.png">Audiovisual installations</li>
       <li class="scene-skill" data-preview-video="PROJECTS/4-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">Interactive exhibitions</li>
-      <li class="scene-skill" data-preview-video="PROJECTS/1.mp4" data-preview-poster="Imagenes/MOTION.png">Spatial storytelling</li>
+      <li class="scene-skill" data-preview-video="videos/NEW MAPPING0001-2247.mp4" data-preview-poster="Imagenes/MOTION.png"><a class="scene-skill-link scene-skill-link--cta" href="/videomapping/">Spatial storytelling</a></li>
     </ul>
   </div>
   <div class="scene-block scene-block--zz-right" id="scene-block-1" data-scene="1" aria-label="What we do">
     <h2 class="scene-title scene-title--act">WHAT WE DO</h2>
-    <p class="scene-desc">We design and produce immersive audiovisual experiences—from projection mapping and animation to installations for museums, brands, and cultural spaces.</p>
-    <p class="scene-desc scene-desc--services">Services</p>
-    <ul class="scene-skills scene-skills--whatwedo" aria-label="Capabilities">
-      <li class="scene-skill" data-preview-video="PROJECTS/2.mp4" data-preview-poster="Imagenes/chapala.png">Projection mapping</li>
-      <li class="scene-skill" data-preview-video="PROJECTS/8-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">3D animation &amp; visual systems</li>
-      <li class="scene-skill" data-preview-video="videos/10-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">Sound design &amp; music</li>
-      <li class="scene-skill" data-preview-video="Imagenes/innovationdesign-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">Audiovisual installations</li>
-      <li class="scene-skill" data-preview-video="Imagenes/interactive-systems-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">Interactive exhibitions</li>
-    </ul>
+    <div class="whatwedo-reel" aria-label="Demo reel and disciplines">
+      <p class="whatwedo-pillars whatwedo-pillars--top">Videomapping Architectural · Generative Art · Audiovisual AI / Interactive Design · Spatial Sound</p>
+      <figure class="whatwedo-video">
+        <video src="videos/DEMOREEL_AIROLAX 2026.mp4" autoplay muted loop playsinline controls preload="metadata" aria-label="Andata Lab demo reel"></video>
+      </figure>
+      <p class="whatwedo-pillars whatwedo-pillars--bottom">3D Design · Large-Scale Projection · Technical Direction · Spatial Storytelling</p>
+    </div>
   </div>
   <div class="scene-block scene-block--zz-left scene-block--living" id="scene-block-2" data-scene="2">
     <div class="hero-head hero-head--living">
@@ -2136,10 +2508,10 @@ nav{
             <h1 class="hero-h1 hero-h1--brutal">
               <div class="hero-h1-slab">
                 <div class="hero-h1-face">
-                  <span class="hero-base-line">WHERE SPACE</span>
-                  <span class="hero-base-line">BECOMES</span>
+                  <span class="hero-base-line">ANDATA LAB*</span>
+                  <span class="hero-base-line hero-base-line--immersive">IMMERSIVE</span>
                   <span class="hero-living-row">
-                    <span class="living-art-row" role="button" tabindex="0" title="Pulse"><span class="living-art-kinetic">LIVING</span><span class="living-art-plain"> ART</span></span>
+                    <span class="living-art-row" role="button" tabindex="0" title="Pulse"><span class="living-art-kinetic">LIVING</span><span class="living-art-plain"> SPATIAL ART</span></span>
                   </span>
                 </div>
               </div>
@@ -2155,8 +2527,41 @@ nav{
         </div>
       </div>
     </div>
-    <div class="scene-vision-copy scene-vision-copy--dream" aria-label="Vision dream">
-      <h2 class="scene-vision-dream" id="vision-dream-text">Let's DREAM</h2>
+    <div class="scene-vision-copy scene-vision-copy--dream" aria-label="Services">
+      <h2 class="scene-title scene-title--act">SERVICES</h2>
+      <ul class="scene-skills scene-skills--whatwedo" aria-label="Services now">
+        <li class="scene-skill" id="svc-mapping" data-preview-video="PROJECTS/2.mp4" data-preview-poster="Imagenes/chapala.png">
+          <a class="svc-link" href="#project-ajijic">
+            <h3>Architectural &amp; Large-Scale Mapping</h3>
+            <p class="svc-meta">dual-projector blending / site-specific calibration</p>
+          </a>
+        </li>
+        <li class="scene-skill" id="svc-generative" data-preview-video="PROJECTS/8-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">
+          <a class="svc-link" href="/videomapping/">
+            <h3>Generative Content &amp; 3D Systems</h3>
+            <p class="svc-meta">real-time rendering / data-driven composition</p>
+          </a>
+        </li>
+        <li class="scene-skill" id="svc-audio" data-preview-video="videos/10-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
+          <a class="svc-link" href="/videomapping/">
+            <h3>Immersive Audio Design</h3>
+            <p class="svc-meta">spatial soundscapes / reactive music layers</p>
+          </a>
+        </li>
+        <li class="scene-skill" id="svc-immersive" data-preview-video="Imagenes/innovationdesign-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
+          <a class="svc-link" href="/videomapping/">
+            <h3>Immersive Audiovisual Environments</h3>
+            <p class="svc-meta">high-lumen staging / digital-physical choreography</p>
+          </a>
+        </li>
+        <li class="scene-skill" id="svc-interactive" data-preview-video="Imagenes/interactive-systems-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">
+          <a class="svc-link" href="/videomapping/">
+            <h3>Sensor-Driven Interactive Experiences</h3>
+            <p class="svc-meta">computer vision / depth sensing / behavior design</p>
+          </a>
+        </li>
+      </ul>
+      <p class="services-status-line">SYSTEM STATUS: STABLE // RENDER ENGINE: TOUCHDESIGNER</p>
     </div>
   </div>
 </div>
@@ -2165,7 +2570,7 @@ nav{
 <div class="scroll-container">
 <section class="scene-section section scene-section--pin" id="section0" aria-label="Who we are"></section>
 <section class="scene-section section scene-section--pin" id="section1" aria-label="What we do"></section>
-<section class="scene-section section scene-section--pin" id="section2" aria-label="Vision"></section>
+<section class="scene-section section scene-section--pin" id="section2" aria-label="Services"></section>
 <section class="scene-section section scene-section--projects scene-section--pin" id="section3" aria-label="Work">
   <div class="projects-inner">
     <h2 class="projects-title">Work</h2>
@@ -2190,15 +2595,15 @@ nav{
         <p class="project-desc">Interactive spatial narrative and volumetric display.</p>
         <div class="project-meta">MEXICO CITY</div>
       </article>
-      <article class="project-tile" role="listitem" data-index="02">
+      <article class="project-tile" role="listitem" data-index="02" id="project-ajijic">
         <div class="project-media">
           <video class="project-video" muted autoplay playsinline loop controls preload="metadata" src="PROJECTS/2.mp4" data-src="PROJECTS/2.mp4" aria-label="Project 02">
           </video>
           <div class="project-fallback" hidden>Drop <code>PROJECTS/2.mp4</code></div>
         </div>
-        <h3 class="project-title">Whispers of the Lake</h3>
-        <p class="project-desc">An immersive 3D projection mapping installation narrating local myths on historic architecture.</p>
-        <div class="project-meta">CHAPALA, JALISCO</div>
+        <h3 class="project-title">Ajijic Mapping</h3>
+        <p class="project-desc">A dual-projector architectural intervention blending heritage with digital storytelling.</p>
+        <div class="project-meta">Architectural Projection / Technical Direction</div>
       </article>
       <article class="project-tile" role="listitem" data-index="03">
         <div class="project-media">
@@ -3074,22 +3479,38 @@ function applySceneNarrativeFromScroll(p){
   // 03_VISION: tercer tercio completo, antes de videos
   const o2vision=Math.max(0,Math.min(1,smoothstep((p-(P2+0.006))/w)*smoothstep((P3-0.015-p)/(w*1.04))));
   let o2=Math.max(o2intro,o2vision);
-  const dreamEl=document.getElementById('vision-dream-text');
-  if(dreamEl){
-    const enter=smoothstep((p-(P2+0.004))/0.04);
-    const leave=smoothstep((p-(P3-0.12))/0.05);
-    const dreamV=Math.max(0,Math.min(1,enter*(1-leave)));
-    const y=(1-dreamV)*72;
-    const s=0.82+dreamV*0.26;
-    const b=(1-dreamV)*18;
-    const o=Math.pow(dreamV,0.82);
-    const glowA=(0.22+0.55*dreamV).toFixed(3);
-    const glowB=(0.2+0.6*dreamV).toFixed(3);
-    dreamEl.style.opacity=o.toFixed(3);
-    dreamEl.style.transform=`translateY(${y.toFixed(2)}px) scale(${s.toFixed(3)})`;
-    dreamEl.style.filter=`blur(${b.toFixed(2)}px)`;
-    dreamEl.style.textShadow=`0 0 ${Math.round(18+42*dreamV)}px rgba(255,255,255,${glowA}),0 0 ${Math.round(36+82*dreamV)}px rgba(225,170,255,${glowB})`;
+  const servicesTitleEl=document.querySelector('#scene-block-2 .scene-vision-copy .scene-title');
+  const servicesListEl=document.querySelector('#scene-block-2 .scene-vision-copy .scene-skills--whatwedo');
+  const isMobileServices=typeof window!=='undefined'&&typeof window.matchMedia==='function'
+    ? window.matchMedia('(max-width:900px)').matches
+    : false;
+  const servicesLeaveStart=isMobileServices?(P3-0.24):(P3-0.14);
+  const servicesLeaveEnd=isMobileServices?(P3-0.11):(P3-0.06);
+  const servicesLeaveT=Math.max(0,Math.min(1,(p-servicesLeaveStart)/Math.max(1e-6,servicesLeaveEnd-servicesLeaveStart)));
+  const servicesTextVis=1-smoothstep(servicesLeaveT);
+  const servicesTextY=(1-servicesTextVis)*16;
+  const servicesItems=servicesListEl?[...servicesListEl.querySelectorAll('.scene-skill')]:[];
+  const servicesEntryStart=isMobileServices?(P2+0.001):(P2+0.012);
+  const servicesEntryDur=isMobileServices?0.16:0.12;
+  const servicesEntryBase=Math.max(0,Math.min(1,(p-servicesEntryStart)/Math.max(1e-6,servicesEntryDur)));
+  const servicesItemStagger=isMobileServices?0.1:0.075;
+  if(servicesTitleEl){
+    servicesTitleEl.style.opacity=servicesTextVis.toFixed(3);
+    servicesTitleEl.style.transform=`translateY(${servicesTextY.toFixed(2)}px)`;
   }
+  if(servicesListEl){
+    servicesListEl.style.opacity=servicesTextVis.toFixed(3);
+    servicesListEl.style.transform=`translateY(${(servicesTextY*0.8).toFixed(2)}px)`;
+  }
+  servicesItems.forEach((it,idx)=>{
+    const localRaw=(servicesEntryBase-idx*servicesItemStagger)/Math.max(1e-6,1-idx*servicesItemStagger);
+    const local=Math.max(0,Math.min(1,localRaw));
+    const reveal=smoothstep(local);
+    const yOff=(1-reveal)*(18+idx*3.4);
+    const s=0.985+0.015*reveal;
+    it.style.opacity=reveal.toFixed(3);
+    it.style.transform=`translateY(${yOff.toFixed(2)}px) scale(${s.toFixed(3)})`;
+  });
   const downHint=document.getElementById('section-down-hint');
   if(downHint){
     const inNarrative=p<P_S3_END*0.995&&!window.__workFocus;
@@ -3158,7 +3579,8 @@ function applySceneNarrativeFromScroll(p){
   if(window.matchMedia&&window.matchMedia('(hover: none)').matches) return;
   const lists=[
     document.querySelector('#scene-block-0 .scene-skills--interact'),
-    document.querySelector('#scene-block-1 .scene-skills--whatwedo')
+    document.querySelector('#scene-block-1 .scene-skills--whatwedo'),
+    document.querySelector('#scene-block-2 .scene-skills--whatwedo')
   ].filter(Boolean);
   const mediaVideo=preview.querySelector('#service-preview-video');
   const mediaImage=preview.querySelector('#service-preview-image');
@@ -3521,15 +3943,35 @@ if(livingRow){
       attachProjectVideo(v);
     });
   }
+  const SECTION_SLUG_BY_ID={
+    section0:'who-we-are',
+    section1:'what-we-do',
+    section2:'services',
+    section3:'work'
+  };
+  const SECTION_ID_BY_SLUG={
+    'who-we-are':'section0',
+    'what-we-do':'section1',
+    services:'section2',
+    work:'section3'
+  };
+  function toSectionId(raw){
+    if(!raw) return '';
+    return SECTION_ID_BY_SLUG[raw]||raw;
+  }
+  function toSectionSlug(id){
+    return SECTION_SLUG_BY_ID[id]||id;
+  }
   function goToSection(id){
-    const el=document.getElementById(id);
+    const sectionId=toSectionId(id);
+    const el=document.getElementById(sectionId);
     if(!el) return;
-    if(id==='section3') loadProjectVideosFromNav();
-    if(id==='section3'){
+    if(sectionId==='section3') loadProjectVideosFromNav();
+    if(sectionId==='section3'){
       let topAbs=0,nodeAbs=el;
       while(nodeAbs){topAbs+=nodeAbs.offsetTop||0;nodeAbs=nodeAbs.offsetParent;}
       window.scrollTo({top:Math.max(0,topAbs),behavior:'smooth'});
-      try{history.replaceState(null,'','#'+id);}catch(_){}
+      try{history.replaceState(null,'','#'+toSectionSlug(sectionId));}catch(_){}
       return;
     }
     // Navegación por progreso real usando el mismo ScrollTrigger maestro.
@@ -3541,7 +3983,7 @@ if(livingRow){
       section2:centerS2,
       section3:Math.min(0.94,P_S3_END+0.16)
     };
-    const p=Object.prototype.hasOwnProperty.call(targetProgressById,id)?targetProgressById[id]:0;
+    const p=Object.prototype.hasOwnProperty.call(targetProgressById,sectionId)?targetProgressById[sectionId]:0;
     let top=0;
     let usedMaster=false;
     if(typeof ScrollTrigger!=='undefined'&&typeof ScrollTrigger.getById==='function'){
@@ -3559,9 +4001,9 @@ if(livingRow){
       const scrollRange=Math.max(1,rootH-vh);
       top=rootTop+p*scrollRange;
     }
-    const behavior=id==='section2'?'auto':'smooth';
+    const behavior=sectionId==='section2'?'auto':'smooth';
     window.scrollTo({top:Math.max(0,top),behavior});
-    try{history.replaceState(null,'','#'+id);}catch(_){}
+    try{history.replaceState(null,'','#'+toSectionSlug(sectionId));}catch(_){}
   }
   /* Direct listeners on every nav-anchor — no capture-phase tricks, no stopImmediatePropagation */
   document.querySelectorAll('a.nav-anchor').forEach(function(a){
@@ -3569,7 +4011,7 @@ if(livingRow){
       const href=a.getAttribute('href')||'';
       const hash=href.indexOf('#')>=0?href.slice(href.indexOf('#')):'';
       if(!hash) return;
-      const id=hash.slice(1);
+      const id=toSectionId(hash.slice(1));
       if(!document.getElementById(id)) return;
       e.preventDefault();
       e.stopPropagation();
@@ -4388,12 +4830,16 @@ draw();
 <script type="module">
 import * as THREE from 'three';
 
-const S01_PC=3200;
+const isS01Mobile=typeof window!=='undefined'&&typeof window.matchMedia==='function'
+  ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+  : false;
+const S01_PC=isS01Mobile?1200:3200;
 const canvas=document.getElementById('s01-particles-gl');
 const hintEl=document.getElementById('s01-engage-hint');
 if(canvas){
-  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:!isS01Mobile,powerPreference:'high-performance'});
+  const s01MaxPR=isS01Mobile?1.05:2;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,s01MaxPR));
   renderer.setClearColor(0x000000,0);
   const scene=new THREE.Scene();
   const cam=new THREE.PerspectiveCamera(38,2,0.5,120);
@@ -4464,6 +4910,7 @@ if(canvas){
 
   function resize(){
     const w=innerWidth,h=innerHeight;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,s01MaxPR));
     renderer.setSize(w,h,false);
     cam.aspect=w/h;
     cam.updateProjectionMatrix();
