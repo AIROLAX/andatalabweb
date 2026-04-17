@@ -451,6 +451,64 @@ canvas#bg{
   aspect-ratio:16/9;
   object-fit:cover;
 }
+#scene-block-1 .scene-skills--interact{
+  margin-top:clamp(.7rem,1.8vh,1.2rem);
+  gap:clamp(.6rem,1.4vh,.95rem);
+}
+#scene-block-1 .scene-skills--interact .scene-skill{
+  font-family:'Syne','Space Grotesk',system-ui,sans-serif;
+  font-size:clamp(.9rem,1.1vw,1.2rem);
+  font-weight:600;
+  letter-spacing:-0.01em;
+  line-height:1.46;
+}
+#scene-block-1 .scene-skills--interact .scene-skill .scene-skill-link{
+  display:inline-block;
+  font-size:1em;
+  line-height:1.08;
+  transform-origin:left center;
+  transition:transform .22s ease,text-shadow .22s ease,color .22s ease;
+}
+#scene-block-1 .scene-skills--interact .scene-skill .scene-skill-sub{
+  display:block;
+  margin-top:.24rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:clamp(.5rem,.46rem+.14vw,.66rem);
+  letter-spacing:.06em;
+  line-height:1.28;
+  color:rgba(185,208,242,.78);
+}
+#scene-block-1 .scene-skills--interact .scene-skill:hover .scene-skill-link{
+  transform:translateX(1px) scale(1.1);
+  text-shadow:0 0 16px rgba(255,255,255,.58),0 0 34px rgba(160,210,255,.36);
+}
+#scene-block-0 .whatwedo-reel,
+#scene-block-1 .whatwedo-reel{
+  width:min(126%,38rem);
+  max-width:calc(100vw - 2.2rem);
+}
+@media (min-width:1024px){
+  #scene-block-0 .whatwedo-reel{
+    width:min(190%,68rem);
+    max-width:min(92vw,68rem);
+  }
+  #scene-block-0 .whatwedo-video{
+    border-radius:14px;
+  }
+  #scene-block-0 .whatwedo-video video{
+    aspect-ratio:16/8.6;
+  }
+  #scene-block-1 .scene-skills--interact .scene-skill{
+    font-size:clamp(1.45rem,2.3vw,2.4rem);
+    line-height:1.12;
+    letter-spacing:.01em;
+  }
+  #scene-block-1 .scene-skills--whatwedo .scene-skill{
+    font-size:clamp(1.45rem,2.3vw,2.4rem);
+    line-height:1.12;
+    letter-spacing:-0.02em;
+  }
+}
 .tech-spec-bar{
   max-width:min(980px,92vw);
   margin:clamp(1.3rem,3.2vh,2.1rem) auto 0;
@@ -959,6 +1017,35 @@ body.work-focus #hud{
   cursor:pointer;
   pointer-events:auto;
 }
+#scene-block-1 .scene-skills--whatwedo .scene-skill .svc-link,
+#scene-block-1 .scene-skills--whatwedo .scene-skill .svc-link:link,
+#scene-block-1 .scene-skills--whatwedo .scene-skill .svc-link:visited,
+#scene-block-1 .scene-skills--whatwedo .scene-skill .svc-link:any-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  -webkit-text-decoration:none;
+  border:none;
+  background:transparent;
+  padding:0;
+  transition:color .22s ease,text-shadow .22s ease,transform .22s ease;
+}
+#scene-block-1 .scene-skills--whatwedo .scene-skill .svc-link:hover{
+  color:rgba(255,255,255,1);
+  text-shadow:0 0 18px rgba(255,255,255,.45),0 0 36px rgba(160,210,255,.32);
+  transform:translateX(-1px);
+}
+#scene-block-1 .scene-skills--whatwedo .scene-skill h3{
+  margin:0;
+  font-family:'Syne','Space Grotesk',system-ui,sans-serif;
+  font-weight:700;
+  font-size:1em;
+  letter-spacing:-0.02em;
+  line-height:1.12;
+  color:inherit;
+  text-decoration:none;
+  -webkit-text-decoration:none;
+}
 #scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(1),
 #scene-block-2 .scene-vision-copy .scene-skills--whatwedo .scene-skill:nth-child(1){--svc-h:204;}
 #scene-block-1 .scene-skills--whatwedo .scene-skill:nth-child(2),
@@ -1089,27 +1176,52 @@ body.work-focus #hud{
 #section-down-hint{
   position:fixed;
   left:50%;
-  bottom:clamp(.24rem,.9vh,.62rem);
+  bottom:clamp(.35rem,1.4vh,1rem);
   transform:translateX(-50%);
-  display:flex;
+  display:inline-flex;
   align-items:center;
+  justify-content:center;
+  width:clamp(2.1rem,4.6vw,3.1rem);
+  height:clamp(2.1rem,4.6vw,3.1rem);
+  border-radius:999px;
+  border:1px solid rgba(150,220,255,.4);
+  background:radial-gradient(circle at 50% 38%,rgba(170,245,255,.22) 0%,rgba(78,145,255,.14) 40%,rgba(0,0,0,.18) 100%);
+  box-shadow:
+    0 0 18px rgba(125,220,255,.28),
+    0 0 34px rgba(115,136,255,.2),
+    inset 0 0 18px rgba(255,255,255,.08);
   font-family:'JetBrains Mono',monospace;
-  font-size:clamp(.58rem,.52rem+.2vw,.72rem);
-  letter-spacing:.16em;
+  font-size:clamp(.72rem,.64rem+.28vw,.94rem);
+  letter-spacing:.08em;
   text-transform:uppercase;
-  color:rgba(236,244,255,.88);
-  text-shadow:0 0 10px rgba(255,255,255,.22);
+  color:rgba(240,250,255,.95);
+  text-shadow:0 0 14px rgba(170,245,255,.42);
   pointer-events:none;
   z-index:70;
-  animation:visionHintPulse 1.2s ease-in-out infinite;
+  animation:visionHintPulse 1.45s cubic-bezier(.22,.61,.36,1) infinite;
 }
 #section-down-hint .arr{
-  font-size:1rem;
+  font-size:clamp(1.22rem,2.1vw,1.85rem);
+  font-weight:700;
   line-height:1;
 }
 @keyframes visionHintPulse{
-  0%,100%{opacity:.5;transform:translateX(-50%) translateY(0);}
-  50%{opacity:1;transform:translateX(-50%) translateY(4px);}
+  0%,100%{
+    opacity:.58;
+    transform:translateX(-50%) translateY(0) scale(1);
+    box-shadow:
+      0 0 16px rgba(125,220,255,.22),
+      0 0 28px rgba(115,136,255,.16),
+      inset 0 0 14px rgba(255,255,255,.05);
+  }
+  50%{
+    opacity:1;
+    transform:translateX(-50%) translateY(5px) scale(1.07);
+    box-shadow:
+      0 0 24px rgba(150,240,255,.38),
+      0 0 46px rgba(130,152,255,.28),
+      inset 0 0 20px rgba(255,255,255,.1);
+  }
 }
 #scene-block-2.is-vision{
   inset:auto;
@@ -1169,10 +1281,14 @@ body.work-focus #hud{
 #scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill{
   width:min(46rem,100%);
 }
-#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link{
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link,
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link:link,
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link:visited,
+#scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-link:any-link{
   display:block;
   text-decoration:none;
   color:inherit;
+  -webkit-text-decoration:none;
   border:none;
   border-radius:0;
   background:transparent;
@@ -1192,6 +1308,8 @@ body.work-focus #hud{
   letter-spacing:.01em;
   line-height:1.24;
   color:rgba(246,251,255,.98);
+  text-decoration:none;
+  -webkit-text-decoration:none;
 }
 #scene-block-2.is-vision .scene-vision-copy .scene-skills--whatwedo .scene-skill .svc-meta{
   margin-top:.24rem;
@@ -2342,6 +2460,11 @@ nav{
   }
 }
 @media (max-width:640px){
+  #scene-block-0 .whatwedo-reel,
+  #scene-block-1 .whatwedo-reel{
+    width:min(108%,31rem);
+    max-width:calc(100vw - 1.2rem);
+  }
   #scene-block-2 .hero-base-line{
     font-size:clamp(1.88rem,10.1vw,2.72rem);
     line-height:.9;
@@ -2436,8 +2559,8 @@ nav{
     </span>
   </button>
   <ul class="links" id="top-nav-links">
-    <li><a href="#section0" class="nav-anchor">Who we are</a></li>
-    <li><a href="#section1" class="nav-anchor">What we do</a></li>
+    <li><a href="#section0" class="nav-anchor">What we do</a></li>
+    <li><a href="#section1" class="nav-anchor">Services</a></li>
     <li><a href="/videomapping/">VIDEOMAPPING</a></li>
     <li><a href="#section3" class="nav-anchor">Work</a></li>
     <li><a href="mailto:airolaxx@gmail.com">Contact</a></li>
@@ -2481,16 +2604,6 @@ nav{
 
 <div id="scene-narrative" aria-live="polite">
   <div class="scene-block scene-block--zz-left" id="scene-block-0" data-scene="0">
-    <h2 class="scene-title scene-title--act">WHO WE ARE</h2>
-    <p class="scene-desc">We bridge the gap between architecture and digital art through large-scale video mapping, generative visuals, and interactive installations.</p>
-    <ul class="scene-skills scene-skills--interact" aria-label="Studio approach">
-      <li class="scene-skill" data-preview-video="videos/export11-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">Experiential design</li>
-      <li class="scene-skill" data-preview-video="PROJECTS/1.mp4" data-preview-poster="Imagenes/OHM2.png">Audiovisual installations</li>
-      <li class="scene-skill" data-preview-video="PROJECTS/4-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">Interactive exhibitions</li>
-      <li class="scene-skill" data-preview-video="videos/NEW MAPPING0001-2247.mp4" data-preview-poster="Imagenes/MOTION.png"><a class="scene-skill-link scene-skill-link--cta" href="/videomapping/">Spatial storytelling</a></li>
-    </ul>
-  </div>
-  <div class="scene-block scene-block--zz-right" id="scene-block-1" data-scene="1" aria-label="What we do">
     <h2 class="scene-title scene-title--act">WHAT WE DO</h2>
     <div class="whatwedo-reel" aria-label="Demo reel and disciplines">
       <p class="whatwedo-pillars whatwedo-pillars--top">Videomapping Architectural · Generative Art · Audiovisual AI / Interactive Design · Spatial Sound</p>
@@ -2499,6 +2612,36 @@ nav{
       </figure>
       <p class="whatwedo-pillars whatwedo-pillars--bottom">3D Design · Large-Scale Projection · Technical Direction · Spatial Storytelling</p>
     </div>
+  </div>
+  <div class="scene-block scene-block--zz-right" id="scene-block-1" data-scene="1" aria-label="What we do">
+    <h2 class="scene-title scene-title--act">SERVICES</h2>
+    <ul class="scene-skills scene-skills--whatwedo" aria-label="Services">
+      <li class="scene-skill" data-preview-video="PROJECTS/2.mp4" data-preview-poster="Imagenes/chapala.png">
+        <a class="svc-link" href="#project-ajijic">
+          <h3>Architectural &amp; Large-Scale Mapping</h3>
+        </a>
+      </li>
+      <li class="scene-skill" data-preview-video="PROJECTS/8-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">
+        <a class="svc-link" href="/videomapping/">
+          <h3>Generative Content &amp; 3D Systems</h3>
+        </a>
+      </li>
+      <li class="scene-skill" data-preview-video="videos/10-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
+        <a class="svc-link" href="/videomapping/">
+          <h3>Immersive Audio Design</h3>
+        </a>
+      </li>
+      <li class="scene-skill" data-preview-video="Imagenes/innovationdesign-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
+        <a class="svc-link" href="/videomapping/">
+          <h3>Immersive Audiovisual Environments</h3>
+        </a>
+      </li>
+      <li class="scene-skill" data-preview-video="Imagenes/interactive-systems-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">
+        <a class="svc-link" href="/videomapping/">
+          <h3>Sensor-Driven Interactive Experiences</h3>
+        </a>
+      </li>
+    </ul>
   </div>
   <div class="scene-block scene-block--zz-left scene-block--living" id="scene-block-2" data-scene="2">
     <div class="hero-head hero-head--living">
@@ -2528,40 +2671,24 @@ nav{
       </div>
     </div>
     <div class="scene-vision-copy scene-vision-copy--dream" aria-label="Services">
-      <h2 class="scene-title scene-title--act">SERVICES</h2>
-      <ul class="scene-skills scene-skills--whatwedo" aria-label="Services now">
-        <li class="scene-skill" id="svc-mapping" data-preview-video="PROJECTS/2.mp4" data-preview-poster="Imagenes/chapala.png">
-          <a class="svc-link" href="#project-ajijic">
-            <h3>Architectural &amp; Large-Scale Mapping</h3>
-            <p class="svc-meta">dual-projector blending / site-specific calibration</p>
-          </a>
+      <ul class="scene-skills scene-skills--interact" aria-label="Services now">
+        <li class="scene-skill" data-preview-video="videos/NEW MAPPING0001-2247.mp4" data-preview-poster="Imagenes/MOTION.png">
+          <a class="scene-skill-link scene-skill-link--cta" href="/videomapping/">Videomapping</a>
+          <span class="scene-skill-sub">architectural projections / spatial storytelling</span>
         </li>
-        <li class="scene-skill" id="svc-generative" data-preview-video="PROJECTS/8-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">
-          <a class="svc-link" href="/videomapping/">
-            <h3>Generative Content &amp; 3D Systems</h3>
-            <p class="svc-meta">real-time rendering / data-driven composition</p>
-          </a>
+        <li class="scene-skill" data-preview-video="videos/export11-lite.mp4" data-preview-poster="Imagenes/project1.jpg.png">
+          <a class="scene-skill-link" href="/videomapping/">Experiential design</a>
+          <span class="scene-skill-sub">site-specific concepts / immersive direction</span>
         </li>
-        <li class="scene-skill" id="svc-audio" data-preview-video="videos/10-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
-          <a class="svc-link" href="/videomapping/">
-            <h3>Immersive Audio Design</h3>
-            <p class="svc-meta">spatial soundscapes / reactive music layers</p>
-          </a>
+        <li class="scene-skill" data-preview-video="PROJECTS/1.mp4" data-preview-poster="Imagenes/OHM2.png">
+          <a class="scene-skill-link" href="/videomapping/">Audiovisual installations</a>
+          <span class="scene-skill-sub">high-lumen staging / media integration</span>
         </li>
-        <li class="scene-skill" id="svc-immersive" data-preview-video="Imagenes/innovationdesign-lite.mp4" data-preview-poster="Imagenes/AUDIOVISUAL TECH.webp">
-          <a class="svc-link" href="/videomapping/">
-            <h3>Immersive Audiovisual Environments</h3>
-            <p class="svc-meta">high-lumen staging / digital-physical choreography</p>
-          </a>
-        </li>
-        <li class="scene-skill" id="svc-interactive" data-preview-video="Imagenes/interactive-systems-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">
-          <a class="svc-link" href="/videomapping/">
-            <h3>Sensor-Driven Interactive Experiences</h3>
-            <p class="svc-meta">computer vision / depth sensing / behavior design</p>
-          </a>
+        <li class="scene-skill" data-preview-video="PROJECTS/4-lite.mp4" data-preview-poster="Imagenes/SHOW CONTROL.jpg">
+          <a class="scene-skill-link" href="/videomapping/">Interactive exhibitions</a>
+          <span class="scene-skill-sub">sensor systems / real-time behavior</span>
         </li>
       </ul>
-      <p class="services-status-line">SYSTEM STATUS: STABLE // RENDER ENGINE: TOUCHDESIGNER</p>
     </div>
   </div>
 </div>
@@ -3256,7 +3383,7 @@ function drawSpatialDetection(/* det,orbitO,time,cubeExtra,phase,geoSt */){
 function drawWorldAxes(tech,time,phase,orbit,det,sensorLaserBand){
   if(tech<0.05) return;
   const a=Math.min(1,tech);
-  const stream=phase===2&&!!sensorLaserBand;
+  const stream=!!sensorLaserBand;
   const cx=mx||W*0.5;
   const cy=my||H*0.5;
   const xN=(cx/Math.max(1,W))*2-1;
@@ -3567,7 +3694,11 @@ function applySceneNarrativeFromScroll(p){
     const sub=b.querySelector('.scene-subtitle');
     if(sub) wrapChars(sub);
     b.querySelectorAll('.scene-desc').forEach(d=>wrapChars(d));
-    b.querySelectorAll('.scene-skill').forEach(sk=>wrapChars(sk));
+    b.querySelectorAll('.scene-skill').forEach(sk=>{
+      // Keep real links/buttons untouched so hover preview + navigation keep working.
+      if(sk.querySelector('a,button,[role="button"],.scene-skill-sub,h3,p')) return;
+      wrapChars(sk);
+    });
   });
   hideAllScenes();
   applySceneNarrativeFromScroll(0);
@@ -3579,8 +3710,8 @@ function applySceneNarrativeFromScroll(p){
   if(window.matchMedia&&window.matchMedia('(hover: none)').matches) return;
   const lists=[
     document.querySelector('#scene-block-0 .scene-skills--interact'),
-    document.querySelector('#scene-block-1 .scene-skills--whatwedo'),
-    document.querySelector('#scene-block-2 .scene-skills--whatwedo')
+    document.querySelector('#scene-block-1 .scene-skills--interact, #scene-block-1 .scene-skills--whatwedo'),
+    document.querySelector('#scene-block-2 .scene-skills--interact, #scene-block-2 .scene-skills--whatwedo')
   ].filter(Boolean);
   const mediaVideo=preview.querySelector('#service-preview-video');
   const mediaImage=preview.querySelector('#service-preview-image');
@@ -4030,8 +4161,8 @@ if(livingRow){
 const IS_MOBILE_PERF=typeof window!=='undefined'&&typeof window.matchMedia==='function'
   ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
   : false;
-const COUNT      = IS_MOBILE_PERF?560:1500;   // lower particle budget on phones/tablets
-const MOBILE_PARTICLE_STRIDE=IS_MOBILE_PERF?2:1;
+const COUNT      = IS_MOBILE_PERF?720:1500;   // denser mobile sphere without desktop impact
+const MOBILE_PARTICLE_STRIDE=1;
 const ACTIVE_PARTICLE_COUNT=Math.ceil(COUNT/MOBILE_PARTICLE_STRIDE);
 const MOUSE_R    = 320;
 const MOUSE_F    = 26;
@@ -4115,37 +4246,17 @@ window.addEventListener('touchstart',e=>{
 /* ═══════════════════
    CLICK
 ═══════════════════ */
-const toast  = document.getElementById('toast');
 const hMode  = document.getElementById('h-mode');
 const curRing= document.getElementById('cur-ring');
 const digitalGrain=document.getElementById('digital-grain');
 
-function showToast(m){ toast.textContent=m; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1400); }
-
 function applyScatterModeClickAt(cx,cy){
-  // Cycle modes: GENERATIVE DATA -> IMMERSIVE EXPERIENCES -> BY AIROLAX -> GENERATIVE DATA
-  if(scatterMode&&!constellation){
-    scatterMode=false;
-    constellation=!IS_MOBILE_PERF;
-    explX=cx; explY=cy; explStr=EXPLODE_F*0.85;
-    spawnWave(cx,cy);
-    if(hMode) hMode.textContent='IMMERSIVE EXPERIENCES';
-    showToast('— immersive experiences —');
-  }else if(constellation){
-    constellation=false;
-    scatterMode=false;
-    explStr=0;
-    waves.length=0;
-    if(hMode) hMode.textContent='BY WWW.AIROLAX.COM';
-    showToast('— by www.airolax.com —');
-  }else{
-    scatterMode=true;
-    constellation=false;
-    explX=cx; explY=cy; explStr=EXPLODE_F;
-    spawnWave(cx,cy);
-    if(hMode) hMode.textContent='GENERATIVE DATA';
-    showToast('— generative data —');
-  }
+  // Keep a single lightweight interaction mode on click.
+  scatterMode=true;
+  constellation=false;
+  explX=cx; explY=cy; explStr=EXPLODE_F*0.9;
+  spawnWave(cx,cy);
+  if(hMode) hMode.textContent='GENERATIVE DATA';
   const hDeg=Math.round(Math.random()*360);
   const el=document.createElement('div');
   el.className='ripple';
@@ -4177,9 +4288,37 @@ window.addEventListener('click',e=>{
    CURSOR (anillo alineado al puntero, sin lag)
 ═══════════════════ */
 const curDot=document.getElementById('cur');
-document.querySelectorAll('button,a,[role="button"].living-art-row').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ curRing.style.width='46px'; curRing.style.height='46px'; });
-  el.addEventListener('mouseleave',()=>{ curRing.style.width='26px'; curRing.style.height='26px'; });
+function setCursorRingInteractiveState(isActive){
+  if(!curRing) return;
+  if(isActive){
+    curRing.style.width='46px';
+    curRing.style.height='46px';
+  }else{
+    curRing.style.width='26px';
+    curRing.style.height='26px';
+  }
+}
+const CURSOR_INTERACTIVE_SELECTOR=[
+  'button',
+  'a',
+  '[role="button"]',
+  '.scene-skill',
+  '.svc-link',
+  '.project-tile',
+  '.project-media',
+  '.project-video',
+  '.whatwedo-video',
+  '.nav-toggle',
+  '#logo-reset'
+].join(',');
+document.addEventListener('mouseover',e=>{
+  const t=e.target&&e.target.closest?e.target.closest(CURSOR_INTERACTIVE_SELECTOR):null;
+  setCursorRingInteractiveState(!!t);
+});
+document.addEventListener('mouseout',e=>{
+  const rt=e.relatedTarget;
+  const keepActive=rt&&rt.closest?rt.closest(CURSOR_INTERACTIVE_SELECTOR):null;
+  if(!keepActive) setCursorRingInteractiveState(false);
 });
 
 /* ═══════════════════
@@ -4541,6 +4680,16 @@ function draw(){
   const spinCx=spinBand?(spinBand.left+spinBand.right)*0.5:W*0.62;
   const spinCy=spinBand?(spinBand.top+spinBand.bottom)*0.5:H*0.48;
   const spinR=(spinBand?Math.max(spinBand.right-spinBand.left,spinBand.bottom-spinBand.top):Math.min(W,H)*0.42)*0.65;
+  const mobileLandingSphere=IS_MOBILE_PERF&&ph.phase===1&&scrollProgress<P_S1_END*0.9;
+  const landingCx=W*0.42;
+  const landingCy=H*0.34;
+  const landingR=Math.min(W,H)*0.15;
+  const landingR2=landingR*landingR;
+  const landingBand=landingR*1.45;
+  const landingBand2=landingBand*landingBand;
+  const landingParticleSizeMul=mobileLandingSphere?0.78:1;
+  const landingGlowMul=mobileLandingSphere?1.42:1;
+  const landingAlphaMul=mobileLandingSphere?1.32:1;
   for(let i=0;i<COUNT;i+=MOBILE_PARTICLE_STRIDE){
     const z=pz[i], spd=0.4+z*0.6;
     const flat=1-heatSmooth*(ph.phase===1?0.42:0.88);
@@ -4650,9 +4799,36 @@ function draw(){
     pvx[i]*=damp; pvy[i]*=damp;
     px[i]+=pvx[i]; py[i]+=pvy[i];
 
+    if(mobileLandingSphere){
+      const ddx=px[i]-landingCx;
+      const ddy=py[i]-landingCy;
+      const d2=ddx*ddx+ddy*ddy;
+      if(d2>landingR2){
+        const d=Math.sqrt(d2)+1e-4;
+        const nx=ddx/d, ny=ddy/d;
+        const pull=0.12;
+        const tx=landingCx+nx*landingR*0.78;
+        const ty=landingCy+ny*landingR*0.78;
+        px[i]+=(tx-px[i])*pull;
+        py[i]+=(ty-py[i])*pull;
+        pvx[i]*=0.82;
+        pvy[i]*=0.82;
+      }
+      const cPull=0.028;
+      px[i]+=(landingCx-px[i])*cPull;
+      py[i]+=(landingCy-py[i])*cPull;
+    }
+
     // Wrap
     if(px[i]<-6)px[i]=W+6; else if(px[i]>W+6)px[i]=-6;
     if(py[i]<-6)py[i]=H+6; else if(py[i]>H+6)py[i]=-6;
+
+    if(mobileLandingSphere){
+      const cdx=px[i]-landingCx;
+      const cdy=py[i]-landingCy;
+      const cd2=cdx*cdx+cdy*cdy;
+      if(cd2>landingBand2) continue;
+    }
 
     // ── Color (HSL rico + proximidad al puntero + campo ptrHue) ──
     const waveAmt=pwave[i];
@@ -4690,10 +4866,10 @@ function draw(){
         : scatterActive
           ? Math.min(100,84+waveAmt*8+mouseProx*8+scatterPulse*4+moveGlow*4)
           : Math.min(100,88+waveAmt*8+mouseProx*6);
-      const a=Math.min(1,baseAlpha+(scatterActive?waveAmt*0.48:waveAmt*0.52)+mouseProx*(scatterActive?0.14:0.12)+(ph.phase===1?(scatterActive?0.09:0.08):0)+(scatterActive?scatterPulse*0.06:0));
-      ctx.fillStyle=`hsla(${wh.toFixed(0)},${sat}%,${l}%,${a.toFixed(3)})`;
+      const a=Math.min(1,(baseAlpha+(scatterActive?waveAmt*0.48:waveAmt*0.52)+mouseProx*(scatterActive?0.14:0.12)+(ph.phase===1?(scatterActive?0.09:0.08):0)+(scatterActive?scatterPulse*0.06:0))*landingAlphaMul);
+      ctx.fillStyle=`hsla(${wh.toFixed(0)},${sat}%,${Math.min(100,l*landingGlowMul)}%,${a.toFixed(3)})`;
       const waveScale=constellation?1:scatterActive?1.06+scatterPulse*0.08+mouseProx*0.05:1;
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz*(1+waveAmt*0.85)*(ph.phase===1?1.06:1)*phaseSizeMul*waveScale,0,6.2832); ctx.fill();
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz*(1+waveAmt*0.85)*(ph.phase===1?1.06:1)*phaseSizeMul*waveScale*landingParticleSizeMul,0,6.2832); ctx.fill();
     }else if(heatSmooth>0.04){
       const depth=Math.max(0,Math.min(1,z));
       const near=1-depth;
@@ -4717,9 +4893,9 @@ function draw(){
       if(ph.phase===2){ hm=0.58+heatSmooth*0.4; aInner=0.28+0.72*near; }
       else if(ph.phase===1){ hm=0.58+heatSmooth*0.42; aInner=0.3+0.7*near; }
       else{ hm=0.38+heatSmooth*0.52; aInner=0.16+0.84*near; }
-      const a=Math.min(0.98,baseAlpha*hm*aInner*(1+mouseProx*0.35));
-      ctx.fillStyle=`hsla(${h.toFixed(1)},${sat.toFixed(1)}%,${lit.toFixed(1)}%,${a.toFixed(3)})`;
-      ctx.beginPath(); ctx.arc(px[i],py[i],sz*(0.88+0.12*near)*(ph.phase===2?1.06:1)*phaseSizeMul*(1+mouseProx*0.08),0,6.2832); ctx.fill();
+      const a=Math.min(0.98,baseAlpha*hm*aInner*(1+mouseProx*0.35)*landingAlphaMul);
+      ctx.fillStyle=`hsla(${h.toFixed(1)},${sat.toFixed(1)}%,${Math.min(100,lit*landingGlowMul).toFixed(1)}%,${a.toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(px[i],py[i],sz*(0.88+0.12*near)*(ph.phase===2?1.06:1)*phaseSizeMul*(1+mouseProx*0.08)*landingParticleSizeMul,0,6.2832); ctx.fill();
     }else{
       const g=window.__heroStarGlow||0;
       const p1=ph.phase===1;
@@ -4738,10 +4914,10 @@ function draw(){
         : scatterActive
           ? Math.min(97,48+z*18+mouseProx*10+moveGlow*8+g*8+scatterPulse*4+(p1?10+mouseProx*12:0))
           : Math.min(97,42+z*38+mouseProx*22+moveGlow*12+g*14+(p1?16+mouseProx*28:0));
-      const ba=Math.min(0.98,baseAlpha+g*0.38+(p1?0.14:0)+(ph.phase===2?0.1:0)+mouseProx*(p1?0.22:0.14)+moveGlow*(p1?0.1:0));
-      ctx.fillStyle=`hsla(${h.toFixed(1)},${sat.toFixed(1)}%,${lit.toFixed(1)}%,${ba.toFixed(3)})`;
+      const ba=Math.min(0.98,(baseAlpha+g*0.38+(p1?0.14:0)+(ph.phase===2?0.1:0)+mouseProx*(p1?0.22:0.14)+moveGlow*(p1?0.1:0))*landingAlphaMul);
+      ctx.fillStyle=`hsla(${h.toFixed(1)},${sat.toFixed(1)}%,${Math.min(100,lit*landingGlowMul).toFixed(1)}%,${ba.toFixed(3)})`;
       const scatterScale=constellation?1:scatterActive?1.06+scatterPulse*0.08+mouseProx*0.04:1;
-      const szM=sz*(1+0.5*g)*(1+mouseProx*(p1?0.22:0.12)+moveGlow*(p1?0.14:0.08))*(p1?1.08:1)*phaseSizeMul*scatterScale;
+      const szM=sz*(1+0.5*g)*(1+mouseProx*(p1?0.22:0.12)+moveGlow*(p1?0.14:0.08))*(p1?1.08:1)*phaseSizeMul*scatterScale*landingParticleSizeMul;
       ctx.beginPath(); ctx.arc(px[i],py[i],szM,0,6.2832); ctx.fill();
     }
   }
@@ -4802,13 +4978,16 @@ function draw(){
 
   drawSpatialDetection(detSmooth,orbitSmooth,time,cubeSpinSmooth,ph.phase,geoSt);
   const sensorLaser=ph.phase===2&&inSensorBand;
+  const globalLaser=!IS_MOBILE_PERF&&scrollProgress>0.005;
   let axisVis=techViewSmooth;
   if(sensorLaser){
     axisVis=Math.min(1,0.36+humanSmooth*0.42+detSmooth*0.38+orbitSmooth*0.22);
+  }else if(globalLaser){
+    axisVis=Math.max(axisVis,0.24+camSmooth*0.22+orbitSmooth*0.14+humanSmooth*0.1);
   }
-  /* Mira (diagonal + vertical): solo en 02_SPATIAL, siguiendo el mouse */
-  if(sensorLaser&&axisVis>0.05){
-    drawWorldAxes(axisVis,time,2,orbitSmooth,detSmooth,true);
+  /* Mira (diagonal + vertical): visible en toda la página en desktop. */
+  if(globalLaser&&axisVis>0.05){
+    drawWorldAxes(axisVis,time,ph.phase,orbitSmooth,detSmooth,true);
   }
 
   if(s01InteractHint){
