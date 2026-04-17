@@ -4027,13 +4027,16 @@ if(livingRow){
 /* ═══════════════════
    CONFIG
 ═══════════════════ */
-const COUNT      = 1500;   // lean — quality over quantity
+const IS_MOBILE_PERF=typeof window!=='undefined'&&typeof window.matchMedia==='function'
+  ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+  : false;
+const COUNT      = IS_MOBILE_PERF?900:1500;   // lower particle budget on phones/tablets
 const MOUSE_R    = 320;
 const MOUSE_F    = 26;
 const EXPLODE_F  = 22;
 const DRIFT_FREQ = 0.00022;
 const DRIFT_AMP  = 1.4;
-const CONNECT_D  = 80;
+const CONNECT_D  = IS_MOBILE_PERF?66:80;
 
 /* ═══════════════════
    TYPED ARRAYS
@@ -4206,6 +4209,12 @@ function hudUpdate(){
 ═══════════════════ */
 function draw(){
   requestAnimationFrame(draw);
+  const nowMs=performance.now();
+  if(IS_MOBILE_PERF){
+    if(!draw._lastMobileFrameMs) draw._lastMobileFrameMs=0;
+    if((nowMs-draw._lastMobileFrameMs)<(1000/30)) return;
+    draw._lastMobileFrameMs=nowMs;
+  }
   t++;
   const mdx=mx-pmx, mdy=my-pmy;
   velMag=Math.hypot(mdx,mdy);
@@ -4219,7 +4228,7 @@ function draw(){
   const ptrHue=window.__ptrHue;
   const moveGlow=Math.min(1,velMag/22);
   const scatterNow=scatterMode&&!constellation;
-  const driftBoost=(typeof performance!=='undefined'&&performance.now()<(window.__starDriftBoostEnd||0))?2.35:1;
+  const driftBoost=(typeof performance!=='undefined'&&nowMs<(window.__starDriftBoostEnd||0))?2.35:1;
   const time=t*DRIFT_FREQ*1000*driftBoost;
 
   // Trail
@@ -4280,7 +4289,8 @@ function draw(){
   const s01Zone=ph.phase===1&&inInteractBand&&scrollProgress>=Math.max(0.02,P_S1_END*0.04);
   const s02Zone=ph.phase===2&&inSensorBand&&scrollProgress>=P_S1_END*0.9;
   const s01IntroGate=scrollProgress>=0.026;
-  window.__s01GLActive=(s01IntroGate&&inInteractBand)||inManifestBand||(ph.phase===2&&inSensorBand)||workCamBridge>0.035;
+  const s01IntroActive=s01IntroGate&&inInteractBand&&(!IS_MOBILE_PERF||scrollProgress>=P_S1_END*0.62);
+  window.__s01GLActive=s01IntroActive||inManifestBand||(ph.phase===2&&inSensorBand)||workCamBridge>0.035;
   window.__s01Mouse={x:mx,y:my};
   window.__s01CubeBounds=(s01Zone&&camSmooth>0.06)?getCageBounds2D(ph.phase,orbitSmooth,time,cubeSpinSmooth,geoSt):null;
   window.__s02CubeBounds=(s02Zone&&camSmooth>0.08)?getCageBounds2D(ph.phase,orbitSmooth,time,cubeSpinSmooth,geoSt):null;
@@ -4441,6 +4451,7 @@ function draw(){
     let stride=1;
     let maxLinks=7;
     let conCap=920;
+    if(IS_MOBILE_PERF){ stride=3; maxLinks=3; conCap=340; }
     if(fpsNow<56){ stride=2; maxLinks=6; conCap=760; }
     if(fpsNow<48){ stride=2; maxLinks=5; conCap=620; }
     if(fpsNow<40){ stride=3; maxLinks=4; conCap=480; }
@@ -4833,7 +4844,7 @@ import * as THREE from 'three';
 const isS01Mobile=typeof window!=='undefined'&&typeof window.matchMedia==='function'
   ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
   : false;
-const S01_PC=isS01Mobile?1200:3200;
+const S01_PC=isS01Mobile?680:3200;
 const canvas=document.getElementById('s01-particles-gl');
 const hintEl=document.getElementById('s01-engage-hint');
 if(canvas){
@@ -4920,14 +4931,18 @@ if(canvas){
 
   const posArr=geo.attributes.position.array;
   const fwd=0.055,vortex=0.018;
+  const s01FrameBudget=isS01Mobile?(1000/30):0;
+  let s01LastFrameMs=0;
   /* Silueta abstracta (puntos de atracción) si no hay GLB humano */
   const SILH=[
     [0,8.5,-17],[0,1.5,-17],[0,-5,-17],
     [-4.5,5,-17],[4.5,5,-17],[-3,-12,-17],[3,-12,-17]
   ];
 
-  function frame(){
+  function frame(nowMs=performance.now()){
     requestAnimationFrame(frame);
+    if(s01FrameBudget&&((nowMs-s01LastFrameMs)<s01FrameBudget)) return;
+    s01LastFrameMs=nowMs;
     const active=!!window.__s01GLActive;
     canvas.style.opacity=active?'1':'0';
     canvas.style.visibility=active?'visible':'hidden';
@@ -4940,7 +4955,7 @@ if(canvas){
     const my=window.__s01Mouse?.y??innerHeight*0.5;
     const mwx=(mx/innerWidth-0.5)*30;
     const mwy=-(my/innerHeight-0.5)*18;
-    const t=performance.now()*0.001;
+    const t=nowMs*0.001;
     mat.uniforms.uTime.value=t;
     mat.uniforms.uPulse.value=Math.min(1,(window.__s01GlowPulse||0)*1.15);
 
@@ -5046,9 +5061,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const webglHumanCanvas=document.getElementById('webgl-human');
+const isHumanMobile=typeof window!=='undefined'&&typeof window.matchMedia==='function'
+  ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+  : false;
 if(webglHumanCanvas){
-  const renderer=new THREE.WebGLRenderer({canvas:webglHumanCanvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2.2));
+  const renderer=new THREE.WebGLRenderer({canvas:webglHumanCanvas,alpha:true,antialias:!isHumanMobile,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,isHumanMobile?1.15:2.2));
   renderer.setClearColor(0x000000,0);
 
   const scene=new THREE.Scene();
@@ -5172,9 +5190,13 @@ if(webglHumanCanvas){
   window.addEventListener('resize',resize);
 
   const P_ST1=200/700;
+  const humanFrameBudget=isHumanMobile?(1000/24):0;
+  let humanLastFrameMs=0;
   function smoothstepGL(t){const x=Math.max(0,Math.min(1,t));return x*x*(3-2*x);}
-  function frame(){
+  function frame(nowMs=performance.now()){
     requestAnimationFrame(frame);
+    if(humanFrameBudget&&((nowMs-humanLastFrameMs)<humanFrameBudget)) return;
+    humanLastFrameMs=nowMs;
     const ph=window.__ph||{phase:0,cam:0,orbit:0,det:0,techView:0};
     const sp=typeof window.__scrollProgress==='number'?window.__scrollProgress:0;
     const P2=typeof window.__P_S2_END==='number'?window.__P_S2_END:P_ST1*2;
@@ -5283,9 +5305,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const menuCanvas=document.getElementById('menu-logo-3d');
+const isMenuMobile=typeof window!=='undefined'&&typeof window.matchMedia==='function'
+  ? window.matchMedia('(max-width: 900px), (pointer: coarse)').matches
+  : false;
 if(menuCanvas){
-  const renderer=new THREE.WebGLRenderer({canvas:menuCanvas,alpha:true,antialias:true,powerPreference:'high-performance'});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));
+  const renderer=new THREE.WebGLRenderer({canvas:menuCanvas,alpha:true,antialias:!isMenuMobile,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,isMenuMobile?1.05:1.6));
   renderer.setClearColor(0x000000,0);
 
   const scene=new THREE.Scene();
@@ -5365,9 +5390,13 @@ if(menuCanvas){
     ()=>{ addFallbackMark(); }
   );
 
-  function loop(){
+  const menuFrameBudget=isMenuMobile?(1000/24):0;
+  let menuLastFrameMs=0;
+  function loop(nowMs=performance.now()){
     requestAnimationFrame(loop);
-    const tt=performance.now()*0.001;
+    if(menuFrameBudget&&((nowMs-menuLastFrameMs)<menuFrameBudget)) return;
+    menuLastFrameMs=nowMs;
+    const tt=nowMs*0.001;
     if(model){
       /* Keep it facing front; only micro wobble (no full spin/clipping). */
       const baseRx=Math.PI*0.5;
