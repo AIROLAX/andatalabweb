@@ -245,10 +245,15 @@
   .trust img[alt="Conjunto Santander"]{
     height:32px; max-width:200px; padding:8px 14px; border-radius:10px;
     background:#fff; box-shadow:0 0 0 1px var(--hair-2);
-    opacity:.92; filter:invert(1);
+    opacity:.92;
+    /* white mark → black on white pill (do not use generic img:hover filter) */
+    filter:grayscale(1) brightness(0);
   }
-  .trust img[alt="Conjunto Santander"]:hover{ opacity:1; filter:invert(1); }
-  .trust img:hover{ opacity:1; filter:grayscale(0); }
+  .trust img[alt="Conjunto Santander"]:hover{
+    opacity:1;
+    filter:brightness(0);
+  }
+  .trust img:hover:not([alt="Conjunto Santander"]){ opacity:1; filter:grayscale(0); }
   .trust .client{ font-size:15px; font-weight:600; letter-spacing:-.01em; color:var(--ink-2); white-space:nowrap; flex:0 0 auto; }
   @media (prefers-reduced-motion:reduce){ .trust-track{ animation:none; flex-wrap:wrap; justify-content:center; } }
 
