@@ -559,13 +559,16 @@
   .is-mobile .hero-cursor{ display:none !important; }
   .is-mobile .hero-inner > *{ transform:none !important; }
   .is-mobile .scroll-cue{
-    left:auto; right:max(20px,var(--safe-r));
+    left:50%; right:auto;
     bottom:calc(14px + var(--safe-b)); top:auto;
-    transform:none; gap:0; opacity:.65; padding:6px;
+    transform:translateX(-50%); gap:0; opacity:.6; padding:4px;
   }
   .is-mobile .reveal{ filter:none; }
   .is-mobile .scroll-mouse,.is-mobile .scroll-cue .label{ display:none; }
-  .is-mobile .scroll-arrow{ display:block; }
+  .is-mobile .scroll-arrow{
+    display:block; width:8px; height:8px; margin-top:0;
+    border-right-width:1.2px; border-bottom-width:1.2px;
+  }
   .is-mobile .card-media video,.is-mobile .work-media video{
     background:#ececed;
     object-fit:cover;
