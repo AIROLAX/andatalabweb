@@ -213,7 +213,13 @@
   .scroll-cue .label{ font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.7); }
   .scroll-mouse{ width:23px; height:37px; border:1px solid rgba(255,255,255,.55); border-radius:999px; display:flex; justify-content:center; padding-top:7px; }
   .scroll-mouse i{ width:3px; height:7px; border-radius:999px; background:#fff; animation:wheel 1.7s ease-in-out infinite; }
+  .scroll-arrow{
+    display:none; width:11px; height:11px; margin-top:2px;
+    border-right:1.5px solid rgba(255,255,255,.82); border-bottom:1.5px solid rgba(255,255,255,.82);
+    transform:rotate(45deg); animation:scrollBob 2.2s ease-in-out infinite;
+  }
   @keyframes wheel{ 0%{transform:translateY(0);opacity:0} 30%{opacity:1} 70%{transform:translateY(12px);opacity:1} 100%{transform:translateY(16px);opacity:0} }
+  @keyframes scrollBob{ 0%,100%{ transform:rotate(45deg) translateY(0); opacity:.55; } 50%{ transform:rotate(45deg) translateY(5px); opacity:1; } }
 
   /* ── Statement ── */
   .statement-panel{
@@ -531,20 +537,39 @@
   }
   .is-mobile .hero{
     min-height:100svh;
+    min-height:100dvh;
     padding-bottom:var(--safe-b);
   }
   .is-mobile .hero-inner{
-    padding-bottom:calc(clamp(48px,8vh,88px) + var(--safe-b));
+    padding-bottom:calc(28px + var(--safe-b));
+    max-width:100%;
   }
-  .is-mobile .hero h1{ font-size:clamp(2.15rem,11vw,3.4rem); }
-  .is-mobile .hero-sub{ font-size:1rem; margin-top:18px; }
-  .is-mobile .hero-cta{ margin-top:28px; gap:10px; }
-  .is-mobile .hero-cta .btn{ width:100%; justify-content:center; padding:15px 24px; font-size:16px; }
-  .is-mobile .hero-reel{ right:max(var(--pad),var(--safe-r)); }
-  .is-mobile .scroll-cue{ bottom:calc(16px + var(--safe-b)); }
+  .is-mobile .hero h1{ font-size:clamp(1.95rem,9.5vw,2.75rem); line-height:1.02; }
+  .is-mobile .hero-sub{ font-size:.95rem; margin-top:14px; max-width:100%; }
+  .is-mobile .hero-cta{
+    margin-top:20px; gap:8px; flex-wrap:nowrap; width:100%; max-width:100%;
+  }
+  .is-mobile .hero-cta .btn{
+    width:auto; flex:1 1 0; min-width:0;
+    justify-content:center; padding:11px 14px; font-size:13.5px;
+  }
+  .is-mobile .hero-reel{ display:none; }
+  .is-mobile #hero-particles{ display:none !important; }
   .is-mobile #hero-shader{ display:none !important; }
   .is-mobile .hero-cursor{ display:none !important; }
   .is-mobile .hero-inner > *{ transform:none !important; }
+  .is-mobile .scroll-cue{
+    left:auto; right:max(20px,var(--safe-r));
+    bottom:calc(14px + var(--safe-b)); top:auto;
+    transform:none; gap:0; opacity:.65; padding:6px;
+  }
+  .is-mobile .reveal{ filter:none; }
+  .is-mobile .scroll-mouse,.is-mobile .scroll-cue .label{ display:none; }
+  .is-mobile .scroll-arrow{ display:block; }
+  .is-mobile .card-media video,.is-mobile .work-media video{
+    background:#ececed;
+    object-fit:cover;
+  }
   .is-mobile .statement-panel{ border-radius:20px; padding:clamp(28px,6vw,48px); cursor:default; }
   .is-mobile #statement-fx{ display:none !important; }
   .is-mobile .statement-panel{
@@ -630,7 +655,7 @@
   <!-- HERO -->
   <section class="hero" id="s-hero">
     <img class="hero-bg" id="hero-poster" src="Imagenes/MOTION.png" alt="" aria-hidden="true">
-    <video class="hero-bg" id="hero-video" autoplay muted loop playsinline preload="metadata" poster="Imagenes/MOTION.png">
+    <video class="hero-bg" id="hero-video" autoplay muted loop playsinline preload="auto" poster="Imagenes/MOTION.png">
       <source src="videos/hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)">
       <source src="videos/DEMOREEL_AIROLAX 2026.mp4" type="video/mp4">
     </video>
@@ -653,8 +678,9 @@
       </div>
     </div>
 
-    <div class="scroll-cue hero-anim" data-target="s-statement" style="animation-delay:.7s">
-      <span class="scroll-mouse"><i></i></span>
+    <div class="scroll-cue hero-anim" data-target="s-statement" style="animation-delay:.7s" aria-label="Scroll down">
+      <span class="scroll-mouse" aria-hidden="true"><i></i></span>
+      <span class="scroll-arrow" aria-hidden="true"></span>
       <span class="label" data-i18n="scroll">Scroll</span>
     </div>
   </section>

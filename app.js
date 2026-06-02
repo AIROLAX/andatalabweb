@@ -71,6 +71,7 @@
     function applyHeroSrc() {
       var useMobile = window.matchMedia('(max-width: 768px)').matches;
       var next = useMobile ? 'videos/hero-mobile.mp4' : 'videos/DEMOREEL_AIROLAX 2026.mp4';
+      video.preload = useMobile ? 'auto' : 'metadata';
       if (video.getAttribute('src') !== next) {
         video.src = next;
         video.load();
@@ -108,9 +109,10 @@
     SITE.services.forEach(function (s) {
       var media = '';
       if (s.video) {
-        var vidSrc = IS_MOBILE ? 'data-src="' + s.video + '"' : 'src="' + s.video + '"';
-        var vidPre = IS_MOBILE ? 'preload="none" class="lazy-vid"' : 'preload="metadata" autoplay';
-        media = '<div class="card-media"><video ' + vidSrc + ' ' +
+        var vidPre = IS_MOBILE
+          ? 'preload="metadata" class="mobile-vid"'
+          : 'preload="metadata" autoplay class="lazy-vid"';
+        media = '<div class="card-media"><video src="' + s.video + '" ' +
           (s.poster ? 'poster="' + s.poster + '" ' : '') +
           'muted loop playsinline ' + vidPre + ' aria-label="' + s.t + '"></video>' +
           '<span class="card-media-num">' + s.n + '</span></div>';
@@ -158,9 +160,10 @@
           'muted autoplay loop playsinline preload="none" ' +
           'onerror="this.parentNode.classList.remove(\'work-media-stack\');this.remove();"></video>';
       } else if (w.video) {
-        var wSrc = IS_MOBILE ? 'data-src="' + w.video + '"' : 'src="' + w.video + '"';
-        var wPre = IS_MOBILE ? 'preload="none" class="work-img lazy-vid"' : 'preload="metadata" autoplay class="work-img"';
-        mediaInner = '<video ' + wSrc + ' ' +
+        var wPre = IS_MOBILE
+          ? 'preload="metadata" class="work-img mobile-vid"'
+          : 'preload="metadata" autoplay class="work-img lazy-vid"';
+        mediaInner = '<video src="' + w.video + '" ' +
           (w.poster ? 'poster="' + w.poster + '" ' : '') +
           'muted loop playsinline ' + wPre + ' ' +
           'onerror="this.parentNode.style.background=\'' + GRAD[i % 4] + '\';this.remove();"></video>';
@@ -304,32 +307,38 @@
 
   var lazyVideoIO = null;
   function bindLazyVideos() {
-    var vids = $$('.lazy-vid');
+    var vids = $$('.lazy-vid, .mobile-vid');
     if (!vids.length) return;
-    if (!('IntersectionObserver' in window)) {
-      vids.forEach(function (v) {
-        if (!v.src && v.dataset.src) { v.src = v.dataset.src; }
+
+    function playVid(v) {
+      if (v.readyState >= 2) v.play().catch(function () {});
+      else v.addEventListener('loadeddata', function once() {
+        v.removeEventListener('loadeddata', once);
         v.play().catch(function () {});
-      });
+      }, { once: true });
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      vids.forEach(function (v) { playVid(v); });
       return;
     }
+
+    var margin = IS_MOBILE ? '280px 0px 320px 0px' : '120px 0px';
     if (!lazyVideoIO) {
       lazyVideoIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) {
           var v = en.target;
-          if (en.isIntersecting) {
-            if (!v.src && v.dataset.src) { v.src = v.dataset.src; }
-            v.play().catch(function () {});
-          } else {
-            v.pause();
-          }
+          if (en.isIntersecting) playVid(v);
+          else v.pause();
         });
-      }, { rootMargin: '120px 0px', threshold: 0.1 });
+      }, { rootMargin: margin, threshold: 0.08 });
     }
+
     vids.forEach(function (v) {
       if (v._lazyBound) return;
       v._lazyBound = true;
       lazyVideoIO.observe(v);
+      if (IS_MOBILE && v.getBoundingClientRect().top < window.innerHeight * 1.4) playVid(v);
     });
   }
 
@@ -686,6 +695,7 @@
      ============================================================ */
   (function particles() {
     var canvas = $('#hero-particles'); if (!canvas) return;
+    if (IS_MOBILE || prefersReduced) { canvas.style.display = 'none'; return; }
     var hero = $('#s-hero');
     var ctx = canvas.getContext('2d');
     var SPEC = ['255,255,255', '60,220,255', '255,46,138', '255,138,60'];
@@ -709,12 +719,10 @@
       if (!w || !h) return;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var maxP = IS_MOBILE ? 42 : 150;
-      var minP = IS_MOBILE ? 22 : 55;
-      var count = Math.round(Math.min(maxP, Math.max(minP, w / (IS_MOBILE ? 18 : 11))));
+      var count = Math.round(Math.min(150, Math.max(55, w / 11)));
       parts = []; for (var i = 0; i < count; i++) parts.push(spawn());
     }
-    if (hero && !IS_MOBILE) {
+    if (hero) {
       hero.addEventListener('pointermove', function (e) {
         var r = canvas.getBoundingClientRect();
         ptx = e.clientX - r.left; pty = e.clientY - r.top;
