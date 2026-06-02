@@ -1,0 +1,154 @@
+/* ============================================================
+   AAAD DESIGN SYSTEM — ANDATA LAB × AIROLAX
+   colors_and_type.css
+
+   One ecosystem, two surfaces of the same studio:
+   • ANDATA LAB  → B2B creative-technology studio. STRICT LIGHT MODE.
+   • AIROLAX     → Artist portfolio (Argel Erevan Airola). STRICT DARK MODE,
+                   a black canvas for vibrant real-time WebGL content.
+
+   GLOBAL RULE: a single geometric sans — Inter — across both brands.
+   No font mixing. High contrast. Generous negative space.
+   Apple-style architectural minimalism.
+   ============================================================ */
+
+/* Inter — the only typeface. (Live sites mix Syne / Space Grotesk /
+   JetBrains Mono; the system unifies on Inter per the brand brief.) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ---- TYPE FAMILY (single family, no mixing) ---- */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  /* ---- TYPE SCALE (Apple-style: big & quiet) ---- */
+  --fs-display:  clamp(3rem, 7vw, 6rem);     /* hero / poster */
+  --fs-h1:       clamp(2.25rem, 4.5vw, 3.5rem);
+  --fs-h2:       clamp(1.625rem, 3vw, 2.25rem);
+  --fs-h3:       clamp(1.25rem, 2vw, 1.5rem);
+  --fs-lead:     clamp(1.0625rem, 1.4vw, 1.25rem);  /* intro paragraph */
+  --fs-body:     1rem;       /* 16px */
+  --fs-small:    0.875rem;   /* 14px */
+  --fs-label:    0.75rem;    /* 12px — the HUD / system label */
+  --fs-micro:    0.6875rem;  /* 11px */
+
+  /* ---- WEIGHTS ---- */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+  --fw-bold:    700;
+  --fw-black:   800;
+
+  /* ---- TRACKING ---- (tight on big text, wide on labels) */
+  --tr-display: -0.03em;
+  --tr-head:    -0.02em;
+  --tr-body:    -0.005em;
+  --tr-label:   0.22em;   /* uppercase system labels */
+
+  /* ---- LINE HEIGHT ---- */
+  --lh-tight: 1.04;
+  --lh-head:  1.12;
+  --lh-body:  1.6;
+
+  /* ---- SPACING (8pt grid) ---- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --sp-9: 96px; --sp-10:128px;
+
+  /* ---- RADIUS ---- */
+  --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
+  --r-pill: 999px;
+
+  /* ---- SPECTRUM (from the neon AAAD render) ----
+     The ONLY chromatic accent in the system. Reserved for AIROLAX
+     moments (focus rings, hairlines, active states). ANDATA LAB
+     stays strictly monochrome. */
+  --spec-cyan:    #3CDCFF;
+  --spec-magenta: #FF2E8A;
+  --spec-orange:  #FF8A3C;
+  --spectrum: linear-gradient(90deg, var(--spec-cyan) 0%, var(--spec-magenta) 52%, var(--spec-orange) 100%);
+}
+
+/* ============================================================
+   BRAND A — ANDATA LAB  (STRICT LIGHT MODE)
+   Pure white, structural gray #F5F5F7, ink black.
+   ============================================================ */
+[data-brand="andata"] {
+  --bg:        #FFFFFF;   /* pure white page */
+  --surface:   #F5F5F7;   /* structural light gray (panels, cards) */
+  --surface-2: #EBEBEF;   /* deeper gray */
+  --ink:       #111111;   /* primary text */
+  --ink-2:     #6E6E73;   /* secondary text */
+  --ink-3:     #8E8E93;   /* tertiary / captions */
+  --hair:      #D2D2D7;   /* hairline borders */
+  --hair-2:    #E5E5EA;   /* faint dividers */
+  --accent:    #000000;   /* monochrome accent = ink black */
+  --on-accent: #FFFFFF;
+  --field-bg:  #FFFFFF;
+  --shadow-card: 0 1px 2px rgba(0,0,0,.04), 0 8px 28px rgba(0,0,0,.06);
+  --shadow-lift: 0 4px 10px rgba(0,0,0,.06), 0 20px 48px rgba(0,0,0,.10);
+  color-scheme: light;
+}
+
+/* ============================================================
+   BRAND B — AIROLAX  (STRICT DARK MODE)
+   Pure black canvas, charcoal surfaces, white ink.
+   ============================================================ */
+[data-brand="airolax"] {
+  --bg:        #000000;   /* pure black canvas */
+  --surface:   #0C0C0E;   /* near-black panel */
+  --surface-2: #161617;   /* charcoal card */
+  --ink:       #FFFFFF;   /* primary text */
+  --ink-2:     #A1A1A6;   /* secondary text */
+  --ink-3:     #6E6E73;   /* tertiary / captions */
+  --hair:      rgba(255,255,255,.14);  /* hairline borders */
+  --hair-2:    rgba(255,255,255,.07);  /* faint dividers */
+  --accent:    #FFFFFF;   /* monochrome accent = white */
+  --on-accent: #000000;
+  --field-bg:  rgba(255,255,255,.04);
+  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 12px 40px rgba(0,0,0,.6);
+  --shadow-lift: 0 0 0 1px rgba(255,255,255,.10) inset, 0 24px 64px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+
+/* ============================================================
+   SEMANTIC ELEMENT STYLES
+   Apply to .ds-scope (or any element carrying a data-brand).
+   ============================================================ */
+.ds-scope, [data-brand] {
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--bg);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tr-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ds-display {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--tr-display);
+  line-height: var(--lh-tight);
+  text-wrap: balance;
+}
+.ds-h1 { font-size: var(--fs-h1); font-weight: var(--fw-bold); letter-spacing: var(--tr-head); line-height: var(--lh-head); text-wrap: balance; }
+.ds-h2 { font-size: var(--fs-h2); font-weight: var(--fw-semibold); letter-spacing: var(--tr-head); line-height: var(--lh-head); }
+.ds-h3 { font-size: var(--fs-h3); font-weight: var(--fw-semibold); letter-spacing: var(--tr-head); line-height: var(--lh-head); }
+.ds-lead { font-size: var(--fs-lead); font-weight: var(--fw-regular); line-height: 1.5; color: var(--ink-2); }
+.ds-body { font-size: var(--fs-body); font-weight: var(--fw-regular); line-height: var(--lh-body); }
+.ds-small { font-size: var(--fs-small); color: var(--ink-2); }
+
+/* The system / HUD label — a core motif of both sites.
+   Rendered in Inter (uppercase + wide tracking + tabular figures)
+   rather than a mono face, to honor the single-typeface rule. */
+.ds-label {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  font-feature-settings: "tnum" 1, "cv05" 1;
+}
+
+a { color: inherit; }

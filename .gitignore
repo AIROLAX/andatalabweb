@@ -1,0 +1,5 @@
+node_modules/
+_thumb_check/
+.DS_Store
+*.log
+videos/100GOPRO/

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>FLUX OS — Interactive Shader Wallpapers</title>
+<meta name="description" content="Five interactive WebGL shader wallpapers for a futuristic OS. Move the mouse, click to ripple."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --accent:#7df3d0;
+    --glass:rgba(255,255,255,.055);
+    --glass-2:rgba(255,255,255,.1);
+    --stroke:rgba(255,255,255,.14);
+    --txt:rgba(238,246,255,.92);
+    --dim:rgba(210,224,238,.55);
+  }
+  html,body{height:100%;width:100%;overflow:hidden;background:#000;}
+  body{
+    font-family:'JetBrains Mono',monospace;color:var(--txt);
+    -webkit-user-select:none;user-select:none;cursor:crosshair;
+  }
+  #gl{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:0;}
+
+  /* ── HUD top-left ── */
+  #hud{
+    position:fixed;top:clamp(.9rem,2.4vw,1.6rem);left:clamp(.9rem,2.4vw,1.6rem);z-index:10;
+    pointer-events:none;line-height:1.5;
+  }
+  #hud .brand{
+    display:flex;align-items:center;gap:.55rem;
+    font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1rem;letter-spacing:.04em;
+  }
+  #hud .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.5;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+  #hud .sub{margin-top:.35rem;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);}
+  #hud .now{margin-top:.9rem;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.3rem,1rem+1.6vw,2rem);letter-spacing:.01em;}
+  #hud .desc{font-size:.7rem;color:var(--dim);max-width:32ch;margin-top:.2rem;}
+
+  /* ── hint pill ── */
+  #hint{
+    position:fixed;top:clamp(.9rem,2.4vw,1.6rem);right:clamp(.9rem,2.4vw,1.6rem);z-index:10;
+    display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;border-radius:999px;
+    background:var(--glass);border:1px solid var(--stroke);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+    transition:opacity .5s ease;pointer-events:none;
+  }
+  #hint b{color:var(--txt);font-weight:500;}
+
+  /* ── dock ── */
+  #dock{
+    position:fixed;left:50%;bottom:clamp(1rem,3.5vh,2.2rem);transform:translateX(-50%);z-index:10;
+    display:flex;align-items:center;gap:.35rem;padding:.4rem;border-radius:18px;
+    background:var(--glass);border:1px solid var(--stroke);
+    -webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);
+    box-shadow:0 18px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .dock-btn{
+    appearance:none;border:0;cursor:pointer;position:relative;
+    display:flex;flex-direction:column;align-items:center;gap:.25rem;
+    padding:.55rem .85rem;border-radius:13px;background:transparent;color:var(--dim);
+    font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:.7rem;letter-spacing:.02em;
+    transition:color .25s ease,background .25s ease,transform .25s cubic-bezier(.22,1,.36,1);
+    white-space:nowrap;
+  }
+  .dock-btn .num{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;opacity:.6;}
+  .dock-btn:hover{color:var(--txt);background:var(--glass-2);transform:translateY(-3px);}
+  .dock-btn.active{
+    color:#05140f;
+    background:linear-gradient(120deg,#eafff8,#bfe8ff 50%,#e8d5ff);
+    box-shadow:0 8px 26px rgba(110,220,255,.3),inset 0 1px 0 rgba(255,255,255,.7);
+  }
+  .dock-btn.active .num{opacity:.7;}
+
+  #err{
+    position:fixed;inset:0;display:none;place-items:center;z-index:20;
+    background:#0a0c14;color:#ff8b8b;font-size:.85rem;text-align:center;padding:2rem;
+  }
+  @media (max-width:560px){
+    .dock-btn{padding:.5rem .55rem;font-size:.6rem;}
+    #hud .desc{display:none;}
+  }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+
+<div id="hud">
+  <div class="brand"><span class="dot"></span>FLUX&nbsp;OS</div>
+  <div class="sub">Interactive Wallpapers</div>
+  <div class="now" id="now-title">Plasma Flux</div>
+  <div class="desc" id="now-desc">Liquid energy that flows toward your cursor.</div>
+</div>
+
+<div id="hint"><b>Move</b> to warp&nbsp;·&nbsp;<b>Click</b> to pulse&nbsp;·&nbsp;<b>1–5</b> switch&nbsp;·&nbsp;<b>H</b> hide</div>
+
+<nav id="dock" aria-label="Wallpaper switcher"></nav>
+
+<div id="err"></div>
+
+<script>
+"use strict";
+const canvas = document.getElementById('gl');
+const gl = canvas.getContext('webgl', {antialias:false, alpha:false, premultipliedAlpha:false, powerPreference:'high-performance'});
+if(!gl){ showErr('WebGL is not available in this browser.'); }
+
+function showErr(msg){
+  const e=document.getElementById('err');
+  e.style.display='grid'; e.textContent=msg;
+}
+
+/* ───────────────────────── shared GLSL ───────────────────────── */
+const VERT = `
+attribute vec2 aPos;
+void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }
+`;
+
+const HEADER = `
+precision highp float;
+uniform vec2  iResolution;
+uniform float iTime;
+uniform vec2  iMouse;      // smoothed, pixels, y-up
+uniform vec2  iMouseRaw;   // raw, pixels, y-up
+uniform float iMouseDown;  // 0..1 (smoothed)
+uniform vec3  iRipples[8]; // xy = pixel pos (y-up), z = start time (<0 = empty)
+#define RIPPLE_LIFE 2.0
+
+float hash11(float n){ return fract(sin(n)*43758.5453123); }
+float hash21(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }
+vec2  hash22(vec2 p){
+  vec3 a = fract(vec3(p.xyx)*vec3(123.34,234.34,345.65));
+  a += dot(a, a+34.45);
+  return fract(vec2(a.x*a.y, a.y*a.z));
+}
+float vnoise(vec2 p){
+  vec2 i=floor(p), f=fract(p);
+  vec2 u=f*f*(3.0-2.0*f);
+  float a=hash21(i), b=hash21(i+vec2(1,0)), c=hash21(i+vec2(0,1)), d=hash21(i+vec2(1,1));
+  return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
+}
+float fbm(vec2 p){
+  float v=0.0, a=0.5;
+  for(int i=0;i<6;i++){ v+=a*vnoise(p); p=p*2.02+vec2(7.1,3.7); a*=0.5; }
+  return v;
+}
+vec3 pal(float t, vec3 a, vec3 b, vec3 c, vec3 d){ return a + b*cos(6.28318*(c*t+d)); }
+
+// expanding glowing ring contribution from clicks (fc in pixels, y-up)
+float ringRipple(vec2 fc){
+  float s=0.0;
+  for(int i=0;i<8;i++){
+    vec3 r=iRipples[i];
+    if(r.z < 0.0) continue;
+    float age=iTime-r.z;
+    if(age<0.0 || age>RIPPLE_LIFE) continue;
+    float d=distance(fc, r.xy);
+    float radius=age*340.0;
+    float ring=exp(-pow((d-radius)/42.0, 2.0));
+    float fade=1.0-age/RIPPLE_LIFE;
+    s += ring*fade;
+  }
+  return s;
+}
+// radial push direction*strength from clicks (for displacement), returns vec2 in pixels
+vec2 ripplePush(vec2 fc){
+  vec2 s=vec2(0.0);
+  for(int i=0;i<8;i++){
+    vec3 r=iRipples[i];
+    if(r.z < 0.0) continue;
+    float age=iTime-r.z;
+    if(age<0.0 || age>RIPPLE_LIFE) continue;
+    vec2 dir=fc-r.xy;
+    float d=length(dir)+0.001;
+    float radius=age*340.0;
+    float ring=exp(-pow((d-radius)/42.0, 2.0));
+    float fade=1.0-age/RIPPLE_LIFE;
+    s += (dir/d)*ring*fade;
+  }
+  return s;
+}
+`;
+
+/* ───────────────────────── 1 · PLASMA FLUX ───────────────────────── */
+const F_PLASMA = `
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - 0.5*iResolution)/iResolution.y;
+  vec2 m  = (iMouse - 0.5*iResolution)/iResolution.y;
+  float t = iTime*0.16;
+
+  float md = length(uv - m);
+  vec2  pull = (uv - m)*exp(-md*1.6)*0.55;     // mouse attracts the flow
+  vec2  q = uv*1.5 - pull;
+  q += ripplePush(fc)/iResolution.y*0.9;       // clicks shove the field
+
+  float w1 = fbm(q + vec2(0.0, t));
+  float w2 = fbm(q*1.3 - t*1.1 + w1*1.7 + m*0.6);
+  float v  = fbm(q + w2*1.9 + vec2(t*0.5, -t));
+
+  float rip = ringRipple(fc);
+  v += rip*0.45;
+  v += 0.22/(md*5.0 + 0.35);                   // hot mouse core
+  v += iMouseDown*0.15;
+
+  vec3 col = pal(v*1.15 + t + rip*0.6,
+                 vec3(0.5), vec3(0.5), vec3(1.0,1.0,1.0), vec3(0.00,0.33,0.67));
+  col = mix(col, vec3(1.0), smoothstep(0.72,1.35,v)*0.55);
+  col *= 0.65 + 0.7*v;
+  col += rip*vec3(0.25,0.65,1.0);
+  col = pow(col, vec3(0.85));                   // gentle lift
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ───────────────────────── 2 · NEON GRID ───────────────────────── */
+const F_GRID = `
+vec3 gridPlane(vec2 uv, float dir, float pan, float t){
+  float y = uv.y*dir;
+  if(y <= 0.0035) return vec3(0.0);
+  float z = 1.0/y;                       // depth
+  float x = uv.x*z + pan*z*0.15;
+  vec2  g = vec2(x*1.0, z - t*1.6);
+  vec2  cell = abs(fract(g) - 0.5);
+  float lw = 0.02 + 0.05*y;              // thicker near the camera
+  float lines = smoothstep(lw, 0.0, cell.x) + smoothstep(lw, 0.0, cell.y);
+  float fade  = exp(-z*0.10) * smoothstep(0.0, 0.18, y);
+  vec3  c = mix(vec3(1.0,0.15,0.6), vec3(0.2,0.9,1.0), clamp(z*0.08,0.0,1.0));
+  return c * lines * fade;
+}
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - 0.5*iResolution)/iResolution.y;
+  vec2 m  = (iMouse - 0.5*iResolution)/iResolution.y;
+  float t = iTime*0.7;
+
+  float horizon = m.y*0.18;              // mouse tilts the horizon
+  vec2 p = uv;  p.y -= horizon;
+
+  vec3 col = vec3(0.015, 0.0, 0.04);
+  // sky glow gradient
+  col += mix(vec3(0.18,0.02,0.12), vec3(0.0), clamp((p.y)*1.6,0.0,1.0));
+  // sun
+  float sd = length((uv - vec2(m.x*0.4, 0.05))*vec2(1.0,1.4));
+  col += vec3(1.0,0.4,0.7)*smoothstep(0.42,0.0,sd)*0.7;
+  col += vec3(1.0,0.75,0.4)*smoothstep(0.12,0.0,sd);
+
+  col += gridPlane(p, 1.0, m.x, t);      // floor
+  col += gridPlane(p, -1.0, m.x, t)*0.5; // ceiling reflection
+
+  float rip = ringRipple(fc);
+  col += rip*vec3(0.4,1.0,0.9);
+  col += iMouseDown*vec3(0.05,0.12,0.16);
+  // scanlines
+  col *= 0.92 + 0.08*sin(fc.y*1.4);
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ───────────────────────── 3 · AURORA DRIFT ───────────────────────── */
+const F_AURORA = `
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - 0.5*iResolution)/iResolution.y;
+  vec2 m  = (iMouse - 0.5*iResolution)/iResolution.y;
+  float t = iTime*0.25;
+
+  vec3 col = vec3(0.012, 0.02, 0.05);          // night
+  // starfield
+  vec2 sg = floor(fc/2.4);
+  float star = step(0.9975, hash21(sg)) * (0.5 + 0.5*sin(iTime*3.0 + hash21(sg)*40.0));
+  col += vec3(0.7,0.8,1.0)*star;
+
+  float wind = m.x*0.9 + sin(t)*0.15;          // mouse = wind direction
+  for(int i=0;i<3;i++){
+    float fi = float(i);
+    float h = fbm(vec2(uv.x*1.4 + wind + fi*4.0, t*0.6 + fi))*0.55 - 0.12 + fi*0.06;
+    float thick = 0.10 + 0.05*fi;
+    float d = abs(uv.y - h);
+    float glow = thick/(d + thick)*0.45;
+    glow *= 0.55 + 0.45*fbm(vec2(uv.x*9.0 + wind*2.0, uv.y*3.0 - t*2.2)); // vertical streaks
+    vec3 ac = pal(fi*0.22 + uv.x*0.3 + t*0.2,
+                  vec3(0.45), vec3(0.45), vec3(1.0,1.0,0.55), vec3(0.0,0.28,0.55));
+    col += ac*glow*(0.95 - fi*0.18);
+  }
+
+  float md = length(uv - m);
+  col += vec3(0.3,0.9,0.7)*0.06/(md + 0.12);    // cursor aura
+  float rip = ringRipple(fc);
+  col += rip*vec3(0.5,1.0,0.7);
+  col += iMouseDown*vec3(0.04,0.1,0.08);
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ───────────────────────── 4 · CRYSTAL CELLS ───────────────────────── */
+const F_CELLS = `
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - 0.5*iResolution)/iResolution.y;
+  vec2 m  = (iMouse - 0.5*iResolution)/iResolution.y;
+  float t = iTime*0.25;
+
+  float scale = 4.5;
+  vec2 g = uv*scale;
+  vec2 mg = m*scale;
+  vec2 ip = floor(g), fp = fract(g);
+
+  float d1 = 9.0, d2 = 9.0;
+  vec2  id1 = vec2(0.0);
+  for(int y=-1;y<=1;y++){
+    for(int x=-1;x<=1;x++){
+      vec2 o = vec2(float(x), float(y));
+      vec2 rnd = hash22(ip + o);
+      vec2 pt = o + 0.5 + 0.42*sin(t + 6.2831*rnd);
+      // pull cell seeds gently toward the cursor
+      vec2 seed = ip + pt;
+      seed += (mg - seed)*0.12*exp(-length(mg - seed)*0.6);
+      vec2 diff = (seed - ip) - fp;
+      float d = dot(diff, diff);
+      if(d < d1){ d2 = d1; d1 = d; id1 = ip + o; }
+      else if(d < d2){ d2 = d; }
+    }
+  }
+  d1 = sqrt(d1); d2 = sqrt(d2);
+  float border = d2 - d1;
+
+  vec3 cellCol = pal(hash21(id1)*1.0 + t*0.3,
+                     vec3(0.5), vec3(0.5), vec3(1.0), vec3(0.0,0.33,0.67));
+  vec3 col = cellCol*(0.12 + 0.18*hash21(id1+3.1));
+  col *= 0.5 + 0.5*(1.0 - d1);                       // inner shading
+
+  float edge = smoothstep(0.09, 0.0, border);        // neon edges
+  col += edge*mix(vec3(0.2,0.9,1.0), vec3(1.0,0.3,0.8), hash21(id1));
+
+  // nearest cell to cursor lights up
+  vec2 cellCenterUV = (id1 + 0.5)/scale - vec2(0.5*iResolution.x/iResolution.y/scale,0.0);
+  float mdcell = length(uv - m);
+  col += cellCol*0.5*exp(-mdcell*3.0);
+
+  float rip = ringRipple(fc);
+  col += rip*vec3(0.6,1.0,0.9)*(0.4 + edge);
+  col += iMouseDown*edge*vec3(0.3,0.5,0.6);
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ───────────────────────── 5 · HYPERSPACE ───────────────────────── */
+const F_HYPER = `
+void main(){
+  vec2 fc = gl_FragCoord.xy;
+  vec2 uv = (fc - 0.5*iResolution)/iResolution.y;
+  vec2 m  = (iMouse - 0.5*iResolution)/iResolution.y;
+  vec2 p  = uv - m;                          // warp center follows cursor
+  float a = atan(p.y, p.x);
+  float r = length(p);
+  float t = iTime;
+
+  float speed = 0.9 + iMouseDown*3.2;        // hold to jump to lightspeed
+  float lr = log(r + 0.06);
+  float streak = fbm(vec2(a*4.5, lr*3.0 - t*speed));
+  streak = pow(streak, 2.2);
+  float bright = streak/(r*1.6 + 0.08);
+
+  vec3 col = pal(a*0.5 + lr*0.5 - t*0.1,
+                 vec3(0.5), vec3(0.5), vec3(1.0), vec3(0.0,0.33,0.67))*bright;
+  col += vec3(0.6,0.85,1.0)*0.16/(r + 0.09);  // bright core
+
+  // sparse star streaks
+  float sa = floor(a*22.0);
+  float sp = hash11(sa);
+  float band = smoothstep(0.06, 0.0, abs(fract(a*22.0)-0.5)/22.0);
+  col += vec3(0.8,0.9,1.0)*band*pow(fract(lr*1.5 - t*(speed*0.5+sp)),12.0)*0.6;
+
+  float rip = ringRipple(fc);
+  col += rip*vec3(1.0,0.7,0.35)*2.0;          // click = supernova shock
+  col = pow(col, vec3(0.9));
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+
+/* ───────────────────────── wallpaper registry ───────────────────────── */
+const WALLPAPERS = [
+  {name:'Plasma Flux',   desc:'Liquid energy that flows toward your cursor.',         frag:F_PLASMA},
+  {name:'Neon Grid',     desc:'Synthwave horizon — steer it with your mouse.',        frag:F_GRID},
+  {name:'Aurora Drift',  desc:'Northern lights bending to the wind of your cursor.',  frag:F_AURORA},
+  {name:'Crystal Cells', desc:'Living voronoi crystals that lean toward you.',         frag:F_CELLS},
+  {name:'Hyperspace',    desc:'A warp tunnel centered on your cursor — click to jump.',frag:F_HYPER},
+];
+
+/* ───────────────────────── WebGL plumbing ───────────────────────── */
+function compile(type, src){
+  const s = gl.createShader(type);
+  gl.shaderSource(s, src); gl.compileShader(s);
+  if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+    const log = gl.getShaderInfoLog(s);
+    console.error(log, src);
+    throw new Error(log);
+  }
+  return s;
+}
+function buildProgram(fragBody){
+  const vs = compile(gl.VERTEX_SHADER, VERT);
+  const fs = compile(gl.FRAGMENT_SHADER, HEADER + fragBody);
+  const p  = gl.createProgram();
+  gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+  if(!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p));
+  return {
+    prog:p,
+    loc:{
+      aPos:        gl.getAttribLocation(p,'aPos'),
+      iResolution: gl.getUniformLocation(p,'iResolution'),
+      iTime:       gl.getUniformLocation(p,'iTime'),
+      iMouse:      gl.getUniformLocation(p,'iMouse'),
+      iMouseRaw:   gl.getUniformLocation(p,'iMouseRaw'),
+      iMouseDown:  gl.getUniformLocation(p,'iMouseDown'),
+      iRipples:    gl.getUniformLocation(p,'iRipples'),
+    }
+  };
+}
+
+let programs = [];
+try{
+  if(gl){
+    const quad = new Float32Array([-1,-1, 3,-1, -1,3]); // fullscreen triangle
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, quad, gl.STATIC_DRAW);
+    programs = WALLPAPERS.map(w => buildProgram(w.frag));
+    programs.forEach(pr=>{
+      gl.useProgram(pr.prog);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.enableVertexAttribArray(pr.loc.aPos);
+      gl.vertexAttribPointer(pr.loc.aPos, 2, gl.FLOAT, false, 0, 0);
+    });
+  }
+}catch(e){ showErr('Shader error: ' + e.message); }
+
+/* ───────────────────────── state ───────────────────────── */
+let active = 0;
+const DPR_CAP = 1.75;
+let W=0, H=0;
+function resize(){
+  const dpr = Math.min(window.devicePixelRatio||1, DPR_CAP);
+  W = Math.floor(innerWidth*dpr); H = Math.floor(innerHeight*dpr);
+  canvas.width=W; canvas.height=H;
+  canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px';
+  if(gl) gl.viewport(0,0,W,H);
+}
+addEventListener('resize', resize); resize();
+
+// mouse in pixels, y-up; start centered
+const mouse = {tx:W*0.5, ty:H*0.5, x:W*0.5, y:H*0.5, downT:0, down:0};
+function setMouse(clientX, clientY){
+  const dpr = Math.min(window.devicePixelRatio||1, DPR_CAP);
+  mouse.tx = clientX*dpr;
+  mouse.ty = H - clientY*dpr;       // flip to y-up
+}
+addEventListener('pointermove', e=>setMouse(e.clientX, e.clientY), {passive:true});
+
+// ripple ring-buffer
+const RIP_N = 8;
+const ripples = new Float32Array(RIP_N*3).fill(-1);
+let ripIdx = 0;
+function addRipple(){
+  const base = ripIdx*3;
+  ripples[base]   = mouse.tx;
+  ripples[base+1] = mouse.ty;
+  ripples[base+2] = nowSeconds();
+  ripIdx = (ripIdx+1)%RIP_N;
+}
+addEventListener('pointerdown', e=>{
+  setMouse(e.clientX, e.clientY);
+  mouse.down = 1;
+  addRipple();
+});
+addEventListener('pointerup',   ()=>{ mouse.down = 0; });
+addEventListener('pointercancel',()=>{ mouse.down = 0; });
+
+let start = performance.now();
+function nowSeconds(){ return (performance.now()-start)/1000; }
+
+/* ───────────────────────── UI ───────────────────────── */
+const dock = document.getElementById('dock');
+const titleEl = document.getElementById('now-title');
+const descEl  = document.getElementById('now-desc');
+WALLPAPERS.forEach((w,i)=>{
+  const b=document.createElement('button');
+  b.className='dock-btn'+(i===0?' active':'');
+  b.innerHTML=`<span class="num">0${i+1}</span><span>${w.name}</span>`;
+  b.addEventListener('click', ()=>select(i));
+  dock.appendChild(b);
+});
+function select(i){
+  active=i;
+  [...dock.children].forEach((b,bi)=>b.classList.toggle('active', bi===i));
+  titleEl.textContent = WALLPAPERS[i].name;
+  descEl.textContent  = WALLPAPERS[i].desc;
+}
+addEventListener('keydown', e=>{
+  if(e.key>='1' && e.key<='5'){ select(Math.min(+e.key-1, WALLPAPERS.length-1)); }
+  if(e.key.toLowerCase()==='h'){ document.body.classList.toggle('ui-hidden'); }
+});
+// hide/show UI
+const style=document.createElement('style');
+style.textContent='.ui-hidden #hud,.ui-hidden #dock,.ui-hidden #hint{opacity:0;pointer-events:none;transition:opacity .4s ease;}';
+document.head.appendChild(style);
+
+// auto-fade the hint after a while
+setTimeout(()=>{ const h=document.getElementById('hint'); if(h) h.style.opacity='0.0'; }, 7000);
+addEventListener('pointerdown', ()=>{ const h=document.getElementById('hint'); if(h) h.style.opacity='0'; }, {once:true});
+
+/* ───────────────────────── render loop ───────────────────────── */
+function frame(){
+  if(!gl || !programs.length){ return; }
+  const t = nowSeconds();
+
+  // smooth mouse + button
+  mouse.x += (mouse.tx - mouse.x)*0.12;
+  mouse.y += (mouse.ty - mouse.y)*0.12;
+  mouse.downT += ((mouse.down?1:0) - mouse.downT)*0.1;
+
+  const pr = programs[active];
+  gl.useProgram(pr.prog);
+  gl.uniform2f(pr.loc.iResolution, W, H);
+  gl.uniform1f(pr.loc.iTime, t);
+  gl.uniform2f(pr.loc.iMouse, mouse.x, mouse.y);
+  gl.uniform2f(pr.loc.iMouseRaw, mouse.tx, mouse.ty);
+  gl.uniform1f(pr.loc.iMouseDown, mouse.downT);
+  gl.uniform3fv(pr.loc.iRipples, ripples);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
