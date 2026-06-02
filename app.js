@@ -766,7 +766,7 @@
      ============================================================ */
   (function statementShader() {
     var canvas = document.getElementById('statement-fx'); if (!canvas) return;
-    if (IS_MOBILE || prefersReduced) { canvas.style.display = 'none'; return; }
+    if (prefersReduced) { canvas.style.display = 'none'; return; }
     var panel = canvas.parentNode; if (!panel) return;
     var gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false });
     if (!gl) { canvas.style.display = 'none'; return; }
