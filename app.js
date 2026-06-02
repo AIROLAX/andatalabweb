@@ -2,7 +2,7 @@
    ANDATA LAB — vanilla app (light theme, fast, no build step)
    Content from data.js (window.SITE). Real assets in /videos,
    /PROJECTS, /Imagenes, /logos.
-   Hero = demo reel + interactive spectrum shader + drifting motes.
+   Hero = demo reel + CSS mouse-follow cursor.
    ============================================================ */
 (function () {
   'use strict';
@@ -625,9 +625,9 @@
     onScroll();
 
     var hero = $('#s-hero');
-    if (hero) {
-      var smx = 0, smy = 0, pmx = 0, pmy = 0, tcx = 50, tcy = 50, scx = 50, scy = 50, srx = 50, sry = 50;
-      var lcx = 50, lcy = 50, sang = 0, svel = 0, heroFxOn = false, ptrActive = false;
+    if (hero && !mqCoarse.matches && !IS_MOBILE) {
+      var tcx = 50, tcy = 50, scx = 50, scy = 50, srx = 50, sry = 50;
+      var followOn = false, ptrActive = false;
       var hrect = { l: 0, t: 0, w: 1, h: 1 };
       function refreshHrect() {
         var r = hero.getBoundingClientRect();
@@ -636,50 +636,41 @@
       refreshHrect();
       window.addEventListener('resize', refreshHrect, { passive: true });
       window.addEventListener('scroll', refreshHrect, { passive: true });
-      function onHeroPointer(e) {
+      hero.addEventListener('pointermove', function (e) {
         ptrActive = true;
-        pmx = (e.clientX - hrect.l) / hrect.w - 0.5;
-        pmy = (e.clientY - hrect.t) / hrect.h - 0.5;
         tcx = (e.clientX - hrect.l) / hrect.w * 100;
         tcy = (e.clientY - hrect.t) / hrect.h * 100;
         hero.classList.add('is-pointer');
-      }
-      hero.addEventListener('pointermove', onHeroPointer, { passive: true, capture: true });
-      hero.addEventListener('pointerdown', function () { hero.classList.add('is-clicking'); }, { capture: true });
-      window.addEventListener('pointerup', function () { hero.classList.remove('is-clicking'); });
+      }, { passive: true, capture: true });
       hero.addEventListener('pointerleave', function () {
-        hero.classList.remove('is-pointer', 'is-clicking');
+        hero.classList.remove('is-pointer');
         ptrActive = false;
-        pmx = 0; pmy = 0; tcx = 50; tcy = 50;
-      });
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (es) { heroFxOn = es[0].isIntersecting; }, { threshold: 0.05 }).observe(hero);
-      } else heroFxOn = true;
-      (function heroParallax() {
-        if (heroFxOn && (ptrActive || Math.abs(tcx - scx) > 0.08 || Math.abs(tcy - scy) > 0.08)) {
-          smx += (pmx - smx) * 0.065;
-          smy += (pmy - smy) * 0.065;
-          scx += (tcx - scx) * 0.072;
-          scy += (tcy - scy) * 0.072;
-          srx += (scx - srx) * 0.048;
-          sry += (scy - sry) * 0.048;
-          if (ptrActive) {
-            var dx = scx - lcx, dy = scy - lcy;
-            sang += (Math.atan2(dy, dx) * (180 / Math.PI) - sang) * 0.09;
-            svel += (Math.min(1, Math.sqrt(dx * dx + dy * dy) * 0.12) - svel) * 0.1;
-            lcx = scx; lcy = scy;
-          }
-          hero.style.setProperty('--mx', smx.toFixed(4));
-          hero.style.setProperty('--my', smy.toFixed(4));
+        tcx = 50; tcy = 50;
+      }, { capture: true });
+      function heroFollow() {
+        if (!followOn) return;
+        var moving = ptrActive || Math.abs(tcx - scx) > 0.05 || Math.abs(tcy - scy) > 0.05;
+        if (moving) {
+          scx += (tcx - scx) * 0.14;
+          scy += (tcy - scy) * 0.14;
+          srx += (scx - srx) * 0.08;
+          sry += (scy - sry) * 0.08;
           hero.style.setProperty('--cx', scx.toFixed(2) + '%');
           hero.style.setProperty('--cy', scy.toFixed(2) + '%');
           hero.style.setProperty('--rx', srx.toFixed(2) + '%');
           hero.style.setProperty('--ry', sry.toFixed(2) + '%');
-          hero.style.setProperty('--ang', sang.toFixed(1));
-          hero.style.setProperty('--vel', svel.toFixed(3));
         }
-        requestAnimationFrame(heroParallax);
-      })();
+        requestAnimationFrame(heroFollow);
+      }
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          followOn = es[0].isIntersecting;
+          if (followOn) requestAnimationFrame(heroFollow);
+        }, { threshold: 0.05 }).observe(hero);
+      } else {
+        followOn = true;
+        requestAnimationFrame(heroFollow);
+      }
     }
 
     function bindTilt(sel, max) {
@@ -708,349 +699,15 @@
     bindCardTilt();
   })();
 
-  /* ============================================================
-     HERO GAS SHADER — advanced fluid haze (mouse + click, video untouched).
-     ============================================================ */
-  (function heroShader() {
-    var canvas = $('#hero-shader'); if (!canvas) return;
-    if (prefersReduced || IS_MOBILE) { canvas.style.display = 'none'; return; }
-    var hero = $('#s-hero'); if (!hero) return;
-    hero.classList.add('hero-fx-on');
-    var gl = canvas.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: false, powerPreference: 'low-power' });
-    if (!gl) { canvas.style.display = 'none'; return; }
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    gl.clearColor(0, 0, 0, 0);
-
-    var VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
-    var FRAG = [
-      'precision mediump float;',
-      'uniform vec2 iR; uniform float iT; uniform vec2 iM; uniform vec2 iM2;',
-      'uniform float iDown; uniform float iPulse; uniform vec2 iVel; uniform float iHover;',
-      'float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
-      'float vn(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);',
-      ' float a=h21(i),b=h21(i+vec2(1,0)),c=h21(i+vec2(0,1)),d=h21(i+vec2(1,1));',
-      ' return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}',
-      'float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<5;i++){v+=a*vn(p);p=p*2.01+vec2(7.1,3.7);a*=0.5;}return v;}',
-      'vec2 warp(vec2 p,float t,float s){',
-      ' vec2 e=vec2(fbm(p*2.8+vec2(t*0.11,0.0))-0.5,fbm(p*2.8+vec2(4.2,t*0.09))-0.5);',
-      ' return p+e*s;}',
-      'void main(){',
-      ' vec2 uv=(gl_FragCoord.xy-0.5*iR)/iR.y;',
-      ' vec2 m=(iM-0.5*iR)/iR.y;',
-      ' vec2 m2=(iM2-0.5*iR)/iR.y;',
-      ' float t=iT*0.04;',
-      ' float md=length(uv-m);',
-      ' float md2=length(uv-m2);',
-      ' float near=pow(exp(-md*2.15),1.3);',
-      ' float trail=pow(exp(-md2*2.6),1.15)*0.5;',
-      ' float interact=max(near,trail)*iHover;',
-      ' if(interact<0.01){ gl_FragColor=vec4(0.0); return; }',
-      ' vec2 vel=iVel/iR.y;',
-      ' float speed=clamp(length(vel)*16.0,0.0,1.2);',
-      ' float zone=smoothstep(0.58,0.04,uv.y);',
-      ' vec2 q=uv*1.24+vec2(0.0,-t*0.14)-vel*0.035*interact;',
-      ' q+=(uv-m)*near*0.2*(1.0+iDown*0.4+iPulse*0.22);',
-      ' q+=(uv-m2)*trail*0.1;',
-      ' q=warp(q,t,0.11*interact);',
-      ' q+=vec2(sin(q.y*1.5+t*0.48),cos(q.x*1.3-t*0.42))*0.025*interact;',
-      ' float w=fbm(q+vec2(t*0.08,sin(t*0.28)*0.05));',
-      ' float v=fbm(q+w*1.45+vec2(t*0.22,-t*0.28));',
-      ' float gas=smoothstep(0.06,0.9,max(v,w));',
-      ' float hx=fbm(q+vec2(0.004,0.0))-fbm(q-vec2(0.004,0.0));',
-      ' float hy=fbm(q+vec2(0.0,0.004))-fbm(q-vec2(0.0,0.004));',
-      ' vec3 n=normalize(vec3(-hx*2.4,-hy*2.4,0.5));',
-      ' vec3 L=normalize(vec3(0.28,0.18,0.62));',
-      ' float diff=0.5+0.5*max(0.0,dot(n,L));',
-      ' float spec=pow(max(0.0,dot(reflect(-L,n),vec3(0.0,0.0,1.0))),24.0)*0.12;',
-      ' vec3 col=mix(vec3(0.1,0.03,0.18),vec3(0.42,0.08,0.58),smoothstep(0.08,0.5,gas));',
-      ' col=mix(col,vec3(0.62,0.18,0.48),smoothstep(0.2,0.68,w));',
-      ' col=mix(col,vec3(0.82,0.38,0.62),smoothstep(0.3,0.85,v)*interact);',
-      ' col*=diff;',
-      ' col+=spec*vec3(0.85,0.5,0.72)*interact*0.65;',
-      ' float click=(iDown*0.9+iPulse*0.65)*near;',
-      ' float clickPop=sin(md*26.0-iPulse*9.0)*exp(-md*5.5)*click*0.22;',
-      ' float energy=smoothstep(0.05,0.65,gas)*zone*0.03+near*(0.38+speed*0.26);',
-      ' energy+=click*0.95/(md*md*12.0+md*3.5+0.1)+exp(-md*2.8)*click*0.35;',
-      ' energy+=exp(-md*1.15)*near*0.28+clickPop+trail*0.16;',
-      ' col*=clamp(energy,0.0,1.18);',
-      ' col=pow(col,vec3(0.96));',
-      ' float alpha=clamp(energy*0.94,0.0,0.9)*zone*iHover;',
-      ' gl_FragColor=vec4(col,alpha);',
-      '}'
-    ].join('\n');
-
-    function shCtx(ctx, type, src) {
-      var s = ctx.createShader(type); ctx.shaderSource(s, src); ctx.compileShader(s);
-      if (!ctx.getShaderParameter(s, ctx.COMPILE_STATUS)) { console.error(ctx.getShaderInfoLog(s)); return null; }
-      return s;
-    }
-    function sh(type, src) { return shCtx(gl, type, src); }
-    var vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) { canvas.style.display = 'none'; return; }
-    var prog = gl.createProgram(); gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.warn('hero shader: link failed'); return; }
-    gl.useProgram(prog);
-    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    var aP = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(aP); gl.vertexAttribPointer(aP, 2, gl.FLOAT, false, 0, 0);
-    var uR = gl.getUniformLocation(prog, 'iR'), uT = gl.getUniformLocation(prog, 'iT'),
-        uM = gl.getUniformLocation(prog, 'iM'), uM2 = gl.getUniformLocation(prog, 'iM2'),
-        uDown = gl.getUniformLocation(prog, 'iDown'), uPulse = gl.getUniformLocation(prog, 'iPulse'),
-        uVel = gl.getUniformLocation(prog, 'iVel'), uHover = gl.getUniformLocation(prog, 'iHover');
-
-    var video = $('#hero-video');
-    if (video) video.classList.remove('hero-video-src');
-    var vfc = $('#hero-video-fx');
-    if (vfc) { vfc.classList.remove('is-active'); vfc.style.display = 'none'; }
-
-    var DPR = Math.min(window.devicePixelRatio || 1, 1.08);
-    var W = 0, H = 0, hr = { l: 0, t: 0, w: 1, h: 1 };
-    function refreshHeroRect() {
-      var r = hero.getBoundingClientRect();
-      hr.l = r.left; hr.t = r.top; hr.w = r.width; hr.h = r.height;
-    }
-    function resize() {
-      refreshHeroRect();
-      W = Math.max(1, Math.floor(hr.w * DPR)); H = Math.max(1, Math.floor(hr.h * DPR));
-      if (canvas.width === W && canvas.height === H) return;
-      canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H);
-    }
-    var mx = 0, my = 0, mx2 = 0, my2 = 0, tx = 0, ty = 0;
-    var down = 0, downS = 0, pulse = 0, hover = 0, hoverS = 0, velX = 0, velY = 0, active = 0;
-    function setM(cx, cy) {
-      tx = (cx - hr.l) * DPR;
-      ty = H - (cy - hr.t) * DPR;
-      hover = 1;
-      active = 1;
-    }
-    function onPtrDown(e) { setM(e.clientX, e.clientY); down = 1; pulse = 0.65; downS = 1; active = 1; }
-    function onPtrMove(e) { setM(e.clientX, e.clientY); }
-    hero.addEventListener('pointermove', onPtrMove, { passive: true, capture: true });
-    hero.addEventListener('pointerdown', onPtrDown, { capture: true });
-    hero.addEventListener('pointerleave', function () {
-      down = 0; hover = 0;
-      tx = W * 0.5;
-      ty = -H * 0.2;
-    }, { capture: true });
-    window.addEventListener('pointerup', function () { down = 0; });
-    var resizeT = 0;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeT);
-      resizeT = setTimeout(resize, 120);
-    }, { passive: true });
-    window.addEventListener('scroll', refreshHeroRect, { passive: true });
-    resize();
-    tx = W * 0.5; ty = H * 0.35; mx = mx2 = tx; my = my2 = ty;
-
-    var t0 = performance.now(), visible = true, running = false, lastFrame = 0;
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (visible && !running && !prefersReduced) { running = true; requestAnimationFrame(loop); }
-      }, { threshold: 0.01, rootMargin: '80px 0px' }).observe(hero);
-    }
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) running = false;
-      else if (visible) { running = true; requestAnimationFrame(loop); }
-    });
-    function frame(now) {
-      mx += (tx - mx) * 0.078;
-      my += (ty - my) * 0.078;
-      mx2 += (mx - mx2) * 0.042;
-      my2 += (my - my2) * 0.042;
-      velX += ((tx - mx) - velX) * 0.1;
-      velY += ((ty - my) - velY) * 0.1;
-      hoverS += (hover - hoverS) * (hover ? 0.14 : 0.06);
-      downS += ((down ? 1 : 0) - downS) * (down ? 0.26 : 0.08);
-      if (down) pulse = Math.min(1.0, pulse + 0.16);
-      else pulse *= 0.8;
-      var settled = Math.abs(tx - mx) < 1.2 && Math.abs(ty - my) < 1.2 && downS < 0.03;
-      if (!hover && hoverS < 0.04 && settled) { active = 0; return false; }
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform2f(uR, W, H);
-      gl.uniform1f(uT, (now - t0) / 1000);
-      gl.uniform2f(uM, mx, my);
-      gl.uniform2f(uM2, mx2, my2);
-      gl.uniform2f(uVel, velX, velY);
-      gl.uniform1f(uHover, hoverS);
-      gl.uniform1f(uDown, downS);
-      gl.uniform1f(uPulse, pulse);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      return true;
-    }
-    function loop(now) {
-      if (!visible || document.hidden) { running = false; return; }
-      now = now || performance.now();
-      if (!active && hoverS < 0.05 && downS < 0.03 && now - lastFrame < 48) {
-        requestAnimationFrame(loop);
-        return;
-      }
-      if (frame(now)) lastFrame = now;
-      requestAnimationFrame(loop);
-    }
-    function onMqHero() {
-      if (mqNarrow.matches) { canvas.style.display = 'none'; running = false; }
-      else {
-        canvas.style.display = '';
-        resize();
-        if (visible && !document.hidden) { running = true; requestAnimationFrame(loop); }
-      }
-    }
-    if (mqNarrow.addEventListener) mqNarrow.addEventListener('change', onMqHero);
-    else if (mqNarrow.addListener) mqNarrow.addListener(onMqHero);
-    if (prefersReduced) { frame(performance.now()); } else { running = true; requestAnimationFrame(loop); }
-  })();
-
-  /* ============================================================
-     HERO PARTICLES — mouse-reactive field + click bursts (desktop)
-     ============================================================ */
-  (function particles() {
-    var canvas = $('#hero-particles'); if (!canvas) return;
-    if (prefersReduced || IS_MOBILE) { canvas.style.display = 'none'; return; }
-    var hero = $('#s-hero');
-    if (!hero) return;
-    var ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
-    if (!ctx) return;
-    var SPEC = ['160,50,120', '200,70,150', '140,40,130', '220,90,170'];
-    var w = 0, h = 0, dpr = 1, parts = [], bursts = [], raf = 0, running = false, visible = true, t = 0;
-    var ptrX = 0, ptrY = 0, spx = 0, spy = 0, ptrOn = false;
-    var pr = { l: 0, t: 0 };
-    function refreshPR() {
-      var r = hero.getBoundingClientRect();
-      pr.l = r.left; pr.t = r.top;
-    }
-    refreshPR();
-    window.addEventListener('resize', refreshPR, { passive: true });
-    window.addEventListener('scroll', refreshPR, { passive: true });
-
-    hero.addEventListener('pointermove', function (e) {
-      ptrX = e.clientX - pr.l;
-      ptrY = e.clientY - pr.t;
-      ptrOn = true;
-    }, { passive: true, capture: true });
-    hero.addEventListener('pointerleave', function () { ptrOn = false; }, { capture: true });
-    hero.addEventListener('pointerdown', function (e) {
-      var bx = e.clientX - pr.l, by = e.clientY - pr.t;
-      for (var b = 0; b < 7; b++) {
-        var ang = Math.random() * Math.PI * 2;
-        var spd = Math.random() * 1.8 + 0.5;
-        bursts.push({
-          x: bx, y: by,
-          vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
-          r: Math.random() * 1.4 + 0.35,
-          life: 1,
-          c: SPEC[1 + ((Math.random() * 2) | 0)]
-        });
-      }
-    }, { capture: true });
-
-    function spawn() {
-      return {
-        x: Math.random() * w,
-        y: h + Math.random() * 50,
-        r: Math.random() * 1.4 + 0.3,
-        vy: -(Math.random() * 0.18 + 0.04),
-        vx: 0,
-        sway: Math.random() * 0.35 + 0.06, phase: Math.random() * Math.PI * 2,
-        a: Math.random() * 0.14 + 0.05,
-        c: SPEC[Math.random() < 0.7 ? 1 + ((Math.random() * 2) | 0) : 0],
-        glow: false
-      };
-    }
-    function resize() {
-      refreshPR();
-      dpr = Math.min(window.devicePixelRatio || 1, 1);
-      w = canvas.clientWidth; h = canvas.clientHeight;
-      if (!w || !h) return;
-      var cw = Math.floor(w * dpr), ch = Math.floor(h * dpr);
-      if (canvas.width !== cw || canvas.height !== ch) {
-        canvas.width = cw; canvas.height = ch;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      var count = Math.min(36, Math.max(22, Math.round(w / 24)));
-      if (parts.length !== count) {
-        parts = [];
-        for (var i = 0; i < count; i++) parts.push(spawn());
-      }
-    }
-    function draw() {
-      t += 0.005;
-      if (ptrOn) {
-        spx += (ptrX - spx) * 0.055;
-        spy += (ptrY - spy) * 0.055;
-      }
-      ctx.clearRect(0, 0, w, h);
-      var rad = Math.min(w, h) * 0.26, rad2 = rad * rad;
-      for (var i = 0; i < parts.length; i++) {
-        var p = parts[i];
-        p.y += p.vy;
-        p.x += p.vx;
-        p.vx *= 0.94;
-        if (ptrOn) {
-          var dx = spx - p.x, dy = spy - p.y, d2 = dx * dx + dy * dy;
-          if (d2 < rad2) {
-            var pull = 0.02 / (1 + d2 * 0.00007);
-            p.vx += dx * pull;
-            p.vy += dy * pull * 0.32;
-          }
-        }
-        if (p.y < -12) { parts[i] = spawn(); p = parts[i]; }
-        var lift = Math.max(0, Math.min(1, (h - p.y) / (h * 0.52)));
-        var x = p.x + Math.sin(t + p.phase) * p.sway * 5;
-        var nearPtr = ptrOn ? Math.max(0, 1 - Math.hypot(spx - x, spy - p.y) / 180) : 0;
-        ctx.globalAlpha = p.a * lift * (0.5 + nearPtr * 0.55);
-        ctx.fillStyle = nearPtr > 0.25 ? 'rgba(' + p.c + ',.95)' : 'rgba(' + p.c + ',.75)';
-        ctx.beginPath();
-        ctx.arc(x, p.y, p.r * (1 + nearPtr * 0.3), 0, Math.PI * 2);
-        ctx.fill();
-      }
-      for (var bi = bursts.length - 1; bi >= 0; bi--) {
-        var b = bursts[bi];
-        b.x += b.vx; b.y += b.vy;
-        b.vx *= 0.96; b.vy *= 0.96;
-        b.life -= 0.03;
-        if (b.life <= 0) { bursts.splice(bi, 1); continue; }
-        ctx.globalAlpha = b.life * 0.65;
-        ctx.fillStyle = 'rgba(' + b.c + ',1)';
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r * b.life, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      ctx.globalAlpha = 1;
-    }
-    var lastP = 0;
-    function loop(now) {
-      if (!running || !visible || document.hidden) { running = false; return; }
-      now = now || performance.now();
-      if (!ptrOn && bursts.length === 0 && now - lastP < 50) {
-        raf = requestAnimationFrame(loop);
-        return;
-      }
-      draw();
-      lastP = now;
-      raf = requestAnimationFrame(loop);
-    }
-
-    resize();
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        visible = es[0].isIntersecting;
-        if (visible && !running) { running = true; raf = requestAnimationFrame(loop); }
-      }, { threshold: 0.05 }).observe(hero);
-    } else { running = true; raf = requestAnimationFrame(loop); }
-    var pResizeT = 0;
-    window.addEventListener('resize', function () {
-      clearTimeout(pResizeT);
-      pResizeT = setTimeout(resize, 120);
-    });
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { running = false; cancelAnimationFrame(raf); }
-      else if (visible) { running = true; raf = requestAnimationFrame(loop); }
+  
+  /* Hero: CSS mouse-follow only */
+  (function heroFxOff() {
+    ['hero-shader', 'hero-particles', 'hero-video-fx'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.parentNode) el.parentNode.removeChild(el);
     });
   })();
-
-  /* ============================================================
+/* ============================================================
      STATEMENT BACKGROUND SHADER — "Plasma Flux" from FLUX OS.
      Liquid energy that flows toward the cursor, behind the
      "We design and build immersive…" statement. Self-contained.
