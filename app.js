@@ -814,24 +814,36 @@
     var uR = gl.getUniformLocation(prog, 'iR'), uT = gl.getUniformLocation(prog, 'iT'),
         uM = gl.getUniformLocation(prog, 'iM'), uDown = gl.getUniformLocation(prog, 'iDown');
 
-    var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    var DPR = IS_MOBILE ? Math.min(window.devicePixelRatio || 1, 1.15) : Math.min(window.devicePixelRatio || 1, 1.5);
     var W = 0, H = 0;
     function resize() {
       var r = panel.getBoundingClientRect();
       W = Math.max(1, Math.floor(r.width * DPR)); H = Math.max(1, Math.floor(r.height * DPR));
       canvas.width = W; canvas.height = H; gl.viewport(0, 0, W, H);
     }
-    var mx = 0, my = 0, tx = 0, ty = 0, down = 0, downS = 0;
+    var mx = 0, my = 0, tx = 0, ty = 0, down = 0, downS = 0, drift = 0;
     function setM(cx, cy) { var r = canvas.getBoundingClientRect(); tx = (cx - r.left) * DPR; ty = H - (cy - r.top) * DPR; }
     panel.addEventListener('pointermove', function (e) { setM(e.clientX, e.clientY); }, { passive: true });
-    panel.addEventListener('pointerdown', function (e) { setM(e.clientX, e.clientY); down = 1; });
+    panel.addEventListener('pointerdown', function (e) { setM(e.clientX, e.clientY); down = 1; }, { passive: true });
+    panel.addEventListener('touchstart', function (e) {
+      if (!e.touches || !e.touches[0]) return;
+      setM(e.touches[0].clientX, e.touches[0].clientY); down = 1;
+    }, { passive: true });
     window.addEventListener('pointerup', function () { down = 0; });
+    window.addEventListener('touchend', function () { down = 0; });
     window.addEventListener('resize', resize);
     resize(); tx = W * 0.62; ty = H * 0.5; mx = tx; my = ty;
 
     var t0 = performance.now(), visible = false, running = false;
     function frame() {
-      mx += (tx - mx) * 0.14; my += (ty - my) * 0.14; downS += ((down ? 1 : 0) - downS) * 0.12;
+      if (IS_MOBILE && !down) {
+        drift += 0.008;
+        tx = W * (0.52 + Math.sin(drift) * 0.12);
+        ty = H * (0.48 + Math.cos(drift * 0.85) * 0.1);
+      }
+      mx += (tx - mx) * (IS_MOBILE ? 0.1 : 0.14);
+      my += (ty - my) * (IS_MOBILE ? 0.1 : 0.14);
+      downS += ((down ? 1 : 0) - downS) * 0.12;
       gl.useProgram(prog);
       gl.uniform2f(uR, W, H); gl.uniform1f(uT, (performance.now() - t0) / 1000);
       gl.uniform2f(uM, mx, my); gl.uniform1f(uDown, downS);

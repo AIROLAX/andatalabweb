@@ -573,14 +573,12 @@
     background:#ececed;
     object-fit:cover;
   }
-  .is-mobile .statement-panel{ border-radius:20px; padding:clamp(28px,6vw,48px); cursor:default; }
-  .is-mobile #statement-fx{ display:none !important; }
-  .is-mobile .statement-panel{
-    background:
-      radial-gradient(120% 90% at 20% 0%, rgba(60,220,255,.18) 0%, transparent 55%),
-      radial-gradient(90% 70% at 90% 100%, rgba(255,46,138,.12) 0%, transparent 50%),
-      #06070d;
+  .is-mobile .statement-panel{ border-radius:20px; padding:clamp(28px,6vw,48px); cursor:default; background:#06070d; }
+  .is-mobile .statement-panel::after{
+    background:radial-gradient(130% 120% at 30% 20%, rgba(6,7,13,0) 0%, rgba(6,7,13,.18) 50%, rgba(6,7,13,.5) 100%),
+      linear-gradient(180deg, rgba(6,7,13,.12) 0%, rgba(6,7,13,0) 35%, rgba(6,7,13,0) 65%, rgba(6,7,13,.28) 100%);
   }
+  .is-mobile #statement-fx{ display:block !important; }
   .is-mobile .statement p{ font-size:clamp(1.35rem,5.5vw,1.85rem); }
   .is-mobile .grid-3,.is-mobile .grid-2{ grid-template-columns:1fr; gap:14px; }
   .is-mobile .card{ padding:24px 22px; }
