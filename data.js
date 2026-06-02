@@ -19,13 +19,8 @@
     'Imagenes/concepts/rubik-immersive.png', // 01 Concept — immersive brand concept
     'Imagenes/SHOW CONTROL.jpg',   // 02 Prototype — real-time tests
     'PROJECTS/7.jpg',                // 03 Build — staging & systems
-    'Imagenes/deliver-04.jpg',       // 04 Deliver — poster fallback
+    'Imagenes/deliver-04.jpg',       // 04 Deliver — on-site control / pink screen
   ];
-
-  var PROCESS_DELIVER = {
-    video: 'videos/deliver-04.mp4',
-    poster: 'Imagenes/deliver-04.jpg',
-  };
 
   var SERVICE_IMG = [
     'Imagenes/chapala.png',        // 01 mapping (matches Ajijic work)
@@ -139,7 +134,7 @@
       { n: '01', t: 'Concept', d: 'We start with the space, the audience and the story — then design the experience around them.', img: PROCESS_IMG[0] },
       { n: '02', t: 'Prototype', d: 'Real-time tests and visual studies so you see the idea moving before we build at scale.', img: PROCESS_IMG[1] },
       { n: '03', t: 'Build', d: 'Generative systems, content and hardware engineered to run reliably, night after night.', img: PROCESS_IMG[2] },
-      { n: '04', t: 'Deliver', d: 'On-site staging, calibration and technical direction. We are there until it runs perfectly.', video: PROCESS_DELIVER.video, poster: PROCESS_DELIVER.poster },
+      { n: '04', t: 'Deliver', d: 'On-site staging, calibration and technical direction. We are there until it runs perfectly.', img: PROCESS_IMG[3] },
     ],
   };
 
@@ -195,7 +190,7 @@
       { n: '01', t: 'Concepto', d: 'Partimos del espacio, la audiencia y la historia — y diseñamos la experiencia en torno a ellos.', img: PROCESS_IMG[0] },
       { n: '02', t: 'Prototipo', d: 'Pruebas en tiempo real y estudios visuales para que veas la idea en movimiento antes de construir a escala.', img: PROCESS_IMG[1] },
       { n: '03', t: 'Construcción', d: 'Sistemas generativos, contenido y hardware diseñados para funcionar de forma confiable, noche tras noche.', img: PROCESS_IMG[2] },
-      { n: '04', t: 'Entrega', d: 'Montaje en sitio, calibración y dirección técnica. Estamos ahí hasta que funcione a la perfección.', video: PROCESS_DELIVER.video, poster: PROCESS_DELIVER.poster },
+      { n: '04', t: 'Entrega', d: 'Montaje en sitio, calibración y dirección técnica. Estamos ahí hasta que funcione a la perfección.', img: PROCESS_IMG[3] },
     ],
   };
 
