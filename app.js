@@ -158,7 +158,7 @@
       var media = '';
       if (s.video) {
         var vSrc = pickServiceVideo(s);
-        media = '<div class="card-media"><video data-src="' + vSrc + '" ' +
+        media = '<div class="card-media media--video-fs"><video data-src="' + vSrc + '" ' +
           (s.poster ? 'poster="' + s.poster + '" ' : '') +
           'muted loop playsinline preload="none" class="lazy-vid" aria-label="' + s.t + '"></video>' +
           '<span class="card-media-num">' + s.n + '</span></div>';
@@ -169,7 +169,7 @@
       } else {
         media = '<span class="ds-label" style="color:var(--ink-3)">' + s.n + '</span>';
       }
-      var card = el('article', 'card' + (s.img || s.video ? ' has-media' : '') + (s.mediaFull ? ' card--video-full' : ''));
+      var card = el('article', 'card' + (s.img || s.video ? ' has-media' : ''));
       if (s.id) card.id = s.id;
       card.innerHTML = media +
         '<h3>' + s.t + '</h3>' +
@@ -204,7 +204,6 @@
       } else {
         card.setAttribute('data-target', 's-contact');
       }
-      if (w.mediaFull) card.classList.add('work-card--video-full');
       var mediaInner;
       if (w.img && w.video) {
         mediaInner =
@@ -225,6 +224,7 @@
         mediaInner = '';
       }
       var mediaCls = (w.img && w.video) ? ' work-media-stack' : '';
+      if (w.video) mediaCls += ' media--video-fs';
       card.innerHTML =
         '<div class="work-media' + mediaCls + '" style="background:' + GRAD[i % 4] + '">' + mediaInner + '</div>' +
         '<div class="work-body">' +
@@ -418,6 +418,73 @@
     });
   }
 
+  function ensureVideoSrc(video) {
+    var src = video.getAttribute('data-src');
+    if (src && video.getAttribute('src') !== src) {
+      video.setAttribute('src', src);
+      video.load();
+    }
+  }
+
+  function bindVideoFullscreen() {
+    document.querySelectorAll('.media--video-fs').forEach(function (media) {
+      if (media._fsBound) return;
+      media._fsBound = true;
+      var card = media.closest('.card, .work-card');
+      var video = media.querySelector('video');
+      if (!video) return;
+      var title = card && card.querySelector('h3') ? card.querySelector('h3').textContent : 'Video';
+      var inLink = !!(card && card.tagName === 'A');
+      media.setAttribute('aria-label', title + ' — play fullscreen');
+      if (!inLink) {
+        media.setAttribute('role', 'button');
+        media.setAttribute('tabindex', '0');
+      }
+
+      function restorePreview() {
+        video.muted = true;
+        video.controls = false;
+        video.loop = true;
+      }
+
+      function onFsExit() {
+        if (document.fullscreenElement || document.webkitFullscreenElement) return;
+        restorePreview();
+        document.removeEventListener('fullscreenchange', onFsExit);
+        video.removeEventListener('webkitendfullscreen', onFsExit);
+      }
+
+      function openFullscreen(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        ensureVideoSrc(video);
+        video.muted = false;
+        video.controls = true;
+        document.addEventListener('fullscreenchange', onFsExit);
+        video.addEventListener('webkitendfullscreen', onFsExit);
+
+        function enterFs() {
+          var req = video.requestFullscreen || video.webkitRequestFullscreen || video.msRequestFullscreen;
+          if (req) return req.call(video);
+          if (video.webkitEnterFullscreen) { video.webkitEnterFullscreen(); return Promise.resolve(); }
+          return Promise.reject(new Error('fullscreen unavailable'));
+        }
+
+        var play = video.play();
+        (play && play.catch ? play : Promise.resolve()).catch(function () {
+          video.muted = true;
+          return video.play();
+        }).then(enterFs).catch(function () { restorePreview(); });
+      }
+
+      media.addEventListener('click', openFullscreen);
+      if (!inLink) {
+        media.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') openFullscreen(e);
+        });
+      }
+    });
+  }
+
   function bindStepParticles() {
     stepParticleLoops.forEach(function (stop) { if (stop) stop(); });
     stepParticleLoops = [];
@@ -494,6 +561,7 @@
     renderProcess();
     lazyVideoIO = null;
     bindLazyVideos();
+    bindVideoFullscreen();
     bindCardTilt();
   }
 

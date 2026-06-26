@@ -306,16 +306,15 @@
   .card-media video.lazy-vid.is-loaded{ opacity:1; }
   .card.has-media:hover .card-media img,.card.has-media:hover .card-media video{ transform:scale(1.06); }
   .card-media-num{ position:absolute; top:12px; left:14px; font-family:'SF Mono',ui-monospace,Menlo,monospace; font-size:11px; letter-spacing:.12em; font-weight:600; color:#fff; padding:4px 9px; border-radius:999px; background:rgba(0,0,0,.42); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
-  .card--video-full .card-media{
-    position:relative; width:100%; height:0; padding-top:60%;
-    overflow:hidden; background:#080808; border-bottom:1px solid var(--hair-2);
-    aspect-ratio:unset; flex:0 0 auto;
+  .media--video-fs{ cursor:pointer; }
+  .media--video-fs::after{
+    content:''; position:absolute; right:12px; bottom:12px; width:28px; height:28px; border-radius:999px;
+    background-color:rgba(0,0,0,.48); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    pointer-events:none; opacity:0; transition:opacity .25s;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23fff' stroke-width='1.6' viewBox='0 0 24 24'%3E%3Cpath d='M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:center;
   }
-  .card--video-full .card-media video{
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center center; display:block;
-  }
-  .card--video-full.has-media:hover .card-media video{ transform:none; }
+  .media--video-fs:hover::after,.media--video-fs:focus-visible::after{ opacity:1; }
   .card h3{ font-size:19px; font-weight:600; letter-spacing:-.015em; margin:0; line-height:1.25; }
   .card p{ font-size:14.5px; color:var(--ink-2); line-height:1.55; margin:0; }
   .card .get{ font-size:12px; color:var(--ink-3); margin-top:auto; padding-top:14px; border-top:1px solid var(--hair-2); }
@@ -347,15 +346,6 @@
   .work-body{ padding:20px 22px 24px; }
   .work-body h3{ font-size:20px; font-weight:600; letter-spacing:-.02em; margin:8px 0; }
   .work-body p{ font-size:14.5px; color:var(--ink-2); line-height:1.5; margin:0; }
-  .work-card--video-full .work-media{
-    position:relative; width:100%; height:0; padding-top:176.667%;
-    overflow:hidden; background:#080808;
-  }
-  .work-card--video-full .work-img{
-    position:absolute; inset:0; width:100%; height:100%;
-    object-fit:cover; object-position:center center;
-  }
-  .work-card--video-full:hover .work-img{ transform:none; }
 
   /* ── Process (dark) — preview media on section backdrop, cards = color + particles ── */
   .process{ background:var(--ink); color:var(--on-accent); overflow:hidden; }
@@ -658,9 +648,7 @@
   .is-mobile .card{ padding:24px 22px; }
   .is-mobile .card.has-media > h3,.is-mobile .card.has-media > p,.is-mobile .card.has-media > .get{ margin-left:22px; margin-right:22px; }
   .is-mobile .card-media{ aspect-ratio:16/11; }
-  .is-mobile .card--video-full .card-media{ aspect-ratio:unset; height:0; padding-top:60%; }
   .is-mobile .work-media{ height:200px; }
-  .is-mobile .work-card--video-full .work-media{ padding-top:176.667%; }
   .is-mobile .work-body{ padding:18px 18px 22px; }
   .is-mobile .work-body h3{ font-size:18px; }
   .is-mobile .process-grid{ grid-template-columns:1fr 1fr; gap:12px; }
