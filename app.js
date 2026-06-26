@@ -169,7 +169,7 @@
       } else {
         media = '<span class="ds-label" style="color:var(--ink-3)">' + s.n + '</span>';
       }
-      var card = el('article', 'card' + (s.img || s.video ? ' has-media' : ''));
+      var card = el('article', 'card' + (s.img || s.video ? ' has-media' : '') + (s.mediaFull ? ' card--video-full' : ''));
       if (s.id) card.id = s.id;
       card.innerHTML = media +
         '<h3>' + s.t + '</h3>' +
@@ -194,8 +194,17 @@
       'linear-gradient(135deg,#0c1a2a,#7a4cff)'
     ];
     SITE.work.forEach(function (w, i) {
-      var card = el('article', 'work-card');
-      card.setAttribute('data-target', 's-contact');
+      var linked = !!w.url;
+      var card = el(linked ? 'a' : 'article', 'work-card' + (linked ? ' work-card--link' : ''));
+      if (linked) {
+        card.href = w.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.setAttribute('aria-label', w.t + ' — view project on AIROLAX');
+      } else {
+        card.setAttribute('data-target', 's-contact');
+      }
+      if (w.mediaFull) card.classList.add('work-card--video-full');
       var mediaInner;
       if (w.img && w.video) {
         mediaInner =

@@ -58,6 +58,7 @@
     video: 'videos/interactive-service.mp4',
     videoMobile: 'videos/services-mobile/interactive-service.mp4',
     poster: 'Imagenes/interactive-service-poster.jpg',
+    mediaFull: true,
   };
 
   var MULTI_SCREEN_INSTALL = {
@@ -67,14 +68,14 @@
 
   // Per-work shared assets (id, video, poster), text added per language
   var WORK_MEDIA = [
-    { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png' },
-    { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg' },
-    { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg' },
-    { id: 'plants', video: MULTI_SCREEN_INSTALL.video,       poster: MULTI_SCREEN_INSTALL.poster },
-    { id: 'ajijic', video: 'PROJECTS/2.mp4',                 poster: 'Imagenes/ajijic-mapping.jpg' },
-    { id: 'ohm',   video: 'videos/ohm-laser-arp.mp4',       poster: 'Imagenes/OHM2.png' },
-    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp' },
-    { id: 'santander', video: 'videos/conjunto-santander.mp4', poster: 'Imagenes/conjunto-santander-poster.jpg' },
+    { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png',       url: 'https://airolax.com/work/ethereal-motion-digital-poetry.html' },
+    { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'https://airolax.com/work/biointerface.html' },
+    { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg', url: 'https://airolax.com/work/thermosense.html' },
+    { id: 'plants', video: MULTI_SCREEN_INSTALL.video,       poster: MULTI_SCREEN_INSTALL.poster, url: 'https://airolax.com/work/biointerface-2.html', mediaFull: true },
+    { id: 'ajijic', video: 'PROJECTS/2.mp4',                 poster: 'Imagenes/ajijic-mapping.jpg', url: 'https://airolax.com/work/whispers-of-the-lake-digital-immersive-experience.html' },
+    { id: 'ohm',   video: 'videos/ohm-laser-arp.mp4',       poster: 'Imagenes/OHM2.png',         url: 'https://airolax.com/work/ohm-interactive-laser-sculpture.html' },
+    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'https://airolax.com/work/museo-descubre.html' },
+    { id: 'santander', video: 'videos/conjunto-santander.mp4', poster: 'Imagenes/conjunto-santander-poster.jpg', url: 'https://airolax.com/work/breathing-space.html' },
   ];
 
   function merge(mediaArr, textArr) {
@@ -120,7 +121,7 @@
     services: [
       { n: '01', t: 'Architectural & Large-Scale Mapping', d: 'Facade and site-specific projection that turns buildings and heritage spaces into living canvases.', get: 'Concept · content · high-lumen staging · on-site calibration', video: ARCHITECTURAL_MAPPING.video, videoMobile: ARCHITECTURAL_MAPPING.videoMobile, poster: ARCHITECTURAL_MAPPING.poster },
       { n: '02', t: 'Real-Time & Generative Systems', d: 'TouchDesigner and custom engines that generate visuals live — reactive, never the same twice.', get: 'Engine build · generative content · show control', video: REAL_TIME_GENERATIVE.video, videoMobile: REAL_TIME_GENERATIVE.videoMobile, poster: REAL_TIME_GENERATIVE.poster },
-      { n: '03', t: 'Interactive Installations', d: 'Sensor- and motion-driven environments where the audience becomes part of the artwork.', get: 'Interaction design · sensor systems · real-time behavior', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
+      { n: '03', t: 'Interactive Installations', d: 'Sensor- and motion-driven environments where the audience becomes part of the artwork.', get: 'Interaction design · sensor systems · real-time behavior', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster, mediaFull: INTERACTIVE_INSTALLATIONS_SVC.mediaFull },
       { n: '04', t: 'Immersive Audiovisual Environments', d: 'Full-room experiences uniting projection, spatial sound and lighting into one narrative.', get: 'Experiential direction · media integration · spatial audio', video: IMMERSIVE_AV.video, videoMobile: IMMERSIVE_AV.videoMobile, poster: IMMERSIVE_AV.poster },
       { n: '05', t: 'AI-Enhanced Creative Experiences', ai: true, d: 'Poetic immersive worlds and live installations — generative AI, data and audiences shaped into original art with intention, not automation for its own sake.', get: 'Concept Immersive · creative R&D · AI pipelines · bespoke artwork', video: AI_CONCEPT.video, videoMobile: AI_CONCEPT.videoMobile, poster: AI_CONCEPT.poster },
     ],
@@ -176,7 +177,7 @@
     services: [
       { n: '01', t: 'Videomapping Arquitectónico y de Gran Escala', d: 'Proyección en fachadas y sitios específicos que convierte edificios y espacios patrimoniales en lienzos vivos.', get: 'Concepto · contenido · montaje de alta luminosidad · calibración en sitio', video: ARCHITECTURAL_MAPPING.video, videoMobile: ARCHITECTURAL_MAPPING.videoMobile, poster: ARCHITECTURAL_MAPPING.poster },
       { n: '02', t: 'Sistemas Generativos y en Tiempo Real', d: 'TouchDesigner y motores a medida que generan visuales en vivo — reactivos, nunca iguales dos veces.', get: 'Desarrollo de motor · contenido generativo · show control', video: REAL_TIME_GENERATIVE.video, videoMobile: REAL_TIME_GENERATIVE.videoMobile, poster: REAL_TIME_GENERATIVE.poster },
-      { n: '03', t: 'Instalaciones Interactivas', d: 'Entornos accionados por sensores y movimiento donde la audiencia se vuelve parte de la obra.', get: 'Diseño de interacción · sistemas de sensores · comportamiento en tiempo real', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
+      { n: '03', t: 'Instalaciones Interactivas', d: 'Entornos accionados por sensores y movimiento donde la audiencia se vuelve parte de la obra.', get: 'Diseño de interacción · sistemas de sensores · comportamiento en tiempo real', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster, mediaFull: INTERACTIVE_INSTALLATIONS_SVC.mediaFull },
       { n: '04', t: 'Entornos Audiovisuales Inmersivos', d: 'Experiencias de sala completa que unen proyección, sonido espacial e iluminación en una sola narrativa.', get: 'Dirección experiencial · integración de medios · audio espacial', video: IMMERSIVE_AV.video, videoMobile: IMMERSIVE_AV.videoMobile, poster: IMMERSIVE_AV.poster },
       { n: '05', t: 'Experiencias Creativas Potenciadas con IA', ai: true, d: 'Mundos inmersivos poéticos e instalaciones en vivo — IA generativa, datos y audiencias con intención, no automatización por automatizar.', get: 'Concept Immersive · I+D creativa · pipelines de IA · obra a medida', video: AI_CONCEPT.video, videoMobile: AI_CONCEPT.videoMobile, poster: AI_CONCEPT.poster },
     ],
