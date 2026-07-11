@@ -1,0 +1,17 @@
+IMÁGENES — MUSEO DESCUBRE
+=========================
+
+Estas imágenes ya están conectadas a la página (index.html):
+
+  concept-overview.png      -> Sección "Dirección creativa" (infografía de zonas alrededor de OHM)
+  creative-direction.png    -> Sección "Dirección creativa" (render de propuesta inicial)
+  zones-diagram.png         -> Sección "Dirección creativa" (diagrama de salas)
+  floorplan.png             -> Sección "El museo" (plano del museo)
+  exp-happy-cloud.png       -> Experiencia "Happy Cloud Future"
+  exp-colours-of-life.png   -> Experiencia "Colours of Life"
+  exp-transcenders.png      -> Experiencia "The Game of Transcenders"
+  timeline.png              -> Sección "Desarrollo" (cronograma del proyecto)
+
+Para cambiar una imagen: reemplaza el archivo con el MISMO nombre.
+Para agregar más: súbelas aquí y dime qué sección/nombre quieres y las conecto.
+Formatos: .jpg/.webp/.png para fotos, .mp4 para video (~1600px de ancho).

@@ -74,7 +74,7 @@
     { id: 'plants', video: MULTI_SCREEN_INSTALL.video,       poster: MULTI_SCREEN_INSTALL.poster, url: 'https://airolax.com/work/biointerface-2.html' },
     { id: 'ajijic', video: 'PROJECTS/2.mp4',                 poster: 'Imagenes/ajijic-mapping.jpg', url: 'https://airolax.com/work/whispers-of-the-lake-digital-immersive-experience.html' },
     { id: 'ohm',   video: 'videos/ohm-laser-arp.mp4',       poster: 'Imagenes/OHM2.png',         url: 'https://airolax.com/work/ohm-interactive-laser-sculpture.html' },
-    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'https://airolax.com/work/museo-descubre.html' },
+    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'museo-descubre/index.html' },
     { id: 'santander', video: 'videos/conjunto-santander.mp4', poster: 'Imagenes/conjunto-santander-poster.jpg', url: 'https://airolax.com/work/breathing-space.html' },
   ];
 

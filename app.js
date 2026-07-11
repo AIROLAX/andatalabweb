@@ -198,9 +198,12 @@
       var card = el(linked ? 'a' : 'article', 'work-card' + (linked ? ' work-card--link' : ''));
       if (linked) {
         card.href = w.url;
-        card.target = '_blank';
-        card.rel = 'noopener noreferrer';
-        card.setAttribute('aria-label', w.t + ' — view project on AIROLAX');
+        var external = /^https?:\/\//i.test(w.url);
+        if (external) {
+          card.target = '_blank';
+          card.rel = 'noopener noreferrer';
+        }
+        card.setAttribute('aria-label', w.t + (external ? ' — view project on AIROLAX' : ' — view project'));
       } else {
         card.setAttribute('data-target', 's-contact');
       }

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Museo Descubre — Interactive Science Museum · Andata Lab</title>
+<meta name="description" content="Museo Descubre — creative direction and interactive systems by Andata Lab for the renovation of the science museum in Aguascalientes: themed zones, the central OHM installation and sensor-driven experiences.">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── Nav ── */
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; }
+  .nav-links a:hover{ color:var(--ink); }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  /* ── Back link ── */
+  .back{
+    position:fixed; top:calc(var(--nav-h) + 14px + var(--safe-t)); left:var(--pad); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2);
+    padding:9px 15px; border-radius:999px; background:rgba(255,255,255,.7);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), color .3s, box-shadow .3s;
+  }
+  .back:hover{ transform:translateY(-2px); color:var(--ink); box-shadow:var(--shadow-lift); }
+  .back svg{ width:15px; height:15px; }
+
+  /* ── Hero ── */
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:840px; }
+  .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#000; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
+  .hero-media video,.hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  /* ── Meta strip ── */
+  .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
+  .meta div{ background:var(--bg); padding:20px 22px; }
+  .meta dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .meta dd{ margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; color:var(--ink); }
+
+  /* ── Sections ── */
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+
+  /* ── Phases ── */
+  .phases{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .phase{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start; padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .phase:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .phase-n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:4px; }
+  .phase-when{ display:block; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-top:6px; }
+  .phase h3{ font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .phase p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  /* ── Tags ── */
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  /* ── Zone chips ── */
+  .zones{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:clamp(22px,3vw,32px); }
+  .zone{ padding:16px 18px; border-radius:var(--r-md); background:var(--surface); border:1px solid var(--hair-2); }
+  .zone b{ display:block; font-size:15px; font-weight:600; letter-spacing:-.01em; }
+  .zone span{ font-size:12.5px; color:var(--ink-3); }
+  .zone.zone--ohm{ background:var(--ink); border-color:var(--ink); }
+  .zone.zone--ohm b{ color:#fff; }
+  .zone.zone--ohm span{ color:rgba(255,255,255,.6); }
+
+  /* ── Plates (full concept images / diagrams with text) ── */
+  .plates{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:clamp(28px,4vw,44px); align-items:start; }
+  .plate{ margin:0; border-radius:var(--r-lg); overflow:hidden; background:var(--surface); border:1px solid var(--hair-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .plate:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .plate img{ width:100%; height:auto; }
+  .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); }
+  .plate--wide{ grid-column:1 / -1; }
+  .plate--wide img{ max-height:640px; object-fit:contain; background:var(--surface-2); }
+
+  /* ── Interactive experiences ── */
+  .exp-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:clamp(28px,4vw,44px); align-items:start; }
+  .exp{ border-radius:var(--r-lg); overflow:hidden; background:var(--bg); border:1px solid var(--hair-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .exp:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); }
+  .exp-img{ width:100%; aspect-ratio:1/1; object-fit:cover; background:#000; }
+  .exp-body{ padding:20px 22px 24px; }
+  .exp-body h3{ font-size:1.1rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .exp-body p{ font-size:.95rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  /* ── On-site gallery ── */
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .gallery{ grid-template-columns:1fr; } }
+  .shot{ position:relative; aspect-ratio:4/3; border-radius:var(--r-lg); overflow:hidden; background:var(--surface-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .shot:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot img,.shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); }
+  .shot:hover img,.shot:hover video{ transform:scale(1.05); }
+  .shot--wide{ grid-column:span 2; aspect-ratio:16/9; }
+  @media (max-width:560px){ .shot--wide{ grid-column:span 1; } }
+
+  /* ── Stats ── */
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .stat{ padding:28px 26px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .stat .big{ font-size:clamp(2rem,4vw,2.8rem); font-weight:800; letter-spacing:-.03em; line-height:1; }
+  .stat .cap{ margin-top:10px; font-size:14px; color:var(--ink-2); line-height:1.5; }
+
+  /* ── Credits ── */
+  .credits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .credit{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); }
+  .credit dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .credit dd{ margin:0; font-size:15px; font-weight:600; color:var(--ink); }
+
+  /* ── CTA ── */
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:520px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  /* ── Footer ── */
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  /* ── Reveal ── */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+</style>
+</head>
+<body data-brand="andata">
+
+  <header class="nav">
+    <a class="brand" href="../index.html" aria-label="Andata Lab">
+      <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
+      <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+    </nav>
+  </header>
+
+  <a class="back" href="../index.html#s-work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span data-i18n="back">Back to work</span>
+  </a>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-head reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Selected work · Interactive science museum</span></span>
+          <h1>Museo Descubre</h1>
+          <p class="hero-sub" data-i18n="hero_sub">Creative direction and interactive systems for the renovation of the Museo Descubre science museum in Aguascalientes — themed zones, a central kinetic installation and sensor-driven walls that turn science into something you touch, move and feel.</p>
+        </div>
+
+        <div class="hero-media reveal">
+          <video id="hero-video" autoplay muted loop playsinline poster="https://airolax.com/videos/museo/1.png">
+            <source src="https://airolax.com/videos/museo/C0087.MP4" type="video/mp4">
+          </video>
+        </div>
+
+        <dl class="meta reveal">
+          <div><dt data-i18n="m_client">Client</dt><dd>Museo Descubre</dd></div>
+          <div><dt data-i18n="m_partners">Partners</dt><dd>Gob. de Aguascalientes · Nissan · IPG Mediabrands</dd></div>
+          <div><dt data-i18n="m_role">Role</dt><dd data-i18n="m_role_v">Creative direction · Project management · Interactive art</dd></div>
+          <div><dt data-i18n="m_year">Year</dt><dd>2024</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="block">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_overview">Overview</span></span>
+          <h2 class="sec-title" data-i18n="overview_title">Science you can touch, move and play.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="overview_p1">We led the <strong>creative direction and project management</strong> for the renovation of Museo Descubre. The concept blends technology and education, reimagining the floor around a central kinetic installation — <strong>OHM</strong> — surrounded by themed science zones.</p>
+          <p data-i18n="overview_p2">Each room pairs a scientific theme with a hands-on, sensor-driven experience. Visitors don't just read about a concept — they trigger it, shape it and play with it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONCEPT & CREATIVE DIRECTION -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_concept">Creative direction</span></span>
+          <h2 class="sec-title" data-i18n="concept_title">The initial proposal.</h2>
+        </div>
+        <div class="plates reveal">
+          <figure class="plate"><img src="img/concept-overview.png" alt="Museo Descubre — concept overview with themed zones around the OHM installation" loading="lazy"><figcaption data-i18n="cap_overview">Zones and interactions mapped around the central OHM installation.</figcaption></figure>
+          <figure class="plate"><img src="img/creative-direction.png" alt="Museo Descubre — creative direction and initial proposal render" loading="lazy"><figcaption data-i18n="cap_direction">Initial concept proposal blending technology and education.</figcaption></figure>
+          <figure class="plate"><img src="img/zones-diagram.png" alt="Museo Descubre — diagram of the museum zones" loading="lazy"><figcaption data-i18n="cap_zones">Room-by-room layout of the experience.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONES -->
+    <section class="block">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_zones">The museum</span></span>
+          <h2 class="sec-title" data-i18n="zones_title">Zone by zone, around OHM.</h2>
+        </div>
+        <div>
+          <div class="zones">
+            <div class="zone zone--ohm"><b>OHM</b><span data-i18n="z_ohm">Central installation</span></div>
+            <div class="zone"><b data-i18n="z_space">Space Sciences</b><span>Ciencias del Espacio</span></div>
+            <div class="zone"><b data-i18n="z_earth">Earth Sciences</b><span>Ciencias de la Tierra</span></div>
+            <div class="zone"><b data-i18n="z_bio">Biology</b><span>Biología</span></div>
+            <div class="zone"><b data-i18n="z_phys">Physics</b><span>Física</span></div>
+            <div class="zone"><b data-i18n="z_tech">Technology</b><span>Tecnología</span></div>
+            <div class="zone"><b data-i18n="z_cine">Cinema Room</b><span>Sala de Cine</span></div>
+            <div class="zone"><b data-i18n="z_nissan">Nissan Room</b><span>Sala Nissan</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="plates reveal">
+          <figure class="plate plate--wide"><img src="img/floorplan.png" alt="Museo Descubre — floor plan of the museum zones" loading="lazy"><figcaption data-i18n="cap_floorplan">Floor plan — themed rooms arranged around the OHM core.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE EXPERIENCES -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_exp">Interactive experiences</span></span>
+          <h2 class="sec-title" data-i18n="exp_title">Walls that react to you.</h2>
+        </div>
+        <div class="exp-grid reveal">
+          <article class="exp">
+            <img class="exp-img" src="img/exp-happy-cloud.png" alt="Happy Cloud Future — immersive sky wall" loading="lazy">
+            <div class="exp-body"><h3>Happy Cloud Future</h3><p data-i18n="exp1">An immersive sky wall where you feel the colours of the sky — a sensory experience of touch, sound and light.</p></div>
+          </article>
+          <article class="exp">
+            <img class="exp-img" src="img/exp-colours-of-life.png" alt="Colours of Life — touch-activated sensor wall" loading="lazy">
+            <div class="exp-body"><h3>Colours of Life</h3><p data-i18n="exp2">A sensor wall that reacts to touch, using colour memory to spark dopamine and emotion.</p></div>
+          </article>
+          <article class="exp">
+            <img class="exp-img" src="img/exp-transcenders.png" alt="The Game of Transcenders — hand-sensor data experience" loading="lazy">
+            <div class="exp-body"><h3>The Game of Transcenders</h3><p data-i18n="exp3">Place your hand, a sensor activates the screen, and 3D graphics appear alongside live data shared by IPG Mediabrands.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVELOPMENT / TIMELINE -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_dev">Development</span></span>
+          <h2 class="sec-title" data-i18n="dev_title">From concept to open doors.</h2>
+        </div>
+        <div class="phases">
+          <div class="phase reveal"><div class="phase-n">01<span class="phase-when">Apr</span></div><div><h3 data-i18n="p1_t">Conceptualization</h3><p data-i18n="p1_d">Concept development — defining the narrative, the zones and how each exhibit teaches through interaction.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">02<span class="phase-when">Apr–May</span></div><div><h3 data-i18n="p2_t">Exhibit design</h3><p data-i18n="p2_d">Designing each room and interactive moment — from the OHM centerpiece to the sensor walls.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">03<span class="phase-when">May–Jun</span></div><div><h3 data-i18n="p3_t">Interactive elements &amp; hardware</h3><p data-i18n="p3_d">Building the interactive systems and producing the hardware — sensors, screens and custom electronics.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">04<span class="phase-when">May–Jul</span></div><div><h3 data-i18n="p4_t">Site preparation &amp; installation</h3><p data-i18n="p4_d">Preparing the space and installing exhibits on site, calibrated to the venue's geometry and lighting.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">05<span class="phase-when">Aug</span></div><div><h3 data-i18n="p5_t">Systems testing</h3><p data-i18n="p5_d">Stress-testing every system with real audiences and hardening it for continuous daily operation.</p></div></div>
+        </div>
+        <div class="plates reveal">
+          <figure class="plate plate--wide"><img src="img/timeline.png" alt="Museo Descubre — project timeline from April to August" loading="lazy"><figcaption data-i18n="cap_timeline">Project timeline — conceptualization, design &amp; production, installation and testing.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_tech">Technologies</span></span>
+          <h2 class="sec-title" data-i18n="tech_title">The stack behind the rooms.</h2>
+        </div>
+        <div class="tags reveal">
+          <span class="tag">Projection Mapping</span>
+          <span class="tag">Motion Tracking</span>
+          <span class="tag" data-i18n="t_touch">Touch Sensors</span>
+          <span class="tag">TouchDesigner</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">Unity3D</span>
+          <span class="tag" data-i18n="t_rt">Real-time Graphics</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ON SITE -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gallery">In the space</span></span>
+          <h2 class="sec-title" data-i18n="gallery_title">Live on the museum floor.</h2>
+        </div>
+        <div class="gallery reveal">
+          <div class="shot shot--wide">
+            <video autoplay muted loop playsinline poster="https://airolax.com/videos/museo/1.png">
+              <source src="https://airolax.com/videos/museo/C0087.MP4" type="video/mp4">
+            </video>
+          </div>
+          <div class="shot"><img src="https://airolax.com/videos/museo/1.png" alt="Museo Descubre — interactive wall" loading="lazy"></div>
+          <div class="shot"><img src="https://airolax.com/videos/museo/2.png" alt="Museo Descubre — projection" loading="lazy"></div>
+          <div class="shot"><img src="https://airolax.com/videos/museo/3.png" alt="Museo Descubre — experience" loading="lazy"></div>
+          <div class="shot"><img src="https://airolax.com/videos/museo/4.png" alt="Museo Descubre — installation" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_results">At a glance</span></span>
+          <h2 class="sec-title" data-i18n="results_title">A whole floor, reimagined.</h2>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><div class="big">8</div><div class="cap" data-i18n="s1_c">Themed zones, arranged around the central OHM installation.</div></div>
+          <div class="stat"><div class="big">3</div><div class="cap" data-i18n="s2_c">Signature interactive experiences driven by sensors.</div></div>
+          <div class="stat"><div class="big" data-i18n="s3_v">Real-time</div><div class="cap" data-i18n="s3_c">Visuals and screens that react instantly to touch and presence.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_credits">Credits</span></span>
+          <h2 class="sec-title" data-i18n="credits_title">Made by Andata Lab.</h2>
+        </div>
+        <dl class="credits reveal">
+          <div class="credit"><dt data-i18n="c_studio">Studio</dt><dd>Andata Lab</dd></div>
+          <div class="credit"><dt data-i18n="c_roles">Roles</dt><dd data-i18n="c_roles_v">Creative Director · Creative Project Manager · Interactive Artist</dd></div>
+          <div class="credit"><dt data-i18n="c_partners">Partners</dt><dd>Gob. de Aguascalientes · Nissan · IPG Mediabrands</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap reveal">
+        <div class="cta-panel">
+          <h2 data-i18n="cta_title">Have a space that should come alive?</h2>
+          <p data-i18n="cta_sub">We design and build immersive, interactive experiences for museums, brands and cultural spaces.</p>
+          <a class="btn" href="../index.html#s-contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+      <div class="foot-links">
+        <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
+        <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    'use strict';
+    var LANG_KEY = 'andata_lang';
+    var I18N = {
+      en: {
+        nav_work:'Work', nav_contact:'Contact', back:'Back to work',
+        eyebrow:'Selected work · Interactive science museum',
+        hero_sub:'Creative direction and interactive systems for the renovation of the Museo Descubre science museum in Aguascalientes — themed zones, a central kinetic installation and sensor-driven walls that turn science into something you touch, move and feel.',
+        m_client:'Client', m_partners:'Partners', m_role:'Role', m_role_v:'Creative direction · Project management · Interactive art', m_year:'Year',
+        e_overview:'Overview', overview_title:'Science you can touch, move and play.',
+        overview_p1:'We led the <strong>creative direction and project management</strong> for the renovation of Museo Descubre. The concept blends technology and education, reimagining the floor around a central kinetic installation — <strong>OHM</strong> — surrounded by themed science zones.',
+        overview_p2:'Each room pairs a scientific theme with a hands-on, sensor-driven experience. Visitors don\u2019t just read about a concept — they trigger it, shape it and play with it.',
+        e_concept:'Creative direction', concept_title:'The initial proposal.',
+        cap_overview:'Zones and interactions mapped around the central OHM installation.',
+        cap_direction:'Initial concept proposal blending technology and education.',
+        cap_zones:'Room-by-room layout of the experience.',
+        e_zones:'The museum', zones_title:'Zone by zone, around OHM.',
+        z_ohm:'Central installation', z_space:'Space Sciences', z_earth:'Earth Sciences', z_bio:'Biology', z_phys:'Physics', z_tech:'Technology', z_cine:'Cinema Room', z_nissan:'Nissan Room',
+        cap_floorplan:'Floor plan — themed rooms arranged around the OHM core.',
+        e_exp:'Interactive experiences', exp_title:'Walls that react to you.',
+        exp1:'An immersive sky wall where you feel the colours of the sky — a sensory experience of touch, sound and light.',
+        exp2:'A sensor wall that reacts to touch, using colour memory to spark dopamine and emotion.',
+        exp3:'Place your hand, a sensor activates the screen, and 3D graphics appear alongside live data shared by IPG Mediabrands.',
+        e_dev:'Development', dev_title:'From concept to open doors.',
+        p1_t:'Conceptualization', p1_d:'Concept development — defining the narrative, the zones and how each exhibit teaches through interaction.',
+        p2_t:'Exhibit design', p2_d:'Designing each room and interactive moment — from the OHM centerpiece to the sensor walls.',
+        p3_t:'Interactive elements & hardware', p3_d:'Building the interactive systems and producing the hardware — sensors, screens and custom electronics.',
+        p4_t:'Site preparation & installation', p4_d:'Preparing the space and installing exhibits on site, calibrated to the venue\u2019s geometry and lighting.',
+        p5_t:'Systems testing', p5_d:'Stress-testing every system with real audiences and hardening it for continuous daily operation.',
+        cap_timeline:'Project timeline — conceptualization, design & production, installation and testing.',
+        e_tech:'Technologies', tech_title:'The stack behind the rooms.', t_touch:'Touch Sensors', t_rt:'Real-time Graphics',
+        e_gallery:'In the space', gallery_title:'Live on the museum floor.',
+        e_results:'At a glance', results_title:'A whole floor, reimagined.',
+        s1_c:'Themed zones, arranged around the central OHM installation.',
+        s2_c:'Signature interactive experiences driven by sensors.',
+        s3_v:'Real-time', s3_c:'Visuals and screens that react instantly to touch and presence.',
+        e_credits:'Credits', credits_title:'Made by Andata Lab.',
+        c_studio:'Studio', c_roles:'Roles', c_roles_v:'Creative Director · Creative Project Manager · Interactive Artist', c_partners:'Partners',
+        cta_title:'Have a space that should come alive?', cta_sub:'We design and build immersive, interactive experiences for museums, brands and cultural spaces.', cta_btn:'Start a project',
+        rights:'All rights reserved.'
+      },
+      es: {
+        nav_work:'Proyectos', nav_contact:'Contacto', back:'Volver a proyectos',
+        eyebrow:'Proyecto destacado · Museo de ciencia interactivo',
+        hero_sub:'Dirección creativa y sistemas interactivos para la renovación del museo de ciencia Museo Descubre en Aguascalientes — zonas temáticas, una instalación cinética central y muros con sensores que convierten la ciencia en algo que se toca, se mueve y se siente.',
+        m_client:'Cliente', m_partners:'Aliados', m_role:'Rol', m_role_v:'Dirección creativa · Gestión de proyecto · Arte interactivo', m_year:'Año',
+        e_overview:'Resumen', overview_title:'Ciencia que se toca, se mueve y se juega.',
+        overview_p1:'Lideramos la <strong>dirección creativa y la gestión</strong> del proyecto de renovación del Museo Descubre. El concepto une tecnología y educación, reimaginando la sala alrededor de una instalación cinética central — <strong>OHM</strong> — rodeada de zonas temáticas de ciencia.',
+        overview_p2:'Cada sala combina un tema científico con una experiencia práctica accionada por sensores. El visitante no solo lee sobre un concepto — lo activa, lo transforma y juega con él.',
+        e_concept:'Dirección creativa', concept_title:'La propuesta inicial.',
+        cap_overview:'Zonas e interacciones mapeadas alrededor de la instalación central OHM.',
+        cap_direction:'Propuesta conceptual inicial que une tecnología y educación.',
+        cap_zones:'Distribución de la experiencia, sala por sala.',
+        e_zones:'El museo', zones_title:'Sala por sala, alrededor de OHM.',
+        z_ohm:'Instalación central', z_space:'Ciencias del Espacio', z_earth:'Ciencias de la Tierra', z_bio:'Biología', z_phys:'Física', z_tech:'Tecnología', z_cine:'Sala de Cine', z_nissan:'Sala Nissan',
+        cap_floorplan:'Plano — salas temáticas dispuestas alrededor del núcleo OHM.',
+        e_exp:'Experiencias interactivas', exp_title:'Muros que reaccionan a ti.',
+        exp1:'Un muro inmersivo donde sientes los colores del cielo — una experiencia sensorial de tacto, sonido e iluminación.',
+        exp2:'Un muro con sensores que reacciona al contacto, usando la memoria del color para activar dopamina y emoción.',
+        exp3:'Coloca tu mano, un sensor activa la pantalla y aparecen gráficas 3D junto a datos en vivo compartidos por IPG Mediabrands.',
+        e_dev:'Desarrollo', dev_title:'Del concepto a la apertura.',
+        p1_t:'Conceptualización', p1_d:'Desarrollo del concepto — definir la narrativa, las zonas y cómo cada exhibición enseña a través de la interacción.',
+        p2_t:'Diseño de exhibiciones', p2_d:'Diseño de cada sala y momento interactivo — desde la pieza central OHM hasta los muros con sensores.',
+        p3_t:'Elementos interactivos y hardware', p3_d:'Construcción de los sistemas interactivos y producción del hardware — sensores, pantallas y electrónica a medida.',
+        p4_t:'Preparación e instalación', p4_d:'Preparación del espacio e instalación de las exhibiciones en sitio, calibradas a la geometría y la luz del recinto.',
+        p5_t:'Pruebas de sistemas', p5_d:'Pruebas exhaustivas con público real y endurecimiento para operación diaria continua.',
+        cap_timeline:'Cronograma — conceptualización, diseño y producción, instalación y pruebas.',
+        e_tech:'Tecnologías', tech_title:'La tecnología detrás de las salas.', t_touch:'Sensores táctiles', t_rt:'Gráficos en tiempo real',
+        e_gallery:'En sala', gallery_title:'En vivo en el museo.',
+        e_results:'De un vistazo', results_title:'Una sala completa, reimaginada.',
+        s1_c:'Zonas temáticas dispuestas alrededor de la instalación central OHM.',
+        s2_c:'Experiencias interactivas insignia accionadas por sensores.',
+        s3_v:'Tiempo real', s3_c:'Visuales y pantallas que reaccionan al instante al tacto y la presencia.',
+        e_credits:'Créditos', credits_title:'Hecho por Andata Lab.',
+        c_studio:'Estudio', c_roles:'Roles', c_roles_v:'Director creativo · Project manager creativo · Artista interactivo', c_partners:'Aliados',
+        cta_title:'¿Tienes un espacio que debería cobrar vida?', cta_sub:'Diseñamos y construimos experiencias inmersivas e interactivas para museos, marcas y espacios culturales.', cta_btn:'Inicia un proyecto',
+        rights:'Todos los derechos reservados.'
+      }
+    };
+
+    function pickLang(){
+      var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+      if(saved==='en'||saved==='es') return saved;
+      return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+    }
+    var lang = pickLang();
+
+    function apply(){
+      var dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(function(node){
+        var k = node.getAttribute('data-i18n');
+        if(dict[k]!=null) node.innerHTML = dict[k];
+      });
+      var btn = document.getElementById('lang-toggle');
+      if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+    }
+    apply();
+
+    var toggle = document.getElementById('lang-toggle');
+    if(toggle) toggle.addEventListener('click', function(){
+      lang = (lang==='en') ? 'es' : 'en';
+      try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+      apply();
+    });
+
+    var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    var reveals = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+      reveals.forEach(function(r){ io.observe(r); });
+    } else {
+      reveals.forEach(function(r){ r.classList.add('in'); });
+    }
+  })();
+  </script>
+</body>
+</html>
