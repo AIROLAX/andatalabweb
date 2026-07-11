@@ -187,12 +187,7 @@
   function renderWork() {
     var host = $('#work-grid'); if (!host || !SITE.work) return;
     host.innerHTML = '';
-    var GRAD = [
-      'linear-gradient(135deg,#0a2740,#3CDCFF)',
-      'linear-gradient(135deg,#2a0a1e,#FF2E8A)',
-      'linear-gradient(135deg,#2a1605,#FF8A3C)',
-      'linear-gradient(135deg,#0c1a2a,#7a4cff)'
-    ];
+    var GRAD = ['#fff', '#fff', '#fff', '#fff'];
     SITE.work.forEach(function (w, i) {
       var linked = !!w.url;
       var card = el(linked ? 'a' : 'article', 'work-card' + (linked ? ' work-card--link' : ''));
@@ -207,27 +202,31 @@
       } else {
         card.setAttribute('data-target', 's-contact');
       }
+      var vids = w.videos ? w.videos.slice() : (w.video ? [w.video] : []);
+      var multi = vids.length > 1;
+      var loopAttr = multi ? '' : 'loop ';
+      var plAttr = multi ? "data-playlist='" + JSON.stringify(vids) + "' " : '';
       var mediaInner;
-      if (w.img && w.video) {
+      if (w.img && vids.length) {
         mediaInner =
           '<img class="work-img work-img-still" src="' + w.img + '" alt="" loading="lazy" aria-hidden="true" ' +
             'onerror="this.remove();">' +
-          '<video class="work-img work-img-vid lazy-vid" data-src="' + w.video + '" ' +
+          '<video class="work-img work-img-vid lazy-vid' + (multi ? ' multi-vid' : '') + '" data-src="' + vids[0] + '" ' + plAttr +
           (w.poster ? 'poster="' + w.poster + '" ' : '') +
-          'muted loop playsinline preload="none" ' +
+          'muted ' + loopAttr + 'playsinline preload="none" ' +
           'onerror="this.parentNode.classList.remove(\'work-media-stack\');this.remove();"></video>';
-      } else if (w.video) {
-        mediaInner = '<video class="work-img lazy-vid" data-src="' + w.video + '" ' +
+      } else if (vids.length) {
+        mediaInner = '<video class="work-img lazy-vid' + (multi ? ' multi-vid' : '') + '" data-src="' + vids[0] + '" ' + plAttr +
           (w.poster ? 'poster="' + w.poster + '" ' : '') +
-          'muted loop playsinline preload="none" ' +
+          'muted ' + loopAttr + 'playsinline preload="none" ' +
           'onerror="this.parentNode.style.background=\'' + GRAD[i % 4] + '\';this.remove();"></video>';
       } else if (w.img) {
         mediaInner = '<img class="work-img" src="' + w.img + '" alt="' + w.t + '" onerror="this.parentNode.style.background=\'' + GRAD[i % 4] + '\';this.remove();">';
       } else {
         mediaInner = '';
       }
-      var mediaCls = (w.img && w.video) ? ' work-media-stack' : '';
-      if (w.video) mediaCls += ' media--video-fs';
+      var mediaCls = (w.img && vids.length) ? ' work-media-stack' : '';
+      if (vids.length && !linked && !multi) mediaCls += ' media--video-fs';
       card.innerHTML =
         '<div class="work-media' + mediaCls + '" style="background:' + GRAD[i % 4] + '">' + mediaInner + '</div>' +
         '<div class="work-body">' +
@@ -479,8 +478,8 @@
         }).then(enterFs).catch(function () { restorePreview(); });
       }
 
-      media.addEventListener('click', openFullscreen);
       if (!inLink) {
+        media.addEventListener('click', openFullscreen);
         media.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') openFullscreen(e);
         });
@@ -564,8 +563,30 @@
     renderProcess();
     lazyVideoIO = null;
     bindLazyVideos();
+    bindVideoPlaylists();
     bindVideoFullscreen();
     bindCardTilt();
+  }
+
+  // Play a card's clips one after another (loops back to the first).
+  function bindVideoPlaylists() {
+    document.querySelectorAll('video.multi-vid[data-playlist]').forEach(function (v) {
+      if (v._plBound) return;
+      v._plBound = true;
+      var list;
+      try { list = JSON.parse(v.getAttribute('data-playlist')); } catch (e) { list = null; }
+      if (!list || list.length < 2) return;
+      v._plIndex = 0;
+      v.addEventListener('ended', function () {
+        v._plIndex = (v._plIndex + 1) % list.length;
+        var next = list[v._plIndex];
+        v.setAttribute('data-src', next);
+        v.setAttribute('src', next);
+        v.load();
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    });
   }
 
   /* ---------- i18n: static text + language toggle ---------- */

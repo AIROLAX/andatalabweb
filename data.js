@@ -67,14 +67,15 @@
 
   // Per-work shared assets (id, video, poster), text added per language
   var WORK_MEDIA = [
+    { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'biointerface/' },
+    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'museo-descubre/' },
+    { id: 'ajijic', videos: ['PROJECTS/2.mp4', ARCHITECTURAL_MAPPING.video], poster: 'Imagenes/architectural-mapping-poster.jpg', url: 'ajijic-mapping/' },
     { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png',       url: 'https://airolax.com/work/ethereal-motion-digital-poetry.html' },
-    { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'https://airolax.com/work/biointerface.html' },
     { id: 'tollan', video: 'videos/tollan-inmersivo.mp4',    poster: 'Imagenes/tollan-inmersivo-poster.jpg', url: 'https://www.salaguadalupemastache.space/' },
     { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg', url: 'https://airolax.com/work/thermosense.html' },
-    { id: 'plants', video: MULTI_SCREEN_INSTALL.video,       poster: MULTI_SCREEN_INSTALL.poster, url: 'https://airolax.com/work/biointerface-2.html' },
-    { id: 'ajijic', video: 'PROJECTS/2.mp4',                 poster: 'Imagenes/ajijic-mapping.jpg', url: 'https://airolax.com/work/whispers-of-the-lake-digital-immersive-experience.html' },
-    { id: 'ohm',   video: 'videos/ohm-laser-arp.mp4',       poster: 'Imagenes/OHM2.png',         url: 'https://airolax.com/work/ohm-interactive-laser-sculpture.html' },
-    { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'museo-descubre/index.html' },
+    { id: 'rtg',    video: REAL_TIME_GENERATIVE.video,       poster: REAL_TIME_GENERATIVE.poster, url: 'https://airolax.com/work/biointerface-2.html' },
+    { id: 'wavey',  video: INTERACTIVE_INSTALLATIONS_SVC.video, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
+    { id: 'ohm',   videos: ['videos/ohm-laser-arp.mp4', IMMERSIVE_AV.video], poster: 'Imagenes/OHM2.png', url: 'https://airolax.com/work/ohm-interactive-laser-sculpture.html' },
     { id: 'santander', video: 'videos/conjunto-santander.mp4', poster: 'Imagenes/conjunto-santander-poster.jpg', url: 'https://airolax.com/work/breathing-space.html' },
   ];
 
@@ -126,14 +127,15 @@
     ],
     servicesAccent: { h: 'Not sure where it fits?', p: "Bring us the space and the ambition. We'll shape the rest.", btn: 'Book a call →' },
     work: merge(WORK_MEDIA, [
-      { t: 'Particle System Art',    client: 'Generative Art Work',                        outcome: 'Bioluminescent fluid dynamics rendered as real-time generative art.' },
       { t: 'Biointerface',          client: 'Interactive AI Installation · Mexico City', outcome: 'Real-time biometric data translated into living digital art.' },
+      { t: 'Museo Descubre',         client: 'Interactive Museum · Aguascalientes',        outcome: 'Motion-tracked exhibits that made science learning physical.' },
+      { t: 'Ajijic Mapping',         client: 'Architectural & Large-Scale Mapping · Jalisco', outcome: 'Facade and site-specific projection mapping — a dual-projector intervention that turned heritage architecture into a living canvas of digital storytelling.' },
+      { t: 'Particle System Art',    client: 'Generative Art Work',                        outcome: 'Bioluminescent fluid dynamics rendered as real-time generative art.' },
       { t: 'Tollan Inmersivo',      client: 'Immersive Interpretation Room · Tula, Hidalgo', outcome: 'El Viaje del Héroe Tolteca — a five-act journey through Toltec civilization with 360° projection, kinetic interactives, immersive tunnel and VR.' },
       { t: 'Volumetric TouchScreen', client: 'Interactive Display · Mexico City',         outcome: 'A spatial, touch-driven narrative on a volumetric display.' },
-      { t: 'Interactive Multi-Screen Installation', client: 'Live Plants · Multi-Screen', outcome: 'An interactive botanical environment — screens, living plants and audience presence woven into one responsive installation.' },
-      { t: 'Ajijic Mapping',         client: 'Architectural Projection · Jalisco',         outcome: 'A dual-projector intervention blending heritage with digital storytelling.' },
-      { t: 'OHM',                    client: 'Interactive Laser Installation',             outcome: 'A circular chamber of laser light — spatial, interactive and built to be experienced in the round.' },
-      { t: 'Museo Descubre',         client: 'Interactive Museum · Aguascalientes',        outcome: 'Motion-tracked exhibits that made science learning physical.' },
+      { t: 'Real-Time & Generative Systems', client: 'Generative Systems · Multi-Screen', outcome: 'TouchDesigner and custom engines generating live visuals across a multi-screen installation — reactive, never the same twice.' },
+      { t: 'Wavey Interactive Installation', client: 'Interactive Installation',           outcome: 'A sensor- and motion-driven environment where the audience becomes part of the artwork.' },
+      { t: 'Ohm Sound Laser Sculpture', client: 'Immersive Laser Installation',            outcome: 'A circular chamber of laser light, spatial sound and projection — a full-room audiovisual sculpture experienced in the round.' },
       { t: 'Conjunto Santander',     client: 'Real-Time Generative Systems · Puebla',      outcome: 'A generative light column and floor grid for a live wellness experience — visuals driven in real time for Conjunto Santander.' },
     ]),
     process: [
@@ -182,14 +184,15 @@
     ],
     servicesAccent: { h: '¿No sabes dónde encaja?', p: 'Tráenos el espacio y la ambición. Nosotros damos forma al resto.', btn: 'Agenda una llamada →' },
     work: merge(WORK_MEDIA, [
-      { t: 'Arte con Sistemas de Partículas', client: 'Obra de Arte Generativo',                         outcome: 'Dinámica de fluidos bioluminiscente renderizada como arte generativo en tiempo real.' },
       { t: 'Biointerfaz',                   client: 'Instalación Interactiva con IA · Ciudad de México', outcome: 'Datos biométricos en tiempo real traducidos en arte digital vivo.' },
+      { t: 'Museo Descubre',                client: 'Museo Interactivo · Aguascalientes',                outcome: 'Exhibiciones con seguimiento de movimiento que hicieron físico el aprendizaje de la ciencia.' },
+      { t: 'Mapping en Ajijic',             client: 'Videomapping Arquitectónico y de Gran Escala · Jalisco', outcome: 'Videomapping en fachada y sitio específico — una intervención de doble proyector que convirtió la arquitectura patrimonial en un lienzo vivo de narrativa digital.' },
+      { t: 'Arte con Sistemas de Partículas', client: 'Obra de Arte Generativo',                         outcome: 'Dinámica de fluidos bioluminiscente renderizada como arte generativo en tiempo real.' },
       { t: 'Tollan Inmersivo',              client: 'Sala de Interpretación Guadalupe Mastache · Tula, Hidalgo', outcome: 'El Viaje del Héroe Tolteca — cinco actos que recorren cosmos, apogeo, caída y trascendencia con proyección 360°, túnel inmersivo y VR.' },
       { t: 'Pantalla Táctil Volumétrica',   client: 'Pantalla Interactiva · Ciudad de México',           outcome: 'Una narrativa espacial y táctil en una pantalla volumétrica.' },
-      { t: 'Instalación Multi-Pantalla Interactiva', client: 'Plantas Vivas · Multi-Pantalla', outcome: 'Un entorno botánico interactivo — pantallas, plantas vivas y presencia de la audiencia en una sola instalación responsiva.' },
-      { t: 'Mapping en Ajijic',             client: 'Proyección Arquitectónica · Jalisco',               outcome: 'Una intervención de doble proyector que fusiona patrimonio y narrativa digital.' },
-      { t: 'OHM',                           client: 'Instalación Láser Interactiva',                     outcome: 'Una cámara circular de luz láser — espacial, interactiva y hecha para vivirse desde adentro.' },
-      { t: 'Museo Descubre',                client: 'Museo Interactivo · Aguascalientes',                outcome: 'Exhibiciones con seguimiento de movimiento que hicieron físico el aprendizaje de la ciencia.' },
+      { t: 'Sistemas Generativos y en Tiempo Real', client: 'Sistemas Generativos · Multi-Pantalla', outcome: 'TouchDesigner y motores a medida generando visuales en vivo en una instalación multi-pantalla — reactivos, nunca iguales dos veces.' },
+      { t: 'Wavey Interactive Installation', client: 'Instalación Interactiva',                          outcome: 'Un entorno accionado por sensores y movimiento donde la audiencia se vuelve parte de la obra.' },
+      { t: 'Ohm Sound Laser Sculpture',     client: 'Instalación Láser Inmersiva',                       outcome: 'Una cámara circular de luz láser, sonido espacial y proyección — una escultura audiovisual de sala completa vivida desde adentro.' },
       { t: 'Conjunto Santander',            client: 'Sistemas Generativos en Tiempo Real · Puebla',      outcome: 'Columna de luz generativa y piso en grid para una experiencia de bienestar en vivo — visuales en tiempo real para Conjunto Santander.' },
     ]),
     process: [

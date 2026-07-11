@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Biointerface — AI + Interactive Art · Andata Lab</title>
+<meta name="description" content="Biointerface — an interactive installation by Andata Lab bridging AI, biological data and digital art: capacitive plant sensors, Kinect and a real-time TouchDesigner engine driving a multi-screen environment.">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── Nav ── */
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; }
+  .nav-links a:hover{ color:var(--ink); }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  /* ── Back link ── */
+  .back{
+    position:fixed; top:calc(var(--nav-h) + 14px + var(--safe-t)); left:var(--pad); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2);
+    padding:9px 15px; border-radius:999px; background:rgba(255,255,255,.7);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), color .3s, box-shadow .3s;
+  }
+  .back:hover{ transform:translateY(-2px); color:var(--ink); box-shadow:var(--shadow-lift); }
+  .back svg{ width:15px; height:15px; }
+
+  /* ── Hero ── */
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:840px; }
+  .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#000; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
+  .hero-media video,.hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  /* ── Meta strip ── */
+  .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
+  .meta div{ background:var(--bg); padding:20px 22px; }
+  .meta dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .meta dd{ margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; color:var(--ink); }
+
+  /* ── Sections ── */
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+
+  /* ── Phases ── */
+  .phases{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .phase{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start; padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .phase:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .phase-n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:4px; }
+  .phase h3{ font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .phase p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  /* ── Tags ── */
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  /* ── Plates (diagrams with text shown in full) ── */
+  .plates{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:clamp(28px,4vw,44px); align-items:start; }
+  .plate{ margin:0; border-radius:var(--r-lg); overflow:hidden; background:var(--surface); border:1px solid var(--hair-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .plate:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .plate img{ width:100%; height:auto; background:#fff; }
+  .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); }
+  .plate--wide{ grid-column:1 / -1; }
+  .plate--wide img{ max-height:620px; object-fit:contain; background:#fff; }
+
+  /* ── Gallery ── */
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .gallery{ grid-template-columns:1fr; } }
+  .shot{ position:relative; aspect-ratio:4/3; border-radius:var(--r-lg); overflow:hidden; background:var(--surface-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .shot:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot img,.shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); }
+  .shot:hover img,.shot:hover video{ transform:scale(1.05); }
+  .shot--wide{ grid-column:span 2; aspect-ratio:16/9; }
+  @media (max-width:560px){ .shot--wide{ grid-column:span 1; } }
+
+  /* ── Stats ── */
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .stat{ padding:28px 26px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .stat .big{ font-size:clamp(2rem,4vw,2.8rem); font-weight:800; letter-spacing:-.03em; line-height:1; }
+  .stat .cap{ margin-top:10px; font-size:14px; color:var(--ink-2); line-height:1.5; }
+
+  /* ── Credits ── */
+  .credits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .credit{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); }
+  .credit dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .credit dd{ margin:0; font-size:15px; font-weight:600; color:var(--ink); }
+
+  /* ── CTA ── */
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:520px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  /* ── Footer ── */
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  /* ── Reveal ── */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+</style>
+</head>
+<body data-brand="andata">
+
+  <header class="nav">
+    <a class="brand" href="../index.html" aria-label="Andata Lab">
+      <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
+      <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+    </nav>
+  </header>
+
+  <a class="back" href="../index.html#s-work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span data-i18n="back">Back to work</span>
+  </a>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-head reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Selected work · AI + interactive art</span></span>
+          <h1>Biointerface</h1>
+          <p class="hero-sub" data-i18n="hero_sub">An interactive installation at the intersection of AI, biological data and digital art — where living plants become capacitive instruments and the audience's touch drives a real-time, multi-screen environment.</p>
+        </div>
+
+        <div class="hero-media reveal">
+          <video id="hero-video" autoplay muted loop playsinline poster="https://airolax.com/videos/BIOINTERFACE/1.JPG">
+            <source src="https://airolax.com/videos/compressed/pro1.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <dl class="meta reveal">
+          <div><dt data-i18n="m_studio">Studio</dt><dd>Andata Lab</dd></div>
+          <div><dt data-i18n="m_disc">Discipline</dt><dd data-i18n="m_disc_v">AI + interactive installation</dd></div>
+          <div><dt data-i18n="m_stack">Stack</dt><dd>TouchDesigner · Sensors</dd></div>
+          <div><dt data-i18n="m_year">Year</dt><dd>2024</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="block">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_overview">Overview</span></span>
+          <h2 class="sec-title" data-i18n="overview_title">Where biology meets the machine.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="overview_p1">Biointerface explores the bridge between <strong>artificial intelligence, biological data and digital art</strong>. Living plants are wired as capacitive sensors, so a visitor's touch — and their own physiology — becomes the input that shapes the visuals.</p>
+          <p data-i18n="overview_p2">A real-time engine turns that data into a responsive, ever-changing environment projected across a multi-screen canvas — a living dialogue between human, plant and machine.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS / SYSTEM -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_system">How it works</span></span>
+          <h2 class="sec-title" data-i18n="system_title">From touch to visuals, in real time.</h2>
+        </div>
+        <div class="plates reveal">
+          <figure class="plate plate--wide"><img src="img/system-architecture.png" alt="Biointerface system architecture — inputs, interactive processing and output mapping" loading="lazy"><figcaption data-i18n="cap_arch">System architecture — inputs, real-time processing and output mapping.</figcaption></figure>
+          <figure class="plate"><img src="img/signal-flow.png" alt="Biointerface signal flow — sensors to interactive visuals and output" loading="lazy"><figcaption data-i18n="cap_flow">Signal flow — from sensors and data to interactive visuals and output.</figcaption></figure>
+          <figure class="plate"><img src="img/touchdesigner-nodes.png" alt="Biointerface TouchDesigner node network" loading="lazy"><figcaption data-i18n="cap_nodes">Inside TouchDesigner — sensor input mapped through the node network to the output.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEVELOPMENT -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_dev">Development</span></span>
+          <h2 class="sec-title" data-i18n="dev_title">How it was built.</h2>
+        </div>
+        <div class="phases">
+          <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Concept &amp; sensing</h3><p data-i18n="p1_d">Defining the bridge between biological data and digital art — and choosing how to sense it: capacitive touch on living plants, Kinect and camera input.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Sensor system &amp; hardware</h3><p data-i18n="p2_d">Wiring plants as capacitive inputs through Playtron / Bare Conductive boards, with USB active extensions running back to a second-floor show-control machine.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Real-time engine</h3><p data-i18n="p3_d">A TouchDesigner network — Constant, Circle, LFO, Movie File In — plus a GLSL shader content switcher with noise and feedback, all mapped from sensor and MIDI/OSC data.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Multi-screen mapping</h3><p data-i18n="p4_d">Compositing onto a three-screen canvas (3240 × 1920 px) and routing to LED screens, main screen, floor particles and the AI station via NDI / Spout.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">05</div><div><h3 data-i18n="p5_t">Install &amp; show control</h3><p data-i18n="p5_d">On-site assembly of the touch tables and hanging plants, second-floor show control, calibration and testing with real audiences.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECHNICAL / SETUP -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_tech_plan">The build</span></span>
+          <h2 class="sec-title" data-i18n="tech_plan_title">Screens, sensors and wiring.</h2>
+        </div>
+        <div class="plates reveal">
+          <figure class="plate plate--wide"><img src="img/screen-plan.png" alt="Biointerface technical plan — three-screen canvas 3240x1920" loading="lazy"><figcaption data-i18n="cap_plan">Technical plan — a three-screen canvas, 3240 × 1920 px.</figcaption></figure>
+          <figure class="plate"><img src="img/install-layout.png" alt="Biointerface installation layout — touch tables, plants and show control" loading="lazy"><figcaption data-i18n="cap_layout">Installation layout — touch tables, hanging plants and second-floor show control.</figcaption></figure>
+          <figure class="plate"><img src="img/wiring-diagram.png" alt="Biointerface wiring — plants through Playtron to show control and LED screens" loading="lazy"><figcaption data-i18n="cap_wiring">Wiring — plants as capacitive inputs through Playtron to show control and the LED screens.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECH TAGS -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_tech">Technologies</span></span>
+          <h2 class="sec-title" data-i18n="tech_title">The stack behind Biointerface.</h2>
+        </div>
+        <div class="tags reveal">
+          <span class="tag">TouchDesigner</span>
+          <span class="tag" data-i18n="t_glsl">GLSL Shaders</span>
+          <span class="tag">Kinect</span>
+          <span class="tag" data-i18n="t_cap">Capacitive Touch Sensors</span>
+          <span class="tag">MIDI / OSC</span>
+          <span class="tag">NDI / Spout</span>
+          <span class="tag" data-i18n="t_ml">Machine Learning</span>
+          <span class="tag">Python · OpenCV</span>
+          <span class="tag" data-i18n="t_rt">Real-time Graphics</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gallery">In the space</span></span>
+          <h2 class="sec-title" data-i18n="gallery_title">Inside the installation.</h2>
+        </div>
+        <div class="gallery reveal">
+          <div class="shot shot--wide"><img src="img/render-room.png" alt="Biointerface — forest screens and glowing touch tables" loading="lazy"></div>
+          <div class="shot"><img src="img/render-people.png" alt="Biointerface — visitors interacting with the plant pedestals" loading="lazy"></div>
+          <div class="shot">
+            <video autoplay muted loop playsinline poster="https://airolax.com/videos/BIOINTERFACE/1.JPG">
+              <source src="https://airolax.com/videos/BIOINTERFACE/F5.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="shot"><img src="https://airolax.com/videos/BIOINTERFACE/F1.jpg" alt="Biointerface — process F1" loading="lazy"></div>
+          <div class="shot"><img src="https://airolax.com/videos/BIOINTERFACE/F2.jpg" alt="Biointerface — process F2" loading="lazy"></div>
+          <div class="shot"><img src="https://airolax.com/videos/BIOINTERFACE/F3.jpg" alt="Biointerface — process F3" loading="lazy"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_results">At a glance</span></span>
+          <h2 class="sec-title" data-i18n="results_title">A living, responsive system.</h2>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><div class="big" data-i18n="s1_v">Plants</div><div class="cap" data-i18n="s1_c">Living plants wired as capacitive touch instruments.</div></div>
+          <div class="stat"><div class="big">3</div><div class="cap" data-i18n="s2_c">A three-screen canvas, 3240 × 1920 px, driven live.</div></div>
+          <div class="stat"><div class="big" data-i18n="s3_v">Real-time</div><div class="cap" data-i18n="s3_c">Visuals generated on the fly from sensor and biometric data.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_credits">Credits</span></span>
+          <h2 class="sec-title" data-i18n="credits_title">Made by Andata Lab.</h2>
+        </div>
+        <dl class="credits reveal">
+          <div class="credit"><dt data-i18n="c_studio">Studio</dt><dd>Andata Lab</dd></div>
+          <div class="credit"><dt data-i18n="c_disc">Disciplines</dt><dd data-i18n="c_disc_v">Interactive art · Real-time systems</dd></div>
+          <div class="credit"><dt data-i18n="c_tech">Engineering</dt><dd data-i18n="c_tech_v">TouchDesigner · Sensors · Show control</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap reveal">
+        <div class="cta-panel">
+          <h2 data-i18n="cta_title">Have a space that should come alive?</h2>
+          <p data-i18n="cta_sub">We design and build immersive, interactive experiences for museums, brands and cultural spaces.</p>
+          <a class="btn" href="../index.html#s-contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+      <div class="foot-links">
+        <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
+        <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    'use strict';
+    var LANG_KEY = 'andata_lang';
+    var I18N = {
+      en: {
+        nav_work:'Work', nav_contact:'Contact', back:'Back to work',
+        eyebrow:'Selected work · AI + interactive art',
+        hero_sub:'An interactive installation at the intersection of AI, biological data and digital art — where living plants become capacitive instruments and the audience\u2019s touch drives a real-time, multi-screen environment.',
+        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'AI + interactive installation', m_stack:'Stack', m_year:'Year',
+        e_overview:'Overview', overview_title:'Where biology meets the machine.',
+        overview_p1:'Biointerface explores the bridge between <strong>artificial intelligence, biological data and digital art</strong>. Living plants are wired as capacitive sensors, so a visitor\u2019s touch — and their own physiology — becomes the input that shapes the visuals.',
+        overview_p2:'A real-time engine turns that data into a responsive, ever-changing environment projected across a multi-screen canvas — a living dialogue between human, plant and machine.',
+        e_system:'How it works', system_title:'From touch to visuals, in real time.',
+        cap_arch:'System architecture — inputs, real-time processing and output mapping.',
+        cap_flow:'Signal flow — from sensors and data to interactive visuals and output.',
+        cap_nodes:'Inside TouchDesigner — sensor input mapped through the node network to the output.',
+        e_dev:'Development', dev_title:'How it was built.',
+        p1_t:'Concept & sensing', p1_d:'Defining the bridge between biological data and digital art — and choosing how to sense it: capacitive touch on living plants, Kinect and camera input.',
+        p2_t:'Sensor system & hardware', p2_d:'Wiring plants as capacitive inputs through Playtron / Bare Conductive boards, with USB active extensions running back to a second-floor show-control machine.',
+        p3_t:'Real-time engine', p3_d:'A TouchDesigner network — Constant, Circle, LFO, Movie File In — plus a GLSL shader content switcher with noise and feedback, all mapped from sensor and MIDI/OSC data.',
+        p4_t:'Multi-screen mapping', p4_d:'Compositing onto a three-screen canvas (3240 × 1920 px) and routing to LED screens, main screen, floor particles and the AI station via NDI / Spout.',
+        p5_t:'Install & show control', p5_d:'On-site assembly of the touch tables and hanging plants, second-floor show control, calibration and testing with real audiences.',
+        e_tech_plan:'The build', tech_plan_title:'Screens, sensors and wiring.',
+        cap_plan:'Technical plan — a three-screen canvas, 3240 × 1920 px.',
+        cap_layout:'Installation layout — touch tables, hanging plants and second-floor show control.',
+        cap_wiring:'Wiring — plants as capacitive inputs through Playtron to show control and the LED screens.',
+        e_tech:'Technologies', tech_title:'The stack behind Biointerface.', t_glsl:'GLSL Shaders', t_cap:'Capacitive Touch Sensors', t_ml:'Machine Learning', t_rt:'Real-time Graphics',
+        e_gallery:'In the space', gallery_title:'Inside the installation.',
+        e_results:'At a glance', results_title:'A living, responsive system.',
+        s1_v:'Plants', s1_c:'Living plants wired as capacitive touch instruments.',
+        s2_c:'A three-screen canvas, 3240 × 1920 px, driven live.',
+        s3_v:'Real-time', s3_c:'Visuals generated on the fly from sensor and biometric data.',
+        e_credits:'Credits', credits_title:'Made by Andata Lab.',
+        c_studio:'Studio', c_disc:'Disciplines', c_disc_v:'Interactive art · Real-time systems', c_tech:'Engineering', c_tech_v:'TouchDesigner · Sensors · Show control',
+        cta_title:'Have a space that should come alive?', cta_sub:'We design and build immersive, interactive experiences for museums, brands and cultural spaces.', cta_btn:'Start a project',
+        rights:'All rights reserved.'
+      },
+      es: {
+        nav_work:'Proyectos', nav_contact:'Contacto', back:'Volver a proyectos',
+        eyebrow:'Proyecto destacado · IA + arte interactivo',
+        hero_sub:'Una instalación interactiva en la intersección de la IA, los datos biológicos y el arte digital — donde plantas vivas se vuelven instrumentos capacitivos y el tacto del público mueve un entorno multi-pantalla en tiempo real.',
+        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Instalación IA + interactiva', m_stack:'Stack', m_year:'Año',
+        e_overview:'Resumen', overview_title:'Donde la biología encuentra a la máquina.',
+        overview_p1:'Biointerface explora el puente entre <strong>inteligencia artificial, datos biológicos y arte digital</strong>. Las plantas vivas se cablean como sensores capacitivos, así que el tacto del visitante — y su propia fisiología — se vuelve la entrada que da forma a los visuales.',
+        overview_p2:'Un motor en tiempo real convierte esos datos en un entorno reactivo y siempre cambiante proyectado en un lienzo multi-pantalla — un diálogo vivo entre humano, planta y máquina.',
+        e_system:'Cómo funciona', system_title:'Del tacto a los visuales, en tiempo real.',
+        cap_arch:'Arquitectura del sistema — entradas, procesamiento en tiempo real y mapeo de salida.',
+        cap_flow:'Flujo de señal — de sensores y datos a visuales interactivos y salida.',
+        cap_nodes:'Dentro de TouchDesigner — la entrada de sensores mapeada por la red de nodos hacia la salida.',
+        e_dev:'Desarrollo', dev_title:'Cómo se construyó.',
+        p1_t:'Concepto y sensado', p1_d:'Definir el puente entre datos biológicos y arte digital — y cómo sensarlo: tacto capacitivo en plantas vivas, Kinect y cámara.',
+        p2_t:'Sistema de sensores y hardware', p2_d:'Cablear las plantas como entradas capacitivas vía placas Playtron / Bare Conductive, con extensiones USB activas hasta el show-control del segundo piso.',
+        p3_t:'Motor en tiempo real', p3_d:'Una red en TouchDesigner — Constant, Circle, LFO, Movie File In — más un content switcher con shader GLSL, ruido y feedback, todo mapeado desde datos de sensores y MIDI/OSC.',
+        p4_t:'Mapeo multi-pantalla', p4_d:'Composición sobre un lienzo de tres pantallas (3240 × 1920 px) y ruteo a pantallas LED, pantalla principal, partículas de piso y la estación de IA vía NDI / Spout.',
+        p5_t:'Montaje y show control', p5_d:'Ensamble en sitio de las mesas táctiles y plantas colgantes, show control en el segundo piso, calibración y pruebas con público real.',
+        e_tech_plan:'El montaje', tech_plan_title:'Pantallas, sensores y cableado.',
+        cap_plan:'Plan técnico — un lienzo de tres pantallas, 3240 × 1920 px.',
+        cap_layout:'Montaje — mesas táctiles, plantas colgantes y show control en el segundo piso.',
+        cap_wiring:'Cableado — plantas como entradas capacitivas vía Playtron hacia show control y las pantallas LED.',
+        e_tech:'Tecnologías', tech_title:'La tecnología detrás de Biointerface.', t_glsl:'Shaders GLSL', t_cap:'Sensores táctiles capacitivos', t_ml:'Machine Learning', t_rt:'Gráficos en tiempo real',
+        e_gallery:'En sala', gallery_title:'Dentro de la instalación.',
+        e_results:'De un vistazo', results_title:'Un sistema vivo y reactivo.',
+        s1_v:'Plantas', s1_c:'Plantas vivas cableadas como instrumentos táctiles capacitivos.',
+        s2_c:'Un lienzo de tres pantallas, 3240 × 1920 px, movido en vivo.',
+        s3_v:'Tiempo real', s3_c:'Visuales generados al vuelo a partir de datos de sensores y biométricos.',
+        e_credits:'Créditos', credits_title:'Hecho por Andata Lab.',
+        c_studio:'Estudio', c_disc:'Disciplinas', c_disc_v:'Arte interactivo · Sistemas en tiempo real', c_tech:'Ingeniería', c_tech_v:'TouchDesigner · Sensores · Show control',
+        cta_title:'¿Tienes un espacio que debería cobrar vida?', cta_sub:'Diseñamos y construimos experiencias inmersivas e interactivas para museos, marcas y espacios culturales.', cta_btn:'Inicia un proyecto',
+        rights:'Todos los derechos reservados.'
+      }
+    };
+
+    function pickLang(){
+      var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+      if(saved==='en'||saved==='es') return saved;
+      return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+    }
+    var lang = pickLang();
+
+    function apply(){
+      var dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(function(node){
+        var k = node.getAttribute('data-i18n');
+        if(dict[k]!=null) node.innerHTML = dict[k];
+      });
+      var btn = document.getElementById('lang-toggle');
+      if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+    }
+    apply();
+
+    var toggle = document.getElementById('lang-toggle');
+    if(toggle) toggle.addEventListener('click', function(){
+      lang = (lang==='en') ? 'es' : 'en';
+      try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+      apply();
+    });
+
+    var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    var reveals = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+      reveals.forEach(function(r){ io.observe(r); });
+    } else {
+      reveals.forEach(function(r){ r.classList.add('in'); });
+    }
+  })();
+  </script>
+</body>
+</html>

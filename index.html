@@ -338,7 +338,7 @@
   a.work-card--link{ display:block; text-decoration:none; color:inherit; }
   .work-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-lift); }
   .work-card.tilt-active{ transition:transform .08s ease-out, box-shadow .35s; }
-  .work-media{ position:relative; height:236px; overflow:hidden; background:#ececed; }
+  .work-media{ position:relative; height:236px; overflow:hidden; background:#fff; }
   .work-media-stack{ display:flex; flex-direction:column; height:280px; }
   .work-media-stack .work-img-still{ flex:0 0 50%; width:100%; height:50%; min-height:0; object-fit:cover; display:block; }
   .work-media-stack .work-img-vid{ flex:0 0 50%; width:100%; height:50%; min-height:0; object-fit:cover; display:block; }
@@ -639,7 +639,7 @@
     border-right-width:1.2px; border-bottom-width:1.2px;
   }
   .is-mobile .card-media video,.is-mobile .work-media video{
-    background:#ececed;
+    background:#fff;
     object-fit:cover;
   }
   .is-mobile .statement-panel{ border-radius:20px; padding:clamp(28px,6vw,48px); cursor:default; background:#06070d; }
@@ -759,14 +759,6 @@
         <h2 class="sec-title" data-i18n="work_title">Built, staged and running.</h2>
       </div>
       <div class="grid grid-2" id="work-grid"></div>
-
-      <div class="work-showcase-capabilities services">
-        <div class="sec-head">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" style="color:var(--ink-3)" data-i18n="services_eyebrow">What we do</span></span>
-          <h2 class="sec-title" data-i18n="services_title">Built for spaces, audiences and stories.</h2>
-        </div>
-        <div class="grid grid-3" id="services-grid"></div>
-      </div>
     </div>
   </section>
 
