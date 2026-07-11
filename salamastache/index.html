@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Tollan Inmersivo · Sala Guadalupe Mastache — Andata Lab</title>
+<meta name="description" content="Tollan Inmersivo — El Viaje del Héroe Tolteca. Propuesta de experiencia inmersiva por Andata Lab para la Sala de Interpretación Guadalupe Mastache, Tula, Hidalgo.">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+
+<!-- Open Graph / social preview so the link looks good when shared -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:title" content="Tollan Inmersivo · El Viaje del Héroe Tolteca">
+<meta property="og:description" content="Experiencia inmersiva en cinco actos: proyección 360°, kinética, túnel inmersivo y VR para la Sala Guadalupe Mastache, Tula.">
+<meta property="og:url" content="https://andatalab.com/salamastache/">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  html,body{ margin:0; padding:0; height:100%; background:#000; overflow:hidden; }
+  #frame{ position:fixed; inset:0; width:100%; height:100%; border:0; display:block; }
+  /* Loading splash shown until the iframe finishes loading */
+  #splash{
+    position:fixed; inset:0; z-index:2; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:18px; background:#050608; color:#e9e6df;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    transition:opacity .6s ease; text-align:center; padding:24px;
+  }
+  #splash.hide{ opacity:0; pointer-events:none; }
+  .sp-title{ font-size:clamp(1.4rem,4vw,2.2rem); font-weight:800; letter-spacing:.06em; }
+  .sp-sub{ font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#8a8578; }
+  .sp-ring{ width:34px; height:34px; border-radius:50%; border:3px solid rgba(255,255,255,.15); border-top-color:#c9a24b; animation:spin 1s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+  <div id="splash">
+    <div class="sp-ring"></div>
+    <div class="sp-title">TOLLAN&nbsp;INMERSIVO</div>
+    <div class="sp-sub">Cargando experiencia…</div>
+  </div>
+
+  <iframe
+    id="frame"
+    src="https://www.salaguadalupemastache.space/"
+    title="Tollan Inmersivo · Sala Guadalupe Mastache"
+    allow="autoplay; fullscreen; accelerometer; gyroscope; magnetometer; xr-spatial-tracking; camera; microphone"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+  <script>
+    (function(){
+      var frame = document.getElementById('frame');
+      var splash = document.getElementById('splash');
+      function hide(){ if(splash){ splash.classList.add('hide'); setTimeout(function(){ if(splash&&splash.parentNode) splash.parentNode.removeChild(splash); }, 700); } }
+      frame.addEventListener('load', hide);
+      // Fallback in case the load event is missed
+      setTimeout(hide, 6000);
+    })();
+  </script>
+</body>
+</html>

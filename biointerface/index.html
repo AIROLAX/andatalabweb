@@ -63,8 +63,9 @@
   .hero-head{ max-width:840px; }
   .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
   .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
-  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#000; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
-  .hero-media video,.hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#0b1020; height:min(70vh,620px); box-shadow:var(--shadow-lift); display:flex; align-items:center; justify-content:center; }
+  .hero-media .hero-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(30px) brightness(.55) saturate(1.15); transform:scale(1.12); }
+  .hero-media .hero-fg{ position:relative; z-index:1; height:100%; width:auto; max-width:100%; object-fit:contain; }
 
   /* ── Meta strip ── */
   .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
@@ -150,17 +151,17 @@
 <body data-brand="andata">
 
   <header class="nav">
-    <a class="brand" href="../index.html" aria-label="Andata Lab">
+    <a class="brand" href="../" aria-label="Andata Lab">
       <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
     </a>
     <nav class="nav-links">
-      <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
-      <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+      <a href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../#contact" data-i18n="nav_contact">Contact</a>
       <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
     </nav>
   </header>
 
-  <a class="back" href="../index.html#s-work">
+  <a class="back" href="../#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <span data-i18n="back">Back to work</span>
   </a>
@@ -176,7 +177,8 @@
         </div>
 
         <div class="hero-media reveal">
-          <video id="hero-video" autoplay muted loop playsinline poster="https://airolax.com/videos/BIOINTERFACE/1.JPG">
+          <img class="hero-bg" src="https://airolax.com/videos/BIOINTERFACE/1.JPG" alt="" aria-hidden="true">
+          <video id="hero-video" class="hero-fg" autoplay muted loop playsinline poster="https://airolax.com/videos/BIOINTERFACE/1.JPG">
             <source src="https://airolax.com/videos/compressed/pro1.mp4" type="video/mp4">
           </video>
         </div>
@@ -212,7 +214,6 @@
           <h2 class="sec-title" data-i18n="system_title">From touch to visuals, in real time.</h2>
         </div>
         <div class="plates reveal">
-          <figure class="plate plate--wide"><img src="img/system-architecture.png" alt="Biointerface system architecture — inputs, interactive processing and output mapping" loading="lazy"><figcaption data-i18n="cap_arch">System architecture — inputs, real-time processing and output mapping.</figcaption></figure>
           <figure class="plate"><img src="img/signal-flow.png" alt="Biointerface signal flow — sensors to interactive visuals and output" loading="lazy"><figcaption data-i18n="cap_flow">Signal flow — from sensors and data to interactive visuals and output.</figcaption></figure>
           <figure class="plate"><img src="img/touchdesigner-nodes.png" alt="Biointerface TouchDesigner node network" loading="lazy"><figcaption data-i18n="cap_nodes">Inside TouchDesigner — sensor input mapped through the node network to the output.</figcaption></figure>
         </div>
@@ -226,6 +227,10 @@
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_dev">Development</span></span>
           <h2 class="sec-title" data-i18n="dev_title">How it was built.</h2>
         </div>
+        <figure class="plate plate--wide reveal" style="background:#0b1020">
+          <img src="img/render-room.png" alt="Biointerface installation — the touch tables and forest screens in the space" loading="lazy" style="background:#0b1020">
+          <figcaption data-i18n="cap_built">The installation, up and running in the space.</figcaption>
+        </figure>
         <div class="phases">
           <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Concept &amp; sensing</h3><p data-i18n="p1_d">Defining the bridge between biological data and digital art — and choosing how to sense it: capacitive touch on living plants, Kinect and camera input.</p></div></div>
           <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Sensor system &amp; hardware</h3><p data-i18n="p2_d">Wiring plants as capacitive inputs through Playtron / Bare Conductive boards, with USB active extensions running back to a second-floor show-control machine.</p></div></div>
@@ -330,7 +335,7 @@
         <div class="cta-panel">
           <h2 data-i18n="cta_title">Have a space that should come alive?</h2>
           <p data-i18n="cta_sub">We design and build immersive, interactive experiences for museums, brands and cultural spaces.</p>
-          <a class="btn" href="../index.html#s-contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
         </div>
       </div>
     </section>
@@ -340,8 +345,8 @@
     <div class="wrap foot-inner">
       <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
       <div class="foot-links">
-        <a href="../index.html#s-work" data-i18n="nav_work">Work</a>
-        <a href="../index.html#s-contact" data-i18n="nav_contact">Contact</a>
+        <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../#contact" data-i18n="nav_contact">Contact</a>
       </div>
     </div>
   </footer>
@@ -363,7 +368,7 @@
         cap_arch:'System architecture — inputs, real-time processing and output mapping.',
         cap_flow:'Signal flow — from sensors and data to interactive visuals and output.',
         cap_nodes:'Inside TouchDesigner — sensor input mapped through the node network to the output.',
-        e_dev:'Development', dev_title:'How it was built.',
+        e_dev:'Development', dev_title:'How it was built.', cap_built:'The installation, up and running in the space.',
         p1_t:'Concept & sensing', p1_d:'Defining the bridge between biological data and digital art — and choosing how to sense it: capacitive touch on living plants, Kinect and camera input.',
         p2_t:'Sensor system & hardware', p2_d:'Wiring plants as capacitive inputs through Playtron / Bare Conductive boards, with USB active extensions running back to a second-floor show-control machine.',
         p3_t:'Real-time engine', p3_d:'A TouchDesigner network — Constant, Circle, LFO, Movie File In — plus a GLSL shader content switcher with noise and feedback, all mapped from sensor and MIDI/OSC data.',
@@ -396,7 +401,7 @@
         cap_arch:'Arquitectura del sistema — entradas, procesamiento en tiempo real y mapeo de salida.',
         cap_flow:'Flujo de señal — de sensores y datos a visuales interactivos y salida.',
         cap_nodes:'Dentro de TouchDesigner — la entrada de sensores mapeada por la red de nodos hacia la salida.',
-        e_dev:'Desarrollo', dev_title:'Cómo se construyó.',
+        e_dev:'Desarrollo', dev_title:'Cómo se construyó.', cap_built:'La instalación, montada y funcionando en sala.',
         p1_t:'Concepto y sensado', p1_d:'Definir el puente entre datos biológicos y arte digital — y cómo sensarlo: tacto capacitivo en plantas vivas, Kinect y cámara.',
         p2_t:'Sistema de sensores y hardware', p2_d:'Cablear las plantas como entradas capacitivas vía placas Playtron / Bare Conductive, con extensiones USB activas hasta el show-control del segundo piso.',
         p3_t:'Motor en tiempo real', p3_d:'Una red en TouchDesigner — Constant, Circle, LFO, Movie File In — más un content switcher con shader GLSL, ruido y feedback, todo mapeado desde datos de sensores y MIDI/OSC.',

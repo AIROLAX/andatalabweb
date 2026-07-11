@@ -71,7 +71,7 @@
     { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'museo-descubre/' },
     { id: 'ajijic', videos: ['PROJECTS/2.mp4', ARCHITECTURAL_MAPPING.video], poster: 'Imagenes/architectural-mapping-poster.jpg', url: 'ajijic-mapping/' },
     { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png',       url: 'https://airolax.com/work/ethereal-motion-digital-poetry.html' },
-    { id: 'tollan', video: 'videos/tollan-inmersivo.mp4',    poster: 'Imagenes/tollan-inmersivo-poster.jpg', url: 'https://www.salaguadalupemastache.space/' },
+    { id: 'tollan', video: 'videos/tollan-inmersivo.mp4',    poster: 'Imagenes/tollan-inmersivo-poster.jpg', url: 'salamastache/' },
     { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg', url: 'https://airolax.com/work/thermosense.html' },
     { id: 'rtg',    video: REAL_TIME_GENERATIVE.video,       poster: REAL_TIME_GENERATIVE.poster, url: 'https://airolax.com/work/biointerface-2.html' },
     { id: 'wavey',  video: INTERACTIVE_INSTALLATIONS_SVC.video, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },

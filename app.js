@@ -41,20 +41,49 @@
   }
 
   /* ---------- smooth scroll / nav ---------- */
-  function scrollToId(id) {
+  function cleanHashFor(id) { return (id && id !== 's-hero') ? id.replace(/^s-/, '') : ''; }
+  function idFromHash(h) {
+    h = (h || '').replace(/^#/, '');
+    if (!h) return null;
+    if (document.getElementById(h)) return h;
+    if (document.getElementById('s-' + h)) return 's-' + h;
+    return null;
+  }
+  function setCleanUrl(id) {
+    var clean = cleanHashFor(id);
+    var base = location.pathname.replace(/index\.html$/, '');
+    try { history.replaceState(null, '', base + (location.search || '') + (clean ? '#' + clean : '')); } catch (e) {}
+  }
+  function scrollToId(id, updateUrl) {
     var t = document.getElementById(id);
     if (!t) return;
     var navEl = $('#nav');
     var off = navEl ? navEl.offsetHeight : 56;
     var top = t.getBoundingClientRect().top + window.pageYOffset - off;
     window.scrollTo({ top: top, behavior: prefersReduced ? 'auto' : 'smooth' });
+    if (updateUrl !== false) setCleanUrl(id);
   }
   document.addEventListener('click', function (e) {
     var t = e.target.closest('[data-target]');
     if (t) { e.preventDefault(); scrollToId(t.getAttribute('data-target')); }
   });
   var brandHome = $('#brand-home');
-  if (brandHome) brandHome.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' }); });
+  if (brandHome) brandHome.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+    try { history.replaceState(null, '', location.pathname.replace(/index\.html$/, '') + (location.search || '')); } catch (e) {}
+  });
+  /* Keep the address bar clean: drop index.html and normalize #s-work -> #work */
+  (function initCleanUrl() {
+    var run = function () {
+      var id = idFromHash(location.hash);
+      if (id) { scrollToId(id, false); setCleanUrl(id); }
+      else if (/index\.html$/.test(location.pathname)) {
+        try { history.replaceState(null, '', location.pathname.replace(/index\.html$/, '') + (location.search || '') + location.hash); } catch (e) {}
+      }
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(run, 60); });
+    else setTimeout(run, 60);
+  })();
 
   var nav = $('#nav');
   function onScrollNav() {
