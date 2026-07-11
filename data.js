@@ -69,6 +69,7 @@
   var WORK_MEDIA = [
     { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png',       url: 'https://airolax.com/work/ethereal-motion-digital-poetry.html' },
     { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'https://airolax.com/work/biointerface.html' },
+    { id: 'tollan', video: 'videos/tollan-inmersivo.mp4',    poster: 'Imagenes/tollan-inmersivo-poster.jpg', url: 'https://www.salaguadalupemastache.space/' },
     { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg', url: 'https://airolax.com/work/thermosense.html' },
     { id: 'plants', video: MULTI_SCREEN_INSTALL.video,       poster: MULTI_SCREEN_INSTALL.poster, url: 'https://airolax.com/work/biointerface-2.html' },
     { id: 'ajijic', video: 'PROJECTS/2.mp4',                 poster: 'Imagenes/ajijic-mapping.jpg', url: 'https://airolax.com/work/whispers-of-the-lake-digital-immersive-experience.html' },
@@ -91,7 +92,7 @@
   var EN = {
     ui: {
       doc_title: 'Andata Lab — Immersive & Creative Technology Studio',
-      nav_work: 'Work', nav_services: 'Services', nav_process: 'Process',
+      nav_work: 'Work', nav_process: 'Process',
       cta_start: 'Start a project',
       hero_reel: 'Showreel 2026',
       hero_h1a: 'Immersive Experiences,', hero_h1b: 'Engineered.',
@@ -122,12 +123,12 @@
       { n: '02', t: 'Real-Time & Generative Systems', d: 'TouchDesigner and custom engines that generate visuals live — reactive, never the same twice.', get: 'Engine build · generative content · show control', video: REAL_TIME_GENERATIVE.video, videoMobile: REAL_TIME_GENERATIVE.videoMobile, poster: REAL_TIME_GENERATIVE.poster },
       { n: '03', t: 'Interactive Installations', d: 'Sensor- and motion-driven environments where the audience becomes part of the artwork.', get: 'Interaction design · sensor systems · real-time behavior', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
       { n: '04', t: 'Immersive Audiovisual Environments', d: 'Full-room experiences uniting projection, spatial sound and lighting into one narrative.', get: 'Experiential direction · media integration · spatial audio', video: IMMERSIVE_AV.video, videoMobile: IMMERSIVE_AV.videoMobile, poster: IMMERSIVE_AV.poster },
-      { n: '05', t: 'AI-Enhanced Creative Experiences', ai: true, d: 'Poetic immersive worlds and live installations — generative AI, data and audiences shaped into original art with intention, not automation for its own sake.', get: 'Concept Immersive · creative R&D · AI pipelines · bespoke artwork', video: AI_CONCEPT.video, videoMobile: AI_CONCEPT.videoMobile, poster: AI_CONCEPT.poster },
     ],
     servicesAccent: { h: 'Not sure where it fits?', p: "Bring us the space and the ambition. We'll shape the rest.", btn: 'Book a call →' },
     work: merge(WORK_MEDIA, [
       { t: 'Particle System Art',    client: 'Generative Art Work',                        outcome: 'Bioluminescent fluid dynamics rendered as real-time generative art.' },
       { t: 'Biointerface',          client: 'Interactive AI Installation · Mexico City', outcome: 'Real-time biometric data translated into living digital art.' },
+      { t: 'Tollan Inmersivo',      client: 'Immersive Interpretation Room · Tula, Hidalgo', outcome: 'El Viaje del Héroe Tolteca — a five-act journey through Toltec civilization with 360° projection, kinetic interactives, immersive tunnel and VR.' },
       { t: 'Volumetric TouchScreen', client: 'Interactive Display · Mexico City',         outcome: 'A spatial, touch-driven narrative on a volumetric display.' },
       { t: 'Interactive Multi-Screen Installation', client: 'Live Plants · Multi-Screen', outcome: 'An interactive botanical environment — screens, living plants and audience presence woven into one responsive installation.' },
       { t: 'Ajijic Mapping',         client: 'Architectural Projection · Jalisco',         outcome: 'A dual-projector intervention blending heritage with digital storytelling.' },
@@ -147,7 +148,7 @@
   var ES = {
     ui: {
       doc_title: 'Andata Lab — Estudio de Tecnología Inmersiva y Creativa',
-      nav_work: 'Proyectos', nav_services: 'Servicios', nav_process: 'Proceso',
+      nav_work: 'Proyectos', nav_process: 'Proceso',
       cta_start: 'Inicia un proyecto',
       hero_reel: 'Showreel 2026',
       hero_h1a: 'Experiencias inmersivas,', hero_h1b: 'con ingeniería.',
@@ -178,12 +179,12 @@
       { n: '02', t: 'Sistemas Generativos y en Tiempo Real', d: 'TouchDesigner y motores a medida que generan visuales en vivo — reactivos, nunca iguales dos veces.', get: 'Desarrollo de motor · contenido generativo · show control', video: REAL_TIME_GENERATIVE.video, videoMobile: REAL_TIME_GENERATIVE.videoMobile, poster: REAL_TIME_GENERATIVE.poster },
       { n: '03', t: 'Instalaciones Interactivas', d: 'Entornos accionados por sensores y movimiento donde la audiencia se vuelve parte de la obra.', get: 'Diseño de interacción · sistemas de sensores · comportamiento en tiempo real', video: INTERACTIVE_INSTALLATIONS_SVC.video, videoMobile: INTERACTIVE_INSTALLATIONS_SVC.videoMobile, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
       { n: '04', t: 'Entornos Audiovisuales Inmersivos', d: 'Experiencias de sala completa que unen proyección, sonido espacial e iluminación en una sola narrativa.', get: 'Dirección experiencial · integración de medios · audio espacial', video: IMMERSIVE_AV.video, videoMobile: IMMERSIVE_AV.videoMobile, poster: IMMERSIVE_AV.poster },
-      { n: '05', t: 'Experiencias Creativas Potenciadas con IA', ai: true, d: 'Mundos inmersivos poéticos e instalaciones en vivo — IA generativa, datos y audiencias con intención, no automatización por automatizar.', get: 'Concept Immersive · I+D creativa · pipelines de IA · obra a medida', video: AI_CONCEPT.video, videoMobile: AI_CONCEPT.videoMobile, poster: AI_CONCEPT.poster },
     ],
     servicesAccent: { h: '¿No sabes dónde encaja?', p: 'Tráenos el espacio y la ambición. Nosotros damos forma al resto.', btn: 'Agenda una llamada →' },
     work: merge(WORK_MEDIA, [
       { t: 'Arte con Sistemas de Partículas', client: 'Obra de Arte Generativo',                         outcome: 'Dinámica de fluidos bioluminiscente renderizada como arte generativo en tiempo real.' },
       { t: 'Biointerfaz',                   client: 'Instalación Interactiva con IA · Ciudad de México', outcome: 'Datos biométricos en tiempo real traducidos en arte digital vivo.' },
+      { t: 'Tollan Inmersivo',              client: 'Sala de Interpretación Guadalupe Mastache · Tula, Hidalgo', outcome: 'El Viaje del Héroe Tolteca — cinco actos que recorren cosmos, apogeo, caída y trascendencia con proyección 360°, túnel inmersivo y VR.' },
       { t: 'Pantalla Táctil Volumétrica',   client: 'Pantalla Interactiva · Ciudad de México',           outcome: 'Una narrativa espacial y táctil en una pantalla volumétrica.' },
       { t: 'Instalación Multi-Pantalla Interactiva', client: 'Plantas Vivas · Multi-Pantalla', outcome: 'Un entorno botánico interactivo — pantallas, plantas vivas y presencia de la audiencia en una sola instalación responsiva.' },
       { t: 'Mapping en Ajijic',             client: 'Proyección Arquitectónica · Jalisco',               outcome: 'Una intervención de doble proyector que fusiona patrimonio y narrativa digital.' },

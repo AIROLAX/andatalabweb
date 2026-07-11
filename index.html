@@ -288,6 +288,11 @@
   .grid-3{ grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
   .grid-2{ grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); }
   .services{ background:var(--surface); border-top:1px solid var(--hair-2); }
+  .work-showcase-capabilities{
+    margin-top:clamp(3rem,8vw,5rem); padding-top:clamp(2.5rem,6vw,4rem);
+    border-top:1px solid var(--hair-2);
+  }
+  .work-showcase-capabilities .sec-head{ margin-bottom:clamp(1.5rem,4vw,2.25rem); }
   .card{
     background:var(--bg); border-radius:18px; padding:30px 28px; box-shadow:var(--shadow-card);
     display:flex; flex-direction:column; gap:12px;
@@ -696,7 +701,6 @@
     <a class="brand" id="brand-home" aria-label="Andata Lab"><img class="brand-mark" src="Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span></a>
     <nav class="nav-links">
       <a data-target="s-work" data-i18n="nav_work">Work</a>
-      <a data-target="s-services" data-i18n="nav_services">Services</a>
       <a data-target="s-process" data-i18n="nav_process">Process</a>
       <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language" data-i18n="lang_switch">ES</button>
       <button class="nav-cta" data-target="s-contact" data-i18n="cta_start">Start a project</button>
@@ -711,7 +715,6 @@
     <div class="nav-drawer-backdrop" id="nav-drawer-backdrop" aria-hidden="true"></div>
     <nav class="nav-drawer-panel" aria-label="Mobile menu">
       <a data-target="s-work" data-i18n="nav_work">Work</a>
-      <a data-target="s-services" data-i18n="nav_services">Services</a>
       <a data-target="s-process" data-i18n="nav_process">Process</a>
       <button type="button" class="nav-drawer-cta" data-target="s-contact" data-i18n="cta_start">Start a project</button>
       <button type="button" class="nav-drawer-lang" id="lang-toggle-drawer" data-i18n="lang_switch">ES</button>
@@ -741,10 +744,29 @@
       </div>
     </div>
 
-    <div class="scroll-cue hero-anim" data-target="s-statement" style="animation-delay:.7s" aria-label="Scroll down">
+    <div class="scroll-cue hero-anim" data-target="s-work" style="animation-delay:.7s" aria-label="Scroll down">
       <span class="scroll-mouse" aria-hidden="true"><i></i></span>
       <span class="scroll-arrow" aria-hidden="true"></span>
       <span class="label" data-i18n="scroll">Scroll</span>
+    </div>
+  </section>
+
+  <!-- WORK + CAPABILITIES (one section — real projects first) -->
+  <section class="sec-pad reveal" id="s-work">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" style="color:var(--ink-3)" data-i18n="work_eyebrow">Selected work</span></span>
+        <h2 class="sec-title" data-i18n="work_title">Built, staged and running.</h2>
+      </div>
+      <div class="grid grid-2" id="work-grid"></div>
+
+      <div class="work-showcase-capabilities services">
+        <div class="sec-head">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" style="color:var(--ink-3)" data-i18n="services_eyebrow">What we do</span></span>
+          <h2 class="sec-title" data-i18n="services_title">Built for spaces, audiences and stories.</h2>
+        </div>
+        <div class="grid grid-3" id="services-grid"></div>
+      </div>
     </div>
   </section>
 
@@ -765,28 +787,6 @@
       <div class="trust-marquee" aria-hidden="true">
         <div class="trust-track" id="trust-track"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services sec-pad reveal" id="s-services">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow"><span class="dot"></span><span class="ds-label" style="color:var(--ink-3)" data-i18n="services_eyebrow">What we do</span></span>
-        <h2 class="sec-title" data-i18n="services_title">Built for spaces, audiences and stories.</h2>
-      </div>
-      <div class="grid grid-3" id="services-grid"></div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="sec-pad reveal" id="s-work">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow"><span class="dot"></span><span class="ds-label" style="color:var(--ink-3)" data-i18n="work_eyebrow">Selected work</span></span>
-        <h2 class="sec-title" data-i18n="work_title">Built, staged and running.</h2>
-      </div>
-      <div class="grid grid-2" id="work-grid"></div>
     </div>
   </section>
 
