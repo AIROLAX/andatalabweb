@@ -204,17 +204,16 @@
   .hero-inner{ position:relative; z-index:5; height:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--pad) clamp(54px,9vh,112px); display:flex; flex-direction:column; justify-content:flex-end; }
   .hero-inner > *{ transition:transform .35s cubic-bezier(.16,1,.3,1); will-change:transform; }
   .hero h1{
-    font-size:clamp(2.2rem,5.4vw,4.5rem); font-weight:800; letter-spacing:-.035em; line-height:1.02; margin:0; color:#fff; text-wrap:balance;
-    text-shadow:0 2px 40px rgba(0,0,0,.45);
+    font-size:clamp(2.2rem,5.4vw,4.5rem); font-weight:800; letter-spacing:-.035em; line-height:1.04; margin:0; color:#fff; text-wrap:balance;
     transform:translate3d(calc(var(--mx) * 12px), calc(var(--my) * 8px), 0);
   }
-  /* Advanced line-mask reveal for the hero title */
-  .hero h1 .line{ display:block; overflow:hidden; padding-bottom:.1em; margin-bottom:-.1em; }
-  .hero h1 .line-in{ display:block; transform:translateY(115%); opacity:0; animation:heroLineUp 1.15s cubic-bezier(.16,1,.3,1) forwards; }
-  .hero h1 .line:nth-child(1) .line-in{ animation-delay:.18s; }
-  .hero h1 .line:nth-child(2) .line-in{ animation-delay:.34s; }
-  @keyframes heroLineUp{ to{ transform:none; opacity:1; } }
-  .hero h1 .line2{ color:rgba(255,255,255,.5); }
+  /* Advanced word-by-word reveal for the hero title */
+  .hero h1 .line{ display:block; }
+  .hero h1 .line-in{ display:block; }
+  .hero h1 .word{ display:inline-block; overflow:hidden; vertical-align:top; padding-bottom:.12em; margin-bottom:-.12em; }
+  .hero h1 .word-in{ display:inline-block; transform:translateY(115%); opacity:0; animation:heroWordUp .9s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes heroWordUp{ from{ transform:translateY(115%); opacity:0; } to{ transform:none; opacity:1; } }
+  .hero h1 .line2{ color:rgba(255,255,255,.55); }
   .hero-sub{
     font-size:clamp(1.02rem,1.5vw,1.3rem); font-weight:400; line-height:1.5; color:rgba(255,255,255,.82);
     max-width:580px; margin:24px 0 0; text-shadow:0 1px 24px rgba(0,0,0,.5);
@@ -691,7 +690,7 @@
   }
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
-    .reveal,.hero-anim,.hero h1 .line-in{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
+    .reveal,.hero-anim,.hero h1 .line-in,.hero h1 .word-in{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
     .reveal.in .card,.reveal.in .work-card,.reveal.in .step{ animation:none !important; }
     .hero-cursor-ring,.hero-cursor-core{ display:none; }
     .hero-inner > *{ transform:none !important; }
@@ -858,5 +857,40 @@
 
 <script src="data.js"></script>
 <script src="app.js"></script>
+<script>
+/* Hero title: reveal word-by-word. Re-runs when the language toggle rewrites the text. */
+(function () {
+  var h1 = document.querySelector('.hero h1');
+  if (!h1) return;
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function split() {
+    var idx = 0;
+    var lines = h1.querySelectorAll('.line-in');
+    lines.forEach(function (line) {
+      var text = (line.textContent || '').trim();
+      if (!text) return;
+      var words = text.split(/\s+/);
+      line.innerHTML = words.map(function (w) {
+        var delay = (0.12 + idx * 0.11).toFixed(2);
+        idx++;
+        return '<span class="word"><span class="word-in" style="animation-delay:' + delay + 's">' + esc(w) + '</span></span>';
+      }).join(' ');
+    });
+  }
+  function needsSplit() {
+    var need = false;
+    h1.querySelectorAll('.line-in').forEach(function (line) {
+      if (!line.querySelector('.word') && (line.textContent || '').trim()) need = true;
+    });
+    return need;
+  }
+  var obs = new MutationObserver(function () {
+    if (needsSplit()) { obs.disconnect(); split(); obs.observe(h1, { childList: true, subtree: true, characterData: true }); }
+  });
+  var start = function () { if (needsSplit()) split(); obs.observe(h1, { childList: true, subtree: true, characterData: true }); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>
