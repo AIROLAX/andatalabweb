@@ -469,7 +469,7 @@
      ══════════════════════════════════════════ */
   .inter{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
   .inter-media{
-    position:relative; margin-top:clamp(34px,5vw,56px); border-radius:var(--r-xl); overflow:hidden;
+    position:relative; margin:clamp(34px,5vw,56px) 0 0; border-radius:var(--r-xl); overflow:hidden;
     aspect-ratio:16/8; background:#05070d; border:1px solid var(--d-line-2);
   }
   .inter-media video,.inter-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -530,7 +530,7 @@
   .how-note svg{ width:16px; height:16px; flex:0 0 auto; margin-top:1px; color:var(--spec-cyan); }
   .how-note p{ font-size:.88rem; line-height:1.6; color:var(--d-ink-2); margin:0; }
   .how-media{
-    position:relative; margin-top:clamp(34px,5vw,56px); border-radius:var(--r-xl); overflow:hidden;
+    position:relative; margin:clamp(34px,5vw,56px) 0 0; border-radius:var(--r-xl); overflow:hidden;
     aspect-ratio:16/8; background:#05070d; border:1px solid var(--d-line-2);
   }
   .how-media video,.how-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -542,6 +542,31 @@
   }
   .how-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
   .how-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:56ch; }
+
+  /* Pre-visualisation: the content mounted inside the venue geometry. */
+  .how-pair{
+    margin-top:clamp(34px,5vw,56px); display:grid; align-items:center;
+    grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(26px,4vw,52px);
+  }
+  .how-shot{
+    margin:0; border-radius:var(--r-lg); overflow:hidden; background:#05070d;
+    border:1px solid var(--d-line-2); position:relative;
+  }
+  .how-shot img{ display:block; width:100%; height:auto; }
+  .how-shot .badge{
+    position:absolute; z-index:2; left:12px; top:12px; padding:6px 11px; border-radius:999px;
+    font-size:9px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.78);
+    background:rgba(4,6,11,.66); border:1px solid var(--d-line);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  }
+  .how-pair-copy h3{
+    font-size:clamp(1.2rem,2vw,1.55rem); font-weight:700; letter-spacing:-.026em; line-height:1.18;
+    color:#fff; margin:14px 0 0; max-width:26ch;
+  }
+  .how-pair-copy p{ font-size:.96rem; line-height:1.7; color:var(--d-ink-2); margin:14px 0 0; max-width:46ch; }
+  @media (max-width:880px){
+    .how-pair{ grid-template-columns:1fr; gap:22px; }
+  }
 
   /* File → dome: the technical path, four beats. */
   .pipe{
@@ -1195,6 +1220,20 @@
         </figcaption>
       </figure>
 
+      <div class="how-pair reveal">
+        <figure class="how-shot">
+          <span class="badge" data-i18n="badge_tech">Tecnología demostrada</span>
+          <img src="img/dome-warp-calibration.png" width="550" height="321" loading="lazy" decoding="async"
+               alt="Previsualización de contenido montado dentro de un modelo tridimensional de cúpula, con la malla de calibración y el grado de apertura del domo">
+        </figure>
+        <div class="how-pair-copy">
+          <span class="how-k"><i aria-hidden="true"></i><span data-i18n="how_c_k">Previsualización</span></span>
+          <h3 data-i18n="how_c_t">Cada cúpula se calibra antes de llegar</h3>
+          <p data-i18n="how_c_d1">Antes de producir, el contenido se monta dentro de un modelo de la cúpula real: diámetro, grado de apertura, número de proyectores y posición del público. Lo que ves aquí es esa previsualización.</p>
+          <p data-i18n="how_c_d2">Eso evita sorpresas en sitio. Cuando llegamos al recinto el trabajo es de ajuste fino, no de rediseño, y el calendario de estreno se sostiene.</p>
+        </div>
+      </div>
+
       <div class="pipe reveal">
         <div class="pipe-i">
           <span class="pipe-n">01</span>
@@ -1603,6 +1642,9 @@
       how_b4_t: 'Función irrepetible',
       how_b4_d: 'La versión de hoy no es la de ayer, y queda registro de lo que ocurrió cada día: material útil para prensa, patrocinios y reportes del recinto.',
       how_b_note: 'Trabajamos con datos públicos o del propio recinto. Si una fuente no existe todavía, se puede sustituir por captura propia o por participación del público.',
+      how_c_k: 'Previsualización', how_c_t: 'Cada cúpula se calibra antes de llegar',
+      how_c_d1: 'Antes de producir, el contenido se monta dentro de un modelo de la cúpula real: diámetro, grado de apertura, número de proyectores y posición del público. Lo que ves aquí es esa previsualización.',
+      how_c_d2: 'Eso evita sorpresas en sitio. Cuando llegamos al recinto el trabajo es de ajuste fino, no de rediseño, y el calendario de estreno se sostiene.',
       how_media_cap: 'Motor generativo de ANDATA LAB corriendo en vivo: cada parámetro visible puede engancharse a una cámara, a un dato o a la mano de un operador. Es la misma base que alimenta una cúpula.',
       pipe1_t: 'Formato domemaster',
       pipe1_d: 'El contenido se produce circular, a 180°: el centro de la imagen es el cenit, justo arriba del público.',
@@ -1771,6 +1813,9 @@
       how_b4_t: 'A show that never repeats',
       how_b4_d: 'Today\u2019s version isn\u2019t yesterday\u2019s, and there is a record of what happened each day — useful material for press, sponsors and venue reporting.',
       how_b_note: 'We work with public data or data from the venue itself. If a source doesn\u2019t exist yet, it can be replaced by our own capture or by audience participation.',
+      how_c_k: 'Pre-visualization', how_c_t: 'Every dome is calibrated before we arrive',
+      how_c_d1: 'Before production, content is mounted inside a model of the actual dome: diameter, dome angle, number of projectors and where the audience sits. What you see here is that pre-visualization.',
+      how_c_d2: 'It removes surprises on site. By the time we reach the venue the work is fine-tuning, not redesign, and the premiere date holds.',
       how_media_cap: 'An ANDATA LAB generative engine running live: every visible parameter can be hooked to a camera, a data feed or an operator\u2019s hand. It is the same base that feeds a dome.',
       pipe1_t: 'Domemaster format',
       pipe1_d: 'Content is produced circular, at 180°: the center of the frame is the zenith, directly above the audience.',
