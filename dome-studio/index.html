@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04060b">
+<meta name="format-detection" content="telephone=no">
+
+<title>Dome Studio | Contenido e interactividad para domos | ANDATA LAB</title>
+<meta name="description" content="ANDATA LAB crea contenido fulldome, experiencias interactivas, visuales generativos, audio espacial y programación para domos y espacios inmersivos.">
+<meta name="keywords" content="producción de contenido para domos, fulldome México, dome projection mapping, experiencias inmersivas, TouchDesigner, contenido interactivo, domos para hoteles y turismo, producción audiovisual inmersiva">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://andatalab.com/dome-studio/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="ANDATA DOME STUDIO — Contenido vivo para espacios inmersivos">
+<meta property="og:description" content="Contenido fulldome, sistemas interactivos, visuales generativos, audio espacial y programación continua para domos y recintos inmersivos.">
+<meta property="og:url" content="https://andatalab.com/dome-studio/">
+<meta property="og:image" content="https://andatalab.com/Imagenes/immersive-audiovisual-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ANDATA DOME STUDIO — Contenido vivo para espacios inmersivos">
+<meta name="twitter:description" content="Contenido fulldome, sistemas interactivos, visuales generativos, audio espacial y programación continua para domos y recintos inmersivos.">
+<meta name="twitter:image" content="https://andatalab.com/Imagenes/immersive-audiovisual-poster.jpg">
+
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="../Imagenes/real-time-generative-poster.jpg">
+<link rel="stylesheet" href="../colors_and_type.css">
+
+<style>
+  :root{
+    --maxw:1180px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+    --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px);
+    /* Dome surfaces — the dark counterpart of the ANDATA light system */
+    --d-0:#04060b; --d-1:#070a12; --d-2:#0b0f19;
+    --d-line:rgba(255,255,255,.10);
+    --d-line-2:rgba(255,255,255,.06);
+    --d-ink:#ffffff; --d-ink-2:rgba(255,255,255,.68); --d-ink-3:rgba(255,255,255,.46);
+    --acc:#3CDCFF;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
+  html,body{ margin:0; background:var(--d-0); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video,canvas{ display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:rgba(60,220,255,.26); }
+  h1,h2,h3{ text-wrap:balance; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 max(var(--pad),var(--safe-l)); }
+  section{ position:relative; scroll-margin-top:calc(var(--nav-h) + 8px); }
+
+  /* ── Nav (transparent over the hero, solid after — same behavior as the homepage) ── */
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:calc(var(--nav-h) + var(--safe-t));
+    padding-top:var(--safe-t);
+    display:flex; align-items:center; gap:20px;
+    padding-left:max(var(--pad),var(--safe-l)); padding-right:max(var(--pad),var(--safe-r));
+    background:transparent; border-bottom:1px solid transparent;
+    transition:background .45s var(--ease), border-color .45s, backdrop-filter .45s;
+  }
+  body.is-scrolled header.nav{
+    background:rgba(6,8,14,.72); border-bottom:1px solid var(--d-line-2);
+    backdrop-filter:blur(18px) saturate(1.2); -webkit-backdrop-filter:blur(18px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:#fff; }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; filter:invert(1); }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:clamp(14px,2.4vw,26px); margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:rgba(255,255,255,.7); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover{ color:#fff; }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer; flex:0 0 auto;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.04); color:rgba(255,255,255,.8);
+    transition:border-color .3s, color .3s, background .3s;
+  }
+  .lang-toggle:hover{ border-color:#fff; color:#fff; background:rgba(255,255,255,.1); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:9px 18px; border-radius:999px; cursor:pointer; white-space:nowrap;
+    border:1px solid #fff; background:#fff; color:#0b0f19;
+    transition:transform .3s var(--ease), box-shadow .3s;
+  }
+  .nav-links a.nav-cta:hover{ color:#0b0f19; transform:translateY(-1px); box-shadow:0 10px 30px rgba(60,220,255,.22); }
+  @media (max-width:720px){ .nav-cta{ display:none; } }
+
+  .scroll-progress{
+    position:fixed; top:var(--safe-t); left:0; right:0; height:2px; z-index:70; pointer-events:none;
+    transform-origin:left; transform:scaleX(0);
+    background:linear-gradient(90deg, var(--spec-cyan), var(--spec-magenta), var(--spec-orange));
+    box-shadow:0 0 12px rgba(60,220,255,.45);
+  }
+
+  /* ── Back pill ── */
+  .back{
+    position:fixed; top:calc(var(--nav-h) + var(--safe-t) + 14px); left:max(var(--pad),var(--safe-l)); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:rgba(255,255,255,.74);
+    padding:9px 15px; border-radius:999px;
+    background:rgba(8,11,18,.5); border:1px solid var(--d-line);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:transform .3s var(--ease), color .3s, background .3s, opacity .3s;
+  }
+  .back:hover{ transform:translateY(-2px); color:#fff; }
+  .back svg{ width:15px; height:15px; }
+  /* Once the solid nav takes over, its logo is the way home — drop the pill. */
+  body.is-scrolled .back{ opacity:0; transform:translateY(-8px); pointer-events:none; }
+  @media (max-width:760px){ .back{ opacity:0; pointer-events:none; } }
+
+  /* ── Shared type ── */
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 10px rgba(60,220,255,.6); flex:0 0 auto; }
+  .eyebrow .ds-label{ color:var(--d-ink-3); }
+  .sec-title{
+    font-size:clamp(1.85rem,4.2vw,3.1rem); font-weight:700; letter-spacing:-.032em;
+    line-height:1.08; margin:16px 0 0; color:var(--d-ink);
+  }
+  .sec-lead{ font-size:var(--fs-lead); line-height:1.6; color:var(--d-ink-2); margin:22px 0 0; max-width:60ch; }
+  .sec-head{ max-width:780px; }
+  .block{ padding:clamp(76px,13vh,150px) 0; background:var(--d-0); }
+  .block--alt{ background:var(--d-1); }
+  .block--hair{ border-top:1px solid var(--d-line-2); }
+
+  /* Light interludes — the ANDATA LAB light system, used as breathing room */
+  .block--light{ background:var(--bg); }
+  .block--light .sec-title{ color:var(--ink); }
+  .block--light .sec-lead{ color:var(--ink-2); }
+  .block--light .eyebrow .ds-label{ color:var(--ink-3); }
+  .block--tint{ background:var(--surface); }
+
+  /* ── Buttons ── */
+  .btn{
+    font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em;
+    padding:15px 28px; border-radius:999px; cursor:pointer; border:1px solid transparent;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .28s var(--ease), box-shadow .28s, background .28s, border-color .28s, color .28s;
+  }
+  .btn-primary{ background:#fff; color:#0b0f19; border-color:#fff; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 44px rgba(60,220,255,.24); }
+  .btn-ghost{ background:rgba(255,255,255,.06); color:#fff; border-color:rgba(255,255,255,.42); backdrop-filter:blur(6px); }
+  .btn-ghost:hover{ transform:translateY(-2px); background:rgba(255,255,255,.13); border-color:#fff; }
+  .btn-dark{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn-dark:hover{ transform:translateY(-2px); box-shadow:var(--shadow-lift); }
+  .btn:active{ transform:scale(.985); }
+
+  /* ══════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════ */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center;
+    overflow:hidden; background:#02040a; isolation:isolate;
+  }
+  /* Ambience: the same footage, blurred far back — the site's existing hero pattern. */
+  .hero-amb{ position:absolute; inset:0; z-index:0; }
+  .hero-amb img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transform:scale(1.16); filter:blur(38px) brightness(.42) saturate(1.2);
+  }
+  #dome-fx{ position:absolute; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; }
+  .hero-scrim{
+    position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% 116%, rgba(60,220,255,.16) 0%, rgba(60,220,255,0) 58%),
+      radial-gradient(70% 55% at 88% 12%, rgba(255,46,138,.10) 0%, rgba(255,46,138,0) 62%),
+      linear-gradient(180deg, rgba(4,6,11,.78) 0%, rgba(4,6,11,.52) 34%, rgba(4,6,11,.72) 78%, var(--d-0) 100%);
+  }
+  .hero-inner{
+    position:relative; z-index:3; width:100%;
+    display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+    align-items:center; gap:clamp(30px,5vw,68px);
+    padding-top:calc(var(--nav-h) + var(--safe-t) + clamp(46px,7vh,86px));
+    padding-bottom:calc(clamp(76px,12vh,124px) + var(--safe-b));
+  }
+  .hero-visual{ position:relative; }
+  .disc--hero{ max-width:clamp(268px,40vw,520px); margin:0 auto; }
+  .hero-visual-cap{
+    display:flex; align-items:baseline; justify-content:center; gap:9px;
+    text-align:center; margin:22px auto 0; max-width:34ch;
+  }
+  .hero-visual-cap .ds-label{ font-size:10px; color:rgba(255,255,255,.5); }
+  .hero-visual-cap .pulse{
+    width:6px; height:6px; border-radius:999px; flex:0 0 auto; background:var(--spec-cyan);
+    box-shadow:0 0 0 4px rgba(60,220,255,.14); animation:pulse 2.6s ease-in-out infinite;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem,4.6vw,3.9rem); font-weight:800; letter-spacing:-.04em; line-height:1.03;
+    margin:18px 0 0; color:#fff; max-width:15ch;
+  }
+  @media (max-width:900px){
+    .hero{ align-items:flex-end; }
+    .hero-inner{
+      grid-template-columns:1fr; gap:clamp(22px,5vw,34px);
+      padding-top:calc(var(--nav-h) + var(--safe-t) + 30px);
+      padding-bottom:calc(74px + var(--safe-b));
+    }
+    .hero-visual{ order:-1; }
+    .disc--hero{ max-width:min(320px,56vw); }
+    .hero h1{ font-size:clamp(2.05rem,8.4vw,2.9rem); max-width:20ch; }
+    .hero-sub{ margin-top:20px; }
+    .hero-visual-cap{ margin-top:16px; }
+    .hero-cta{ margin-top:28px; gap:10px; }
+    .hero-cta .btn{ flex:1 1 100%; justify-content:center; padding:14px 22px; }
+  }
+  .hero h1 .l{ display:block; }
+  .hero h1 .l2{ color:rgba(255,255,255,.52); }
+  .hero-sub{
+    font-size:clamp(1.02rem,1.5vw,1.28rem); line-height:1.55; color:rgba(255,255,255,.8);
+    margin:26px 0 0; max-width:56ch;
+  }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:36px; }
+  @keyframes pulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
+  .scroll-cue{
+    position:absolute; left:50%; bottom:calc(18px + var(--safe-b)); z-index:4;
+    transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px;
+    opacity:.7; transition:opacity .3s;
+  }
+  .scroll-cue:hover{ opacity:1; }
+  .scroll-cue .ds-label{ font-size:10px; color:rgba(255,255,255,.66); }
+  .scroll-cue i{
+    width:10px; height:10px; border-right:1.4px solid rgba(255,255,255,.8); border-bottom:1.4px solid rgba(255,255,255,.8);
+    transform:rotate(45deg); animation:bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob{ 0%,100%{ transform:rotate(45deg) translateY(0); opacity:.5; } 50%{ transform:rotate(45deg) translateY(5px); opacity:1; } }
+  @media (max-width:760px){ .scroll-cue .ds-label{ display:none; } }
+
+  /* ══════════════════════════════════════════
+     THE DOME DISC — the fulldome master frame,
+     the page's signature visual component.
+     ══════════════════════════════════════════ */
+  .disc{
+    position:relative; width:100%; aspect-ratio:1; border-radius:50%; overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--acc) 42%, transparent) 0%, transparent 46%),
+      radial-gradient(circle at 32% 24%, rgba(255,255,255,.10) 0%, transparent 38%),
+      radial-gradient(circle at 50% 50%, #0a1020 0%, #05070d 74%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.09),
+      0 0 70px color-mix(in srgb, var(--acc) 20%, transparent),
+      inset 0 0 90px rgba(0,0,0,.6);
+    transition:box-shadow .8s var(--ease), background .8s var(--ease);
+  }
+  .disc-rings,.disc-ribs,.disc-fx,.disc-img,.disc-vid{ position:absolute; inset:0; }
+  .disc-vid{ width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 1.2s ease; }
+  .disc-vid.is-live{ opacity:1; }
+  .disc-rings{
+    background:repeating-radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.075) 0 1px, transparent 1px 8.5%);
+    opacity:.85;
+  }
+  .disc-ribs{
+    background:repeating-conic-gradient(from 0deg at 50% 50%,
+      rgba(255,255,255,.07) 0deg .28deg, transparent .28deg 11.25deg);
+    animation:spin 190s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .disc-fx{ width:100%; height:100%; }
+  .disc-img{ width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .9s ease; }
+  .disc.is-filled .disc-img{ opacity:1; }
+  .disc.is-filled .disc-rings{ opacity:.32; }
+  .disc.is-filled .disc-ribs{ opacity:.35; }
+  .disc::after{
+    content:''; position:absolute; inset:0; border-radius:50%; pointer-events:none;
+    background:radial-gradient(circle at 50% 50%, transparent 56%, rgba(4,6,11,.5) 92%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .disc-tag{
+    position:absolute; z-index:3; left:50%; bottom:9%; transform:translateX(-50%);
+    padding:6px 13px; border-radius:999px; white-space:nowrap;
+    background:rgba(4,6,11,.6); border:1px solid var(--d-line);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  }
+  .disc-tag .ds-label{ font-size:9.5px; color:rgba(255,255,255,.7); }
+  .disc.is-filled .disc-tag{ display:none; }
+  .disc-slug{
+    position:absolute; z-index:3; left:50%; top:50%; transform:translate(-50%,-50%);
+    text-align:center; padding:0 12%;
+  }
+  .disc-slug b{
+    display:block; font-size:clamp(11px,1.1vw,13px); font-weight:600; letter-spacing:.14em;
+    text-transform:uppercase; color:rgba(255,255,255,.5);
+  }
+  .disc-slug span{
+    display:block; margin-top:7px; font-size:11px; letter-spacing:.02em; color:rgba(255,255,255,.32);
+  }
+  .disc.is-filled .disc-slug{ display:none; }
+
+  /* ══════════════════════════════════════════
+     2 · THE OPPORTUNITY — pinned statement
+     ══════════════════════════════════════════ */
+  /* Extra height gives the sticky child room to hold while the page scrolls. */
+  .opp{ background:var(--d-0); min-height:170svh; }
+  .opp-sticky{ position:sticky; top:0; height:100svh; display:flex; align-items:center; overflow:hidden; }
+  @media (max-width:900px){
+    .opp{ min-height:0; }
+    .opp-sticky{ position:relative; height:auto; min-height:78svh; }
+  }
+  .opp-glow{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(70% 55% at 18% 22%, rgba(60,220,255,.13) 0%, transparent 62%),
+      radial-gradient(60% 50% at 88% 82%, rgba(155,122,255,.11) 0%, transparent 60%);
+    animation:drift 26s ease-in-out infinite alternate;
+  }
+  @keyframes drift{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(0,-3%,0) scale(1.08); } }
+  .opp-inner{ position:relative; z-index:1; padding:clamp(80px,14vh,140px) 0; }
+  .opp h2{
+    font-size:clamp(2rem,5.2vw,3.9rem); font-weight:700; letter-spacing:-.035em; line-height:1.06;
+    margin:18px 0 0; color:#fff; max-width:22ch;
+  }
+  .opp-cols{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:clamp(24px,4vw,56px); margin-top:clamp(34px,5vw,54px); max-width:960px;
+  }
+  .opp-cols p{ font-size:1.05rem; line-height:1.72; color:var(--d-ink-2); margin:0; }
+  .opp-cols p strong{ color:#fff; font-weight:600; }
+
+  /* ══════════════════════════════════════════
+     3 · CAPABILITIES — Apple-style pinned visual
+     ══════════════════════════════════════════ */
+  .caps{ background:var(--d-1); border-top:1px solid var(--d-line-2); padding-bottom:clamp(70px,11vh,130px); }
+  .caps-head{ padding:clamp(76px,13vh,150px) 0 0; }
+  .caps-grid{ display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:clamp(28px,5vw,74px); align-items:start; margin-top:clamp(40px,6vw,70px); }
+  .caps-visual{ position:sticky; top:calc(50svh - clamp(150px,20vw,225px)); }
+  .caps-visual .disc{ max-width:clamp(240px,32vw,420px); margin:0 auto; }
+  .caps-visual-cap{ text-align:center; margin:22px auto 0; max-width:320px; }
+  .caps-visual-cap b{ display:block; font-size:1.06rem; font-weight:600; letter-spacing:-.02em; color:#fff; }
+  .caps-visual-cap span{ display:block; margin-top:8px; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--d-ink-3); }
+  .caps-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:clamp(10px,1.6vw,16px); }
+  .cap{
+    position:relative; padding:clamp(22px,2.6vw,30px) clamp(20px,2.4vw,30px);
+    border-radius:var(--r-lg); border:1px solid var(--d-line-2);
+    background:linear-gradient(160deg, rgba(255,255,255,.045) 0%, rgba(255,255,255,.014) 52%, rgba(4,6,11,.3) 100%);
+    transition:border-color .5s var(--ease), background .5s var(--ease), transform .5s var(--ease), box-shadow .5s var(--ease);
+  }
+  .cap::before{
+    content:''; position:absolute; left:0; top:16px; bottom:16px; width:2px; border-radius:2px;
+    background:linear-gradient(180deg, var(--acc), transparent);
+    opacity:0; transform:scaleY(.4); transform-origin:top;
+    transition:opacity .5s var(--ease), transform .5s var(--ease);
+  }
+  .cap.is-active{
+    border-color:color-mix(in srgb, var(--acc) 34%, var(--d-line));
+    background:linear-gradient(160deg, color-mix(in srgb, var(--acc) 13%, rgba(255,255,255,.05)) 0%, rgba(255,255,255,.02) 52%, rgba(4,6,11,.28) 100%);
+    box-shadow:0 20px 50px rgba(0,0,0,.4), 0 0 34px color-mix(in srgb, var(--acc) 14%, transparent);
+  }
+  .cap.is-active::before{ opacity:1; transform:scaleY(1); }
+  .cap-n{
+    font-size:11px; font-weight:600; letter-spacing:.16em; color:var(--d-ink-3);
+    font-variant-numeric:tabular-nums; transition:color .4s;
+  }
+  .cap.is-active .cap-n{ color:var(--acc); }
+  .cap h3{ font-size:clamp(1.1rem,1.7vw,1.3rem); font-weight:600; letter-spacing:-.02em; margin:10px 0 0; color:#fff; }
+  .cap p{ font-size:.985rem; line-height:1.62; color:var(--d-ink-3); margin:10px 0 0; transition:color .4s; }
+  .cap.is-active p{ color:var(--d-ink-2); }
+  .cap:nth-child(8n+1){ --acc:#3CDCFF; }
+  .cap:nth-child(8n+2){ --acc:#FF2E8A; }
+  .cap:nth-child(8n+3){ --acc:#9b7aff; }
+  .cap:nth-child(8n+4){ --acc:#3CDCFF; }
+  .cap:nth-child(8n+5){ --acc:#FF8A3C; }
+  .cap:nth-child(8n+6){ --acc:#9b7aff; }
+  .cap:nth-child(8n+7){ --acc:#FF2E8A; }
+  .cap:nth-child(8n+8){ --acc:#FF8A3C; }
+  @media (max-width:900px){
+    .caps-grid{ grid-template-columns:1fr; gap:18px; margin-top:30px; }
+    .caps-visual{
+      top:calc(var(--nav-h) + var(--safe-t)); z-index:4;
+      margin:0 calc(-1 * max(var(--pad), var(--safe-l))); padding:16px 0 14px;
+      background:var(--d-1);
+    }
+    .caps-visual::after{
+      content:''; position:absolute; left:0; right:0; top:100%; height:28px; pointer-events:none;
+      background:linear-gradient(180deg, var(--d-1), rgba(11,15,25,0));
+    }
+    .caps-visual .disc{ max-width:min(184px,42vw); }
+    .caps-visual-cap{ margin-top:14px; }
+    .caps-visual-cap b{ font-size:.98rem; }
+    .caps-visual-cap span{ margin-top:5px; font-size:10px; }
+  }
+
+  /* ══════════════════════════════════════════
+     4 · FLAGSHIP CONCEPTS
+     ══════════════════════════════════════════ */
+  .concepts{ background:var(--d-0); border-top:1px solid var(--d-line-2); }
+  .honest{
+    display:inline-flex; align-items:flex-start; gap:11px; margin-top:26px;
+    padding:13px 18px 13px 16px; border-radius:var(--r-md);
+    background:rgba(255,255,255,.035); border:1px solid var(--d-line-2);
+    max-width:64ch;
+  }
+  .honest svg{ width:16px; height:16px; flex:0 0 auto; margin-top:2px; color:var(--spec-cyan); }
+  .honest p{ margin:0; font-size:.93rem; line-height:1.55; color:var(--d-ink-2); }
+  .concept-list{ margin-top:clamp(46px,7vw,86px); display:flex; flex-direction:column; gap:clamp(56px,9vw,132px); }
+  .concept{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,72px); align-items:center; }
+  .concept:nth-child(even) .concept-media{ order:2; }
+  .concept-media .disc{ max-width:clamp(260px,38vw,460px); margin:0 auto; }
+  .concept-n{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:11px; font-weight:600; letter-spacing:.2em; color:var(--d-ink-3); font-variant-numeric:tabular-nums;
+  }
+  .concept-n::after{ content:''; width:clamp(24px,4vw,52px); height:1px; background:linear-gradient(90deg, var(--acc), transparent); }
+  .concept h3{ font-size:clamp(1.55rem,3.2vw,2.4rem); font-weight:700; letter-spacing:-.03em; line-height:1.1; margin:16px 0 0; color:#fff; }
+  .concept p{ font-size:1.04rem; line-height:1.72; color:var(--d-ink-2); margin:18px 0 0; max-width:52ch; }
+  .concept-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .chip{
+    font-size:11.5px; font-weight:500; letter-spacing:.02em; padding:7px 13px; border-radius:999px;
+    background:rgba(255,255,255,.05); border:1px solid var(--d-line-2); color:var(--d-ink-2);
+  }
+  @media (max-width:860px){
+    .concept{ grid-template-columns:1fr; gap:26px; }
+    .concept:nth-child(even) .concept-media{ order:0; }
+    .concept-media .disc{ max-width:min(340px,72vw); }
+  }
+
+  /* ══════════════════════════════════════════
+     5 · INTERACTIVITY
+     ══════════════════════════════════════════ */
+  .inter{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
+  .inter-media{
+    position:relative; margin-top:clamp(34px,5vw,56px); border-radius:var(--r-xl); overflow:hidden;
+    aspect-ratio:16/8; background:#05070d; border:1px solid var(--d-line-2);
+  }
+  .inter-media video,.inter-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .inter-media video{ opacity:0; transition:opacity .8s ease; }
+  .inter-media video.is-loaded{ opacity:1; }
+  .inter-media figcaption{
+    position:absolute; z-index:2; left:0; right:0; bottom:0;
+    padding:clamp(20px,3vw,30px);
+    background:linear-gradient(transparent, rgba(4,6,11,.86));
+  }
+  .inter-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
+  .inter-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:52ch; }
+  .inter-grid{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:1px; margin-top:clamp(34px,5vw,56px);
+    background:var(--d-line-2); border:1px solid var(--d-line-2); border-radius:var(--r-lg); overflow:hidden;
+  }
+  .inter-item{ background:var(--d-1); padding:clamp(22px,2.6vw,28px); transition:background .4s; }
+  .inter-item:hover{ background:var(--d-2); }
+  .inter-item .dot{
+    display:block; width:7px; height:7px; border-radius:999px; background:var(--acc);
+    box-shadow:0 0 0 4px color-mix(in srgb, var(--acc) 16%, transparent);
+  }
+  .inter-item h3{ font-size:1rem; font-weight:600; letter-spacing:-.015em; margin:16px 0 0; color:#fff; }
+  .inter-item p{ font-size:.92rem; line-height:1.58; color:var(--d-ink-3); margin:8px 0 0; }
+  .inter-item:nth-child(4n+1){ --acc:#3CDCFF; }
+  .inter-item:nth-child(4n+2){ --acc:#FF2E8A; }
+  .inter-item:nth-child(4n+3){ --acc:#FF8A3C; }
+  .inter-item:nth-child(4n+4){ --acc:#9b7aff; }
+
+  /* ══════════════════════════════════════════
+     6 · YEAR-ROUND PROGRAMMING — snap rail
+     ══════════════════════════════════════════ */
+  .season{ background:var(--d-0); border-top:1px solid var(--d-line-2); overflow:hidden; }
+  .rail-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-top:clamp(30px,4vw,44px); }
+  .rail-nav{ display:flex; gap:9px; flex:0 0 auto; }
+  .rail-btn{
+    width:42px; height:42px; border-radius:999px; cursor:pointer; flex:0 0 auto;
+    border:1px solid var(--d-line); background:rgba(255,255,255,.04); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:background .3s, border-color .3s, opacity .3s, transform .3s var(--ease);
+  }
+  .rail-btn:hover{ background:rgba(255,255,255,.11); border-color:#fff; }
+  .rail-btn:disabled{ opacity:.3; cursor:default; }
+  .rail-btn svg{ width:17px; height:17px; }
+  @media (max-width:760px){ .rail-nav{ display:none; } }
+  .rail{
+    --rail-edge:max(var(--pad), calc((100% - var(--maxw)) / 2 + var(--pad)));
+    display:flex; gap:14px; margin-top:22px;
+    padding:4px var(--rail-edge) 10px;
+    overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+    scrollbar-width:none; -ms-overflow-style:none;
+    -webkit-mask-image:linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
+    mask-image:linear-gradient(90deg, #000 0, #000 84%, transparent 100%);
+  }
+  .rail.at-end{ -webkit-mask-image:none; mask-image:none; }
+  .rail::-webkit-scrollbar{ display:none; }
+  .rail-item{
+    scroll-snap-align:center; flex:0 0 clamp(216px,25vw,262px);
+    padding:24px 22px 26px; border-radius:var(--r-lg);
+    border:1px solid var(--d-line-2);
+    background:linear-gradient(165deg, color-mix(in srgb, var(--acc) 11%, rgba(255,255,255,.04)) 0%, rgba(255,255,255,.015) 55%, rgba(4,6,11,.3) 100%);
+    transition:transform .45s var(--ease), border-color .45s, box-shadow .45s;
+  }
+  .rail-item:hover{ transform:translateY(-6px); border-color:color-mix(in srgb, var(--acc) 40%, var(--d-line)); box-shadow:0 22px 52px rgba(0,0,0,.45); }
+  .rail-item .ds-label{ font-size:10px; color:var(--acc); opacity:.9; }
+  .rail-item h3{ font-size:1.06rem; font-weight:600; letter-spacing:-.02em; margin:14px 0 0; color:#fff; line-height:1.24; }
+  .rail-item p{ font-size:.9rem; line-height:1.55; color:var(--d-ink-3); margin:10px 0 0; }
+  .rail-item:nth-child(4n+1){ --acc:#3CDCFF; }
+  .rail-item:nth-child(4n+2){ --acc:#FF8A3C; }
+  .rail-item:nth-child(4n+3){ --acc:#FF2E8A; }
+  .rail-item:nth-child(4n+4){ --acc:#9b7aff; }
+  .rail:focus-visible{ outline:2px solid var(--spec-cyan); outline-offset:6px; border-radius:var(--r-md); }
+
+  /* ══════════════════════════════════════════
+     7 · COLLABORATION MODEL (light)
+     ══════════════════════════════════════════ */
+  .mod-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:16px; margin-top:clamp(38px,5vw,58px); }
+  .mod{
+    padding:28px 26px 30px; border-radius:var(--r-lg); background:var(--bg);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    transition:transform .35s var(--ease), box-shadow .35s;
+  }
+  .mod:hover{ transform:translateY(-5px); box-shadow:var(--shadow-lift); }
+  .mod .n{ font-size:11px; font-weight:600; letter-spacing:.16em; color:var(--ink-3); font-variant-numeric:tabular-nums; }
+  .mod h3{ font-size:1.08rem; font-weight:600; letter-spacing:-.02em; margin:14px 0 0; color:var(--ink); }
+  .mod p{ font-size:.95rem; line-height:1.6; color:var(--ink-2); margin:9px 0 0; }
+  .note{ font-size:.92rem; color:var(--ink-3); margin:24px 0 0; }
+
+  /* ══════════════════════════════════════════
+     8 · TECHNOLOGY
+     ══════════════════════════════════════════ */
+  .tech{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
+  .tech-cols{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,70px); align-items:start; }
+  @media (max-width:860px){ .tech-cols{ grid-template-columns:1fr; } }
+  .tech-cols p{ font-size:1.02rem; line-height:1.72; color:var(--d-ink-2); margin:0 0 16px; }
+  .tech-cols p:last-child{ margin-bottom:0; }
+  .tags{ display:flex; flex-wrap:wrap; gap:9px; margin-top:clamp(28px,4vw,42px); }
+  .tag{
+    padding:10px 18px; border-radius:999px; font-size:13.5px; font-weight:500;
+    background:rgba(255,255,255,.045); border:1px solid var(--d-line-2); color:rgba(255,255,255,.82);
+    transition:border-color .3s, background .3s, transform .3s var(--ease);
+  }
+  .tag:hover{ border-color:rgba(60,220,255,.45); background:rgba(60,220,255,.08); transform:translateY(-2px); }
+
+  /* ══════════════════════════════════════════
+     9 · EXPERIENCE / PROOF (light)
+     ══════════════════════════════════════════ */
+  .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(28px,4vw,40px); }
+  .legend span{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:12px; font-weight:500; color:var(--ink-2);
+    padding:8px 14px; border-radius:999px; background:var(--surface); border:1px solid var(--hair-2);
+  }
+  .legend i{ width:7px; height:7px; border-radius:999px; flex:0 0 auto; }
+  .lg-real{ background:#111; }
+  .lg-tech{ background:var(--spec-cyan); }
+  .lg-con{ background:var(--spec-magenta); }
+  .lg-vis{ background:var(--spec-orange); }
+  .proof-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:18px; margin-top:26px; }
+  .proof{
+    display:block; border-radius:var(--r-lg); overflow:hidden; background:var(--bg);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    transition:transform .35s var(--ease), box-shadow .35s;
+  }
+  .proof:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); }
+  .proof-media{ position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--surface); }
+  .proof-media img,.proof-media video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease), opacity .5s ease; }
+  .proof-media video{ opacity:0; }
+  .proof-media video.is-loaded{ opacity:1; }
+  .proof:hover .proof-media img,.proof:hover .proof-media video{ transform:scale(1.05); }
+  .badge{
+    position:absolute; z-index:2; top:12px; left:12px;
+    padding:5px 11px; border-radius:999px; font-size:9.5px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase;
+    background:rgba(4,6,11,.62); color:#fff; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.16);
+  }
+  .proof-body{ padding:20px 22px 24px; }
+  .proof-body .ds-label{ font-size:10px; color:var(--ink-3); }
+  .proof-body h3{ font-size:1.1rem; font-weight:600; letter-spacing:-.02em; margin:9px 0 0; color:var(--ink); }
+  .proof-body p{ font-size:.94rem; line-height:1.55; color:var(--ink-2); margin:8px 0 0; }
+  .proof-body .go{ display:inline-block; margin-top:14px; font-size:13px; font-weight:600; color:var(--ink); }
+
+  /* ══════════════════════════════════════════
+     10 · PROCESS (light)
+     ══════════════════════════════════════════ */
+  .steps{ display:grid; gap:14px; margin-top:clamp(38px,5vw,58px); }
+  .step-row{
+    display:grid; grid-template-columns:auto 1fr; gap:clamp(18px,3vw,34px); align-items:start;
+    padding:26px clamp(20px,3vw,32px); border-radius:var(--r-lg);
+    background:var(--bg); border:1px solid var(--hair-2);
+    transition:transform .35s var(--ease), box-shadow .35s, border-color .35s;
+  }
+  .step-row:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .step-row .n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:3px; }
+  .step-row h3{ font-size:1.1rem; font-weight:600; letter-spacing:-.02em; margin:0; color:var(--ink); }
+  .step-row p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:8px 0 0; max-width:66ch; }
+
+  /* ══════════════════════════════════════════
+     11 · FINAL CTA
+     ══════════════════════════════════════════ */
+  .final{ background:var(--d-0); padding:clamp(76px,13vh,150px) 0; }
+  .final-panel{
+    position:relative; overflow:hidden; text-align:center;
+    border-radius:var(--r-xl); padding:clamp(44px,7vw,92px) clamp(24px,5vw,72px);
+    background:
+      radial-gradient(110% 80% at 50% 116%, rgba(60,220,255,.22) 0%, transparent 60%),
+      radial-gradient(80% 60% at 14% 0%, rgba(255,46,138,.14) 0%, transparent 58%),
+      linear-gradient(165deg, #0a0e18 0%, #05070d 100%);
+    border:1px solid var(--d-line);
+  }
+  .final-panel .disc-rings{ opacity:.22; border-radius:0; }
+  .final-panel > *{ position:relative; z-index:1; }
+  .final-panel h2{ font-size:clamp(1.9rem,4.4vw,3.2rem); font-weight:700; letter-spacing:-.035em; line-height:1.06; margin:16px 0 0; color:#fff; }
+  .final-panel p{ font-size:1.04rem; line-height:1.65; color:var(--d-ink-2); margin:20px auto 0; max-width:58ch; }
+  .final-cta{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:34px; }
+  .final-meta{ display:flex; flex-wrap:wrap; gap:26px; justify-content:center; margin-top:36px; padding-top:28px; border-top:1px solid var(--d-line-2); }
+  .final-meta div{ text-align:center; }
+  .final-meta .ds-label{ font-size:10px; color:var(--d-ink-3); }
+  .final-meta p{ margin:7px 0 0; font-size:14.5px; font-weight:500; color:#fff; max-width:none; }
+  .final-meta a:hover{ color:var(--spec-cyan); }
+
+  /* ── Footer ── */
+  footer.foot{ background:var(--d-0); border-top:1px solid var(--d-line-2); padding:40px 0 calc(40px + var(--safe-b)); }
+  .foot-inner{ display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+  .foot-brand{ display:flex; align-items:center; gap:10px; }
+  .foot-brand .brand-mark{ width:24px; height:24px; }
+  .foot-brand span{ font-size:13px; font-weight:600; letter-spacing:.04em; color:#fff; }
+  .foot-inner p{ margin:0; font-size:12.5px; color:var(--d-ink-3); }
+  .foot-links{ display:flex; gap:20px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--d-ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:#fff; }
+
+  /* ── Scroll reveal (Apple-style: rise + settle) ── */
+  .reveal{
+    opacity:0; transform:translateY(30px);
+    transition:opacity .95s var(--ease), transform .95s var(--ease);
+  }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-d1{ transition-delay:.08s; }
+  .reveal-d2{ transition-delay:.16s; }
+  .reveal-d3{ transition-delay:.24s; }
+  .hero .reveal{ transition-duration:1.15s; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .disc-ribs,.opp-glow,.hero-visual-cap .pulse,.scroll-cue i{ animation:none; }
+    .rail{ scroll-behavior:auto; }
+    .cap,.mod,.proof,.step-row,.rail-item{ transition:none; }
+    .cap:hover,.mod:hover,.proof:hover,.step-row:hover,.rail-item:hover{ transform:none; }
+  }
+</style>
+</head>
+<body data-brand="andata">
+
+<header class="nav">
+  <a class="brand" href="../" aria-label="Andata Lab — inicio">
+    <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+  </a>
+  <nav class="nav-links" aria-label="Navegación principal">
+    <a href="#capacidades" data-i18n="nav_caps">Capacidades</a>
+    <a href="../#work" data-i18n="nav_work">Proyectos</a>
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Cambiar idioma">EN</button>
+    <a class="nav-cta" href="#contacto" data-i18n="nav_cta">Hablemos</a>
+  </nav>
+</header>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<a class="back" href="../">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <span data-i18n="back">Volver al inicio</span>
+</a>
+
+<main>
+
+  <!-- ══ 1 · HERO ══ -->
+  <section class="hero" id="inicio">
+    <div class="hero-amb" aria-hidden="true">
+      <img src="../Imagenes/real-time-generative-poster.jpg" alt="">
+    </div>
+    <canvas id="dome-fx" aria-hidden="true"></canvas>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="hero-inner wrap">
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
+        <h1 class="reveal reveal-d1">
+          <span class="l" data-i18n="h_t1">Contenido vivo</span>
+          <span class="l l2" data-i18n="h_t2">para espacios inmersivos</span>
+        </h1>
+        <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Creamos experiencias audiovisuales, interactivas y generativas para domos, recintos fulldome y superficies de gran formato.</p>
+        <div class="hero-cta reveal reveal-d3">
+          <a class="btn btn-primary" href="#contacto" data-i18n="h_cta1">Hablemos de tu espacio</a>
+          <a class="btn btn-ghost" href="#capacidades" data-i18n="h_cta2">Explorar capacidades</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal reveal-d2">
+        <div class="disc disc--hero is-filled">
+          <video class="disc-vid" id="hero-video" muted loop playsinline preload="none"
+                 poster="../Imagenes/real-time-generative-poster.jpg"
+                 data-src="../videos/real-time-generative.mp4"
+                 data-src-mobile="../videos/services-mobile/real-time-generative.mp4"
+                 aria-label="Visuales generativos en tiempo real de ANDATA LAB, encuadrados en formato domemaster circular"></video>
+          <canvas class="disc-fx" aria-hidden="true"></canvas>
+          <span class="disc-rings" aria-hidden="true"></span>
+          <span class="disc-ribs" aria-hidden="true"></span>
+        </div>
+        <p class="hero-visual-cap">
+          <span class="pulse" aria-hidden="true"></span>
+          <span class="ds-label" data-i18n="h_cap">Formato domemaster 180° · fragmentos de sistemas en tiempo real de ANDATA LAB</span>
+        </p>
+      </div>
+    </div>
+
+    <a class="scroll-cue" href="#oportunidad" aria-label="Bajar a la siguiente sección">
+      <span class="ds-label" data-i18n="scroll">Desliza</span>
+      <i aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- ══ 2 · THE OPPORTUNITY ══ -->
+  <section class="opp" id="oportunidad">
+    <div class="opp-sticky">
+      <div class="opp-glow" aria-hidden="true"></div>
+      <div class="opp-inner wrap">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="op_eyebrow">La oportunidad</span></span>
+        <h2 class="reveal reveal-d1" data-i18n="op_title">Más que proyectar contenido</h2>
+        <div class="opp-cols">
+          <p class="reveal reveal-d2" data-i18n="op_p1">Un domo no tiene que funcionar como una pantalla que repite el mismo material. Puede convertirse en una <strong>plataforma viva</strong> para cultura, turismo, entretenimiento, marcas y experiencias participativas.</p>
+          <p class="reveal reveal-d3" data-i18n="op_p2">ANDATA LAB combina dirección creativa, producción audiovisual y tecnología en tiempo real para desarrollar contenido que <strong>evoluciona con el espacio, el público y cada temporada</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3 · CAPABILITIES ══ -->
+  <section class="caps" id="capacidades">
+    <div class="wrap caps-head">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="cap_eyebrow">Capacidades</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="cap_title">Todo lo que puede vivir dentro de una cúpula.</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="cap_lead">Un solo estudio para dirección creativa, producción, sistemas en tiempo real e integración técnica. Elegimos las piezas según el espacio y el objetivo.</p>
+      </div>
+    </div>
+
+    <div class="wrap caps-grid">
+      <div class="caps-visual">
+        <div class="disc" id="caps-disc" aria-hidden="true">
+          <canvas class="disc-fx" id="caps-fx"></canvas>
+          <span class="disc-rings"></span>
+          <span class="disc-ribs"></span>
+        </div>
+        <div class="caps-visual-cap" aria-live="polite">
+          <b id="caps-label">Contenido fulldome</b>
+          <span class="ds-label" data-i18n="cap_format">Formato domemaster · 360°</span>
+        </div>
+      </div>
+
+      <ol class="caps-list" id="caps-list">
+        <li class="cap reveal">
+          <span class="cap-n">01</span>
+          <h3 data-i18n="cap1_t">Contenido fulldome</h3>
+          <p data-i18n="cap1_d">Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">02</span>
+          <h3 data-i18n="cap2_t">Experiencias interactivas</h3>
+          <p data-i18n="cap2_d">Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">03</span>
+          <h3 data-i18n="cap3_t">Visuales generativos</h3>
+          <p data-i18n="cap3_d">Sistemas creados en TouchDesigner que producen experiencias dinámicas y operables en tiempo real.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">04</span>
+          <h3 data-i18n="cap4_t">Data experiences</h3>
+          <p data-i18n="cap4_d">Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">05</span>
+          <h3 data-i18n="cap5_t">Live Dome</h3>
+          <p data-i18n="cap5_d">Shows audiovisuales sincronizados con músicos, DJ, performances y eventos especiales.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">06</span>
+          <h3 data-i18n="cap6_t">Audio espacial y DMX</h3>
+          <p data-i18n="cap6_d">Integración de sonido envolvente e iluminación para extender la experiencia más allá de la proyección.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">07</span>
+          <h3 data-i18n="cap7_t">Producción local</h3>
+          <p data-i18n="cap7_d">Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">08</span>
+          <h3 data-i18n="cap8_t">Programación continua</h3>
+          <p data-i18n="cap8_d">Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══ 4 · FLAGSHIP CONCEPTS ══ -->
+  <section class="concepts block" id="experiencias">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="con_eyebrow">Experiencias insignia</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="con_title">Cuatro conceptos para abrir un domo al público.</h2>
+        <div class="honest reveal reveal-d2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <p data-i18n="con_tag">Conceptos adaptables a cada destino, temporada o identidad de marca. Son propuestas de dirección creativa, no producciones ya realizadas.</p>
+        </div>
+      </div>
+
+      <div class="concept-list">
+        <!-- Concept 01 -->
+        <article class="concept reveal" style="--acc:#3CDCFF">
+          <div class="concept-media">
+            <div class="disc" data-asset="dome-whale-concept"
+                 data-alt="Visualización conceptual: ballenas monumentales en formato domemaster para domo inmersivo"
+                 style="--acc:#2f9fff">
+              <canvas class="disc-fx"></canvas>
+              <span class="disc-rings"></span>
+              <span class="disc-ribs"></span>
+              <span class="disc-slug"><b>dome-whale-concept</b><span data-i18n="ph_pending">Placeholder — reemplazar en /img</span></span>
+              <span class="disc-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            </div>
+          </div>
+          <div>
+            <span class="concept-n" data-i18n="cn1">Concepto 01</span>
+            <h3 data-i18n="c1_t">Viaje de las Ballenas</h3>
+            <p data-i18n="c1_d">Una travesía inmersiva por el océano donde ballenas monumentales, sonido espacial, datos ambientales y movimiento generativo transforman el domo en un ecosistema vivo.</p>
+            <div class="concept-chips">
+              <span class="chip" data-i18n="c1_k1">Océano y bioluminiscencia</span>
+              <span class="chip" data-i18n="c1_k2">Audio espacial</span>
+              <span class="chip" data-i18n="c1_k3">Datos ambientales</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Concept 02 -->
+        <article class="concept reveal" style="--acc:#FF2E8A">
+          <div class="concept-media">
+            <div class="disc" data-asset="dome-memory-concept"
+                 data-alt="Visualización conceptual: Día de Muertos contemporáneo en formato domemaster"
+                 style="--acc:#ff8a3c">
+              <canvas class="disc-fx"></canvas>
+              <span class="disc-rings"></span>
+              <span class="disc-ribs"></span>
+              <span class="disc-slug"><b>dome-memory-concept</b><span data-i18n="ph_pending">Placeholder — reemplazar en /img</span></span>
+              <span class="disc-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            </div>
+          </div>
+          <div>
+            <span class="concept-n" data-i18n="cn2">Concepto 02</span>
+            <h3 data-i18n="c2_t">Memoria Viva</h3>
+            <p data-i18n="c2_d">Una interpretación contemporánea de Día de Muertos donde memorias, retratos voluntarios, cempasúchil, agua, luz y sonido se convierten en una experiencia colectiva.</p>
+            <div class="concept-chips">
+              <span class="chip" data-i18n="c2_k1">Participación del público</span>
+              <span class="chip" data-i18n="c2_k2">Retratos voluntarios</span>
+              <span class="chip" data-i18n="c2_k3">Ritual contemporáneo</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Concept 03 -->
+        <article class="concept reveal" style="--acc:#FF8A3C">
+          <div class="concept-media">
+            <div class="disc" data-asset="dome-territory-capture"
+                 data-alt="Visualización conceptual: territorio, dron y paisaje en formato domemaster"
+                 style="--acc:#ffb03c">
+              <canvas class="disc-fx"></canvas>
+              <span class="disc-rings"></span>
+              <span class="disc-ribs"></span>
+              <span class="disc-slug"><b>dome-territory-capture</b><span data-i18n="ph_pending">Placeholder — reemplazar en /img</span></span>
+              <span class="disc-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            </div>
+          </div>
+          <div>
+            <span class="concept-n" data-i18n="cn3">Concepto 03</span>
+            <h3 data-i18n="c3_t">El Destino Vivo</h3>
+            <p data-i18n="c3_d">El territorio contado mediante imágenes de dron, paisajes, arquitectura, cultura local y datos transformados en movimiento, luz y sonido.</p>
+            <div class="concept-chips">
+              <span class="chip" data-i18n="c3_k1">Captura con dron</span>
+              <span class="chip" data-i18n="c3_k2">Identidad del destino</span>
+              <span class="chip" data-i18n="c3_k3">Turismo cultural</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Concept 04 -->
+        <article class="concept reveal" style="--acc:#9b7aff">
+          <div class="concept-media">
+            <div class="disc" data-asset="dome-data-experience"
+                 data-alt="Visualización conceptual: datos de marea, clima y público en formato domemaster"
+                 style="--acc:#9b7aff">
+              <canvas class="disc-fx"></canvas>
+              <span class="disc-rings"></span>
+              <span class="disc-ribs"></span>
+              <span class="disc-slug"><b>dome-data-experience</b><span data-i18n="ph_pending">Placeholder — reemplazar en /img</span></span>
+              <span class="disc-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            </div>
+          </div>
+          <div>
+            <span class="concept-n" data-i18n="cn4">Concepto 04</span>
+            <h3 data-i18n="c4_t">Data Dome</h3>
+            <p data-i18n="c4_d">Mareas, clima, sonido, movimiento y participación del público convertidos en una composición audiovisual irrepetible.</p>
+            <div class="concept-chips">
+              <span class="chip" data-i18n="c4_k1">Datos en vivo</span>
+              <span class="chip" data-i18n="c4_k2">Sistemas generativos</span>
+              <span class="chip" data-i18n="c4_k3">Nunca igual dos veces</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5 · INTERACTIVITY ══ -->
+  <section class="inter block" id="interactividad">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="int_eyebrow">Interactividad</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="int_title">El público activa la experiencia</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="int_p">Una experiencia interactiva no requiere tocar la superficie del domo. El movimiento, el sonido y la participación pueden modificar el contenido en tiempo real.</p>
+      </div>
+
+      <figure class="inter-media reveal">
+        <img src="../Imagenes/interactive-installations-poster.jpg" alt="" aria-hidden="true">
+        <video class="lazy-vid" muted loop playsinline preload="none"
+               poster="../Imagenes/interactive-installations-poster.jpg"
+               data-src="../videos/interactive-installations.mp4"
+               aria-label="Instalación interactiva de ANDATA LAB donde el movimiento del público genera visuales en tiempo real"></video>
+        <figcaption>
+          <span class="ds-label" data-i18n="badge_tech">Tecnología demostrada</span>
+          <p data-i18n="int_cap">Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.</p>
+        </figcaption>
+      </figure>
+
+      <div class="inter-grid reveal">
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i1_t">Tracking corporal</h3><p data-i18n="i1_d">El cuerpo del visitante se convierte en imagen dentro de la cúpula.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i2_t">Siluetas y partículas</h3><p data-i18n="i2_d">La presencia se traduce en luz, estelas y movimiento.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i3_t">Dinámicas colectivas</h3><p data-i18n="i3_d">El grupo completo modifica la escena en conjunto.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i4_t">Audio reactivo</h3><p data-i18n="i4_d">La música y las voces dibujan lo que se proyecta.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i5_t">Participación por QR</h3><p data-i18n="i5_d">El teléfono como control, sin instalar ninguna aplicación.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i6_t">Retratos voluntarios</h3><p data-i18n="i6_d">Rostros compartidos con permiso, convertidos en visual.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i7_t">Datos del público</h3><p data-i18n="i7_d">Respuestas y presencia convertidas en composición audiovisual.</p></div>
+        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i8_t">Control en vivo</h3><p data-i18n="i8_d">Artistas y operadores dirigen la experiencia en tiempo real.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6 · YEAR-ROUND PROGRAMMING ══ -->
+  <section class="season block" id="programacion">
+    <div class="wrap">
+      <div class="rail-head">
+        <div class="sec-head">
+          <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="sea_eyebrow">Programación anual</span></span>
+          <h2 class="sec-title reveal reveal-d1" data-i18n="sea_title">Un espacio que cambia durante todo el año</h2>
+          <p class="sec-lead reveal reveal-d2" data-i18n="sea_p">Diseñamos bibliotecas de contenido y temporadas que mantienen vigente la experiencia, generan nuevas razones para regresar y abren oportunidades de colaboración con marcas e instituciones.</p>
+        </div>
+        <div class="rail-nav reveal">
+          <button class="rail-btn" id="rail-prev" type="button" aria-label="Ver temporadas anteriores">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="rail-btn" id="rail-next" type="button" aria-label="Ver más temporadas">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rail reveal" id="rail" tabindex="0" role="group" aria-label="Temporadas y bloques de programación">
+      <article class="rail-item"><span class="ds-label">01</span><h3 data-i18n="s1_t">Temporada de ballenas</h3><p data-i18n="s1_d">Migración, océano y sonido espacial.</p></article>
+      <article class="rail-item"><span class="ds-label">02</span><h3 data-i18n="s2_t">Primavera y naturaleza</h3><p data-i18n="s2_d">Ciclos, agua, semillas y color.</p></article>
+      <article class="rail-item"><span class="ds-label">03</span><h3 data-i18n="s3_t">Pride</h3><p data-i18n="s3_d">Identidad, comunidad y celebración.</p></article>
+      <article class="rail-item"><span class="ds-label">04</span><h3 data-i18n="s4_t">Vacaciones de verano</h3><p data-i18n="s4_d">Programación familiar de alta rotación.</p></article>
+      <article class="rail-item"><span class="ds-label">05</span><h3 data-i18n="s5_t">Día de Muertos</h3><p data-i18n="s5_d">Memoria, retratos y ritual contemporáneo.</p></article>
+      <article class="rail-item"><span class="ds-label">06</span><h3 data-i18n="s6_t">Navidad</h3><p data-i18n="s6_d">Luz, orquesta visual y calidez.</p></article>
+      <article class="rail-item"><span class="ds-label">07</span><h3 data-i18n="s7_t">Año Nuevo</h3><p data-i18n="s7_d">Cuenta regresiva audiovisual en vivo.</p></article>
+      <article class="rail-item"><span class="ds-label">08</span><h3 data-i18n="s8_t">Programación infantil</h3><p data-i18n="s8_d">Formatos cortos, juego y asombro.</p></article>
+      <article class="rail-item"><span class="ds-label">09</span><h3 data-i18n="s9_t">Bienestar</h3><p data-i18n="s9_d">Respiración, ritmo lento y sonido envolvente.</p></article>
+      <article class="rail-item"><span class="ds-label">10</span><h3 data-i18n="s10_t">Ciencia y exploración</h3><p data-i18n="s10_d">Cosmos, datos y divulgación.</p></article>
+      <article class="rail-item"><span class="ds-label">11</span><h3 data-i18n="s11_t">Eventos deportivos</h3><p data-i18n="s11_d">Transmisión envolvente y momentos colectivos.</p></article>
+      <article class="rail-item"><span class="ds-label">12</span><h3 data-i18n="s12_t">Activaciones de marca</h3><p data-i18n="s12_d">Brand takeover con narrativa propia.</p></article>
+      <article class="rail-item"><span class="ds-label">13</span><h3 data-i18n="s13_t">Conciertos y sesiones</h3><p data-i18n="s13_d">Live dome con músicos, DJ y performance.</p></article>
+    </div>
+  </section>
+
+  <!-- ══ 7 · COLLABORATION MODEL ══ -->
+  <section class="block block--light block--tint" id="modelo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="mod_eyebrow">Modelo de colaboración</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="mod_title">De una pieza original a una programación completa</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="mod_p">Módulos que se combinan según el momento del proyecto. Puedes empezar por una sola pieza y crecer hacia un calendario anual.</p>
+      </div>
+      <div class="mod-grid">
+        <div class="mod reveal"><span class="n">01</span><h3 data-i18n="m1_t">Pieza insignia</h3><p data-i18n="m1_d">Una obra original diseñada para tu domo y su público.</p></div>
+        <div class="mod reveal reveal-d1"><span class="n">02</span><h3 data-i18n="m2_t">Temporada temática</h3><p data-i18n="m2_d">Un bloque de contenido con estreno, vigencia y cierre.</p></div>
+        <div class="mod reveal reveal-d2"><span class="n">03</span><h3 data-i18n="m3_t">Sistema interactivo</h3><p data-i18n="m3_d">Sensores, tracking y comportamiento en tiempo real.</p></div>
+        <div class="mod reveal reveal-d3"><span class="n">04</span><h3 data-i18n="m4_t">Live audiovisual show</h3><p data-i18n="m4_d">Función en vivo con operación creativa y músicos invitados.</p></div>
+        <div class="mod reveal"><span class="n">05</span><h3 data-i18n="m5_t">Brand takeover</h3><p data-i18n="m5_d">Adaptación del espacio a una marca o campaña.</p></div>
+        <div class="mod reveal reveal-d1"><span class="n">06</span><h3 data-i18n="m6_t">Producción local</h3><p data-i18n="m6_d">Captura original del destino, su cultura y su paisaje.</p></div>
+        <div class="mod reveal reveal-d2"><span class="n">07</span><h3 data-i18n="m7_t">Programación anual</h3><p data-i18n="m7_d">Calendario completo de contenido, estrenos y activaciones.</p></div>
+        <div class="mod reveal reveal-d3"><span class="n">08</span><h3 data-i18n="m8_t">Soporte y evolución</h3><p data-i18n="m8_d">Actualizaciones, mantenimiento y nuevas versiones.</p></div>
+      </div>
+      <p class="note reveal" data-i18n="mod_note">Cada módulo se cotiza según alcance, formato del domo y calendario. Lo definimos juntos después de conocer el espacio.</p>
+    </div>
+  </section>
+
+  <!-- ══ 8 · TECHNOLOGY ══ -->
+  <section class="tech block" id="tecnologia">
+    <div class="wrap">
+      <div class="tech-cols">
+        <div>
+          <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="tec_eyebrow">Tecnología</span></span>
+          <h2 class="sec-title reveal reveal-d1" data-i18n="tec_title">Tecnología al servicio de la experiencia</h2>
+        </div>
+        <div class="reveal reveal-d2">
+          <p data-i18n="tec_p1">No empezamos por el equipo. Empezamos por lo que debe sentir el público y por la infraestructura que ya existe en el recinto.</p>
+          <p data-i18n="tec_p2">A partir de ahí seleccionamos el stack: motores en tiempo real, sensado, sonido, iluminación y control. La tecnología queda invisible; lo que se recuerda es la experiencia.</p>
+        </div>
+      </div>
+      <div class="tags reveal">
+        <span class="tag">TouchDesigner</span>
+        <span class="tag" data-i18n="t_map">Projection mapping</span>
+        <span class="tag" data-i18n="t_sens">Sensores y cámaras de profundidad</span>
+        <span class="tag">Orbbec</span>
+        <span class="tag" data-i18n="t_gen">Sistemas generativos</span>
+        <span class="tag">OSC · MIDI</span>
+        <span class="tag">Ableton Live</span>
+        <span class="tag">Resolume</span>
+        <span class="tag" data-i18n="t_audio">Audio reactivo</span>
+        <span class="tag" data-i18n="t_dmx">Control DMX</span>
+        <span class="tag" data-i18n="t_ai">Inteligencia artificial aplicada a contenido</span>
+        <span class="tag" data-i18n="t_rt">Integración audiovisual en tiempo real</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 9 · EXPERIENCE / PROOF ══ -->
+  <section class="block block--light" id="experiencia">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="exp_eyebrow">Experiencia ANDATA LAB</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="exp_title">Experiencia que se adapta a nuevas superficies</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="exp_p1">ANDATA LAB desarrolla instalaciones interactivas, sistemas audiovisuales, mapping y experiencias generativas para espacios físicos, eventos y marcas.</p>
+        <p class="sec-lead reveal reveal-d2" data-i18n="exp_p2">Nuestra experiencia con cámaras, sensores, contenido en tiempo real y superficies de gran formato nos permite diseñar nuevas posibilidades para el formato fulldome.</p>
+        <div class="legend reveal reveal-d3">
+          <span><i class="lg-real" aria-hidden="true"></i><span data-i18n="lg_real">Proyecto realizado</span></span>
+          <span><i class="lg-tech" aria-hidden="true"></i><span data-i18n="lg_tech">Tecnología demostrada</span></span>
+          <span><i class="lg-con" aria-hidden="true"></i><span data-i18n="lg_con">Concepto para domo</span></span>
+          <span><i class="lg-vis" aria-hidden="true"></i><span data-i18n="lg_vis">Visualización conceptual</span></span>
+        </div>
+      </div>
+
+      <div class="proof-grid">
+        <a class="proof reveal" href="../biointerface/">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_real">Proyecto realizado</span>
+            <img src="../Imagenes/AI INSTA.jpg" alt="Biointerface — instalación interactiva de ANDATA LAB con sensores y visuales en tiempo real" loading="lazy" decoding="async">
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="pr1_c">Instalación interactiva · Ciudad de México</span>
+            <h3>Biointerface</h3>
+            <p data-i18n="pr1_d">Sensado capacitivo y motor en tiempo real para un entorno multi-pantalla. La misma arquitectura de sistema aplica a una cúpula.</p>
+            <span class="go" data-i18n="see">Ver proyecto →</span>
+          </div>
+        </a>
+
+        <a class="proof reveal reveal-d1" href="../museo-descubre/">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_real">Proyecto realizado</span>
+            <img src="../Imagenes/AUDIOVISUAL TECH.webp" alt="Museo Descubre — dirección creativa y experiencias interactivas por ANDATA LAB" loading="lazy" decoding="async">
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="pr2_c">Museo interactivo · Aguascalientes</span>
+            <h3>Museo Descubre</h3>
+            <p data-i18n="pr2_d">Dirección creativa y salas con seguimiento de movimiento: experiencia por zonas y programación pensada para público general.</p>
+            <span class="go" data-i18n="see">Ver proyecto →</span>
+          </div>
+        </a>
+
+        <a class="proof reveal reveal-d2" href="../ajijic-mapping/">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_real">Proyecto realizado</span>
+            <img src="../Imagenes/architectural-mapping-poster.jpg" alt="Whispers of the Lake — videomapping arquitectónico en Ajijic por ANDATA LAB" loading="lazy" decoding="async">
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="pr3_c">Videomapping arquitectónico · Jalisco</span>
+            <h3>Whispers of the Lake</h3>
+            <p data-i18n="pr3_d">Proyección sobre superficie compleja con narrativa cultural: calibración, warping y contenido diseñado para la geometría del sitio.</p>
+            <span class="go" data-i18n="see">Ver proyecto →</span>
+          </div>
+        </a>
+
+        <div class="proof reveal">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_tech">Tecnología demostrada</span>
+            <video class="lazy-vid" muted loop playsinline preload="none"
+                   poster="../Imagenes/real-time-generative-poster.jpg"
+                   data-src="../videos/real-time-generative.mp4"
+                   aria-label="Sistemas generativos en tiempo real de ANDATA LAB"></video>
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="r1_c">TouchDesigner · operación en vivo</span>
+            <h3 data-i18n="r1_t">Sistemas generativos en tiempo real</h3>
+            <p data-i18n="r1_d">Motores en TouchDesigner que generan imagen en vivo y se operan durante la función. Base directa para contenido fulldome generativo.</p>
+          </div>
+        </div>
+
+        <div class="proof reveal reveal-d1">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_tech">Tecnología demostrada</span>
+            <video class="lazy-vid" muted loop playsinline preload="none"
+                   poster="../Imagenes/immersive-audiovisual-poster.jpg"
+                   data-src="../videos/immersive-audiovisual.mp4"
+                   aria-label="Entornos audiovisuales inmersivos de ANDATA LAB"></video>
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="r2_c">Proyección · audio espacial · luz</span>
+            <h3 data-i18n="r2_t">Entornos audiovisuales inmersivos</h3>
+            <p data-i18n="r2_d">Salas completas donde proyección, sonido espacial e iluminación funcionan como una sola narrativa.</p>
+          </div>
+        </div>
+
+        <div class="proof reveal reveal-d2">
+          <div class="proof-media">
+            <span class="badge" data-i18n="badge_tech">Tecnología demostrada</span>
+            <video class="lazy-vid" muted loop playsinline preload="none"
+                   poster="../Imagenes/multi-screen-installation-poster.jpg"
+                   data-src="../videos/multi-screen-installation.mp4"
+                   aria-label="Instalación multi-pantalla sincronizada de ANDATA LAB"></video>
+          </div>
+          <div class="proof-body">
+            <span class="ds-label" data-i18n="r3_c">Salidas múltiples · show control</span>
+            <h3 data-i18n="r3_t">Sincronía multi-pantalla</h3>
+            <p data-i18n="r3_d">Contenido distribuido y sincronizado entre múltiples salidas — el punto de partida para cubrir una cúpula con varios proyectores.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 10 · PROCESS ══ -->
+  <section class="block block--light block--tint" id="proceso">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="pro_eyebrow">Proceso</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="pro_title">Cómo llegamos del espacio a la función</h2>
+      </div>
+      <div class="steps">
+        <div class="step-row reveal"><span class="n">01</span><div><h3 data-i18n="pp1_t">Descubrimiento</h3><p data-i18n="pp1_d">Conocemos el espacio, audiencia, calendario y objetivos.</p></div></div>
+        <div class="step-row reveal"><span class="n">02</span><div><h3 data-i18n="pp2_t">Diseño creativo</h3><p data-i18n="pp2_d">Definimos narrativa, lenguaje visual e interacción.</p></div></div>
+        <div class="step-row reveal"><span class="n">03</span><div><h3 data-i18n="pp3_t">Prototipo</h3><p data-i18n="pp3_d">Validamos contenido, formato y comportamiento técnico.</p></div></div>
+        <div class="step-row reveal"><span class="n">04</span><div><h3 data-i18n="pp4_t">Producción</h3><p data-i18n="pp4_d">Creamos visuales, sonido, sistemas y adaptaciones.</p></div></div>
+        <div class="step-row reveal"><span class="n">05</span><div><h3 data-i18n="pp5_t">Integración</h3><p data-i18n="pp5_d">Probamos dentro del recinto y ajustamos la experiencia.</p></div></div>
+        <div class="step-row reveal"><span class="n">06</span><div><h3 data-i18n="pp6_t">Evolución</h3><p data-i18n="pp6_d">Actualizamos temporadas, contenido y nuevas activaciones.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 11 · FINAL CTA ══ -->
+  <section class="final" id="contacto">
+    <div class="wrap">
+      <div class="final-panel reveal">
+        <span class="disc-rings" aria-hidden="true"></span>
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
+        <h2 data-i18n="cta_title">Hagamos que el espacio cobre vida</h2>
+        <p data-i18n="cta_p">Creamos contenido, interacción y programación para convertir domos y superficies inmersivas en destinos que la gente quiera volver a experimentar.</p>
+        <div class="final-cta">
+          <a class="btn btn-primary" href="../#contact" data-i18n="cta_btn1">Cuéntanos sobre tu espacio</a>
+          <a class="btn btn-ghost" href="mailto:airolaxx@gmail.com?subject=ANDATA%20DOME%20STUDIO%20%E2%80%94%20mi%20espacio%20inmersivo" data-i18n="cta_btn2">Escribir por correo</a>
+        </div>
+        <div class="final-meta">
+          <div>
+            <span class="ds-label" data-i18n="label_email">Correo</span>
+            <p><a href="mailto:airolaxx@gmail.com">airolaxx@gmail.com</a></p>
+          </div>
+          <div>
+            <span class="ds-label" data-i18n="label_based">Ubicación</span>
+            <p data-i18n="based">México · trabajamos en todo el mundo</p>
+          </div>
+          <div>
+            <span class="ds-label" data-i18n="label_reply">Respuesta</span>
+            <p data-i18n="reply">24–48 horas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span class="foot-brand">
+      <img class="brand-mark" src="../Imagenes/logo-mark.png" width="24" height="24" alt="">
+      <span>Andata&nbsp;Lab<span class="brand-asterisk">*</span></span>
+    </span>
+    <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">Todos los derechos reservados.</span></p>
+    <div class="foot-links">
+      <a href="../" data-i18n="nav_home">Inicio</a>
+      <a href="../#work" data-i18n="nav_work">Proyectos</a>
+      <a href="../#contact" data-i18n="nav_contact">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://andatalab.com/#organization",
+      "name": "Andata Lab",
+      "url": "https://andatalab.com/",
+      "email": "airolaxx@gmail.com",
+      "logo": "https://andatalab.com/Imagenes/logo-mark.png",
+      "description": "Estudio de tecnología inmersiva y creativa: instalaciones interactivas, videomapping y sistemas audiovisuales en tiempo real.",
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+    },
+    {
+      "@type": "Service",
+      "name": "ANDATA DOME STUDIO",
+      "serviceType": "Producción de contenido e interactividad para domos y espacios inmersivos",
+      "description": "Contenido fulldome, experiencias interactivas, visuales generativos, data experiences, live dome, audio espacial, control DMX, producción local y programación continua para domos y recintos inmersivos.",
+      "url": "https://andatalab.com/dome-studio/",
+      "provider": { "@id": "https://andatalab.com/#organization" },
+      "areaServed": [
+        { "@type": "Country", "name": "México" },
+        { "@type": "Place", "name": "Worldwide" }
+      ],
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Domos inmersivos, hoteles y resorts, destinos turísticos, gobiernos, museos, festivales, agencias, marcas y productores de entretenimiento"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Andata Lab", "item": "https://andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Dome Studio", "item": "https://andatalab.com/dome-studio/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var LANG_KEY = 'andata_lang';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqNarrow = window.matchMedia('(max-width: 768px)');
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* ─────────── i18n (same dictionary pattern as the other project pages) ─────────── */
+  var I18N = {
+    es: {
+      nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_contact: 'Contacto', nav_home: 'Inicio',
+      nav_cta: 'Hablemos', back: 'Volver al inicio', scroll: 'Desliza',
+      h_t1: 'Contenido vivo', h_t2: 'para espacios inmersivos',
+      h_sub: 'Creamos experiencias audiovisuales, interactivas y generativas para domos, recintos fulldome y superficies de gran formato.',
+      h_cta1: 'Hablemos de tu espacio', h_cta2: 'Explorar capacidades',
+      h_cap: 'Formato domemaster 180° · fragmentos de sistemas en tiempo real de ANDATA LAB',
+
+      op_eyebrow: 'La oportunidad', op_title: 'Más que proyectar contenido',
+      op_p1: 'Un domo no tiene que funcionar como una pantalla que repite el mismo material. Puede convertirse en una <strong>plataforma viva</strong> para cultura, turismo, entretenimiento, marcas y experiencias participativas.',
+      op_p2: 'ANDATA LAB combina dirección creativa, producción audiovisual y tecnología en tiempo real para desarrollar contenido que <strong>evoluciona con el espacio, el público y cada temporada</strong>.',
+
+      cap_eyebrow: 'Capacidades', cap_title: 'Todo lo que puede vivir dentro de una cúpula.',
+      cap_lead: 'Un solo estudio para dirección creativa, producción, sistemas en tiempo real e integración técnica. Elegimos las piezas según el espacio y el objetivo.',
+      cap_format: 'Formato domemaster · 360°',
+      cap1_t: 'Contenido fulldome', cap1_d: 'Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.',
+      cap2_t: 'Experiencias interactivas', cap2_d: 'Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.',
+      cap3_t: 'Visuales generativos', cap3_d: 'Sistemas creados en TouchDesigner que producen experiencias dinámicas y operables en tiempo real.',
+      cap4_t: 'Data experiences', cap4_d: 'Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.',
+      cap5_t: 'Live Dome', cap5_d: 'Shows audiovisuales sincronizados con músicos, DJ, performances y eventos especiales.',
+      cap6_t: 'Audio espacial y DMX', cap6_d: 'Integración de sonido envolvente e iluminación para extender la experiencia más allá de la proyección.',
+      cap7_t: 'Producción local', cap7_d: 'Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.',
+      cap8_t: 'Programación continua', cap8_d: 'Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.',
+
+      con_eyebrow: 'Experiencias insignia', con_title: 'Cuatro conceptos para abrir un domo al público.',
+      con_tag: 'Conceptos adaptables a cada destino, temporada o identidad de marca. Son propuestas de dirección creativa, no producciones ya realizadas.',
+      ph_label: 'Visualización conceptual', ph_pending: 'Placeholder — reemplazar en /img',
+      cn1: 'Concepto 01', cn2: 'Concepto 02', cn3: 'Concepto 03', cn4: 'Concepto 04',
+      c1_t: 'Viaje de las Ballenas',
+      c1_d: 'Una travesía inmersiva por el océano donde ballenas monumentales, sonido espacial, datos ambientales y movimiento generativo transforman el domo en un ecosistema vivo.',
+      c1_k1: 'Océano y bioluminiscencia', c1_k2: 'Audio espacial', c1_k3: 'Datos ambientales',
+      c2_t: 'Memoria Viva',
+      c2_d: 'Una interpretación contemporánea de Día de Muertos donde memorias, retratos voluntarios, cempasúchil, agua, luz y sonido se convierten en una experiencia colectiva.',
+      c2_k1: 'Participación del público', c2_k2: 'Retratos voluntarios', c2_k3: 'Ritual contemporáneo',
+      c3_t: 'El Destino Vivo',
+      c3_d: 'El territorio contado mediante imágenes de dron, paisajes, arquitectura, cultura local y datos transformados en movimiento, luz y sonido.',
+      c3_k1: 'Captura con dron', c3_k2: 'Identidad del destino', c3_k3: 'Turismo cultural',
+      c4_t: 'Data Dome',
+      c4_d: 'Mareas, clima, sonido, movimiento y participación del público convertidos en una composición audiovisual irrepetible.',
+      c4_k1: 'Datos en vivo', c4_k2: 'Sistemas generativos', c4_k3: 'Nunca igual dos veces',
+
+      int_eyebrow: 'Interactividad', int_title: 'El público activa la experiencia',
+      int_p: 'Una experiencia interactiva no requiere tocar la superficie del domo. El movimiento, el sonido y la participación pueden modificar el contenido en tiempo real.',
+      int_cap: 'Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.',
+      i1_t: 'Tracking corporal', i1_d: 'El cuerpo del visitante se convierte en imagen dentro de la cúpula.',
+      i2_t: 'Siluetas y partículas', i2_d: 'La presencia se traduce en luz, estelas y movimiento.',
+      i3_t: 'Dinámicas colectivas', i3_d: 'El grupo completo modifica la escena en conjunto.',
+      i4_t: 'Audio reactivo', i4_d: 'La música y las voces dibujan lo que se proyecta.',
+      i5_t: 'Participación por QR', i5_d: 'El teléfono como control, sin instalar ninguna aplicación.',
+      i6_t: 'Retratos voluntarios', i6_d: 'Rostros compartidos con permiso, convertidos en visual.',
+      i7_t: 'Datos del público', i7_d: 'Respuestas y presencia convertidas en composición audiovisual.',
+      i8_t: 'Control en vivo', i8_d: 'Artistas y operadores dirigen la experiencia en tiempo real.',
+
+      sea_eyebrow: 'Programación anual', sea_title: 'Un espacio que cambia durante todo el año',
+      sea_p: 'Diseñamos bibliotecas de contenido y temporadas que mantienen vigente la experiencia, generan nuevas razones para regresar y abren oportunidades de colaboración con marcas e instituciones.',
+      s1_t: 'Temporada de ballenas', s1_d: 'Migración, océano y sonido espacial.',
+      s2_t: 'Primavera y naturaleza', s2_d: 'Ciclos, agua, semillas y color.',
+      s3_t: 'Pride', s3_d: 'Identidad, comunidad y celebración.',
+      s4_t: 'Vacaciones de verano', s4_d: 'Programación familiar de alta rotación.',
+      s5_t: 'Día de Muertos', s5_d: 'Memoria, retratos y ritual contemporáneo.',
+      s6_t: 'Navidad', s6_d: 'Luz, orquesta visual y calidez.',
+      s7_t: 'Año Nuevo', s7_d: 'Cuenta regresiva audiovisual en vivo.',
+      s8_t: 'Programación infantil', s8_d: 'Formatos cortos, juego y asombro.',
+      s9_t: 'Bienestar', s9_d: 'Respiración, ritmo lento y sonido envolvente.',
+      s10_t: 'Ciencia y exploración', s10_d: 'Cosmos, datos y divulgación.',
+      s11_t: 'Eventos deportivos', s11_d: 'Transmisión envolvente y momentos colectivos.',
+      s12_t: 'Activaciones de marca', s12_d: 'Brand takeover con narrativa propia.',
+      s13_t: 'Conciertos y sesiones', s13_d: 'Live dome con músicos, DJ y performance.',
+
+      mod_eyebrow: 'Modelo de colaboración', mod_title: 'De una pieza original a una programación completa',
+      mod_p: 'Módulos que se combinan según el momento del proyecto. Puedes empezar por una sola pieza y crecer hacia un calendario anual.',
+      mod_note: 'Cada módulo se cotiza según alcance, formato del domo y calendario. Lo definimos juntos después de conocer el espacio.',
+      m1_t: 'Pieza insignia', m1_d: 'Una obra original diseñada para tu domo y su público.',
+      m2_t: 'Temporada temática', m2_d: 'Un bloque de contenido con estreno, vigencia y cierre.',
+      m3_t: 'Sistema interactivo', m3_d: 'Sensores, tracking y comportamiento en tiempo real.',
+      m4_t: 'Live audiovisual show', m4_d: 'Función en vivo con operación creativa y músicos invitados.',
+      m5_t: 'Brand takeover', m5_d: 'Adaptación del espacio a una marca o campaña.',
+      m6_t: 'Producción local', m6_d: 'Captura original del destino, su cultura y su paisaje.',
+      m7_t: 'Programación anual', m7_d: 'Calendario completo de contenido, estrenos y activaciones.',
+      m8_t: 'Soporte y evolución', m8_d: 'Actualizaciones, mantenimiento y nuevas versiones.',
+
+      tec_eyebrow: 'Tecnología', tec_title: 'Tecnología al servicio de la experiencia',
+      tec_p1: 'No empezamos por el equipo. Empezamos por lo que debe sentir el público y por la infraestructura que ya existe en el recinto.',
+      tec_p2: 'A partir de ahí seleccionamos el stack: motores en tiempo real, sensado, sonido, iluminación y control. La tecnología queda invisible; lo que se recuerda es la experiencia.',
+      t_map: 'Projection mapping', t_sens: 'Sensores y cámaras de profundidad', t_gen: 'Sistemas generativos',
+      t_audio: 'Audio reactivo', t_dmx: 'Control DMX', t_ai: 'Inteligencia artificial aplicada a contenido',
+      t_rt: 'Integración audiovisual en tiempo real',
+
+      exp_eyebrow: 'Experiencia ANDATA LAB', exp_title: 'Experiencia que se adapta a nuevas superficies',
+      exp_p1: 'ANDATA LAB desarrolla instalaciones interactivas, sistemas audiovisuales, mapping y experiencias generativas para espacios físicos, eventos y marcas.',
+      exp_p2: 'Nuestra experiencia con cámaras, sensores, contenido en tiempo real y superficies de gran formato nos permite diseñar nuevas posibilidades para el formato fulldome.',
+      lg_real: 'Proyecto realizado', lg_tech: 'Tecnología demostrada', lg_con: 'Concepto para domo', lg_vis: 'Visualización conceptual',
+      badge_real: 'Proyecto realizado', badge_tech: 'Tecnología demostrada', see: 'Ver proyecto →',
+      pr1_c: 'Instalación interactiva · Ciudad de México',
+      pr1_d: 'Sensado capacitivo y motor en tiempo real para un entorno multi-pantalla. La misma arquitectura de sistema aplica a una cúpula.',
+      pr2_c: 'Museo interactivo · Aguascalientes',
+      pr2_d: 'Dirección creativa y salas con seguimiento de movimiento: experiencia por zonas y programación pensada para público general.',
+      pr3_c: 'Videomapping arquitectónico · Jalisco',
+      pr3_d: 'Proyección sobre superficie compleja con narrativa cultural: calibración, warping y contenido diseñado para la geometría del sitio.',
+      r1_c: 'TouchDesigner · operación en vivo', r2_c: 'Proyección · audio espacial · luz', r3_c: 'Salidas múltiples · show control',
+      r1_t: 'Sistemas generativos en tiempo real',
+      r1_d: 'Motores en TouchDesigner que generan imagen en vivo y se operan durante la función. Base directa para contenido fulldome generativo.',
+      r2_t: 'Entornos audiovisuales inmersivos',
+      r2_d: 'Salas completas donde proyección, sonido espacial e iluminación funcionan como una sola narrativa.',
+      r3_t: 'Sincronía multi-pantalla',
+      r3_d: 'Contenido distribuido y sincronizado entre múltiples salidas — el punto de partida para cubrir una cúpula con varios proyectores.',
+
+      pro_eyebrow: 'Proceso', pro_title: 'Cómo llegamos del espacio a la función',
+      pp1_t: 'Descubrimiento', pp1_d: 'Conocemos el espacio, audiencia, calendario y objetivos.',
+      pp2_t: 'Diseño creativo', pp2_d: 'Definimos narrativa, lenguaje visual e interacción.',
+      pp3_t: 'Prototipo', pp3_d: 'Validamos contenido, formato y comportamiento técnico.',
+      pp4_t: 'Producción', pp4_d: 'Creamos visuales, sonido, sistemas y adaptaciones.',
+      pp5_t: 'Integración', pp5_d: 'Probamos dentro del recinto y ajustamos la experiencia.',
+      pp6_t: 'Evolución', pp6_d: 'Actualizamos temporadas, contenido y nuevas activaciones.',
+
+      cta_title: 'Hagamos que el espacio cobre vida',
+      cta_p: 'Creamos contenido, interacción y programación para convertir domos y superficies inmersivas en destinos que la gente quiera volver a experimentar.',
+      cta_btn1: 'Cuéntanos sobre tu espacio', cta_btn2: 'Escribir por correo',
+      label_email: 'Correo', label_based: 'Ubicación', label_reply: 'Respuesta',
+      based: 'México · trabajamos en todo el mundo', reply: '24–48 horas',
+      rights: 'Todos los derechos reservados.',
+      doc_title: 'Dome Studio | Contenido e interactividad para domos | ANDATA LAB'
+    },
+    en: {
+      nav_caps: 'Capabilities', nav_work: 'Work', nav_contact: 'Contact', nav_home: 'Home',
+      nav_cta: "Let's talk", back: 'Back to home', scroll: 'Scroll',
+      h_t1: 'Living content', h_t2: 'for immersive spaces',
+      h_sub: 'We create audiovisual, interactive and generative experiences for domes, fulldome venues and large-format surfaces.',
+      h_cta1: "Let's talk about your space", h_cta2: 'Explore capabilities',
+      h_cap: 'Domemaster 180° format · fragments of ANDATA LAB real-time systems',
+
+      op_eyebrow: 'The opportunity', op_title: 'More than projecting content',
+      op_p1: 'A dome doesn\u2019t have to work like a screen replaying the same material. It can become a <strong>living platform</strong> for culture, tourism, entertainment, brands and participatory experiences.',
+      op_p2: 'ANDATA LAB combines creative direction, audiovisual production and real-time technology to build content that <strong>evolves with the space, the audience and every season</strong>.',
+
+      cap_eyebrow: 'Capabilities', cap_title: 'Everything that can live inside a dome.',
+      cap_lead: 'One studio for creative direction, production, real-time systems and technical integration. We pick the pieces that fit the space and the goal.',
+      cap_format: 'Domemaster format · 360°',
+      cap1_t: 'Fulldome content', cap1_d: 'Production and adaptation of audiovisual pieces designed to wrap around the audience.',
+      cap2_t: 'Interactive experiences', cap2_d: 'Depth cameras, sensors and body tracking that turn the audience\u2019s presence into image and movement.',
+      cap3_t: 'Generative visuals', cap3_d: 'TouchDesigner systems that produce dynamic experiences, operable live.',
+      cap4_t: 'Data experiences', cap4_d: 'Environmental, cultural or participatory data turned into audiovisual narratives.',
+      cap5_t: 'Live Dome', cap5_d: 'Audiovisual shows synced with musicians, DJs, performances and special events.',
+      cap6_t: 'Spatial audio & DMX', cap6_d: 'Surround sound and lighting integration to extend the experience beyond projection.',
+      cap7_t: 'Local production', cap7_d: 'Photography, video, drone, 360 capture and original material tied to each destination.',
+      cap8_t: 'Ongoing programming', cap8_d: 'Seasons, premieres, sponsored activations and periodic content updates.',
+
+      con_eyebrow: 'Flagship experiences', con_title: 'Four concepts to open a dome to the public.',
+      con_tag: 'Concepts adaptable to each destination, season or brand identity. These are creative-direction proposals, not productions already delivered.',
+      ph_label: 'Conceptual visualization', ph_pending: 'Placeholder — replace in /img',
+      cn1: 'Concept 01', cn2: 'Concept 02', cn3: 'Concept 03', cn4: 'Concept 04',
+      c1_t: 'Journey of the Whales',
+      c1_d: 'An immersive ocean crossing where monumental whales, spatial sound, environmental data and generative motion turn the dome into a living ecosystem.',
+      c1_k1: 'Ocean & bioluminescence', c1_k2: 'Spatial audio', c1_k3: 'Environmental data',
+      c2_t: 'Living Memory',
+      c2_d: 'A contemporary reading of Día de Muertos where memories, volunteered portraits, marigold, water, light and sound become a collective experience.',
+      c2_k1: 'Audience participation', c2_k2: 'Volunteered portraits', c2_k3: 'Contemporary ritual',
+      c3_t: 'The Living Destination',
+      c3_d: 'The territory told through drone imagery, landscape, architecture, local culture and data transformed into movement, light and sound.',
+      c3_k1: 'Drone capture', c3_k2: 'Destination identity', c3_k3: 'Cultural tourism',
+      c4_t: 'Data Dome',
+      c4_d: 'Tides, weather, sound, movement and audience participation turned into an audiovisual composition that never repeats.',
+      c4_k1: 'Live data', c4_k2: 'Generative systems', c4_k3: 'Never twice the same',
+
+      int_eyebrow: 'Interactivity', int_title: 'The audience activates the experience',
+      int_p: 'An interactive experience doesn\u2019t require touching the dome surface. Movement, sound and participation can reshape the content in real time.',
+      int_cap: 'ANDATA LAB interactive installation: sensors and tracking turning audience movement into image. The same technical base adapts to a dome.',
+      i1_t: 'Body tracking', i1_d: 'The visitor\u2019s body becomes image inside the dome.',
+      i2_t: 'Silhouettes & particles', i2_d: 'Presence translated into light, trails and motion.',
+      i3_t: 'Collective dynamics', i3_d: 'The whole group reshapes the scene together.',
+      i4_t: 'Audio reactive', i4_d: 'Music and voices draw what gets projected.',
+      i5_t: 'QR participation', i5_d: 'The phone as controller — no app to install.',
+      i6_t: 'Volunteered portraits', i6_d: 'Faces shared with consent, turned into visuals.',
+      i7_t: 'Audience data', i7_d: 'Answers and presence turned into audiovisual composition.',
+      i8_t: 'Live control', i8_d: 'Artists and operators drive the experience in real time.',
+
+      sea_eyebrow: 'Year-round programming', sea_title: 'A space that changes all year',
+      sea_p: 'We design content libraries and seasons that keep the experience current, create new reasons to come back and open collaborations with brands and institutions.',
+      s1_t: 'Whale season', s1_d: 'Migration, ocean and spatial sound.',
+      s2_t: 'Spring & nature', s2_d: 'Cycles, water, seeds and color.',
+      s3_t: 'Pride', s3_d: 'Identity, community and celebration.',
+      s4_t: 'Summer holidays', s4_d: 'High-rotation family programming.',
+      s5_t: 'Día de Muertos', s5_d: 'Memory, portraits and contemporary ritual.',
+      s6_t: 'Christmas', s6_d: 'Light, visual orchestra and warmth.',
+      s7_t: 'New Year', s7_d: 'A live audiovisual countdown.',
+      s8_t: 'Kids programming', s8_d: 'Short formats, play and wonder.',
+      s9_t: 'Wellness', s9_d: 'Breath, slow tempo and surround sound.',
+      s10_t: 'Science & exploration', s10_d: 'Cosmos, data and outreach.',
+      s11_t: 'Sports events', s11_d: 'Immersive broadcast and collective moments.',
+      s12_t: 'Brand activations', s12_d: 'Brand takeover with its own narrative.',
+      s13_t: 'Concerts & sessions', s13_d: 'Live dome with musicians, DJs and performance.',
+
+      mod_eyebrow: 'Collaboration model', mod_title: 'From one original piece to full programming',
+      mod_p: 'Modules that combine depending on where the project is. You can start with a single piece and grow into a yearly calendar.',
+      mod_note: 'Each module is quoted by scope, dome format and calendar. We define it together once we know the space.',
+      m1_t: 'Flagship piece', m1_d: 'An original work designed for your dome and its audience.',
+      m2_t: 'Themed season', m2_d: 'A content block with a premiere, a run and a close.',
+      m3_t: 'Interactive system', m3_d: 'Sensors, tracking and real-time behavior.',
+      m4_t: 'Live audiovisual show', m4_d: 'A live show with creative operation and guest musicians.',
+      m5_t: 'Brand takeover', m5_d: 'Adapting the space to a brand or campaign.',
+      m6_t: 'Local production', m6_d: 'Original capture of the destination, its culture and landscape.',
+      m7_t: 'Yearly programming', m7_d: 'A full calendar of content, premieres and activations.',
+      m8_t: 'Support & evolution', m8_d: 'Updates, maintenance and new versions.',
+
+      tec_eyebrow: 'Technology', tec_title: 'Technology in service of the experience',
+      tec_p1: 'We don\u2019t start with the gear. We start with what the audience should feel, and with the infrastructure the venue already has.',
+      tec_p2: 'From there we select the stack: real-time engines, sensing, sound, lighting and control. The technology stays invisible; the experience is what people remember.',
+      t_map: 'Projection mapping', t_sens: 'Sensors & depth cameras', t_gen: 'Generative systems',
+      t_audio: 'Audio reactive', t_dmx: 'DMX control', t_ai: 'AI applied to content',
+      t_rt: 'Real-time audiovisual integration',
+
+      exp_eyebrow: 'ANDATA LAB experience', exp_title: 'Experience that adapts to new surfaces',
+      exp_p1: 'ANDATA LAB builds interactive installations, audiovisual systems, mapping and generative experiences for physical spaces, events and brands.',
+      exp_p2: 'Our experience with cameras, sensors, real-time content and large-format surfaces lets us design new possibilities for the fulldome format.',
+      lg_real: 'Delivered project', lg_tech: 'Proven technology', lg_con: 'Dome concept', lg_vis: 'Conceptual visualization',
+      badge_real: 'Delivered project', badge_tech: 'Proven technology', see: 'View project →',
+      pr1_c: 'Interactive installation · Mexico City',
+      pr1_d: 'Capacitive sensing and a real-time engine driving a multi-screen environment. The same system architecture applies to a dome.',
+      pr2_c: 'Interactive museum · Aguascalientes',
+      pr2_d: 'Creative direction and motion-tracked rooms: a zoned experience and programming designed for general audiences.',
+      pr3_c: 'Architectural mapping · Jalisco',
+      pr3_d: 'Projection on a complex surface with a cultural narrative: calibration, warping and content designed for the site geometry.',
+      r1_c: 'TouchDesigner · live operation', r2_c: 'Projection · spatial audio · light', r3_c: 'Multiple outputs · show control',
+      r1_t: 'Real-time generative systems',
+      r1_d: 'TouchDesigner engines generating live imagery, operated during the show. A direct base for generative fulldome content.',
+      r2_t: 'Immersive audiovisual environments',
+      r2_d: 'Full rooms where projection, spatial sound and lighting work as a single narrative.',
+      r3_t: 'Multi-screen sync',
+      r3_d: 'Content distributed and synced across multiple outputs — the starting point for covering a dome with several projectors.',
+
+      pro_eyebrow: 'Process', pro_title: 'How we get from the space to the show',
+      pp1_t: 'Discovery', pp1_d: 'We learn the space, audience, calendar and goals.',
+      pp2_t: 'Creative design', pp2_d: 'We define narrative, visual language and interaction.',
+      pp3_t: 'Prototype', pp3_d: 'We validate content, format and technical behavior.',
+      pp4_t: 'Production', pp4_d: 'We create visuals, sound, systems and adaptations.',
+      pp5_t: 'Integration', pp5_d: 'We test inside the venue and tune the experience.',
+      pp6_t: 'Evolution', pp6_d: 'We update seasons, content and new activations.',
+
+      cta_title: 'Let\u2019s bring the space to life',
+      cta_p: 'We create content, interaction and programming to turn domes and immersive surfaces into destinations people want to experience again.',
+      cta_btn1: 'Tell us about your space', cta_btn2: 'Send us an email',
+      label_email: 'Email', label_based: 'Based', label_reply: 'Reply',
+      based: 'Mexico · working worldwide', reply: '24–48 hours',
+      rights: 'All rights reserved.',
+      doc_title: 'Dome Studio | Content & interactivity for domes | ANDATA LAB'
+    }
+  };
+
+  function pickLang() {
+    var saved = null;
+    try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
+    if (saved === 'en' || saved === 'es') return saved;
+    return (navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+  }
+  var lang = pickLang();
+
+  function applyLang() {
+    var dict = I18N[lang] || I18N.es;
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(function (node) {
+      var k = node.getAttribute('data-i18n');
+      if (dict[k] != null) node.innerHTML = dict[k];
+    });
+    if (dict.doc_title) document.title = dict.doc_title;
+    var btn = $('#lang-toggle');
+    if (btn) {
+      btn.textContent = (lang === 'es') ? 'EN' : 'ES';
+      btn.setAttribute('aria-label', lang === 'es' ? 'Switch to English' : 'Cambiar a español');
+    }
+    syncCapLabel();
+  }
+
+  var langBtn = $('#lang-toggle');
+  if (langBtn) langBtn.addEventListener('click', function () {
+    lang = (lang === 'es') ? 'en' : 'es';
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  });
+
+  var yearEl = $('#year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  /* ─────────── Scroll reveal ─────────── */
+  var reveals = $$('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (r) { r.classList.add('in'); });
+  } else {
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); revealIO.unobserve(en.target); }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -8% 0px' });
+    reveals.forEach(function (r) { revealIO.observe(r); });
+  }
+
+  /* ─────────── Nav state + scroll progress ─────────── */
+  (function scrollChrome() {
+    var progress = $('#scroll-progress');
+    var queued = false;
+    function frame() {
+      queued = false;
+      var y = window.scrollY || window.pageYOffset;
+      document.body.classList.toggle('is-scrolled', y > window.innerHeight * 0.6);
+      if (progress) {
+        var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        progress.style.transform = 'scaleX(' + Math.min(1, y / max) + ')';
+      }
+    }
+    function onScroll() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    frame();
+  })();
+
+  /* ─────────── Hero video: right source per device, paused off-screen ─────────── */
+  (function heroVideo() {
+    var v = $('#hero-video');
+    if (!v) return;
+    function src() {
+      var m = mqNarrow.matches ? v.getAttribute('data-src-mobile') : v.getAttribute('data-src');
+      return m || v.getAttribute('data-src');
+    }
+    function load() {
+      var next = src();
+      if (!next || v.getAttribute('src') === next) return;
+      v.setAttribute('src', next);
+      v.load();
+    }
+    v.addEventListener('playing', function () { v.classList.add('is-live'); });
+    v.addEventListener('error', function () { v.classList.remove('is-live'); });
+    if (mqNarrow.addEventListener) mqNarrow.addEventListener('change', load);
+    else if (mqNarrow.addListener) mqNarrow.addListener(load);
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { load(); v.play().catch(function () {}); }
+        else v.pause();
+      }, { threshold: 0.05 }).observe($('.hero'));
+    } else { load(); v.play().catch(function () {}); }
+  })();
+
+  /* ─────────── Lazy videos in cards / bands ─────────── */
+  (function lazyVideos() {
+    var vids = $$('.lazy-vid');
+    if (!vids.length) return;
+    function play(v) {
+      var s = v.getAttribute('data-src');
+      if (s && v.getAttribute('src') !== s) { v.setAttribute('src', s); v.load(); }
+      if (v.readyState >= 2) { v.classList.add('is-loaded'); v.play().catch(function () {}); return; }
+      v.addEventListener('loadeddata', function once() {
+        v.removeEventListener('loadeddata', once);
+        v.classList.add('is-loaded');
+        v.play().catch(function () {});
+      }, { once: true });
+    }
+    if (!('IntersectionObserver' in window)) { vids.forEach(play); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) play(en.target);
+        else en.target.pause();
+      });
+    }, { rootMargin: '120px 0px 160px 0px', threshold: 0.12 });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
+
+  /* ─────────── Capabilities: pinned disc follows the active item ─────────── */
+  var capLabelEl = $('#caps-label');
+  var activeCap = null;
+  function syncCapLabel() {
+    if (!capLabelEl) return;
+    var src = activeCap || $('.cap');
+    var h = src && src.querySelector('h3');
+    if (h) capLabelEl.textContent = h.textContent;
+  }
+  (function capsScroll() {
+    var list = $('#caps-list');
+    var disc = $('#caps-disc');
+    if (!list || !disc) return;
+    var items = $$('.cap', list);
+    if (!items.length) return;
+
+    function activate(li) {
+      if (li === activeCap) return;
+      items.forEach(function (i) { i.classList.toggle('is-active', i === li); });
+      activeCap = li;
+      var acc = getComputedStyle(li).getPropertyValue('--acc').trim();
+      if (acc) disc.style.setProperty('--acc', acc);
+      syncCapLabel();
+    }
+    activate(items[0]);
+
+    if (!('IntersectionObserver' in window)) { items.forEach(function (i) { i.classList.add('is-active'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) activate(en.target); });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    items.forEach(function (i) { io.observe(i); });
+  })();
+
+  /* ─────────── Season rail arrows ─────────── */
+  (function rail() {
+    var r = $('#rail'), prev = $('#rail-prev'), next = $('#rail-next');
+    if (!r || !prev || !next) return;
+    function step() {
+      var card = r.querySelector('.rail-item');
+      return card ? card.offsetWidth + 14 : 240;
+    }
+    function sync() {
+      var atEnd = r.scrollLeft > r.scrollWidth - r.clientWidth - 8;
+      prev.disabled = r.scrollLeft < 8;
+      next.disabled = atEnd;
+      r.classList.toggle('at-end', atEnd);
+    }
+    prev.addEventListener('click', function () { r.scrollBy({ left: -step() * 2, behavior: reduced ? 'auto' : 'smooth' }); });
+    next.addEventListener('click', function () { r.scrollBy({ left: step() * 2, behavior: reduced ? 'auto' : 'smooth' }); });
+    r.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    sync();
+  })();
+
+  /* ─────────── Dome discs: drop an image in /img and it fills the circle ───────────
+     Looks for img/<data-asset>.webp | .jpg | .png — no build step, no config. */
+  (function fillDiscs() {
+    var EXT = ['webp', 'jpg', 'png'];
+    function fill(disc) {
+      var name = disc.getAttribute('data-asset');
+      var i = 0;
+      (function tryNext() {
+        if (i >= EXT.length) return;
+        var url = 'img/' + name + '.' + EXT[i++];
+        var probe = new Image();
+        probe.onload = function () {
+          var img = document.createElement('img');
+          img.className = 'disc-img';
+          img.src = url;
+          img.alt = disc.getAttribute('data-alt') || '';
+          img.decoding = 'async';
+          disc.insertBefore(img, disc.firstChild);
+          disc.classList.add('is-filled');
+          disc.removeAttribute('aria-hidden');
+        };
+        probe.onerror = tryNext;
+        probe.src = url;
+      })();
+    }
+    var discs = $$('.disc[data-asset]');
+    if (!discs.length) return;
+    if (!('IntersectionObserver' in window)) { discs.forEach(fill); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        fill(en.target);
+      });
+    }, { rootMargin: '300px 0px 300px 0px' });
+    discs.forEach(function (d) { io.observe(d); });
+  })();
+
+  /* ─────────── Canvas: dome geometry + bioluminescent drift ───────────
+     One tiny 2D loop per visible canvas. Transform/alpha only, capped DPR,
+     paused when off-screen, single static frame when reduced motion. */
+  function domeCanvas(canvas, opts) {
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    opts = opts || {};
+    var mode = opts.mode || 'disc';
+    var w = 0, h = 0, dpr = 1, parts = [], t = 0, raf = 0, live = false, running = false;
+
+    function spawn() {
+      return {
+        x: Math.random(), y: Math.random(),
+        r: Math.random() * 1.5 + 0.3,
+        vy: -(Math.random() * 0.00035 + 0.00008),
+        sway: Math.random() * 0.5 + 0.1,
+        ph: Math.random() * Math.PI * 2,
+        a: Math.random() * 0.32 + 0.07,
+        tint: Math.random() < 0.42
+      };
+    }
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      if (!w || !h) return;
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(Math.min(mode === 'hero' ? 70 : 46, Math.max(16, w / (mode === 'hero' ? 26 : 12))));
+      parts = [];
+      for (var i = 0; i < n; i++) parts.push(spawn());
+    }
+    function accent() {
+      var host = mode === 'hero' ? document.documentElement : (canvas.closest('.disc') || document.documentElement);
+      var c = getComputedStyle(host).getPropertyValue('--acc').trim();
+      return c || '#3CDCFF';
+    }
+    function draw() {
+      if (!w || !h) return;
+      ctx.clearRect(0, 0, w, h);
+      var acc = accent();
+
+      if (mode === 'hero') {
+        /* A dome springing from below the fold: horizon arcs + ribs. */
+        var cx = w * 0.5, cy = h * 1.12;
+        var base = Math.max(w, h);
+        ctx.lineWidth = 1;
+        for (var i = 1; i <= 9; i++) {
+          var p = i / 9;
+          var breathe = 1 + Math.sin(t * 0.5 + i * 0.42) * 0.008;
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(255,255,255,' + (0.05 * (1 - p * 0.5)).toFixed(3) + ')';
+          ctx.ellipse(cx, cy, base * 0.78 * p * breathe, base * 0.52 * p * breathe, 0, Math.PI, Math.PI * 2);
+          ctx.stroke();
+        }
+        for (var k = 0; k <= 16; k++) {
+          var ang = Math.PI + (Math.PI * k) / 16;
+          ctx.beginPath();
+          ctx.strokeStyle = 'rgba(255,255,255,0.028)';
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(ang) * base * 0.78, cy + Math.sin(ang) * base * 0.52);
+          ctx.stroke();
+        }
+      }
+
+      for (var j = 0; j < parts.length; j++) {
+        var pt = parts[j];
+        pt.y += pt.vy;
+        if (pt.y < -0.02) { pt.y = 1.02; pt.x = Math.random(); }
+        var x = (pt.x + Math.sin(t + pt.ph) * pt.sway * 0.012) * w;
+        var y = pt.y * h;
+        ctx.globalAlpha = pt.a;
+        ctx.fillStyle = pt.tint ? acc : '#ffffff';
+        ctx.beginPath();
+        ctx.arc(x, y, pt.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+    function loop() {
+      if (!live) { running = false; return; }
+      t += 0.006;
+      draw();
+      raf = requestAnimationFrame(loop);
+    }
+    resize();
+    draw();
+    window.addEventListener('resize', function () { resize(); draw(); }, { passive: true });
+
+    if (reduced) return;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        live = es[0].isIntersecting;
+        if (live && !running) { running = true; raf = requestAnimationFrame(loop); }
+        else if (!live) cancelAnimationFrame(raf);
+      }, { threshold: 0.02 }).observe(canvas);
+    } else { live = true; running = true; raf = requestAnimationFrame(loop); }
+  }
+
+  domeCanvas($('#dome-fx'), { mode: 'hero' });
+  $$('.disc-fx').forEach(function (c) { domeCanvas(c, { mode: 'disc' }); });
+
+  applyLang();
+})();
+</script>
+</body>
+</html>

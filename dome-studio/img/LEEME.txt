@@ -1,0 +1,45 @@
+IMÁGENES — ANDATA DOME STUDIO (/dome-studio)
+============================================
+
+La página funciona sin imágenes: mientras no existan, cada concepto muestra
+un placeholder circular (formato domemaster) claramente identificado.
+
+En cuanto subas un archivo con el nombre exacto a esta carpeta, la página lo
+detecta y lo coloca sola. No hay que tocar el código.
+
+ARCHIVOS QUE ESTÁ ESPERANDO
+---------------------------
+
+  dome-whale-concept       -> Concepto 01 · Viaje de las Ballenas
+  dome-memory-concept      -> Concepto 02 · Memoria Viva
+  dome-territory-capture   -> Concepto 03 · El Destino Vivo
+  dome-data-experience     -> Concepto 04 · Data Dome
+
+Formatos aceptados, en este orden de prioridad: .webp, .jpg, .png
+Ejemplo:  dome-whale-concept.jpg
+
+ESPECIFICACIÓN
+--------------
+
+  · Formato CUADRADO (1:1). La imagen se recorta en círculo.
+  · Ideal: domemaster / fisheye 180° — exactamente lo que se proyecta en un domo.
+  · Tamaño recomendado: 1600 × 1600 px (máx. 2048). Peso objetivo: menos de 500 KB.
+  · Fondo oscuro: la página es negra y el borde del círculo se difumina hacia el fondo.
+
+NOMBRES RESERVADOS PARA MÁS ADELANTE
+------------------------------------
+
+Si generas material para estas capacidades, súbelo con estos nombres y dime
+en qué sección lo quieres y lo conecto:
+
+  dome-interactive-tracking   Tracking corporal / siluetas del público
+  dome-live-performance       Live dome con músicos o DJ
+  dome-dmx-lighting           Audio espacial + iluminación DMX
+
+IMPORTANTE
+----------
+
+No subas material de terceros (referencias, moodboards, imágenes de otros
+estudios). En la página todo lo que se muestra está etiquetado como
+"Proyecto realizado", "Tecnología demostrada" o "Visualización conceptual";
+usar referencias ajenas rompería esa honestidad frente al cliente.
