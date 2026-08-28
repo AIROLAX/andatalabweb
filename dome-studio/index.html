@@ -173,19 +173,16 @@
   .hero-amb img{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     object-position:50% 28%;
-    opacity:0; transform:scale(1.22);
-    filter:blur(7px) brightness(.78) saturate(2.2) contrast(1.28);
-    transition:opacity 1.05s ease, filter .8s ease;
-    animation:amb-drift 14s ease-in-out infinite alternate;
+    opacity:0; transform:scale(1.08);
+    filter:saturate(1.35) contrast(1.12) brightness(.92);
+    transition:opacity .85s ease;
+    animation:amb-drift 18s ease-in-out infinite alternate;
     will-change:opacity, transform;
   }
   .hero-amb img.is-on{ opacity:1; z-index:1; }
-  .hero-amb.is-swap img.is-on{
-    filter:blur(3px) brightness(.92) saturate(2.55) contrast(1.34);
-  }
   @keyframes amb-drift{
-    from{ transform:scale(1.12) translate3d(-4%,-2.6%,0); }
-    to{ transform:scale(1.38) translate3d(4.2%,3%,0); }
+    from{ transform:scale(1.04) translate3d(-1.6%,-1%,0); }
+    to{ transform:scale(1.14) translate3d(1.8%,1.2%,0); }
   }
   @media (prefers-reduced-motion:reduce){
     .hero-amb img{ animation:none; }
@@ -194,9 +191,9 @@
   .hero-scrim{
     position:absolute; inset:0; z-index:2; pointer-events:none;
     background:
-      radial-gradient(90% 70% at 50% 42%, color-mix(in srgb, var(--acc) 34%, transparent) 0%, transparent 64%),
-      radial-gradient(120% 80% at 50% 116%, color-mix(in srgb, var(--acc) 46%, transparent) 0%, transparent 58%),
-      linear-gradient(180deg, rgba(4,6,11,.38) 0%, rgba(4,6,11,.06) 42%, rgba(4,6,11,.42) 82%, var(--d-0) 100%);
+      radial-gradient(90% 70% at 50% 42%, color-mix(in srgb, var(--acc) 18%, transparent) 0%, transparent 58%),
+      linear-gradient(90deg, rgba(4,6,11,.42) 0%, rgba(4,6,11,.08) 38%, transparent 62%),
+      linear-gradient(180deg, rgba(4,6,11,.28) 0%, transparent 34%, rgba(4,6,11,.45) 100%);
     transition:background 1s ease;
   }
   .hero-inner{
@@ -3000,6 +2997,6 @@
   { "src": "img/dome-cosmos-concept.jpg", "bg": "img/dome-data-kiosk.jpg", "video": "../videos/interactive-installations.mp4", "t": "c5_t", "acc": "#5CE1B0", "cap": "Audiovisual Sound Systems" }
 ]
 </script>
-<script type="module" src="js/dome-scenes.js"></script>
+<script type="module" src="js/dome-scenes.js?v=4"></script>
 </body>
 </html>

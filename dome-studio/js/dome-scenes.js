@@ -3,8 +3,8 @@
  * Loads the two isolated WebGL modules. If a module declines (no WebGL,
  * reduced motion, missing DOM), the page's existing fallbacks stay in place.
  */
-import { initDomeHero } from './dome-hero.js';
-import { initSpatialField } from './spatial-field.js';
+import { initDomeHero } from './dome-hero.js?v=4';
+import { initSpatialField } from './spatial-field.js?v=4';
 
 var heroOk = false;
 try { heroOk = !!initDomeHero(); } catch (err) { heroOk = false; }
