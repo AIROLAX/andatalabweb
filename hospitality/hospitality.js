@@ -44,12 +44,12 @@
       e_day: 'Day', e_fam: 'Family', e_well: 'Wellness', e_night: 'Night',
       pr_eye: 'Proof', pr_t: 'Permanent where it matters. Proven across real systems.',
       pr_p: 'Our hospitality concepts combine permanent museum installations, real-time sensing and architectural media already delivered by ANDATA.',
-      pr1_a: 'Permanent installation', pr1_b: 'Daily operation', pr1_loc: 'Aguascalientes',
-      pr1: 'Interactive museum environments designed, installed and hardened for continuous daily operation.',
-      pr2_a: 'Delivered interactive system', pr2_b: 'Real-time sensing', pr2_loc: 'Mexico City',
-      pr2: 'Presence, not identity — the architecture Portrait of Place would use.',
-      pr3_a: 'Delivered architectural mapping', pr3_b: 'Site-specific media', pr3_loc: 'Jalisco',
-      pr3: 'Projection mapped to complex architecture.',
+      pr1_a: 'Delivered interactive installation', pr1_b: 'AI-driven mirror', pr1_loc: 'Chapala / Ajijic',
+      pr1: 'An AI-driven mirror ritual for Día de Muertos — portraits, presence and live response.',
+      pr2_a: 'Delivered architectural mapping', pr2_b: 'Site-specific media', pr2_loc: 'Jalisco',
+      pr2: 'Projection calibrated to historic architecture for a nocturnal lake narrative.',
+      pr3_a: 'Delivered interactive system', pr3_b: 'Real-time sensing', pr3_loc: 'Mexico City',
+      pr3: 'Presence, not identity — the architecture Portrait of Place would use.',
       o_eye: 'Operations', o_t: 'Designed to live in the hotel.',
       o_p: 'Scheduled. Serviceable. Privacy-first. Ready to evolve.',
       o1_t: 'Local processing', o1: 'Runs when the network does not.',
@@ -103,12 +103,12 @@
       e_day: 'Día', e_fam: 'Familia', e_well: 'Wellness', e_night: 'Noche',
       pr_eye: 'Prueba', pr_t: 'Permanente donde importa. Probado en sistemas reales.',
       pr_p: 'Nuestros conceptos de hospitality combinan instalaciones museográficas permanentes, sensado en tiempo real y media arquitectónica que ANDATA ya entregó.',
-      pr1_a: 'Instalación permanente', pr1_b: 'Operación diaria', pr1_loc: 'Aguascalientes',
-      pr1: 'Entornos museográficos interactivos diseñados, instalados y endurecidos para operación diaria continua.',
-      pr2_a: 'Sistema interactivo entregado', pr2_b: 'Sensado en tiempo real', pr2_loc: 'Ciudad de México',
-      pr2: 'Presencia, no identidad — la arquitectura que usaría Portrait of Place.',
-      pr3_a: 'Videomapping arquitectónico entregado', pr3_b: 'Media específica al sitio', pr3_loc: 'Jalisco',
-      pr3: 'Proyección sobre arquitectura compleja.',
+      pr1_a: 'Instalación interactiva entregada', pr1_b: 'Espejo con IA', pr1_loc: 'Chapala / Ajijic',
+      pr1: 'Un rito de espejo con IA para Día de Muertos — retratos, presencia y respuesta en vivo.',
+      pr2_a: 'Videomapping arquitectónico entregado', pr2_b: 'Media específica al sitio', pr2_loc: 'Jalisco',
+      pr2: 'Proyección calibrada sobre arquitectura histórica para una narrativa nocturna del lago.',
+      pr3_a: 'Sistema interactivo entregado', pr3_b: 'Sensado en tiempo real', pr3_loc: 'Ciudad de México',
+      pr3: 'Presencia, no identidad — la arquitectura que usaría Portrait of Place.',
       o_eye: 'Operación', o_t: 'Diseñado para vivir en el hotel.',
       o_p: 'Programado. Servible. Privacidad primero. Listo para evolucionar.',
       o1_t: 'Procesamiento local', o1: 'Corre cuando la red no está.',
@@ -364,4 +364,38 @@
   })();
 
   applyLang();
+
+  /* Proof videos — play when visible */
+  (function proofVideos() {
+    var vids = $$('.proof .lazy-vid');
+    if (!vids.length) return;
+    function play(v) {
+      var s = v.getAttribute('data-src');
+      if (s && v.getAttribute('src') !== s) {
+        v.setAttribute('src', s);
+        v.load();
+      }
+      if (v.readyState >= 2) {
+        v.classList.add('is-loaded');
+        v.play().catch(function () {});
+        return;
+      }
+      v.addEventListener('loadeddata', function once() {
+        v.removeEventListener('loadeddata', once);
+        v.classList.add('is-loaded');
+        v.play().catch(function () {});
+      }, { once: true });
+    }
+    if (!('IntersectionObserver' in window)) {
+      vids.forEach(play);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) play(en.target);
+        else en.target.pause();
+      });
+    }, { rootMargin: '120px 0px', threshold: 0.15 });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
 })();

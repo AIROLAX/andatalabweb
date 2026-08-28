@@ -450,9 +450,8 @@
   }
   .nomad-i{ background:var(--d-0); padding:clamp(24px,3vw,34px); }
   .nomad-i .ds-label{ font-size:9.5px; color:var(--spec-cyan); }
-  .nomad-i h3{ font-size:1.12rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:12px 0 0; }
-  .nomad-i p{ display:none; }
-  .nomad-i h3{ font-size:1.02rem; }
+  .nomad-i h3{ font-size:1.05rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:12px 0 0; }
+  .nomad-i p{ margin:10px 0 0; font-size:.9rem; line-height:1.5; color:var(--d-ink-2); max-width:36ch; }
   @media (max-width:880px){ .nomad{ grid-template-columns:1fr; } }
 
   /* ── Data art — how live data becomes the dome ── */
@@ -504,8 +503,18 @@
   }
   .concept-n::after{ content:''; width:clamp(24px,4vw,52px); height:1px; background:linear-gradient(90deg, var(--acc), transparent); }
   .concept h3{ font-size:clamp(1.55rem,3.2vw,2.4rem); font-weight:700; letter-spacing:-.03em; line-height:1.1; margin:16px 0 0; color:#fff; }
-  .concept p{ font-size:.98rem; line-height:1.55; color:var(--d-ink-2); margin:12px 0 0; max-width:36ch; }
-  .concept-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .concept p{ font-size:.98rem; line-height:1.55; color:var(--d-ink-2); margin:12px 0 0; max-width:40ch; }
+  .concept .data-how{
+    margin:14px 0 0; padding:12px 14px; max-width:42ch;
+    border-left:2px solid color-mix(in srgb, var(--acc) 70%, transparent);
+    background:rgba(255,255,255,.03);
+    font-size:.88rem; line-height:1.5; color:rgba(255,255,255,.78);
+  }
+  .concept .data-how b{
+    display:block; margin-bottom:4px; font-size:10px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--acc);
+  }
+  .concept-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; }
   .chip{
     font-size:11.5px; font-weight:500; letter-spacing:.02em; padding:7px 13px; border-radius:999px;
     background:rgba(255,255,255,.05); border:1px solid var(--d-line-2); color:var(--d-ink-2);
@@ -534,25 +543,58 @@
   }
   .inter-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
   .inter-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:52ch; }
-  .inter-shots{
-    margin-top:clamp(18px,2.4vw,28px); display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:clamp(12px,1.8vw,18px);
+  .inter-carousel{
+    margin-top:clamp(18px,2.4vw,28px); position:relative;
   }
-  .inter-shot{
-    margin:0; position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1;
-    background:#05070d; border:1px solid var(--d-line-2);
+  .inter-carousel-head{
+    display:flex; align-items:center; justify-content:flex-end; gap:10px; margin-bottom:12px;
   }
-  .inter-shot img{ width:100%; height:100%; display:block; object-fit:cover; }
-  .inter-shot figcaption{
+  .inter-carousel-btn{
+    width:42px; height:42px; border-radius:999px; cursor:pointer; flex:0 0 auto;
+    border:1px solid var(--d-line); background:rgba(255,255,255,.04); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    transition:background .3s, border-color .3s, opacity .3s, transform .3s var(--ease);
+  }
+  .inter-carousel-btn:hover{ background:rgba(255,255,255,.11); border-color:#fff; }
+  .inter-carousel-btn:disabled{ opacity:.3; cursor:default; }
+  .inter-carousel-btn svg{ width:17px; height:17px; }
+  .inter-track{
+    display:flex; gap:0; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+    scrollbar-width:none; -ms-overflow-style:none;
+    border-radius:var(--r-xl); border:1px solid var(--d-line-2); background:#05070d;
+  }
+  .inter-track::-webkit-scrollbar{ display:none; }
+  .inter-slide{
+    margin:0; position:relative; flex:0 0 100%; scroll-snap-align:start; scroll-snap-stop:always;
+    aspect-ratio:16/10; min-height:min(62svh,520px); overflow:hidden;
+  }
+  .inter-slide img{ width:100%; height:100%; display:block; object-fit:cover; }
+  .inter-slide figcaption{
     position:absolute; left:0; right:0; bottom:0; z-index:2;
-    padding:clamp(16px,2.2vw,24px);
-    background:linear-gradient(transparent, rgba(4,6,11,.88));
+    padding:clamp(22px,3.5vw,40px);
+    background:linear-gradient(transparent, rgba(4,6,11,.9));
   }
-  .inter-shot .ds-label{ font-size:9px; color:rgba(255,255,255,.7); }
-  .inter-shot h3{ font-size:1.02rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:7px 0 0; }
-  .inter-shot p{ font-size:.88rem; line-height:1.5; color:rgba(255,255,255,.78); margin:6px 0 0; max-width:36ch; }
-  @media (max-width:900px){ .inter-shots{ grid-template-columns:1fr 1fr; } }
-  @media (max-width:560px){ .inter-shots{ grid-template-columns:1fr; } }
+  .inter-slide .ds-label{ font-size:10px; color:rgba(255,255,255,.7); }
+  .inter-slide h3{
+    font-size:clamp(1.35rem,2.8vw,2.1rem); font-weight:700; letter-spacing:-.03em;
+    color:#fff; margin:10px 0 0; max-width:18ch;
+  }
+  .inter-slide p{
+    font-size:clamp(.95rem,1.4vw,1.08rem); line-height:1.5;
+    color:rgba(255,255,255,.82); margin:10px 0 0; max-width:42ch;
+  }
+  .inter-dots{
+    display:flex; justify-content:center; gap:8px; margin-top:16px;
+  }
+  .inter-dots button{
+    width:8px; height:8px; border-radius:999px; border:0; padding:0; cursor:pointer;
+    background:rgba(255,255,255,.28); transition:background .3s, transform .3s var(--ease);
+  }
+  .inter-dots button[aria-current="true"]{ background:#3CDCFF; transform:scale(1.25); }
+  @media (max-width:720px){
+    .inter-carousel-head{ display:none; }
+    .inter-slide{ aspect-ratio:4/5; min-height:0; }
+  }
   /* ══════════════════════════════════════════
      5b · HOW IT WORKS — cameras, data, pipeline
      ══════════════════════════════════════════ */
@@ -827,49 +869,6 @@
   .step-row p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:8px 0 0; max-width:66ch; }
 
   /* ══════════════════════════════════════════
-     10b · THE VENUE — closer for screen / room buyers
-     ══════════════════════════════════════════ */
-  .venue{ background:#02040a; padding:0 0 clamp(28px,5vw,48px); }
-  .venue-hero{
-    position:relative; margin:0; overflow:hidden;
-    min-height:min(88svh, 860px); background:#05070d;
-  }
-  .venue-hero img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 82%;
-  }
-  .venue-hero::after{
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background:
-      linear-gradient(180deg, rgba(2,4,10,.22) 0%, rgba(2,4,10,.04) 28%, rgba(2,4,10,.18) 58%, rgba(2,4,10,.62) 86%, var(--d-0) 100%),
-      linear-gradient(90deg, rgba(2,4,10,.42) 0%, rgba(2,4,10,.08) 42%, transparent 68%);
-  }
-  .venue-copy{
-    position:absolute; z-index:2; left:0; right:0; bottom:0;
-    padding:0 0 clamp(28px,5vw,48px);
-  }
-  .venue-copy .wrap{ max-width:var(--maxw); }
-  .venue-copy h2{
-    font-size:clamp(1.7rem,4vw,2.7rem); font-weight:700; letter-spacing:-.035em; line-height:1.08;
-    color:#fff; margin:14px 0 0; max-width:16ch; text-shadow:0 2px 36px rgba(0,0,0,.55);
-  }
-  .venue-copy p{
-    font-size:1.02rem; line-height:1.62; color:rgba(255,255,255,.84); margin:16px 0 0; max-width:48ch;
-    text-shadow:0 1px 20px rgba(0,0,0,.5);
-  }
-  .venue-formats{
-    display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;
-  }
-  .venue-formats span{
-    font-size:11.5px; font-weight:500; letter-spacing:.02em; padding:7px 13px; border-radius:999px;
-    background:rgba(6,9,15,.55); border:1px solid var(--d-line); color:#fff;
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  }
-  @media (max-width:760px){
-    .venue-hero{ aspect-ratio:auto; min-height:88svh; }
-    .venue-hero img{ object-position:50% 72%; }
-  }
-
-  /* ══════════════════════════════════════════
      11 · FINAL CTA
      ══════════════════════════════════════════ */
   .final{ background:var(--d-0); padding:clamp(36px,6vh,80px) 0 clamp(76px,13vh,150px); }
@@ -1026,7 +1025,8 @@
           <div>
             <span class="concept-n" data-i18n="cn1">Concepto 01</span>
             <h3 data-i18n="c1_t">Viaje de las Ballenas</h3>
-            <p data-i18n="c1_d">Una travesía inmersiva por el océano donde ballenas monumentales, sonido espacial, datos ambientales y movimiento generativo transforman el domo en un ecosistema vivo.</p>
+            <p data-i18n="c1_d">Una travesía inmersiva por el océano donde ballenas monumentales y sonido espacial envuelven al público.</p>
+            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c1_data">Marea, corrientes y clima se interpretan como ritmo del agua, brillo bioluminiscente y deriva de las ballenas — no como gráficos, sino como atmósfera artística en la cúpula.</span></p>
             <div class="concept-chips">
               <span class="chip" data-i18n="c1_k1">Océano y bioluminiscencia</span>
               <span class="chip" data-i18n="c1_k2">Audio espacial</span>
@@ -1047,7 +1047,8 @@
           <div>
             <span class="concept-n" data-i18n="cn2">Concepto 02</span>
             <h3 data-i18n="c2_t">Memoria Viva</h3>
-            <p data-i18n="c2_d">Una interpretación contemporánea de Día de Muertos donde memorias, retratos voluntarios, cempasúchil, agua, luz y sonido se convierten en una experiencia colectiva.</p>
+            <p data-i18n="c2_d">Una interpretación contemporánea de Día de Muertos: retratos voluntarios, cempasúchil, luz y sonido como rito colectivo.</p>
+            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c2_data">La presencia y los retratos opt-in se leen como señales: cada persona suma una chispa a una constelación viva en la cúpula. El dato es humano; la imagen es ceremonial.</span></p>
             <div class="concept-chips">
               <span class="chip" data-i18n="c2_k1">Participación del público</span>
               <span class="chip" data-i18n="c2_k2">Retratos voluntarios</span>
@@ -1068,7 +1069,8 @@
           <div>
             <span class="concept-n" data-i18n="cn3">Concepto 03</span>
             <h3 data-i18n="c3_t">El Destino Vivo</h3>
-            <p data-i18n="c3_d">El territorio contado mediante imágenes de dron, paisajes, arquitectura, cultura local y datos transformados en movimiento, luz y sonido.</p>
+            <p data-i18n="c3_d">El territorio contado con dron, paisaje, arquitectura y cultura local — el destino como relato envolvente.</p>
+            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c3_data">Clima local, hora del día y flujos del destino modulan color, densidad y movimiento sobre la captura del lugar. Los datos no reemplazan la imagen: la hacen respirar.</span></p>
             <div class="concept-chips">
               <span class="chip" data-i18n="c3_k1">Captura con dron</span>
               <span class="chip" data-i18n="c3_k2">Identidad del destino</span>
@@ -1089,7 +1091,8 @@
           <div>
             <span class="concept-n" data-i18n="cn4">Concepto 04</span>
             <h3 data-i18n="c4_t">Data Dome</h3>
-            <p data-i18n="c4_d">Marea, clima y público en vivo compuestos en una función que no se repite — data art a escala de cúpula.</p>
+            <p data-i18n="c4_d">La pieza donde el data art es el protagonista: la función se compone en vivo y nunca se repite igual.</p>
+            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c4_data">Marea, clima, sonido y participación se mapean a forma, color y audio espacial. Interpretamos el dato como lenguaje visual — artístico, legible y envolvente.</span></p>
             <div class="concept-chips">
               <span class="chip" data-i18n="c4_k1">Datos en vivo</span>
               <span class="chip" data-i18n="c4_k2">Sistemas generativos</span>
@@ -1101,19 +1104,19 @@
 
       <div class="nomad reveal">
         <div class="nomad-i">
-          <span class="ds-label" data-i18n="nm1_k">Se genera</span>
-          <h3 data-i18n="nm1_t">Ninguna función es idéntica</h3>
-          <p data-i18n="nm1_d">En las piezas generativas el contenido se construye durante la función: el clima, la marea, la música y el público cambian lo que se ve. Quien regresa no vuelve a ver lo mismo.</p>
+          <span class="ds-label" data-i18n="nm1_k">01 · Interpretar</span>
+          <h3 data-i18n="nm1_t">El dato se vuelve imagen artística</h3>
+          <p data-i18n="nm1_d">No mostramos tablas. Traducimos clima, marea o presencia a ritmo, color y movimiento en la cúpula — data art legible y sensorial.</p>
         </div>
         <div class="nomad-i">
-          <span class="ds-label" data-i18n="nm2_k">Se cambia</span>
-          <h3 data-i18n="nm2_t">La cúpula rota de concepto</h3>
-          <p data-i18n="nm2_d">Cada temporada, evento o marca puede tener su propia versión del domo. Se cambia el contenido, no la infraestructura: sin obra y sin equipo nuevo.</p>
+          <span class="ds-label" data-i18n="nm2_k">02 · Componer</span>
+          <h3 data-i18n="nm2_t">Cada función puede ser distinta</h3>
+          <p data-i18n="nm2_d">Las señales cambian durante el show. Quien regresa ve otra composición sin cambiar la infraestructura del recinto.</p>
         </div>
         <div class="nomad-i">
-          <span class="ds-label" data-i18n="nm3_k">Se mueve</span>
-          <h3 data-i18n="nm3_t">Sistemas que viajan</h3>
-          <p data-i18n="nm3_d">Lo que producimos para una cúpula se recalibra para otro recinto, otro tamaño u otra superficie. El motor viaja; solo se ajusta el warping y la escala.</p>
+          <span class="ds-label" data-i18n="nm3_k">03 · Adaptar</span>
+          <h3 data-i18n="nm3_t">El mismo motor, otra historia</h3>
+          <p data-i18n="nm3_d">Se cambia el programa (Ballenas, Memoria, Destino, Data Dome) o se recalibra a otro espacio. El sistema viaja; la obra se reescribe.</p>
         </div>
       </div>
     </div>
@@ -1202,59 +1205,39 @@
         </figcaption>
       </figure>
 
-      <div class="inter-shots reveal">
-        <figure class="inter-shot">
-          <img src="img/dome-portrait-capture.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-               alt="Visualización conceptual: estación de captura voluntaria de retratos que alimenta una pantalla envolvente de rostros">
-          <figcaption>
-            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
-            <h3 data-i18n="int_s1_t">Captura voluntaria</h3>
-            <p data-i18n="int_s1_d">Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.</p>
-          </figcaption>
-        </figure>
-        <figure class="inter-shot">
-          <img src="img/dome-memory-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-               alt="Visualización conceptual: el público alimenta una pantalla envolvente de retratos, flores y mariposas desde mesas táctiles">
-          <figcaption>
-            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
-            <h3 data-i18n="int_s2_t">De la mesa a la pared</h3>
-            <p data-i18n="int_s2_d">Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.</p>
-          </figcaption>
-        </figure>
-      <figure class="inter-shot">
-          <img src="img/dome-interactive-consoles.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-               alt="Visualización conceptual: consolas interactivas frente a una pantalla envolvente">
-          <figcaption>
-            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
-            <h3 data-i18n="int_s3_t">Listo para operar</h3>
-            <p data-i18n="int_s3_d">Mesas, kioscos y control en vivo. El público entra; el recinto ya está armado.</p>
-          </figcaption>
-        </figure>
-
+      <div class="inter-carousel reveal" id="inter-carousel">
+        <div class="inter-carousel-head">
+          <button type="button" class="inter-carousel-btn" id="inter-prev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="inter-carousel-btn" id="inter-next" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="inter-track" id="inter-track" tabindex="0" aria-label="Escenas interactivas">
+          <figure class="inter-slide">
+            <img src="img/dome-portrait-capture.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                 alt="Visualización conceptual: estación de captura voluntaria de retratos que alimenta una pantalla envolvente de rostros">
+            <figcaption>
+              <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
+              <h3 data-i18n="int_s1_t">Captura voluntaria</h3>
+              <p data-i18n="int_s1_d">Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.</p>
+            </figcaption>
+          </figure>
+          <figure class="inter-slide">
+            <img src="img/dome-memory-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                 alt="Visualización conceptual: el público alimenta una pantalla envolvente de retratos, flores y mariposas desde mesas táctiles">
+            <figcaption>
+              <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
+              <h3 data-i18n="int_s2_t">De la mesa a la pared</h3>
+              <p data-i18n="int_s2_d">Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="inter-dots" id="inter-dots" role="tablist" aria-label="Escenas"></div>
       </div>
 
     </div>
-  </section>
-
-  <!-- ══ 10b · THE VENUE ══ -->
-  <section class="venue" id="recinto" aria-labelledby="venue-title">
-    <figure class="venue-hero">
-      <img src="img/dome-venue-gala.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-           alt="Visualización conceptual: cena bajo una cúpula con una ballena monumental — el recinto como producto, no solo el contenido">
-      <div class="venue-copy">
-        <div class="wrap">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="vn_eyebrow">El recinto</span></span>
-          <h2 id="venue-title" data-i18n="vn_title">El recinto, listo.</h2>
-          <p data-i18n="vn_p">Domo, LED curva o salón. El contenido se recalibra; no se vuelve a producir.</p>
-          <div class="venue-formats" aria-label="Formatos de superficie">
-            <span data-i18n="vn_f1">Domo / fulldome</span>
-            <span data-i18n="vn_f2">LED curva</span>
-            <span data-i18n="vn_f3">Pantalla envolvente</span>
-            <span data-i18n="vn_f4">Salón y cena</span>
-          </div>
-        </div>
-      </div>
-    </figure>
   </section>
 
   <!-- ══ 9 · EXPERIENCE / PROOF ══ -->
@@ -1544,17 +1527,29 @@
       ph_label: 'Visualización conceptual',
       cn1: 'Concepto 01', cn2: 'Concepto 02', cn3: 'Concepto 03', cn4: 'Concepto 04',
       c1_t: 'Viaje de las Ballenas',
-      c1_d: 'Ballenas, océano y sonido espacial. El recinto se convierte en un ecosistema.',
+      c1_d: 'Una travesía inmersiva por el océano donde ballenas monumentales y sonido espacial envuelven al público.',
+      c1_data: 'Marea, corrientes y clima se interpretan como ritmo del agua, brillo bioluminiscente y deriva de las ballenas — no como gráficos, sino como atmósfera artística en la cúpula.',
       c1_k1: 'Océano y bioluminiscencia', c1_k2: 'Audio espacial', c1_k3: 'Datos ambientales',
       c2_t: 'Memoria Viva',
-      c2_d: 'Día de Muertos contemporáneo: retratos, cempasúchil y una memoria compartida.',
+      c2_d: 'Una interpretación contemporánea de Día de Muertos: retratos voluntarios, cempasúchil, luz y sonido como rito colectivo.',
+      c2_data: 'La presencia y los retratos opt-in se leen como señales: cada persona suma una chispa a una constelación viva en la cúpula. El dato es humano; la imagen es ceremonial.',
       c2_k1: 'Participación del público', c2_k2: 'Retratos voluntarios', c2_k3: 'Ritual contemporáneo',
       c3_t: 'El Destino Vivo',
-      c3_d: 'El destino, desde el dron hasta la cúpula.',
+      c3_d: 'El territorio contado con dron, paisaje, arquitectura y cultura local — el destino como relato envolvente.',
+      c3_data: 'Clima local, hora del día y flujos del destino modulan color, densidad y movimiento sobre la captura del lugar. Los datos no reemplazan la imagen: la hacen respirar.',
       c3_k1: 'Captura con dron', c3_k2: 'Identidad del destino', c3_k3: 'Turismo cultural',
       c4_t: 'Data Dome',
-      c4_d: 'Marea, clima y público en vivo compuestos en una función que no se repite — data art a escala de cúpula.',
+      c4_d: 'La pieza donde el data art es el protagonista: la función se compone en vivo y nunca se repite igual.',
+      c4_data: 'Marea, clima, sonido y participación se mapean a forma, color y audio espacial. Interpretamos el dato como lenguaje visual — artístico, legible y envolvente.',
       c4_k1: 'Datos en vivo', c4_k2: 'Sistemas generativos', c4_k3: 'Nunca igual dos veces',
+      c_data_l: 'Cómo usamos data art',
+
+      nm1_k: '01 · Interpretar', nm1_t: 'El dato se vuelve imagen artística',
+      nm1_d: 'No mostramos tablas. Traducimos clima, marea o presencia a ritmo, color y movimiento en la cúpula — data art legible y sensorial.',
+      nm2_k: '02 · Componer', nm2_t: 'Cada función puede ser distinta',
+      nm2_d: 'Las señales cambian durante el show. Quien regresa ve otra composición sin cambiar la infraestructura del recinto.',
+      nm3_k: '03 · Adaptar', nm3_t: 'El mismo motor, otra historia',
+      nm3_d: 'Se cambia el programa (Ballenas, Memoria, Destino, Data Dome) o se recalibra a otro espacio. El sistema viaja; la obra se reescribe.',
 
       da_eye: 'Data art', da_t: 'Datos que se vuelven cúpula.',
       da_p: 'En el proyecto, el data art no es un gráfico aparte: es la capa que hace que la función cambie con el lugar, el momento y el público.',
@@ -1568,13 +1563,6 @@
       da_s2_t: 'Componer en tiempo real', da_s2_d: 'Un motor (TouchDesigner / generativo) traduce esas señales en imagen, audio y luz.',
       da_s3_t: 'Envolver la cúpula', da_s3_d: 'El resultado se calibra al fulldome: cada función puede ser distinta sin cambiar la infraestructura.',
 
-      nm1_k: 'Se genera', nm1_t: 'Ninguna función es idéntica',
-      nm1_d: 'En las piezas generativas el contenido se construye durante la función: el clima, la marea, la música y el público cambian lo que se ve. Quien regresa no vuelve a ver lo mismo.',
-      nm2_k: 'Se cambia', nm2_t: 'La cúpula rota de concepto',
-      nm2_d: 'Cada temporada, evento o marca puede tener su propia versión del domo. Se cambia el contenido, no la infraestructura: sin obra y sin equipo nuevo.',
-      nm3_k: 'Se mueve', nm3_t: 'Sistemas que viajan',
-      nm3_d: 'Lo que producimos para una cúpula se recalibra para otro recinto, otro tamaño u otra superficie. El motor viaja; solo se ajusta el warping y la escala.',
-
       int_eyebrow: 'Interactividad', int_title: 'El público entra y la escena responde',
       int_p: 'Kioscos, sensores y control en vivo — sin app.',
       int_cap: 'ANDATA LAB, en vivo: el movimiento se vuelve imagen.',
@@ -1582,7 +1570,6 @@
       int_s1_d: 'Cámara, luz, permiso. El retrato entra a la escena.',
       int_s2_t: 'De la mesa a la pared',
       int_s2_d: 'Lo que tocas en la mesa sube a la cúpula. Al instante.',
-      int_s3_t: 'Listo para operar', int_s3_d: 'Mesas, kioscos y control en vivo. El público entra; el recinto ya está armado.',
       i1_t: 'Tracking corporal', i1_d: 'El cuerpo del visitante se convierte en imagen dentro de la cúpula.',
       i2_t: 'Siluetas y partículas', i2_d: 'La presencia se traduce en luz, estelas y movimiento.',
       i3_t: 'Dinámicas colectivas', i3_d: 'El grupo completo modifica la escena en conjunto.',
@@ -1690,11 +1677,6 @@
       pp5_t: 'Integración', pp5_d: 'Probamos dentro del recinto y ajustamos la experiencia.',
       pp6_t: 'Evolución', pp6_d: 'Actualizamos temporadas, contenido y nuevas activaciones.',
 
-      vn_eyebrow: 'El recinto',
-      vn_title: 'El recinto, listo.',
-      vn_p: 'Domo, LED curva o salón. El contenido se recalibra; no se vuelve a producir.',
-      vn_f1: 'Domo / fulldome', vn_f2: 'LED curva', vn_f3: 'Pantalla envolvente', vn_f4: 'Salón y cena',
-
       cta_title: 'Hagamos que el espacio cobre vida',
       cta_p: 'Contenido, interacción y programación. El recinto deja de ser una pantalla.',
       cta_btn1: 'Cuéntanos sobre tu espacio', cta_btn2: 'Escribir por correo',
@@ -1737,17 +1719,22 @@
       ph_label: 'Conceptual visualization',
       cn1: 'Concept 01', cn2: 'Concept 02', cn3: 'Concept 03', cn4: 'Concept 04',
       c1_t: 'Journey of the Whales',
-      c1_d: 'Whales, ocean and spatial sound. The venue becomes an ecosystem.',
+      c1_d: 'An immersive ocean journey where monumental whales and spatial sound wrap the audience.',
+      c1_data: 'Tide, currents and weather become water rhythm, bioluminescent glow and whale drift — not charts, but artistic atmosphere on the dome.',
       c1_k1: 'Ocean & bioluminescence', c1_k2: 'Spatial audio', c1_k3: 'Environmental data',
       c2_t: 'Living Memory',
-      c2_d: 'A contemporary Día de Muertos: portraits, marigold and shared memory.',
+      c2_d: 'A contemporary Día de Muertos: volunteered portraits, marigold, light and sound as a collective ritual.',
+      c2_data: 'Presence and opt-in portraits are read as signals: each person adds a spark to a living constellation on the dome. The data is human; the image is ceremonial.',
       c2_k1: 'Audience participation', c2_k2: 'Volunteered portraits', c2_k3: 'Contemporary ritual',
       c3_t: 'The Living Destination',
-      c3_d: 'The destination, from drone to dome.',
+      c3_d: 'The territory told through drone, landscape, architecture and local culture — the destination as a wraparound story.',
+      c3_data: 'Local weather, time of day and destination flows modulate color, density and motion over place capture. Data does not replace the image — it makes it breathe.',
       c3_k1: 'Drone capture', c3_k2: 'Destination identity', c3_k3: 'Cultural tourism',
       c4_t: 'Data Dome',
-      c4_d: 'Tide, weather and a live audience composed into a show that never repeats — data art at dome scale.',
+      c4_d: 'The piece where data art leads: the show is composed live and never plays the same way twice.',
+      c4_data: 'Tide, weather, sound and participation map to form, color and spatial audio. We interpret data as visual language — artistic, readable and enveloping.',
       c4_k1: 'Live data', c4_k2: 'Generative systems', c4_k3: 'Never twice the same',
+      c_data_l: 'How we use data art',
 
       da_eye: 'Data art', da_t: 'Data that becomes the dome.',
       da_p: 'In the project, data art is not a separate chart: it is the layer that lets the show change with place, time and audience.',
@@ -1761,12 +1748,12 @@
       da_s2_t: 'Compose in real time', da_s2_d: 'An engine (TouchDesigner / generative) turns those signals into image, sound and light.',
       da_s3_t: 'Wrap the dome', da_s3_d: 'Output is calibrated to fulldome: every show can differ without changing the infrastructure.',
 
-      nm1_k: 'Generated', nm1_t: 'No two shows are identical',
-      nm1_d: 'In generative pieces the content is built during the show: weather, tide, music and the audience change what appears. Coming back is never the same visit twice.',
-      nm2_k: 'Swapped', nm2_t: 'The dome rotates concepts',
-      nm2_d: 'Every season, event or brand can have its own version of the dome. You change the content, not the infrastructure — no construction, no new hardware.',
-      nm3_k: 'Portable', nm3_t: 'Systems that travel',
-      nm3_d: 'What we produce for one dome can be recalibrated for another venue, another size or another surface. The engine travels; only warping and scale get adjusted.',
+      nm1_k: '01 · Interpret', nm1_t: 'Data becomes artistic image',
+      nm1_d: 'We do not show tables. Weather, tide or presence become rhythm, color and motion on the dome — readable, sensory data art.',
+      nm2_k: '02 · Compose', nm2_t: 'Every show can be different',
+      nm2_d: 'Signals shift during the performance. Coming back means a new composition without changing the venue infrastructure.',
+      nm3_k: '03 · Adapt', nm3_t: 'Same engine, another story',
+      nm3_d: 'Swap the program (Whales, Memory, Destination, Data Dome) or recalibrate to another space. The system travels; the work is rewritten.',
 
       int_eyebrow: 'Interactivity', int_title: 'The audience walks in and the scene answers',
       int_p: 'Kiosks, sensors and live control — no app.',
@@ -1775,7 +1762,6 @@
       int_s1_d: 'Camera, light, consent. The portrait enters the scene.',
       int_s2_t: 'From table to wall',
       int_s2_d: 'What you touch on the table goes up on the dome. Instantly.',
-      int_s3_t: 'Ready to run', int_s3_d: 'Tables, kiosks and live control. The audience walks in; the venue is already standing.',
       i1_t: 'Body tracking', i1_d: 'The visitor\u2019s body becomes image inside the dome.',
       i2_t: 'Silhouettes & particles', i2_d: 'Presence translated into light, trails and motion.',
       i3_t: 'Collective dynamics', i3_d: 'The whole group reshapes the scene together.',
@@ -1882,11 +1868,6 @@
       pp4_t: 'Production', pp4_d: 'We create visuals, sound, systems and adaptations.',
       pp5_t: 'Integration', pp5_d: 'We test inside the venue and tune the experience.',
       pp6_t: 'Evolution', pp6_d: 'We update seasons, content and new activations.',
-
-      vn_eyebrow: 'The venue',
-      vn_title: 'The venue, ready.',
-      vn_p: 'Dome, curved LED or ballroom. Content is recalibrated; it is not produced again.',
-      vn_f1: 'Dome / fulldome', vn_f2: 'Curved LED', vn_f3: 'Wraparound screen', vn_f4: 'Ballroom & dinner',
 
       cta_title: 'Let\u2019s bring the space to life',
       cta_p: 'Content, interaction and programming. The venue stops being a screen.',
@@ -2103,6 +2084,49 @@
       entries.forEach(function (en) { if (en.isIntersecting) activate(en.target); });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     items.forEach(function (i) { io.observe(i); });
+  })();
+
+  /* ─────────── Interactivity carousel ─────────── */
+  (function interCarousel() {
+    var track = $('#inter-track'), prev = $('#inter-prev'), next = $('#inter-next'), dots = $('#inter-dots');
+    if (!track) return;
+    var slides = $$('.inter-slide', track);
+    if (!slides.length) return;
+    var i = 0;
+
+    function go(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      var left = slides[i].offsetLeft;
+      track.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
+      sync();
+    }
+    function sync() {
+      var w = track.clientWidth || 1;
+      i = Math.round(track.scrollLeft / w);
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= slides.length - 1;
+      if (dots) {
+        $$('button', dots).forEach(function (b, idx) {
+          b.setAttribute('aria-current', idx === i ? 'true' : 'false');
+        });
+      }
+    }
+    if (dots) {
+      slides.forEach(function (s, idx) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Escena ' + (idx + 1));
+        if (idx === 0) b.setAttribute('aria-current', 'true');
+        b.addEventListener('click', function () { go(idx); });
+        dots.appendChild(b);
+      });
+    }
+    if (prev) prev.addEventListener('click', function () { go(i - 1); });
+    if (next) next.addEventListener('click', function () { go(i + 1); });
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    sync();
   })();
 
   /* ─────────── Season rail arrows ─────────── */
