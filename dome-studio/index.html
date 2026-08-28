@@ -482,6 +482,24 @@
   }
   .inter-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
   .inter-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:52ch; }
+  .inter-shots{
+    margin-top:clamp(18px,2.4vw,28px); display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:clamp(14px,2vw,22px);
+  }
+  .inter-shot{
+    margin:0; position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1;
+    background:#05070d; border:1px solid var(--d-line-2);
+  }
+  .inter-shot img{ width:100%; height:100%; display:block; object-fit:cover; }
+  .inter-shot figcaption{
+    position:absolute; left:0; right:0; bottom:0; z-index:2;
+    padding:clamp(16px,2.2vw,24px);
+    background:linear-gradient(transparent, rgba(4,6,11,.88));
+  }
+  .inter-shot .ds-label{ font-size:9px; color:rgba(255,255,255,.7); }
+  .inter-shot h3{ font-size:1.02rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:7px 0 0; }
+  .inter-shot p{ font-size:.88rem; line-height:1.5; color:rgba(255,255,255,.78); margin:6px 0 0; max-width:36ch; }
+  @media (max-width:720px){ .inter-shots{ grid-template-columns:1fr; } }
   /* ══════════════════════════════════════════
      5b · HOW IT WORKS — cameras, data, pipeline
      ══════════════════════════════════════════ */
@@ -743,9 +761,52 @@
   .step-row p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:8px 0 0; max-width:66ch; }
 
   /* ══════════════════════════════════════════
+     10b · THE VENUE — closer for screen / room buyers
+     ══════════════════════════════════════════ */
+  .venue{ background:#02040a; padding:0 0 clamp(28px,5vw,48px); }
+  .venue-hero{
+    position:relative; margin:0; overflow:hidden;
+    min-height:min(88svh, 860px); background:#05070d;
+  }
+  .venue-hero img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 82%;
+  }
+  .venue-hero::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(2,4,10,.22) 0%, rgba(2,4,10,.04) 28%, rgba(2,4,10,.18) 58%, rgba(2,4,10,.62) 86%, var(--d-0) 100%),
+      linear-gradient(90deg, rgba(2,4,10,.42) 0%, rgba(2,4,10,.08) 42%, transparent 68%);
+  }
+  .venue-copy{
+    position:absolute; z-index:2; left:0; right:0; bottom:0;
+    padding:0 0 clamp(28px,5vw,48px);
+  }
+  .venue-copy .wrap{ max-width:var(--maxw); }
+  .venue-copy h2{
+    font-size:clamp(1.7rem,4vw,2.7rem); font-weight:700; letter-spacing:-.035em; line-height:1.08;
+    color:#fff; margin:14px 0 0; max-width:16ch; text-shadow:0 2px 36px rgba(0,0,0,.55);
+  }
+  .venue-copy p{
+    font-size:1.02rem; line-height:1.62; color:rgba(255,255,255,.84); margin:16px 0 0; max-width:48ch;
+    text-shadow:0 1px 20px rgba(0,0,0,.5);
+  }
+  .venue-formats{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;
+  }
+  .venue-formats span{
+    font-size:11.5px; font-weight:500; letter-spacing:.02em; padding:7px 13px; border-radius:999px;
+    background:rgba(6,9,15,.55); border:1px solid var(--d-line); color:#fff;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  }
+  @media (max-width:760px){
+    .venue-hero{ aspect-ratio:auto; min-height:88svh; }
+    .venue-hero img{ object-position:50% 72%; }
+  }
+
+  /* ══════════════════════════════════════════
      11 · FINAL CTA
      ══════════════════════════════════════════ */
-  .final{ background:var(--d-0); padding:clamp(76px,13vh,150px) 0; }
+  .final{ background:var(--d-0); padding:clamp(36px,6vh,80px) 0 clamp(76px,13vh,150px); }
   .final-panel{
     position:relative; overflow:hidden; text-align:center;
     border-radius:var(--r-xl); padding:clamp(44px,7vw,92px) clamp(24px,5vw,72px);
@@ -1024,8 +1085,8 @@
         <article class="concept reveal" style="--acc:#FF8A3C">
           <div class="concept-media">
             <figure class="shot">
-              <img src="img/dome-territory-capture.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: atardecer sobre una bahía mexicana proyectado en la cúpula durante una cena">
+              <img src="img/dome-destination-pv.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                   alt="Visualización conceptual: Puerto Vallarta proyectado en un recinto inmersivo, con kioscos de participación y público de pie">
               <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
             </figure>
           </div>
@@ -1045,8 +1106,8 @@
         <article class="concept reveal" style="--acc:#9b7aff">
           <div class="concept-media">
             <figure class="shot">
-              <img src="img/dome-data-experience.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: la Tierra, corrientes marinas y datos climáticos en vivo desplegados en la cúpula">
+              <img src="img/dome-data-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                   alt="Visualización conceptual: un destino en datos sobre una pantalla envolvente, alimentado desde kioscos táctiles">
               <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
             </figure>
           </div>
@@ -1103,6 +1164,27 @@
           <p data-i18n="int_cap">Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.</p>
         </figcaption>
       </figure>
+
+      <div class="inter-shots reveal">
+        <figure class="inter-shot">
+          <img src="img/dome-portrait-capture.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+               alt="Visualización conceptual: estación de captura voluntaria de retratos que alimenta una pantalla envolvente de rostros">
+          <figcaption>
+            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
+            <h3 data-i18n="int_s1_t">Captura voluntaria</h3>
+            <p data-i18n="int_s1_d">Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.</p>
+          </figcaption>
+        </figure>
+        <figure class="inter-shot">
+          <img src="img/dome-memory-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+               alt="Visualización conceptual: el público alimenta una pantalla envolvente de retratos, flores y mariposas desde mesas táctiles">
+          <figcaption>
+            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
+            <h3 data-i18n="int_s2_t">De la mesa a la pared</h3>
+            <p data-i18n="int_s2_d">Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.</p>
+          </figcaption>
+        </figure>
+      </div>
 
       <div class="inter-grid reveal">
         <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i1_t">Tracking corporal</h3><p data-i18n="i1_d">El cuerpo del visitante se convierte en imagen dentro de la cúpula.</p></div>
@@ -1455,6 +1537,27 @@
     </div>
   </section>
 
+  <!-- ══ 10b · THE VENUE ══ -->
+  <section class="venue" id="recinto" aria-labelledby="venue-title">
+    <figure class="venue-hero">
+      <img src="img/dome-venue-gala.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+           alt="Visualización conceptual: cena bajo una cúpula con una ballena monumental — el recinto como producto, no solo el contenido">
+      <div class="venue-copy">
+        <div class="wrap">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="vn_eyebrow">El recinto</span></span>
+          <h2 id="venue-title" data-i18n="vn_title">El mismo contenido, en la superficie que vas a comprar.</h2>
+          <p data-i18n="vn_p">Domo, LED curva, pantalla envolvente o un salón de hotel. Diseñamos la experiencia para el hardware que el recinto ya tiene — o para el que estás a punto de especificar. El contenido se recalibra; no se vuelve a producir.</p>
+          <div class="venue-formats" aria-label="Formatos de superficie">
+            <span data-i18n="vn_f1">Domo / fulldome</span>
+            <span data-i18n="vn_f2">LED curva</span>
+            <span data-i18n="vn_f3">Pantalla envolvente</span>
+            <span data-i18n="vn_f4">Salón y cena</span>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </section>
+
   <!-- ══ 11 · FINAL CTA ══ -->
   <section class="final" id="contacto">
     <div class="wrap">
@@ -1611,6 +1714,10 @@
       int_eyebrow: 'Interactividad', int_title: 'El público activa la experiencia',
       int_p: 'Una experiencia interactiva no requiere tocar la superficie del domo. El movimiento, el sonido y la participación pueden modificar el contenido en tiempo real.',
       int_cap: 'Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.',
+      int_s1_t: 'Captura voluntaria',
+      int_s1_d: 'Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.',
+      int_s2_t: 'De la mesa a la pared',
+      int_s2_d: 'Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.',
       i1_t: 'Tracking corporal', i1_d: 'El cuerpo del visitante se convierte en imagen dentro de la cúpula.',
       i2_t: 'Siluetas y partículas', i2_d: 'La presencia se traduce en luz, estelas y movimiento.',
       i3_t: 'Dinámicas colectivas', i3_d: 'El grupo completo modifica la escena en conjunto.',
@@ -1717,6 +1824,11 @@
       pp5_t: 'Integración', pp5_d: 'Probamos dentro del recinto y ajustamos la experiencia.',
       pp6_t: 'Evolución', pp6_d: 'Actualizamos temporadas, contenido y nuevas activaciones.',
 
+      vn_eyebrow: 'El recinto',
+      vn_title: 'El mismo contenido, en la superficie que vas a comprar.',
+      vn_p: 'Domo, LED curva, pantalla envolvente o un salón de hotel. Diseñamos la experiencia para el hardware que el recinto ya tiene — o para el que estás a punto de especificar. El contenido se recalibra; no se vuelve a producir.',
+      vn_f1: 'Domo / fulldome', vn_f2: 'LED curva', vn_f3: 'Pantalla envolvente', vn_f4: 'Salón y cena',
+
       cta_title: 'Hagamos que el espacio cobre vida',
       cta_p: 'Creamos contenido, interacción y programación para convertir domos y superficies inmersivas en destinos que la gente quiera volver a experimentar.',
       cta_btn1: 'Cuéntanos sobre tu espacio', cta_btn2: 'Escribir por correo',
@@ -1782,6 +1894,10 @@
       int_eyebrow: 'Interactivity', int_title: 'The audience activates the experience',
       int_p: 'An interactive experience doesn\u2019t require touching the dome surface. Movement, sound and participation can reshape the content in real time.',
       int_cap: 'ANDATA LAB interactive installation: sensors and tracking turning audience movement into image. The same technical base adapts to a dome.',
+      int_s1_t: 'Voluntary capture',
+      int_s1_d: 'A kiosk with a camera and a light. Whoever wants to, sits for a portrait. It enters the scene and can be deleted when the show ends.',
+      int_s2_t: 'From table to wall',
+      int_s2_d: 'What you touch on the kiosk rises to the large surface. The group sees the result instantly — no app, no technical briefing.',
       i1_t: 'Body tracking', i1_d: 'The visitor\u2019s body becomes image inside the dome.',
       i2_t: 'Silhouettes & particles', i2_d: 'Presence translated into light, trails and motion.',
       i3_t: 'Collective dynamics', i3_d: 'The whole group reshapes the scene together.',
@@ -1887,6 +2003,11 @@
       pp4_t: 'Production', pp4_d: 'We create visuals, sound, systems and adaptations.',
       pp5_t: 'Integration', pp5_d: 'We test inside the venue and tune the experience.',
       pp6_t: 'Evolution', pp6_d: 'We update seasons, content and new activations.',
+
+      vn_eyebrow: 'The venue',
+      vn_title: 'The same content, on the surface you are about to buy.',
+      vn_p: 'Dome, curved LED, wraparound wall or a hotel ballroom. We design the experience for the hardware the venue already has — or for the spec you are about to write. Content is recalibrated; it is not produced twice.',
+      vn_f1: 'Dome / fulldome', vn_f2: 'Curved LED', vn_f3: 'Wraparound screen', vn_f4: 'Ballroom & dinner',
 
       cta_title: 'Let\u2019s bring the space to life',
       cta_p: 'We create content, interaction and programming to turn domes and immersive surfaces into destinations people want to experience again.',

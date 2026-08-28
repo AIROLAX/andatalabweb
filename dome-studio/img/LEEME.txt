@@ -9,9 +9,15 @@ EN USO AHORA
 
   dome-whale-concept.jpg      Hero (primer cuadro) + Concepto 01 · Viaje de las Ballenas
   dome-cosmos-concept.jpg     Hero (segundo cuadro) · Sistema Generativo
-  dome-territory-capture.jpg  Hero (tercer cuadro) + Concepto 03 · El Destino Vivo
+  dome-territory-capture.jpg  Hero (tercer cuadro)
   dome-memory-concept.jpg     Hero (cuarto cuadro) + Concepto 02 · Memoria Viva
-  dome-data-experience.jpg    Hero (quinto cuadro) + Concepto 04 · Data Dome
+  dome-data-experience.jpg    Hero (quinto cuadro)
+  dome-destination-pv.jpg     Concepto 03 · El Destino Vivo (Puerto Vallarta)
+  dome-data-kiosk.jpg         Concepto 04 · Data Dome (kioscos + destino en datos)
+  dome-portrait-capture.jpg   Interactividad · captura voluntaria de retratos
+  dome-memory-kiosk.jpg       Interactividad · de la mesa táctil a la pared
+  dome-venue-gala.jpg         Cierre comercial · recinto / compra de pantallas
+  dome-warp-calibration.png   Cómo funciona · previsualización / warping
   dome-studio-og.jpg          Imagen para redes sociales (1200 × 630)
 
 El hero es un domo que cambia de contenido mientras el visitante hace scroll:
@@ -34,11 +40,7 @@ Si cambias dome-whale-concept.jpg, regenera también dome-studio-og.jpg
 ARCHIVO DISPONIBLE, TODAVÍA SIN USAR
 ------------------------------------
 
-  dome-warp-calibration.png   Captura de una herramienta de warping fulldome.
-
-No está publicada porque no sé si es material propio. Si es una captura de
-nuestro equipo, dime y la coloco en la sección "Cómo funciona" etiquetada como
-tecnología demostrada. Si es una referencia de terceros, no debe publicarse.
+  (ninguno)
 
 NOMBRES RESERVADOS PARA MÁS ADELANTE
 ------------------------------------
