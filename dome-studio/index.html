@@ -454,6 +454,50 @@
   .nomad-i p{ display:none; }
   .nomad-i h3{ font-size:1.02rem; }
   @media (max-width:880px){ .nomad{ grid-template-columns:1fr; } }
+
+  /* ── Data art — how live data becomes the dome ── */
+  .dataart{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
+  .dataart-grid{
+    margin-top:clamp(28px,4vw,48px);
+    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+    gap:clamp(28px,4vw,56px); align-items:center;
+  }
+  .dataart-map{ list-style:none; margin:28px 0 0; padding:0; display:grid; gap:10px; }
+  .dataart-map li{
+    display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr);
+    gap:12px; align-items:center;
+    padding:12px 14px; border:1px solid var(--d-line-2); background:rgba(255,255,255,.03);
+  }
+  .dataart-map .from{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--spec-cyan); }
+  .dataart-map .arrow{ color:rgba(255,255,255,.35); font-size:14px; }
+  .dataart-map .to{ font-size:.92rem; color:var(--d-ink-2); line-height:1.4; }
+  .dataart-note{
+    margin:18px 0 0; font-size:12.5px; line-height:1.5; color:var(--d-ink-3); max-width:48ch;
+  }
+  .dataart-fig{ margin:0; position:relative; overflow:hidden; background:#05070d; border:1px solid var(--d-line-2); }
+  .dataart-fig img{ width:100%; height:min(48vh,420px); object-fit:cover; display:block; }
+  .dataart-fig figcaption{
+    position:absolute; left:0; right:0; bottom:0; padding:16px 18px;
+    background:linear-gradient(transparent, rgba(4,6,11,.9));
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.72);
+  }
+  .dataart-steps{
+    margin-top:clamp(28px,4vw,44px);
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
+    background:var(--d-line-2); border:1px solid var(--d-line-2);
+  }
+  .dataart-steps article{ background:var(--d-0); padding:clamp(18px,2.4vw,26px); }
+  .dataart-steps .n{ display:block; font-size:10px; font-weight:700; letter-spacing:.16em; color:var(--spec-cyan); }
+  .dataart-steps h3{ margin:10px 0 0; font-size:1.05rem; color:#fff; letter-spacing:-.02em; }
+  .dataart-steps p{ margin:8px 0 0; font-size:.9rem; line-height:1.5; color:var(--d-ink-2); }
+  @media (max-width:860px){
+    .dataart-grid{ grid-template-columns:1fr; }
+    .dataart-fig img{ height:240px; }
+    .dataart-map li{ grid-template-columns:1fr; gap:4px; }
+    .dataart-map .arrow{ display:none; }
+    .dataart-steps{ grid-template-columns:1fr; }
+  }
+
   .concept-n{
     display:inline-flex; align-items:center; gap:10px;
     font-size:11px; font-weight:600; letter-spacing:.2em; color:var(--d-ink-3); font-variant-numeric:tabular-nums;
@@ -889,6 +933,7 @@
   </a>
   <nav class="nav-links" aria-label="Navegación principal">
     <a href="#experiencias" data-i18n="nav_stories">Historias</a>
+    <a class="nav-more" href="#data-art" data-i18n="nav_data">Data art</a>
     <a href="../#work" data-i18n="nav_work">Proyectos</a>
     <a class="nav-more" href="#capacidades" data-i18n="nav_caps">Capacidades</a>
     <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Cambiar idioma">EN</button>
@@ -1044,7 +1089,7 @@
           <div>
             <span class="concept-n" data-i18n="cn4">Concepto 04</span>
             <h3 data-i18n="c4_t">Data Dome</h3>
-            <p data-i18n="c4_d">Mareas, clima, sonido, movimiento y participación del público convertidos en una composición audiovisual irrepetible.</p>
+            <p data-i18n="c4_d">Marea, clima y público en vivo compuestos en una función que no se repite — data art a escala de cúpula.</p>
             <div class="concept-chips">
               <span class="chip" data-i18n="c4_k1">Datos en vivo</span>
               <span class="chip" data-i18n="c4_k2">Sistemas generativos</span>
@@ -1070,6 +1115,68 @@
           <h3 data-i18n="nm3_t">Sistemas que viajan</h3>
           <p data-i18n="nm3_d">Lo que producimos para una cúpula se recalibra para otro recinto, otro tamaño u otra superficie. El motor viaja; solo se ajusta el warping y la escala.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATA ART — how live data becomes the dome -->
+  <section class="dataart block" id="data-art">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="da_eye">Data art</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="da_t">Datos que se vuelven cúpula.</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="da_p">En el proyecto, el data art no es un gráfico aparte: es la capa que hace que la función cambie con el lugar, el momento y el público.</p>
+      </div>
+
+      <div class="dataart-grid">
+        <div class="reveal">
+          <ul class="dataart-map" aria-label="Cómo se traduce el dato en la cúpula">
+            <li>
+              <span class="from" data-i18n="da_i1">Marea / clima</span>
+              <span class="arrow" aria-hidden="true">→</span>
+              <span class="to" data-i18n="da_o1">Ritmo, densidad y color en la superficie fulldome</span>
+            </li>
+            <li>
+              <span class="from" data-i18n="da_i2">Viento / hora</span>
+              <span class="arrow" aria-hidden="true">→</span>
+              <span class="to" data-i18n="da_o2">Campos de movimiento y deriva generativa</span>
+            </li>
+            <li>
+              <span class="from" data-i18n="da_i3">Presencia del público</span>
+              <span class="arrow" aria-hidden="true">→</span>
+              <span class="to" data-i18n="da_o3">Capas interactivas sin app — silueta, zona, participación</span>
+            </li>
+            <li>
+              <span class="from" data-i18n="da_i4">Operador / show</span>
+              <span class="arrow" aria-hidden="true">→</span>
+              <span class="to" data-i18n="da_o4">Control en vivo: intensidad, escenas y momentos de marca</span>
+            </li>
+          </ul>
+          <p class="dataart-note" data-i18n="da_note">Explicación del sistema del proyecto. Las fuentes se confirman por recinto — no es un feed en vivo hoy.</p>
+        </div>
+        <figure class="dataart-fig reveal reveal-d1">
+          <img src="img/dome-data-experience.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+               alt="Visualización conceptual: datos ambientales y corrientes proyectados en un recinto inmersivo">
+          <figcaption data-i18n="da_cap">Data Dome — el dato compuesto como imagen envolvente</figcaption>
+        </figure>
+      </div>
+
+      <div class="dataart-steps reveal">
+        <article>
+          <span class="n">01</span>
+          <h3 data-i18n="da_s1_t">Elegir las señales</h3>
+          <p data-i18n="da_s1_d">Clima, marea, sensores en sitio o participación voluntaria — según el brief del recinto.</p>
+        </article>
+        <article>
+          <span class="n">02</span>
+          <h3 data-i18n="da_s2_t">Componer en tiempo real</h3>
+          <p data-i18n="da_s2_d">Un motor (TouchDesigner / generativo) traduce esas señales en imagen, audio y luz.</p>
+        </article>
+        <article>
+          <span class="n">03</span>
+          <h3 data-i18n="da_s3_t">Envolver la cúpula</h3>
+          <p data-i18n="da_s3_d">El resultado se calibra al fulldome: cada función puede ser distinta sin cambiar la infraestructura.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -1277,8 +1384,8 @@
         </li>
         <li class="cap reveal">
           <span class="cap-n">04</span>
-          <h3 data-i18n="cap4_t">Data experiences</h3>
-          <p data-i18n="cap4_d">Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.</p>
+            <h3 data-i18n="cap4_t">Data art / data experiences</h3>
+          <p data-i18n="cap4_d">Señales ambientales, culturales o participativas convertidas en narrativa fulldome en tiempo real.</p>
         </li>
         <li class="cap reveal">
           <span class="cap-n">05</span>
@@ -1404,7 +1511,7 @@
   /* ─────────── i18n (same dictionary pattern as the other project pages) ─────────── */
   var I18N = {
     es: {
-      nav_stories: 'Historias', nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_proof: 'Prueba', nav_contact: 'Contacto', nav_home: 'Inicio',
+      nav_stories: 'Historias', nav_data: 'Data art', nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_proof: 'Prueba', nav_contact: 'Contacto', nav_home: 'Inicio',
       nav_cta: 'Hablemos', back: 'Volver al inicio', scroll: 'Desliza',
       h_t1: 'Contenido vivo', h_t2: 'para espacios inmersivos',
       h_sub: 'Click para cambiar · arrastra para girar',
@@ -1426,7 +1533,7 @@
       cap1_t: 'Contenido fulldome', cap1_d: 'Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.',
       cap2_t: 'Experiencias interactivas', cap2_d: 'Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.',
       cap3_t: 'Visuales generativos', cap3_d: 'Sistemas creados en TouchDesigner que producen experiencias dinámicas y operables en tiempo real.',
-      cap4_t: 'Data experiences', cap4_d: 'Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.',
+      cap4_t: 'Data art / data experiences', cap4_d: 'Señales ambientales, culturales o participativas convertidas en narrativa fulldome en tiempo real.',
       cap5_t: 'Live Dome', cap5_d: 'Shows audiovisuales sincronizados con músicos, DJ, performances y eventos especiales.',
       cap6_t: 'Audio espacial y DMX', cap6_d: 'Integración de sonido envolvente e iluminación para extender la experiencia más allá de la proyección.',
       cap7_t: 'Producción local', cap7_d: 'Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.',
@@ -1446,8 +1553,20 @@
       c3_d: 'El destino, desde el dron hasta la cúpula.',
       c3_k1: 'Captura con dron', c3_k2: 'Identidad del destino', c3_k3: 'Turismo cultural',
       c4_t: 'Data Dome',
-      c4_d: 'Clima, marea y público en vivo. Nunca igual dos veces.',
+      c4_d: 'Marea, clima y público en vivo compuestos en una función que no se repite — data art a escala de cúpula.',
       c4_k1: 'Datos en vivo', c4_k2: 'Sistemas generativos', c4_k3: 'Nunca igual dos veces',
+
+      da_eye: 'Data art', da_t: 'Datos que se vuelven cúpula.',
+      da_p: 'En el proyecto, el data art no es un gráfico aparte: es la capa que hace que la función cambie con el lugar, el momento y el público.',
+      da_i1: 'Marea / clima', da_o1: 'Ritmo, densidad y color en la superficie fulldome',
+      da_i2: 'Viento / hora', da_o2: 'Campos de movimiento y deriva generativa',
+      da_i3: 'Presencia del público', da_o3: 'Capas interactivas sin app — silueta, zona, participación',
+      da_i4: 'Operador / show', da_o4: 'Control en vivo: intensidad, escenas y momentos de marca',
+      da_note: 'Explicación del sistema del proyecto. Las fuentes se confirman por recinto — no es un feed en vivo hoy.',
+      da_cap: 'Data Dome — el dato compuesto como imagen envolvente',
+      da_s1_t: 'Elegir las señales', da_s1_d: 'Clima, marea, sensores en sitio o participación voluntaria — según el brief del recinto.',
+      da_s2_t: 'Componer en tiempo real', da_s2_d: 'Un motor (TouchDesigner / generativo) traduce esas señales en imagen, audio y luz.',
+      da_s3_t: 'Envolver la cúpula', da_s3_d: 'El resultado se calibra al fulldome: cada función puede ser distinta sin cambiar la infraestructura.',
 
       nm1_k: 'Se genera', nm1_t: 'Ninguna función es idéntica',
       nm1_d: 'En las piezas generativas el contenido se construye durante la función: el clima, la marea, la música y el público cambian lo que se ve. Quien regresa no vuelve a ver lo mismo.',
@@ -1585,7 +1704,7 @@
       doc_title: 'Dome Studio | Contenido e interactividad para domos | ANDATA LAB'
     },
     en: {
-      nav_stories: 'Stories', nav_caps: 'Capabilities', nav_work: 'Work', nav_proof: 'Proof', nav_contact: 'Contact', nav_home: 'Home',
+      nav_stories: 'Stories', nav_data: 'Data art', nav_caps: 'Capabilities', nav_work: 'Work', nav_proof: 'Proof', nav_contact: 'Contact', nav_home: 'Home',
       nav_cta: "Let's talk", back: 'Back to home', scroll: 'Scroll',
       h_t1: 'Living content', h_t2: 'for immersive spaces',
       h_sub: 'Click to switch · drag to spin',
@@ -1607,7 +1726,7 @@
       cap1_t: 'Fulldome content', cap1_d: 'Production and adaptation of audiovisual pieces designed to wrap around the audience.',
       cap2_t: 'Interactive experiences', cap2_d: 'Depth cameras, sensors and body tracking that turn the audience\u2019s presence into image and movement.',
       cap3_t: 'Generative visuals', cap3_d: 'TouchDesigner systems that produce dynamic experiences, operable live.',
-      cap4_t: 'Data experiences', cap4_d: 'Environmental, cultural or participatory data turned into audiovisual narratives.',
+      cap4_t: 'Data art / data experiences', cap4_d: 'Environmental, cultural or participatory signals turned into real-time fulldome narrative.',
       cap5_t: 'Live Dome', cap5_d: 'Audiovisual shows synced with musicians, DJs, performances and special events.',
       cap6_t: 'Spatial audio & DMX', cap6_d: 'Surround sound and lighting integration to extend the experience beyond projection.',
       cap7_t: 'Local production', cap7_d: 'Photography, video, drone, 360 capture and original material tied to each destination.',
@@ -1627,8 +1746,20 @@
       c3_d: 'The destination, from drone to dome.',
       c3_k1: 'Drone capture', c3_k2: 'Destination identity', c3_k3: 'Cultural tourism',
       c4_t: 'Data Dome',
-      c4_d: 'Weather, tide and a live audience. Never twice the same.',
+      c4_d: 'Tide, weather and a live audience composed into a show that never repeats — data art at dome scale.',
       c4_k1: 'Live data', c4_k2: 'Generative systems', c4_k3: 'Never twice the same',
+
+      da_eye: 'Data art', da_t: 'Data that becomes the dome.',
+      da_p: 'In the project, data art is not a separate chart: it is the layer that lets the show change with place, time and audience.',
+      da_i1: 'Tide / weather', da_o1: 'Rhythm, density and color across the fulldome surface',
+      da_i2: 'Wind / hour', da_o2: 'Motion fields and generative drift',
+      da_i3: 'Audience presence', da_o3: 'Interactive layers with no app — silhouette, zone, participation',
+      da_i4: 'Operator / show', da_o4: 'Live control: intensity, scenes and branded moments',
+      da_note: 'A system explanation for the project. Sources are confirmed per venue — not a live feed today.',
+      da_cap: 'Data Dome — data composed as wraparound image',
+      da_s1_t: 'Choose the signals', da_s1_d: 'Weather, tide, on-site sensors or opt-in participation — per venue brief.',
+      da_s2_t: 'Compose in real time', da_s2_d: 'An engine (TouchDesigner / generative) turns those signals into image, sound and light.',
+      da_s3_t: 'Wrap the dome', da_s3_d: 'Output is calibrated to fulldome: every show can differ without changing the infrastructure.',
 
       nm1_k: 'Generated', nm1_t: 'No two shows are identical',
       nm1_d: 'In generative pieces the content is built during the show: weather, tide, music and the audience change what appears. Coming back is never the same visit twice.',
