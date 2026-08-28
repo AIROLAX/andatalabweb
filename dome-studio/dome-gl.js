@@ -106,6 +106,11 @@
   function ident() {
     return new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1]);
   }
+  function scaleM(s) {
+    var o = ident();
+    o[0] = s; o[5] = s; o[10] = s;
+    return o;
+  }
   function mul(a, b) {
     var o = new Float32Array(16), i, j, k;
     for (i = 0; i < 4; i++) {
@@ -271,17 +276,17 @@
       if (!visible) return;
       resize();
 
-      // Inside the hemisphere: pull back so the full rim stays in frame.
-      var eyeX = Math.sin(lookYaw) * 0.12;
-      var eyeY = 0.12 + lookPitch * 0.2;
-      var eyeZ = 0.44 - enter * 0.1;
-      var cx = Math.sin(lookYaw) * 0.28;
-      var cy = 0.28 + lookPitch * 0.65;
-      var cz = -0.52 + Math.cos(lookYaw) * 0.06;
+      // Pull back and look up so the full bowl (zenith + rim) fits in frame.
+      var eyeX = Math.sin(lookYaw) * 0.06;
+      var eyeY = 0.06 + lookPitch * 0.12;
+      var eyeZ = 0.62 - enter * 0.06;
+      var cx = Math.sin(lookYaw) * 0.08;
+      var cy = 0.82 + lookPitch * 0.22;
+      var cz = Math.cos(lookYaw) * 0.08;
       var aspect = canvas.width / Math.max(1, canvas.height);
-      var proj = perspective(98 * Math.PI / 180, aspect, 0.05, 6);
+      var proj = perspective(108 * Math.PI / 180, aspect, 0.05, 6);
       var view = lookAt(eyeX, eyeY, eyeZ, cx, cy, cz, 0, 1, 0);
-      var mvp = mul(proj, view);
+      var mvp = mul(proj, mul(view, scaleM(0.86)));
 
       gl.enable(gl.DEPTH_TEST);
       gl.disable(gl.CULL_FACE);
