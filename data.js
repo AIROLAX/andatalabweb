@@ -93,7 +93,7 @@
   var EN = {
     ui: {
       doc_title: 'Andata Lab — Immersive & Creative Technology Studio',
-      nav_work: 'Work', nav_process: 'Process', nav_dome: 'Dome Studio',
+      nav_work: 'Work', nav_process: 'Process', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality',
       cta_start: 'Start a project',
       hero_reel: 'Showreel 2026',
       hero_h1a: 'Immersive Experiences,', hero_h1b: 'Engineered.',
@@ -150,7 +150,7 @@
   var ES = {
     ui: {
       doc_title: 'Andata Lab — Estudio de Tecnología Inmersiva y Creativa',
-      nav_work: 'Proyectos', nav_process: 'Proceso', nav_dome: 'Dome Studio',
+      nav_work: 'Proyectos', nav_process: 'Proceso', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality',
       cta_start: 'Inicia un proyecto',
       hero_reel: 'Showreel 2026',
       hero_h1a: 'Experiencias inmersivas,', hero_h1b: 'con ingeniería.',

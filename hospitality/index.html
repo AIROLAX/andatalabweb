@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#08070a">
+<meta name="format-detection" content="telephone=no">
+
+<title>ANDATA Hospitality | Permanent immersive guest amenities | ANDATA LAB</title>
+<meta name="description" content="ANDATA LAB designs permanent interactive environments for resorts — guest presence, environmental data and local stories become living amenities, not temporary activations.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.andatalab.com/hospitality/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="ANDATA HOSPITALITY — The resort becomes an interface">
+<meta property="og:description" content="Permanent interactive environments that transform movement, environmental data and local stories into memorable guest experiences.">
+<meta property="og:url" content="https://www.andatalab.com/hospitality/">
+<meta property="og:image" content="https://www.andatalab.com/hospitality/img/portrait-of-place.jpg">
+<meta property="og:image:width" content="1536">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:alt" content="Concept visualization — ANDATA LAB: a resort lobby where guest portraits dissolve into Caribbean particles">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ANDATA HOSPITALITY — The resort becomes an interface">
+<meta name="twitter:description" content="Permanent interactive environments for resorts. Designed as part of the space — not as a temporary activation.">
+<meta name="twitter:image" content="https://www.andatalab.com/hospitality/img/portrait-of-place.jpg">
+
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="img/portrait-of-place.jpg" fetchpriority="high">
+<link rel="stylesheet" href="../colors_and_type.css">
+
+<style>
+  :root{
+    --maxw:1180px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+    --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px);
+    --h-0:#08070a; --h-1:#0e0c11; --h-2:#141218;
+    --h-line:rgba(255,255,255,.10); --h-line-2:rgba(255,255,255,.06);
+    --ink:#f6f3ee; --ink-2:rgba(246,243,238,.68); --ink-3:rgba(246,243,238,.46);
+    --cyan:#3CDCFF; --coral:#E08A6A; --gold:#D4B483;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  body[data-brand="andata"]{
+    --bg:#08070a; --surface:#0e0c11; --surface-2:#141218;
+    --ink:#f6f3ee; --ink-2:rgba(246,243,238,.68); --ink-3:rgba(246,243,238,.46);
+    --hair:rgba(255,255,255,.10); --hair-2:rgba(255,255,255,.06);
+    --accent:#ffffff; --on-accent:#08070a;
+    background:#08070a; color:#f6f3ee; color-scheme:dark;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  html,body{ margin:0; background:var(--h-0); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video,canvas{ display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:rgba(60,220,255,.26); }
+  h1,h2,h3{ text-wrap:balance; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 max(var(--pad),var(--safe-l)); }
+  section{ position:relative; scroll-margin-top:calc(var(--nav-h) + 8px); }
+
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:calc(var(--nav-h) + var(--safe-t));
+    padding-top:var(--safe-t);
+    display:flex; align-items:center; gap:20px;
+    padding-left:max(var(--pad),var(--safe-l)); padding-right:max(var(--pad),var(--safe-r));
+    background:transparent; border-bottom:1px solid transparent;
+    transition:background .45s var(--ease), border-color .45s, backdrop-filter .45s;
+  }
+  body.is-scrolled header.nav{
+    background:rgba(8,7,10,.72); border-bottom:1px solid var(--h-line-2);
+    backdrop-filter:blur(18px) saturate(1.2); -webkit-backdrop-filter:blur(18px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:#fff; }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; filter:invert(1); }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:clamp(12px,2.2vw,26px); margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:rgba(255,255,255,.7); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover,.nav-links a.is-here{ color:#fff; }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer; flex:0 0 auto;
+    border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.04); color:rgba(255,255,255,.8);
+  }
+  .lang-toggle:hover{ border-color:#fff; color:#fff; }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:9px 18px; border-radius:999px; border:1px solid #fff; background:#fff; color:#0b0f19;
+  }
+  @media (max-width:860px){ .nav-more{ display:none; } }
+  @media (max-width:720px){ .nav-cta{ display:none; } }
+
+  .scroll-progress{
+    position:fixed; top:var(--safe-t); left:0; right:0; height:2px; z-index:70; pointer-events:none;
+    transform-origin:left; transform:scaleX(0);
+    background:linear-gradient(90deg, var(--cyan), var(--gold), var(--coral));
+  }
+
+  .back{
+    position:fixed; top:calc(var(--nav-h) + var(--safe-t) + 14px); left:max(var(--pad),var(--safe-l)); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:rgba(255,255,255,.74);
+    padding:9px 15px; border-radius:999px;
+    background:rgba(8,11,18,.5); border:1px solid var(--h-line);
+    backdrop-filter:blur(12px);
+  }
+  body.is-scrolled .back{ opacity:0; pointer-events:none; }
+  @media (max-width:760px){ .back{ opacity:0; pointer-events:none; } }
+
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--coral); box-shadow:0 0 10px rgba(224,138,106,.6); flex:0 0 auto; }
+  .eyebrow .ds-label{ color:var(--ink-3); letter-spacing:.22em; font-size:11px; font-weight:600; text-transform:uppercase; }
+  .sec-title{
+    font-size:clamp(1.85rem,4.4vw,3.2rem); font-weight:700; letter-spacing:-.034em;
+    line-height:1.08; margin:16px 0 0; color:var(--ink);
+  }
+  .sec-lead{ font-size:var(--fs-lead); line-height:1.55; color:var(--ink-2); margin:18px 0 0; max-width:46ch; }
+  .block{ padding:clamp(72px,12vh,140px) 0; }
+  .note{
+    margin:18px 0 0; font-size:.88rem; line-height:1.55; color:var(--ink-3); max-width:52ch;
+  }
+
+  .btn{
+    font-family:inherit; font-size:14px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    padding:15px 26px; border-radius:999px; cursor:pointer; border:1px solid transparent;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .28s var(--ease), box-shadow .28s, background .28s, border-color .28s;
+  }
+  .btn-primary{ background:#fff; color:#0b0f19; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 44px rgba(60,220,255,.2); }
+  .btn-ghost{ background:transparent; color:#fff; border-color:rgba(255,255,255,.42); }
+  .btn-ghost:hover{ transform:translateY(-2px); border-color:#fff; background:rgba(255,255,255,.08); }
+
+  #field{
+    position:fixed; inset:0; z-index:0; width:100%; height:100%; pointer-events:none;
+    opacity:.55; mix-blend-mode:screen;
+  }
+  .grain{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.07;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.55'/></svg>");
+  }
+  main{ position:relative; z-index:2; }
+
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:flex-end;
+    isolation:isolate; overflow:hidden;
+  }
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(90% 70% at 78% 20%, rgba(60,220,255,.14) 0%, transparent 58%),
+      radial-gradient(70% 50% at 12% 80%, rgba(224,138,106,.12) 0%, transparent 62%),
+      linear-gradient(180deg, rgba(8,7,10,.55) 0%, rgba(8,7,10,.2) 40%, var(--h-0) 100%);
+  }
+  .hero-inner{
+    position:relative; z-index:2; width:100%;
+    padding-top:calc(var(--nav-h) + var(--safe-t) + 48px);
+    padding-bottom:calc(clamp(56px,10vh,110px) + var(--safe-b));
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,7.2vw,6.1rem); font-weight:800; letter-spacing:-.045em; line-height:.98;
+    margin:22px 0 0; max-width:14ch; color:#fff;
+  }
+  .hero h1 .l2{ display:block; color:rgba(246,243,238,.58); }
+  .hero-sub{ font-size:clamp(1.05rem,1.5vw,1.28rem); line-height:1.5; color:rgba(246,243,238,.82); margin:26px 0 0; max-width:42ch; }
+  .hero-sec{ font-size:.98rem; color:var(--ink-3); margin:14px 0 0; }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+  .scroll-cue{
+    position:absolute; left:50%; bottom:calc(18px + var(--safe-b)); z-index:3;
+    transform:translateX(-50%); opacity:.65; font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-3);
+  }
+  @media (max-width:760px){
+    .hero h1{ font-size:clamp(2.15rem,11vw,3.1rem); }
+    .hero-cta .btn{ flex:1 1 100%; justify-content:center; }
+  }
+
+  .manifesto{ padding:clamp(80px,16vh,180px) 0; }
+  .manifesto h2{
+    font-size:clamp(2rem,5.4vw,4.2rem); font-weight:700; letter-spacing:-.038em; line-height:1.06;
+    margin:0; max-width:16ch;
+  }
+  .manifesto p{ font-size:clamp(1.05rem,1.6vw,1.25rem); line-height:1.55; color:var(--ink-2); margin:28px 0 0; max-width:38ch; }
+  .lines{ display:grid; gap:14px; margin-top:48px; max-width:640px; }
+  .lines p{ margin:0; font-size:1.05rem; color:var(--ink); padding-left:18px; border-left:1px solid color-mix(in srgb, var(--cyan) 50%, transparent); }
+
+  .data{ background:var(--h-1); border-top:1px solid var(--h-line-2); }
+  .data-def{
+    margin:22px 0 0; max-width:46ch; font-size:clamp(1.08rem,1.7vw,1.32rem);
+    line-height:1.5; font-weight:550; color:var(--ink);
+  }
+  .formula{
+    margin:40px 0 0; padding:0; list-style:none;
+    display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1px;
+    background:var(--h-line-2); border:1px solid var(--h-line-2); border-radius:var(--r-lg); overflow:hidden;
+  }
+  .formula li{ background:var(--h-1); padding:clamp(16px,1.8vw,24px); }
+  .formula b{
+    display:block; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan);
+  }
+  .formula span{ display:block; margin-top:10px; font-size:.88rem; line-height:1.45; color:var(--ink-2); }
+  @media (max-width:900px){ .formula{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .formula{ grid-template-columns:1fr; } }
+  .chain{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:28px; align-items:center;
+    font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  }
+  .chain span{ padding:8px 12px; border:1px solid var(--h-line); border-radius:999px; color:var(--ink-2); }
+  .chain span.is-on{ color:#081018; background:var(--cyan); border-color:var(--cyan); }
+  .chain i{ color:var(--ink-3); font-style:normal; }
+  .data-ex{ margin-top:48px; display:grid; gap:22px; }
+  .data-frame{
+    position:relative; overflow:hidden; border-radius:var(--r-lg); background:#05040a;
+    border:1px solid var(--h-line-2);
+  }
+  .data-frame img{
+    width:100%; height:min(68vh,680px); object-fit:cover; display:block;
+  }
+  @media (max-width:720px){
+    .data-frame img{ height:min(52vh,420px); }
+    .data-frame .cap{ padding:56px 16px 16px; }
+  }
+  .data-frame .cap{
+    position:absolute; inset:auto 0 0 0; z-index:2;
+    padding:80px clamp(18px,3vw,32px) 22px;
+    background:linear-gradient(180deg, transparent 0%, rgba(8,7,10,.92) 72%);
+  }
+  .data-frame h3{ font-size:clamp(1.35rem,2.4vw,1.85rem); font-weight:750; letter-spacing:-.03em; margin:0; }
+  .data-frame p{ font-size:.95rem; line-height:1.5; color:rgba(246,243,238,.78); margin:8px 0 0; max-width:52ch; }
+  .pills{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .pills > span{
+    font-size:11px; font-weight:650; letter-spacing:.02em;
+    padding:7px 12px; border-radius:999px;
+    background:rgba(8,7,10,.72); border:1px solid rgba(60,220,255,.38); color:#fff;
+  }
+  .pills em{ color:var(--cyan); font-style:normal; font-weight:700; }
+  .maps{
+    margin-top:40px; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px;
+    background:var(--h-line-2); border:1px solid var(--h-line-2); border-radius:var(--r-lg); overflow:hidden;
+  }
+  .map{ background:var(--h-1); padding:clamp(18px,2.2vw,26px); }
+  .map .from{ font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); }
+  .map b{ display:block; font-size:.98rem; font-weight:650; letter-spacing:-.02em; margin-top:6px; }
+  .map span{ display:block; margin-top:8px; font-size:.86rem; line-height:1.5; color:var(--ink-3); }
+  @media (max-width:860px){ .maps{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .maps{ grid-template-columns:1fr; } }
+  .sources{ margin-top:28px; font-size:.86rem; line-height:1.6; color:var(--ink-3); max-width:70ch; }
+  .sources strong{ color:var(--ink-2); font-weight:600; }
+
+  .shot{
+    position:relative; min-height:100svh; display:flex; align-items:flex-end; overflow:hidden;
+    background:#05040a;
+  }
+  .shot img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%;
+  }
+  #family img{ object-position:42% 65%; }
+  #night img{ object-position:50% 55%; }
+  #wellness img{ object-position:55% 45%; }
+  #brand img{ object-position:40% 50%; }
+  #water img{ object-position:48% 42%; }
+  #corridor img{ object-position:50% 70%; }
+  #dining img{ object-position:45% 55%; }
+  .shot-scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(8,7,10,.15) 0%, rgba(8,7,10,.2) 42%, rgba(8,7,10,.88) 100%);
+  }
+  .shot-copy{ position:relative; z-index:2; width:100%; padding-bottom:clamp(48px,8vh,90px); }
+  .shot h2{ font-size:clamp(2rem,4.6vw,3.6rem); font-weight:800; letter-spacing:-.04em; margin:14px 0 0; max-width:14ch; }
+  .shot p{ font-size:1.05rem; line-height:1.55; color:rgba(246,243,238,.82); margin:16px 0 0; max-width:44ch; }
+  .tag{
+    display:inline-flex; margin-top:18px; padding:6px 11px; border-radius:999px;
+    font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.78); background:rgba(8,7,10,.55); border:1px solid var(--h-line);
+    backdrop-filter:blur(10px);
+  }
+  .steps{ list-style:none; margin:22px 0 0; padding:0; display:grid; gap:8px; max-width:52ch; }
+  .steps li{ font-size:.92rem; line-height:1.5; color:var(--ink-2); padding-left:28px; position:relative; }
+  .steps li::before{
+    content:attr(data-n); position:absolute; left:0; top:1px;
+    font-size:10px; font-weight:700; letter-spacing:.12em; color:var(--cyan);
+  }
+
+  .system{ background:var(--h-0); border-top:1px solid var(--h-line-2); }
+  .kicker{ font-size:clamp(1.2rem,2vw,1.55rem); font-weight:650; letter-spacing:-.025em; margin:28px 0 0; color:var(--gold); }
+  .fam{
+    margin-top:40px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1px;
+    background:var(--h-line-2); border:1px solid var(--h-line-2); border-radius:var(--r-lg); overflow:hidden;
+  }
+  .fam article{ background:var(--h-0); padding:clamp(22px,3vw,34px); }
+  .fam .n{ font-size:11px; font-weight:600; letter-spacing:.18em; color:var(--ink-3); }
+  .fam h3{ font-size:1.15rem; font-weight:700; letter-spacing:-.025em; margin:12px 0 0; }
+  .fam p{ font-size:.95rem; line-height:1.58; color:var(--ink-2); margin:10px 0 0; }
+  @media (max-width:720px){ .fam{ grid-template-columns:1fr; } }
+
+  .social .path{
+    margin-top:40px; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:10px;
+  }
+  .path div{ padding:16px 12px; border-top:1px solid var(--h-line); }
+  .path b{ display:block; font-size:.88rem; font-weight:650; letter-spacing:-.02em; }
+  .path span{ display:block; margin-top:8px; font-size:.8rem; line-height:1.45; color:var(--ink-3); }
+  @media (max-width:900px){ .social .path{ grid-template-columns:1fr 1fr; } }
+
+  .engine{ background:var(--h-1); border-top:1px solid var(--h-line-2); }
+  .cols{ margin-top:40px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; background:var(--h-line-2); border:1px solid var(--h-line-2); border-radius:var(--r-lg); overflow:hidden; }
+  .col{ background:var(--h-1); padding:clamp(22px,3vw,32px); }
+  .col h3{ font-size:1.02rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); margin:0; }
+  .col ul{ list-style:none; margin:18px 0 0; padding:0; }
+  .col li{ font-size:.95rem; line-height:1.55; color:var(--ink-2); padding:8px 0; border-bottom:1px solid var(--h-line-2); }
+  .col li:last-child{ border-bottom:0; }
+  @media (max-width:800px){ .cols{ grid-template-columns:1fr; } }
+
+  .ops{ background:var(--h-0); }
+  .ops-grid{
+    margin-top:40px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px 28px;
+  }
+  .ops-grid h3{ font-size:1rem; font-weight:650; margin:0; }
+  .ops-grid p{ font-size:.9rem; line-height:1.55; color:var(--ink-3); margin:8px 0 0; }
+  @media (max-width:800px){ .ops-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .ops-grid{ grid-template-columns:1fr; } }
+
+  .proof{ background:var(--h-1); border-top:1px solid var(--h-line-2); }
+  .honest{
+    margin-top:22px; max-width:58ch; font-size:.95rem; line-height:1.6; color:var(--ink-2);
+    padding-left:16px; border-left:1px solid var(--gold);
+  }
+  .proof-grid{
+    margin-top:40px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px;
+  }
+  .card{
+    display:block; border-radius:var(--r-lg); overflow:hidden; border:1px solid var(--h-line-2); background:var(--h-0);
+    transition:transform .4s var(--ease), border-color .4s;
+  }
+  .card:hover{ transform:translateY(-3px); border-color:var(--h-line); }
+  .card img,.card video{ width:100%; height:220px; object-fit:cover; background:#05040a; }
+  .card video{ opacity:0; transition:opacity .6s; }
+  .card video.is-loaded{ opacity:1; }
+  .card-body{ padding:18px 18px 20px; }
+  .card .ds-label{ font-size:10px; color:var(--ink-3); }
+  .card h3{ font-size:1.12rem; margin:8px 0 0; }
+  .card p{ font-size:.9rem; line-height:1.55; color:var(--ink-2); margin:8px 0 0; }
+  @media (max-width:720px){ .proof-grid{ grid-template-columns:1fr; } }
+
+  .pilot{ background:var(--h-0); }
+  .stages{ margin-top:36px; display:grid; gap:0; }
+  .stages li{
+    list-style:none; display:grid; grid-template-columns:52px 1fr; gap:16px; align-items:start;
+    padding:16px 0; border-top:1px solid var(--h-line-2);
+  }
+  .stages{ padding:0; }
+  .stages .n{ font-size:11px; font-weight:700; letter-spacing:.16em; color:var(--cyan); padding-top:4px; }
+  .stages h3{ font-size:1.05rem; margin:0; }
+  .stages p{ font-size:.92rem; color:var(--ink-3); margin:6px 0 0; }
+
+  .final{ padding:clamp(36px,6vh,80px) 0 clamp(76px,13vh,140px); }
+  .final-panel{
+    position:relative; overflow:hidden; text-align:center;
+    border-radius:var(--r-xl); padding:clamp(44px,7vw,92px) clamp(24px,5vw,72px);
+    background:
+      radial-gradient(110% 80% at 50% 116%, rgba(60,220,255,.2) 0%, transparent 60%),
+      radial-gradient(80% 60% at 14% 0%, rgba(224,138,106,.16) 0%, transparent 58%),
+      linear-gradient(165deg, #121018 0%, #08070a 100%);
+    border:1px solid var(--h-line);
+  }
+  .final-panel h2{ font-size:clamp(1.9rem,4.4vw,3.2rem); font-weight:700; letter-spacing:-.035em; line-height:1.06; margin:16px 0 0; }
+  .final-panel p{ font-size:1.04rem; line-height:1.65; color:var(--ink-2); margin:20px auto 0; max-width:50ch; }
+  .final-cta{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:34px; }
+  .final-meta{ display:flex; flex-wrap:wrap; gap:26px; justify-content:center; margin-top:36px; padding-top:28px; border-top:1px solid var(--h-line-2); }
+  .final-meta .ds-label{ font-size:10px; color:var(--ink-3); }
+  .final-meta p{ margin:7px 0 0; font-size:14.5px; font-weight:500; color:#fff; max-width:none; }
+
+  footer.foot{ background:var(--h-0); border-top:1px solid var(--h-line-2); padding:40px 0 calc(40px + var(--safe-b)); }
+  .foot-inner{ display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+  .foot-inner p{ margin:0; font-size:12.5px; color:var(--ink-3); }
+  .foot-links{ display:flex; gap:20px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; color:var(--ink-2); }
+  .foot-links a:hover{ color:#fff; }
+
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .95s var(--ease), transform .95s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal-d1{ transition-delay:.08s; } .reveal-d2{ transition-delay:.16s; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    #field,.grain,.scroll-cue{ display:none; }
+  }
+</style>
+</head>
+<body data-brand="andata">
+
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="../" aria-label="Andata Lab — home">
+    <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="../#work" data-i18n="nav_work">Work</a>
+    <a class="nav-more" href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+    <a class="is-here" href="#inicio" data-i18n="nav_hosp">Hospitality</a>
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Cambiar idioma">ES</button>
+    <a class="nav-cta" href="#pilot" data-i18n="nav_cta">Design a pilot</a>
+  </nav>
+</header>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<a class="back" href="../">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <span data-i18n="back">Back to home</span>
+</a>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="hero-scrim"></div>
+    <div class="hero-inner wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">ANDATA HOSPITALITY</span></span>
+      <h1 class="reveal reveal-d1">
+        <span data-i18n="h_t1">The resort</span>
+        <span class="l2" data-i18n="h_t2">becomes an interface</span>
+      </h1>
+      <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Permanent interactive environments that transform movement, environmental data and local stories into memorable guest experiences.</p>
+      <p class="hero-sec reveal reveal-d2" data-i18n="h_sec">Designed as part of the space — not as a temporary activation.</p>
+      <div class="hero-cta reveal reveal-d2">
+        <a class="btn btn-primary" href="#data" data-i18n="h_cta1">Explore the system</a>
+        <a class="btn btn-ghost" href="#pilot" data-i18n="h_cta2">Design a pilot</a>
+      </div>
+    </div>
+    <a class="scroll-cue" href="#manifesto" data-i18n="scroll">Scroll</a>
+  </section>
+
+  <section class="manifesto" id="manifesto">
+    <div class="wrap">
+      <h2 class="reveal" data-i18n="m_t">What if the resort could sense, respond and remember?</h2>
+      <p class="reveal reveal-d1" data-i18n="m_p">A resort is not only architecture. It can become a living interface between guests, the destination, environmental data and cultural memory.</p>
+      <div class="lines reveal">
+        <p data-i18n="m_l1">The guest does not observe the artwork. The guest completes it.</p>
+        <p data-i18n="m_l2">Local data becomes light, movement and memory.</p>
+        <p data-i18n="m_l3">One permanent system. Many programmable moments.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="data block" id="data">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="d_eye">Data art</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="d_t">A named condition becomes a behavior in the room.</h2>
+      <p class="data-def reveal" data-i18n="d_def">Data art is a translation. Wind has a direction. The moon has a phase. The sea has a temperature. The guest has a body. Each one can move light — if we name it, and wire it honestly.</p>
+      <p class="sec-lead reveal" data-i18n="d_p">Not a decorative loop “inspired by nature.” Proposed, viable inputs from the destination — confirmed per property before anything is connected.</p>
+
+      <ol class="formula reveal">
+        <li><b data-i18n="df1_t">Place</b><span data-i18n="df1">This coast, this hour, this architecture.</span></li>
+        <li><b data-i18n="df2_t">Data</b><span data-i18n="df2">Tide, wind, moon, sea temperature, species, presence.</span></li>
+        <li><b data-i18n="df3_t">Behavior</b><span data-i18n="df3">Drift, breathe, densify, attract, appear.</span></li>
+        <li><b data-i18n="df4_t">Room</b><span data-i18n="df4">Walls, floor, water and façade become the canvas.</span></li>
+        <li><b data-i18n="df5_t">Guest</b><span data-i18n="df5">Completes it. Does not walk past a screen.</span></li>
+      </ol>
+
+      <div class="chain reveal" id="chain" aria-hidden="true">
+        <span>Place</span><i>→</i><span>Data</span><i>→</i><span>Behavior</span><i>→</i><span>Visual system</span><i>→</i><span>Guest memory</span>
+      </div>
+
+      <div class="data-ex">
+        <figure class="data-frame reveal">
+          <img src="img/family-discovery.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: a family completes an ecological room — wall, floor and table respond to presence">
+          <figcaption class="cap">
+            <h3 data-i18n="dx1_t">Day. Ecology you can walk into.</h3>
+            <p data-i18n="dx1">Presence, species and place-data become a room. The children are not watching a screen. They are inside the translation.</p>
+            <div class="pills">
+              <span><em data-i18n="dx1a_k">Movement</em> → <span data-i18n="dx1a">tracks on the floor</span></span>
+              <span><em data-i18n="dx1b_k">Species</em> → <span data-i18n="dx1b">the wall answers a hand</span></span>
+              <span><em data-i18n="dx1c_k">Place</em> → <span data-i18n="dx1c">the table holds the map</span></span>
+            </div>
+            <span class="tag" style="margin-top:14px" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+          </figcaption>
+        </figure>
+        <figure class="data-frame reveal">
+          <img src="img/night-pool-event.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: a resort pool, façade and stage as one data-driven night canvas">
+          <figcaption class="cap">
+            <h3 data-i18n="dx2_t">Night. The same translation, as an event.</h3>
+            <p data-i18n="dx2">Moon, water and architecture become spectacle — without changing the hardware that ran the quiet morning.</p>
+            <div class="pills">
+              <span><em data-i18n="dx2a_k">Moon</em> → <span data-i18n="dx2a">cadence on the stage</span></span>
+              <span><em data-i18n="dx2b_k">Water</em> → <span data-i18n="dx2b">the pool is the canvas</span></span>
+              <span><em data-i18n="dx2c_k">Façade</em> → <span data-i18n="dx2c">the building wears the field</span></span>
+            </div>
+            <span class="tag" style="margin-top:14px" data-i18n="ph_study">Speculative hospitality study</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <p class="kicker reveal" style="margin-top:48px" data-i18n="d_legend">How a condition becomes light</p>
+      <div class="maps reveal">
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d1_t">Wind</b><span data-i18n="d1_d">Direction becomes particle drift.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d2_t">Sea temperature</b><span data-i18n="d2_d">Palette and luminosity shift.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d3_t">Tide</b><span data-i18n="d3_d">Vertical motion and breathing rhythm.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d4_t">Moon phase</b><span data-i18n="d4_d">Density and cadence.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d5_t">Rainfall</b><span data-i18n="d5_d">Vegetation and reflective surfaces.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d6_t">Migration</b><span data-i18n="d6_d">Species appear in season.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d7_t">Coral condition</b><span data-i18n="d7_d">Complexity and color.</span></div>
+        <div class="map"><span class="from" data-i18n="d_from">From</span><b data-i18n="d8_t">Guest silhouette</b><span data-i18n="d8_d">Wakes, dispersion, attraction.</span></div>
+      </div>
+      <p class="sources reveal" data-i18n="d_src">Proposed inputs — subject to access and licensing per property: <strong>CONABIO Geoportal</strong>, <strong>EncicloVida</strong>, <strong>SIMAR</strong>, Mexico’s <strong>Servicio Meteorológico Nacional</strong>, independent Caribbean sargassum monitoring, and on-site sensors. None of these are live ANDATA integrations today.</p>
+    </div>
+  </section>
+
+  <section class="shot" id="portrait">
+    <img src="img/portrait-of-place.jpg" width="1536" height="1024" alt="Concept visualization — ANDATA LAB: guests approach architectural displays in a resort lobby as portraits dissolve into Caribbean particles and butterflies">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="p_eye">Permanent amenity</span></span>
+      <h2 data-i18n="p_t">Portrait of Place</h2>
+      <p data-i18n="p_p">A responsive social-memory installation. Guest presence becomes a living portrait of the destination — meaningful in the room, then optionally carried beyond it.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="p1">A guest approaches the display.</li>
+        <li data-n="02" data-i18n="p2">A discreet depth sensor reads silhouette, position and movement — not identity.</li>
+        <li data-n="03" data-i18n="p3">Live particles, flora and local species gather around the body.</li>
+        <li data-n="04" data-i18n="p4">The portrait evolves with time of day or environmental conditions.</li>
+        <li data-n="05" data-i18n="p5">An optional photo or short video can be generated.</li>
+        <li data-n="06" data-i18n="p6">A private QR takeaway — sharing as memory, not a gimmick.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="shot" id="portal">
+    <img src="img/caribbean-data-portal.jpg" width="1536" height="1024" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: a resort passage whose walls, ceiling and floor become a living Caribbean landscape">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="c_eye">Permanent amenity</span></span>
+      <h2 data-i18n="c_t">Caribbean Data Portal</h2>
+      <p data-i18n="c_p">A walkthrough landscape generated from the ecological rhythms of the destination. Quiet at dawn. Alive at noon. Recalibrated for the evening program — same infrastructure.</p>
+      <p class="sec-lead" style="margin-top:14px;color:rgba(246,243,238,.7)" data-i18n="c_d">Can respond to guest movement; wind; tide and lunar phase; sea-surface temperature; sunlight and rainfall; sargassum conditions; coral health; seasonal migration; time of day and hotel programming.</p>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="shot" id="family">
+    <img src="img/family-discovery.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: Family Discovery — children complete a living ecology on wall, floor and table">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="f_eye">Permanent amenity</span></span>
+      <h2 data-i18n="s3_t">Family Discovery</h2>
+      <p data-i18n="f_p">Playful ecology for families: tracks, species, movement and sound — without a conventional kiosk. The room is the interface.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="f1">A child steps onto the field. The floor answers with a track.</li>
+        <li data-n="02" data-i18n="f2">A hand on the wall gathers particles, flora, a species.</li>
+        <li data-n="03" data-i18n="f3">The table holds a living map of the destination — not a touchscreen menu.</li>
+        <li data-n="04" data-i18n="f4">The same engine that runs the lobby at dawn. Recalibrated for wonder.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="shot" id="water">
+    <img src="img/living-water.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: Living Water — a family pool where movement leaves light and the wall holds the reef">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="lw_eye">Permanent amenity</span></span>
+      <h2 data-i18n="lw_t">Living Water</h2>
+      <p data-i18n="lw_p">The pool is not a backdrop. Guest movement becomes light in the water. The wall holds the reef. The same engine as Family Discovery — wet, slower, closer to the body.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="lw1">A step in the shallows leaves a wake of light.</li>
+        <li data-n="02" data-i18n="lw2">The reef on the wall can follow tide, season or presence.</li>
+        <li data-n="03" data-i18n="lw3">Families complete the piece by being in it — not by watching it.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="shot" id="corridor">
+    <img src="img/ecological-corridor.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: Ecological corridor — a night path where local species appear as light">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="ec_eye">Permanent amenity</span></span>
+      <h2 data-i18n="ec_t">Ecological corridor</h2>
+      <p data-i18n="ec_p">The walk between buildings becomes a living field. Local species, lunar cadence and guest presence gather on the path — quiet enough for a family, precise enough to be data.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="ec1">A species appears where the destination would place it.</li>
+        <li data-n="02" data-i18n="ec2">The moon and the hour change density and glow.</li>
+        <li data-n="03" data-i18n="ec3">Guests walk through the translation, not past a screen.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="shot" id="wellness">
+    <img src="img/wellness-atmospheres.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: Wellness Atmospheres — a slow generative room at sunset, open to the destination">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="w_eye">Permanent amenity</span></span>
+      <h2 data-i18n="s4_t">Wellness Atmospheres</h2>
+      <p data-i18n="w_p">Slow generative environments for spa, meditation and recovery. Light, sound and visuals follow breath, gesture, time of day and natural cycles — not a show.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="w1">The room stays quiet. The field moves at the pace of the body.</li>
+        <li data-n="02" data-i18n="w2">Sunset, tide or breath can shift palette and density.</li>
+        <li data-n="03" data-i18n="w3">Architecture, water and the horizon remain the protagonists.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="system block" id="system">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="s_eye">One engine</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="s_t">One permanent system. Many guest experiences.</h2>
+      <p class="kicker reveal" data-i18n="s_k">From a quiet ecological corridor at 7am to a wedding or DJ set at 9pm.</p>
+
+      <p class="sec-lead reveal" data-i18n="s_a">Permanent guest amenities</p>
+      <div class="fam reveal">
+        <article><span class="n">01</span><h3>Portrait of Place</h3><p data-i18n="s1">Interactive portraits merging guests with the destination’s ecology.</p></article>
+        <article><span class="n">02</span><h3>Caribbean Data Portal</h3><p data-i18n="s2">A responsive passage or lobby driven by local data and presence.</p></article>
+        <article><span class="n">03</span><h3 data-i18n="s3_t">Family Discovery</h3><p data-i18n="s3">Playful ecology — tracks, species, sound — without a conventional kiosk.</p></article>
+        <article><span class="n">04</span><h3 data-i18n="s4_t">Wellness Atmospheres</h3><p data-i18n="s4">Slow generative rooms for spa and recovery. Light and sound follow breath, gesture and natural cycles.</p></article>
+      </div>
+
+      <p class="sec-lead reveal" style="margin-top:56px" data-i18n="s_b">Programmable resort moments</p>
+      <div class="fam reveal">
+        <article><span class="n">05</span><h3 data-i18n="s5_t">Night Pool / Event Canvas</h3><p data-i18n="s5">The same media infrastructure holds weddings, DJ sets, cultural programs, conferences and launches.</p></article>
+        <article><span class="n">06</span><h3 data-i18n="s6_t">Immersive Dining</h3><p data-i18n="s6">Atmosphere that evolves with a menu, ingredient origin, sunset or a private dinner.</p></article>
+        <article><span class="n">07</span><h3 data-i18n="s7_t">Brand and product moments</h3><p data-i18n="s7">Temporary content layers for partners — without turning the resort into an advertising screen.</p></article>
+        <article><span class="n">—</span><h3 data-i18n="s8_t">Technology disappears</h3><p data-i18n="s8">The experience remains. Staff run a schedule, not a spectacle.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="shot" id="night">
+    <img src="img/night-pool-event.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Speculative hospitality study — ANDATA LAB: pool, façade and stage as one programmable night canvas">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="n_eye">Programmable moment</span></span>
+      <h2 data-i18n="n_t">Night Pool / Event Canvas</h2>
+      <p data-i18n="n_p">Façade, water, trees and deck as one programmable surface. From a quiet dinner to a signature show — the hardware does not change. The night does.</p>
+      <span class="tag" data-i18n="ph_study">Speculative hospitality study</span>
+    </div>
+  </section>
+
+  <section class="shot" id="brand">
+    <img src="img/brand-product-moment.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Speculative hospitality study — ANDATA LAB: a brand or dining moment layered on permanent media infrastructure">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="b_eye">Programmable moment</span></span>
+      <h2 data-i18n="s7_t">Brand and product moments</h2>
+      <p data-i18n="b_p">A beverage, fashion or conference partner can occupy the same walls, table and light — for one night — without turning the resort into an advertising screen. The system stays. The content layer changes.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="b1">Permanent infrastructure: walls, table, spatial light.</li>
+        <li data-n="02" data-i18n="b2">A temporary layer: origin, ritual, product, atmosphere.</li>
+        <li data-n="03" data-i18n="b3">By morning, the amenity returns to the destination.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_study">Speculative hospitality study</span>
+    </div>
+  </section>
+
+  <section class="shot" id="dining">
+    <img src="img/immersive-dining.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Concept visualization — ANDATA LAB: Immersive Dining — a communal table as a living canvas of origin, menu and atmosphere">
+    <div class="shot-scrim"></div>
+    <div class="shot-copy wrap">
+      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="di_eye">Programmable moment</span></span>
+      <h2 data-i18n="s6_t">Immersive Dining</h2>
+      <p data-i18n="di_p">The table becomes the interface. Light follows a menu, an ingredient’s origin, a sunset or a private dinner. Service stays human. The atmosphere evolves around the plate.</p>
+      <ol class="steps">
+        <li data-n="01" data-i18n="di1">Guests sit. The surface is already a field.</li>
+        <li data-n="02" data-i18n="di2">A hand, a course, a story — the pattern answers.</li>
+        <li data-n="03" data-i18n="di3">The wall holds the same language. The garden stays the room’s edge.</li>
+      </ol>
+      <span class="tag" data-i18n="ph_label">Concept visualization — ANDATA LAB</span>
+    </div>
+  </section>
+
+  <section class="social block" id="social">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="so_eye">The social layer</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="so_t">Designed for the physical space — and the social feed</h2>
+      <p class="sec-lead reveal" data-i18n="so_p">The on-site experience is the work. Sharing is how memory continues after checkout. This website does not request a camera.</p>
+      <div class="path reveal">
+        <div><b data-i18n="so1_t">Enter</b><span data-i18n="so1">Walk into the amenity.</span></div>
+        <div><b data-i18n="so2_t">Trigger</b><span data-i18n="so2">Presence reshapes the field.</span></div>
+        <div><b data-i18n="so3_t">Become</b><span data-i18n="so3">The guest completes the piece.</span></div>
+        <div><b data-i18n="so4_t">Capture</b><span data-i18n="so4">Optional photo or short video.</span></div>
+        <div><b data-i18n="so5_t">Receive</b><span data-i18n="so5">Privately, by QR.</span></div>
+        <div><b data-i18n="so6_t">Share</b><span data-i18n="so6">A memory tied to the destination.</span></div>
+        <div><b data-i18n="so7_t">Return</b><span data-i18n="so7">A different visual state awaits.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="engine block" id="engine">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="e_eye">Modular system</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="e_t">Inputs. Engine. Outputs.</h2>
+      <p class="sec-lead reveal" data-i18n="e_p">ANDATA is not selling a single corridor or a single screen. One creative-technology system, specified to the architecture you already have — or the one you are about to build.</p>
+      <div class="cols reveal">
+        <div class="col">
+          <h3 data-i18n="e1_t">Inputs</h3>
+          <ul>
+            <li data-i18n="e1a">Environmental and marine data</li>
+            <li data-i18n="e1b">On-site sensors</li>
+            <li data-i18n="e1c">Guest movement</li>
+            <li data-i18n="e1d">Music and audio</li>
+            <li data-i18n="e1e">Time and hotel schedules</li>
+            <li data-i18n="e1f">Curated cultural material</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 data-i18n="e2_t">Real-time engine</h3>
+          <ul>
+            <li>TouchDesigner</li>
+            <li data-i18n="e2b">GLSL and generative graphics</li>
+            <li data-i18n="e2c">Depth-camera interaction</li>
+            <li data-i18n="e2d">Custom sensor logic</li>
+            <li>OSC, MIDI, audio analysis</li>
+            <li data-i18n="e2f">Scheduling and content control</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 data-i18n="e3_t">Outputs</h3>
+          <ul>
+            <li data-i18n="e3a">Architectural LED</li>
+            <li data-i18n="e3b">Projection mapping</li>
+            <li data-i18n="e3c">Interactive screens</li>
+            <li data-i18n="e3d">Spatial audio</li>
+            <li data-i18n="e3e">Responsive lighting</li>
+            <li data-i18n="e3f">Private QR takeaways</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ops block" id="ops">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="o_eye">Operations</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="o_t">Designed to live in the hotel</h2>
+      <p class="sec-lead reveal" data-i18n="o_p">Art is the guest-facing surface. Reliability is the actual product.</p>
+      <div class="ops-grid reveal">
+        <div><h3 data-i18n="o1_t">Discreet sensing</h3><p data-i18n="o1">Depth cameras and sensors integrated with the architecture. No facial recognition. No identity stored by default.</p></div>
+        <div><h3 data-i18n="o2_t">Edge computer</h3><p data-i18n="o2">Local processing for reliable performance when the network is not.</p></div>
+        <div><h3 data-i18n="o3_t">Hotel hours</h3><p data-i18n="o3">Scheduled startup and shutdown. Automatic recovery after power or network interruption.</p></div>
+        <div><h3 data-i18n="o4_t">Serviceable hardware</h3><p data-i18n="o4">Modular components. Monitoring, calibration and maintenance options.</p></div>
+        <div><h3 data-i18n="o5_t">Seasonal content</h3><p data-i18n="o5">Remote updates. One artistic system, different states by season, event or audience.</p></div>
+        <div><h3 data-i18n="o6_t">Staff, not spectacle</h3><p data-i18n="o6">Training, operating documentation, and coordination with lighting, acoustic and architectural teams.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="proof block" id="proof">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="pr_eye">Proven systems</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="pr_t">Capabilities that transfer into hospitality</h2>
+      <p class="honest reveal" data-i18n="pr_gap">ANDATA has not yet installed a permanent resort amenity. The works below are real — museums, mapping, sensors, generative rooms. They show how the same engine can live in a hotel, without pretending it already does.</p>
+      <div class="proof-grid">
+        <a class="card reveal" href="../biointerface/">
+          <img src="../biointerface/img/render-people.png" alt="Biointerface — visitors interacting with plant pedestals and forest screens" loading="lazy" decoding="async">
+          <div class="card-body">
+            <span class="ds-label" data-i18n="pr1_k">Delivered · Mexico City</span>
+            <h3>Biointerface</h3>
+            <p data-i18n="pr1">Sensing and a real-time engine. The same architecture of presence — not identity — that Portrait of Place would use.</p>
+          </div>
+        </a>
+        <a class="card reveal" href="../museo-descubre/">
+          <img src="../museo-descubre/img/creative-direction.png" alt="Museo Descubre — interactive museum rooms designed by ANDATA LAB" loading="lazy" decoding="async">
+          <div class="card-body">
+            <span class="ds-label" data-i18n="pr2_k">Delivered · Aguascalientes</span>
+            <h3>Museo Descubre</h3>
+            <p data-i18n="pr2">Motion-tracked rooms for general audiences. The operational pattern behind Family Discovery.</p>
+          </div>
+        </a>
+        <a class="card reveal" href="../ajijic-mapping/">
+          <img src="../Imagenes/architectural-mapping-poster.jpg" alt="Architectural mapping in Ajijic by ANDATA LAB" loading="lazy" decoding="async">
+          <div class="card-body">
+            <span class="ds-label" data-i18n="pr3_k">Delivered · Jalisco</span>
+            <h3>Ajijic Mapping</h3>
+            <p data-i18n="pr3">Projection on complex architecture. The calibration language of an Event Canvas.</p>
+          </div>
+        </a>
+        <div class="card reveal">
+          <video class="lazy-vid" muted loop playsinline preload="none"
+                 poster="../Imagenes/immersive-audiovisual-poster.jpg"
+                 data-src="../videos/immersive-audiovisual.mp4"
+                 aria-label="Immersive audiovisual environment by ANDATA LAB"></video>
+          <div class="card-body">
+            <span class="ds-label" data-i18n="pr4_k">Proven technology</span>
+            <h3 data-i18n="pr4_t">Immersive rooms</h3>
+            <p data-i18n="pr4">Projection, spatial sound and light as one narrative — the basis for Wellness Atmospheres and Immersive Dining.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pilot block" id="pilot">
+    <div class="wrap">
+      <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="pi_eye">Pilot</span></span>
+      <h2 class="sec-title reveal reveal-d1" data-i18n="pi_t">Start with one property. One zone. One unforgettable experience.</h2>
+      <ol class="stages reveal">
+        <li><span class="n">01</span><div><h3 data-i18n="pi1_t">Select</h3><p data-i18n="pi1">The property and the guest moment.</p></div></li>
+        <li><span class="n">02</span><div><h3 data-i18n="pi2_t">Study</h3><p data-i18n="pi2">Architecture, audience and operational constraints.</p></div></li>
+        <li><span class="n">03</span><div><h3 data-i18n="pi3_t">Prototype</h3><p data-i18n="pi3">Interaction and visual language, in motion.</p></div></li>
+        <li><span class="n">04</span><div><h3 data-i18n="pi4_t">Validate</h3><p data-i18n="pi4">With design and operations together.</p></div></li>
+        <li><span class="n">05</span><div><h3 data-i18n="pi5_t">Install</h3><p data-i18n="pi5">Calibrate, train, then run.</p></div></li>
+        <li><span class="n">06</span><div><h3 data-i18n="pi6_t">Evolve</h3><p data-i18n="pi6">Seasonal content. Scale only where it earns its keep.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="final" id="contacto">
+    <div class="wrap">
+      <div class="final-panel reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label">ANDATA HOSPITALITY</span></span>
+        <h2 data-i18n="cta_t">Let’s design the first pilot</h2>
+        <p data-i18n="cta_p">Tell us the space, the guest moment and the operational reality. We reply within 24–48 hours.</p>
+        <div class="final-cta">
+          <a class="btn btn-primary" href="../#contact" data-i18n="cta_1">Start a project</a>
+          <a class="btn btn-ghost" href="mailto:airolaxx@gmail.com?subject=ANDATA%20HOSPITALITY%20%E2%80%94%20pilot" data-i18n="cta_2">Write by email</a>
+        </div>
+        <div class="final-meta">
+          <div><span class="ds-label" data-i18n="label_email">Email</span><p><a href="mailto:airolaxx@gmail.com">airolaxx@gmail.com</a></p></div>
+          <div><span class="ds-label" data-i18n="label_based">Based</span><p data-i18n="based">Mexico · working worldwide</p></div>
+          <div><span class="ds-label" data-i18n="label_reply">Reply</span><p>24–48 hours</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+    <div class="foot-links">
+      <a href="../">Home</a>
+      <a href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../dome-studio/">Dome Studio</a>
+      <a href="./" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#contact" data-i18n="nav_contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "ANDATA Hospitality",
+      "serviceType": "Permanent immersive guest amenities for resorts",
+      "provider": {
+        "@type": "Organization",
+        "name": "ANDATA LAB",
+        "url": "https://www.andatalab.com/",
+        "email": "airolaxx@gmail.com"
+      },
+      "areaServed": "Worldwide",
+      "url": "https://www.andatalab.com/hospitality/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Andata Lab", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Hospitality", "item": "https://www.andatalab.com/hospitality/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var LANG_KEY = 'andata_lang';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mqNarrow = window.matchMedia('(max-width: 768px)');
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var year = $('#year'); if (year) year.textContent = String(new Date().getFullYear());
+
+  var I18N = {
+    en: {
+      nav_work: 'Work', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_cta: 'Design a pilot',
+      nav_home: 'Home', nav_contact: 'Contact', back: 'Back to home', scroll: 'Scroll',
+      h_t1: 'The resort', h_t2: 'becomes an interface',
+      h_sub: 'Permanent interactive environments that transform movement, environmental data and local stories into memorable guest experiences.',
+      h_sec: 'Designed as part of the space — not as a temporary activation.',
+      h_cta1: 'Explore the system', h_cta2: 'Design a pilot',
+      m_t: 'What if the resort could sense, respond and remember?',
+      m_p: 'A resort is not only architecture. It can become a living interface between guests, the destination, environmental data and cultural memory.',
+      m_l1: 'The guest does not observe the artwork. The guest completes it.',
+      m_l2: 'Local data becomes light, movement and memory.',
+      m_l3: 'One permanent system. Many programmable moments.',
+      d_eye: 'Data art', d_t: 'A named condition becomes a behavior in the room.',
+      d_def: 'Data art is a translation. Wind has a direction. The moon has a phase. The sea has a temperature. The guest has a body. Each one can move light — if we name it, and wire it honestly.',
+      d_p: 'Not a decorative loop “inspired by nature.” Proposed, viable inputs from the destination — confirmed per property before anything is connected.',
+      df1_t: 'Place', df1: 'This coast, this hour, this architecture.',
+      df2_t: 'Data', df2: 'Tide, wind, moon, sea temperature, species, presence.',
+      df3_t: 'Behavior', df3: 'Drift, breathe, densify, attract, appear.',
+      df4_t: 'Room', df4: 'Walls, floor, water and façade become the canvas.',
+      df5_t: 'Guest', df5: 'Completes it. Does not walk past a screen.',
+      dx1_t: 'Day. Ecology you can walk into.',
+      dx1: 'Presence, species and place-data become a room. The children are not watching a screen. They are inside the translation.',
+      dx1a_k: 'Movement', dx1a: 'tracks on the floor',
+      dx1b_k: 'Species', dx1b: 'the wall answers a hand',
+      dx1c_k: 'Place', dx1c: 'the table holds the map',
+      dx2_t: 'Night. The same translation, as an event.',
+      dx2: 'Moon, water and architecture become spectacle — without changing the hardware that ran the quiet morning.',
+      dx2a_k: 'Moon', dx2a: 'cadence on the stage',
+      dx2b_k: 'Water', dx2b: 'the pool is the canvas',
+      dx2c_k: 'Façade', dx2c: 'the building wears the field',
+      d_legend: 'How a condition becomes light', d_from: 'From',
+      d1_t: 'Wind', d1_d: 'Direction becomes particle drift.',
+      d2_t: 'Sea temperature', d2_d: 'Palette and luminosity shift.',
+      d3_t: 'Tide', d3_d: 'Vertical motion and breathing rhythm.',
+      d4_t: 'Moon phase', d4_d: 'Density and cadence.',
+      d5_t: 'Rainfall', d5_d: 'Vegetation and reflective surfaces.',
+      d6_t: 'Migration', d6_d: 'Species appear in season.',
+      d7_t: 'Coral condition', d7_d: 'Complexity and color.',
+      d8_t: 'Guest silhouette', d8_d: 'Wakes, dispersion, attraction.',
+      d_src: 'Proposed inputs — subject to access and licensing per property: <strong>CONABIO Geoportal</strong>, <strong>EncicloVida</strong>, <strong>SIMAR</strong>, Mexico’s <strong>Servicio Meteorológico Nacional</strong>, independent Caribbean sargassum monitoring, and on-site sensors. None of these are live ANDATA integrations today.',
+      p_eye: 'Permanent amenity', p_t: 'Portrait of Place',
+      p_p: 'A responsive social-memory installation. Guest presence becomes a living portrait of the destination — meaningful in the room, then optionally carried beyond it.',
+      p1: 'A guest approaches the display.',
+      p2: 'A discreet depth sensor reads silhouette, position and movement — not identity.',
+      p3: 'Live particles, flora and local species gather around the body.',
+      p4: 'The portrait evolves with time of day or environmental conditions.',
+      p5: 'An optional photo or short video can be generated.',
+      p6: 'A private QR takeaway — sharing as memory, not a gimmick.',
+      ph_label: 'Concept visualization — ANDATA LAB', ph_study: 'Speculative hospitality study',
+      c_eye: 'Permanent amenity', c_t: 'Caribbean Data Portal',
+      c_p: 'A walkthrough landscape generated from the ecological rhythms of the destination. Quiet at dawn. Alive at noon. Recalibrated for the evening program — same infrastructure.',
+      c_d: 'Can respond to guest movement; wind; tide and lunar phase; sea-surface temperature; sunlight and rainfall; sargassum conditions; coral health; seasonal migration; time of day and hotel programming.',
+      s_eye: 'One engine', s_t: 'One permanent system. Many guest experiences.',
+      s_k: 'From a quiet ecological corridor at 7am to a wedding or DJ set at 9pm.',
+      s_a: 'Permanent guest amenities', s_b: 'Programmable resort moments',
+      s1: 'Interactive portraits merging guests with the destination’s ecology.',
+      s2: 'A responsive passage or lobby driven by local data and presence.',
+      s3_t: 'Family Discovery', s3: 'Playful ecology — tracks, species, sound — without a conventional kiosk.',
+      s4_t: 'Wellness Atmospheres', s4: 'Slow generative rooms for spa and recovery. Light and sound follow breath, gesture and natural cycles.',
+      s5_t: 'Night Pool / Event Canvas', s5: 'The same media infrastructure holds weddings, DJ sets, cultural programs, conferences and launches.',
+      s6_t: 'Immersive Dining', s6: 'Atmosphere that evolves with a menu, ingredient origin, sunset or a private dinner.',
+      s7_t: 'Brand and product moments', s7: 'Temporary content layers for partners — without turning the resort into an advertising screen.',
+      s8_t: 'Technology disappears', s8: 'The experience remains. Staff run a schedule, not a spectacle.',
+      n_eye: 'Programmable moment', n_t: 'Night Pool / Event Canvas',
+      n_p: 'Façade, water, trees and deck as one programmable surface. From a quiet dinner to a signature show — the hardware does not change. The night does.',
+      f_eye: 'Permanent amenity',
+      f_p: 'Playful ecology for families: tracks, species, movement and sound — without a conventional kiosk. The room is the interface.',
+      f1: 'A child steps onto the field. The floor answers with a track.',
+      f2: 'A hand on the wall gathers particles, flora, a species.',
+      f3: 'The table holds a living map of the destination — not a touchscreen menu.',
+      f4: 'The same engine that runs the lobby at dawn. Recalibrated for wonder.',
+      w_eye: 'Permanent amenity',
+      w_p: 'Slow generative environments for spa, meditation and recovery. Light, sound and visuals follow breath, gesture, time of day and natural cycles — not a show.',
+      w1: 'The room stays quiet. The field moves at the pace of the body.',
+      w2: 'Sunset, tide or breath can shift palette and density.',
+      w3: 'Architecture, water and the horizon remain the protagonists.',
+      b_eye: 'Programmable moment',
+      b_p: 'A beverage, fashion or conference partner can occupy the same walls, table and light — for one night — without turning the resort into an advertising screen. The system stays. The content layer changes.',
+      b1: 'Permanent infrastructure: walls, table, spatial light.',
+      b2: 'A temporary layer: origin, ritual, product, atmosphere.',
+      b3: 'By morning, the amenity returns to the destination.',
+      lw_eye: 'Permanent amenity', lw_t: 'Living Water',
+      lw_p: 'The pool is not a backdrop. Guest movement becomes light in the water. The wall holds the reef. The same engine as Family Discovery — wet, slower, closer to the body.',
+      lw1: 'A step in the shallows leaves a wake of light.',
+      lw2: 'The reef on the wall can follow tide, season or presence.',
+      lw3: 'Families complete the piece by being in it — not by watching it.',
+      ec_eye: 'Permanent amenity', ec_t: 'Ecological corridor',
+      ec_p: 'The walk between buildings becomes a living field. Local species, lunar cadence and guest presence gather on the path — quiet enough for a family, precise enough to be data.',
+      ec1: 'A species appears where the destination would place it.',
+      ec2: 'The moon and the hour change density and glow.',
+      ec3: 'Guests walk through the translation, not past a screen.',
+      di_eye: 'Programmable moment',
+      di_p: 'The table becomes the interface. Light follows a menu, an ingredient’s origin, a sunset or a private dinner. Service stays human. The atmosphere evolves around the plate.',
+      di1: 'Guests sit. The surface is already a field.',
+      di2: 'A hand, a course, a story — the pattern answers.',
+      di3: 'The wall holds the same language. The garden stays the room’s edge.',
+      so_eye: 'The social layer', so_t: 'Designed for the physical space — and the social feed',
+      so_p: 'The on-site experience is the work. Sharing is how memory continues after checkout. This website does not request a camera.',
+      so1_t: 'Enter', so1: 'Walk into the amenity.', so2_t: 'Trigger', so2: 'Presence reshapes the field.',
+      so3_t: 'Become', so3: 'The guest completes the piece.', so4_t: 'Capture', so4: 'Optional photo or short video.',
+      so5_t: 'Receive', so5: 'Privately, by QR.', so6_t: 'Share', so6: 'A memory tied to the destination.',
+      so7_t: 'Return', so7: 'A different visual state awaits.',
+      e_eye: 'Modular system', e_t: 'Inputs. Engine. Outputs.',
+      e_p: 'ANDATA is not selling a single corridor or a single screen. One creative-technology system, specified to the architecture you already have — or the one you are about to build.',
+      e1_t: 'Inputs', e1a: 'Environmental and marine data', e1b: 'On-site sensors', e1c: 'Guest movement', e1d: 'Music and audio', e1e: 'Time and hotel schedules', e1f: 'Curated cultural material',
+      e2_t: 'Real-time engine', e2b: 'GLSL and generative graphics', e2c: 'Depth-camera interaction', e2d: 'Custom sensor logic', e2f: 'Scheduling and content control',
+      e3_t: 'Outputs', e3a: 'Architectural LED', e3b: 'Projection mapping', e3c: 'Interactive screens', e3d: 'Spatial audio', e3e: 'Responsive lighting', e3f: 'Private QR takeaways',
+      o_eye: 'Operations', o_t: 'Designed to live in the hotel',
+      o_p: 'Art is the guest-facing surface. Reliability is the actual product.',
+      o1_t: 'Discreet sensing', o1: 'Depth cameras and sensors integrated with the architecture. No facial recognition. No identity stored by default.',
+      o2_t: 'Edge computer', o2: 'Local processing for reliable performance when the network is not.',
+      o3_t: 'Hotel hours', o3: 'Scheduled startup and shutdown. Automatic recovery after power or network interruption.',
+      o4_t: 'Serviceable hardware', o4: 'Modular components. Monitoring, calibration and maintenance options.',
+      o5_t: 'Seasonal content', o5: 'Remote updates. One artistic system, different states by season, event or audience.',
+      o6_t: 'Staff, not spectacle', o6: 'Training, operating documentation, and coordination with lighting, acoustic and architectural teams.',
+      pr_eye: 'Proven systems', pr_t: 'Capabilities that transfer into hospitality',
+      pr_gap: 'ANDATA has not yet installed a permanent resort amenity. The works below are real — museums, mapping, sensors, generative rooms. They show how the same engine can live in a hotel, without pretending it already does.',
+      pr1_k: 'Delivered · Mexico City', pr1: 'Sensing and a real-time engine. The same architecture of presence — not identity — that Portrait of Place would use.',
+      pr2_k: 'Delivered · Aguascalientes', pr2: 'Motion-tracked rooms for general audiences. The operational pattern behind Family Discovery.',
+      pr3_k: 'Delivered · Jalisco', pr3: 'Projection on complex architecture. The calibration language of an Event Canvas.',
+      pr4_k: 'Proven technology', pr4_t: 'Immersive rooms', pr4: 'Projection, spatial sound and light as one narrative — the basis for Wellness Atmospheres and Immersive Dining.',
+      pi_eye: 'Pilot', pi_t: 'Start with one property. One zone. One unforgettable experience.',
+      pi1_t: 'Select', pi1: 'The property and the guest moment.',
+      pi2_t: 'Study', pi2: 'Architecture, audience and operational constraints.',
+      pi3_t: 'Prototype', pi3: 'Interaction and visual language, in motion.',
+      pi4_t: 'Validate', pi4: 'With design and operations together.',
+      pi5_t: 'Install', pi5: 'Calibrate, train, then run.',
+      pi6_t: 'Evolve', pi6: 'Seasonal content. Scale only where it earns its keep.',
+      cta_t: 'Let’s design the first pilot',
+      cta_p: 'Tell us the space, the guest moment and the operational reality. We reply within 24–48 hours.',
+      cta_1: 'Start a project', cta_2: 'Write by email',
+      label_email: 'Email', label_based: 'Based', label_reply: 'Reply',
+      based: 'Mexico · working worldwide', rights: 'All rights reserved.',
+      doc_title: 'ANDATA Hospitality | Permanent immersive guest amenities | ANDATA LAB'
+    },
+    es: {
+      nav_work: 'Proyectos', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_cta: 'Diseñar un piloto',
+      nav_home: 'Inicio', nav_contact: 'Contacto', back: 'Volver al inicio', scroll: 'Desliza',
+      h_t1: 'El resort', h_t2: 'se vuelve una interfaz',
+      h_sub: 'Entornos interactivos permanentes que transforman movimiento, datos ambientales e historias locales en experiencias memorables.',
+      h_sec: 'Diseñado como parte del espacio — no como una activación temporal.',
+      h_cta1: 'Explorar el sistema', h_cta2: 'Diseñar un piloto',
+      m_t: '¿Y si el resort pudiera percibir, responder y recordar?',
+      m_p: 'Un resort no es solo arquitectura. Puede ser una interfaz viva entre huéspedes, destino, datos ambientales y memoria cultural.',
+      m_l1: 'El huésped no observa la obra. El huésped la completa.',
+      m_l2: 'Los datos locales se vuelven luz, movimiento y memoria.',
+      m_l3: 'Un sistema permanente. Muchos momentos programables.',
+      d_eye: 'Data art', d_t: 'Una condición nombrada se vuelve un comportamiento en el espacio.',
+      d_def: 'Data art es una traducción. El viento tiene dirección. La luna tiene fase. El mar tiene temperatura. El huésped tiene un cuerpo. Cada uno puede mover la luz — si lo nombramos, y lo conectamos con honestidad.',
+      d_p: 'No es un loop decorativo “inspirado en la naturaleza”. Entradas propuestas y viables del destino — confirmadas por propiedad antes de conectar nada.',
+      df1_t: 'Lugar', df1: 'Esta costa, esta hora, esta arquitectura.',
+      df2_t: 'Dato', df2: 'Marea, viento, luna, temperatura del mar, especies, presencia.',
+      df3_t: 'Comportamiento', df3: 'Derivar, respirar, densificar, atraer, aparecer.',
+      df4_t: 'Sala', df4: 'Muros, piso, agua y fachada se vuelven el lienzo.',
+      df5_t: 'Huésped', df5: 'La completa. No pasa de largo frente a una pantalla.',
+      dx1_t: 'Día. Ecología en la que se puede entrar.',
+      dx1: 'Presencia, especies y datos del lugar se vuelven una sala. Los niños no miran una pantalla. Están dentro de la traducción.',
+      dx1a_k: 'Movimiento', dx1a: 'huellas en el piso',
+      dx1b_k: 'Especies', dx1b: 'el muro responde a la mano',
+      dx1c_k: 'Lugar', dx1c: 'la mesa sostiene el mapa',
+      dx2_t: 'Noche. La misma traducción, como evento.',
+      dx2: 'Luna, agua y arquitectura se vuelven espectáculo — sin cambiar el hardware que corrió la mañana quieta.',
+      dx2a_k: 'Luna', dx2a: 'cadencia en el escenario',
+      dx2b_k: 'Agua', dx2b: 'la alberca es el lienzo',
+      dx2c_k: 'Fachada', dx2c: 'el edificio viste el campo',
+      d_legend: 'Cómo una condición se vuelve luz', d_from: 'Desde',
+      d1_t: 'Viento', d1_d: 'La dirección se vuelve deriva de partículas.',
+      d2_t: 'Temperatura del mar', d2_d: 'Paleta y luminosidad.',
+      d3_t: 'Marea', d3_d: 'Movimiento vertical y respiración.',
+      d4_t: 'Fase lunar', d4_d: 'Densidad y cadencia.',
+      d5_t: 'Lluvia', d5_d: 'Vegetación y superficies reflectantes.',
+      d6_t: 'Migración', d6_d: 'Especies que aparecen en temporada.',
+      d7_t: 'Condición del coral', d7_d: 'Complejidad y color.',
+      d8_t: 'Silueta del huésped', d8_d: 'Estelas, dispersión, atracción.',
+      d_src: 'Entradas propuestas — sujetas a acceso y licencias por propiedad: <strong>Geoportal CONABIO</strong>, <strong>EncicloVida</strong>, <strong>SIMAR</strong>, <strong>Servicio Meteorológico Nacional</strong>, monitoreo independiente de sargazo en el Caribe, y sensores en sitio. Ninguna es una integración ANDATA en vivo hoy.',
+      p_eye: 'Amenidad permanente', p_t: 'Portrait of Place',
+      p_p: 'Una instalación de memoria social. La presencia del huésped se vuelve un retrato vivo del destino — primero en el espacio, luego opcionalmente más allá.',
+      p1: 'El huésped se acerca a la pantalla.',
+      p2: 'Un sensor de profundidad discreto lee silueta, posición y movimiento — no identidad.',
+      p3: 'Partículas, flora y especies locales se reúnen alrededor del cuerpo.',
+      p4: 'El retrato evoluciona con la hora o las condiciones ambientales.',
+      p5: 'Se puede generar una foto o un video corto, opcional.',
+      p6: 'Un QR privado — compartir como memoria, no como truco.',
+      ph_label: 'Visualización conceptual — ANDATA LAB', ph_study: 'Estudio especulativo de hospitalidad',
+      c_eye: 'Amenidad permanente', c_t: 'Caribbean Data Portal',
+      c_p: 'Un paisaje transitable generado por los ritmos ecológicos del destino. Quieto al amanecer. Vivo al mediodía. Recalibrado para el programa nocturno — la misma infraestructura.',
+      c_d: 'Puede responder a movimiento; viento; marea y fase lunar; temperatura superficial del mar; sol y lluvia; sargazo; salud del coral; migración estacional; hora del día y programación del hotel.',
+      s_eye: 'Un motor', s_t: 'Un sistema permanente. Muchas experiencias.',
+      s_k: 'De un corredor ecológico a las 7am a una boda o un DJ a las 9pm.',
+      s_a: 'Amenidades permanentes', s_b: 'Momentos programables',
+      s1: 'Retratos interactivos que funden al huésped con la ecología del destino.',
+      s2: 'Un pasaje o lobby impulsado por datos locales y presencia.',
+      s3_t: 'Family Discovery', s3: 'Ecología lúdica — rastros, especies, sonido — sin un kiosco convencional.',
+      s4_t: 'Wellness Atmospheres', s4: 'Salas generativas lentas para spa y recuperación.',
+      s5_t: 'Night Pool / Event Canvas', s5: 'La misma infraestructura sostiene bodas, DJ, programas culturales, conferencias y lanzamientos.',
+      s6_t: 'Immersive Dining', s6: 'Una atmósfera que evoluciona con el menú, el origen, el atardecer o una cena privada.',
+      s7_t: 'Marca y producto', s7: 'Capas temporales para partners — sin convertir el resort en una pantalla publicitaria.',
+      s8_t: 'La tecnología desaparece', s8: 'La experiencia permanece. El staff corre un horario, no un espectáculo.',
+      n_eye: 'Momento programable', n_t: 'Night Pool / Event Canvas',
+      n_p: 'Fachada, agua, árboles y terraza como una sola superficie. De una cena quieta a un show de firma — el hardware no cambia. La noche sí.',
+      f_eye: 'Amenidad permanente',
+      f_p: 'Ecología lúdica para familias: rastros, especies, movimiento y sonido — sin un kiosco convencional. La sala es la interfaz.',
+      f1: 'Un niño pisa el campo. El piso responde con un rastro.',
+      f2: 'Una mano en el muro reúne partículas, flora, una especie.',
+      f3: 'La mesa sostiene un mapa vivo del destino — no un menú táctil.',
+      f4: 'El mismo motor que corre el lobby al amanecer. Recalibrado para el asombro.',
+      w_eye: 'Amenidad permanente',
+      w_p: 'Entornos generativos lentos para spa, meditación y recuperación. Luz, sonido y visuales siguen la respiración, el gesto, la hora y los ciclos naturales — no un show.',
+      w1: 'La sala se queda quieta. El campo se mueve al ritmo del cuerpo.',
+      w2: 'El atardecer, la marea o la respiración pueden cambiar paleta y densidad.',
+      w3: 'La arquitectura, el agua y el horizonte siguen siendo protagonistas.',
+      b_eye: 'Momento programable',
+      b_p: 'Un partner de bebida, moda o conferencia puede ocupar los mismos muros, mesa y luz — una noche — sin convertir el resort en una pantalla publicitaria. El sistema se queda. La capa de contenido cambia.',
+      b1: 'Infraestructura permanente: muros, mesa, luz espacial.',
+      b2: 'Una capa temporal: origen, ritual, producto, atmósfera.',
+      b3: 'Por la mañana, la amenidad vuelve al destino.',
+      lw_eye: 'Amenidad permanente', lw_t: 'Living Water',
+      lw_p: 'La alberca no es un fondo. El movimiento del huésped se vuelve luz en el agua. El muro sostiene el arrecife. El mismo motor que Family Discovery — más húmedo, más lento, más cerca del cuerpo.',
+      lw1: 'Un paso en lo poco profundo deja una estela de luz.',
+      lw2: 'El arrecife en el muro puede seguir marea, temporada o presencia.',
+      lw3: 'Las familias completan la pieza al estar dentro — no al mirarla.',
+      ec_eye: 'Amenidad permanente', ec_t: 'Corredor ecológico',
+      ec_p: 'El camino entre edificios se vuelve un campo vivo. Especies locales, cadencia lunar y presencia se reúnen en el sendero — lo bastante quieto para una familia, lo bastante preciso para ser dato.',
+      ec1: 'Una especie aparece donde el destino la pondría.',
+      ec2: 'La luna y la hora cambian densidad y brillo.',
+      ec3: 'Los huéspedes caminan dentro de la traducción, no frente a una pantalla.',
+      di_eye: 'Momento programable',
+      di_p: 'La mesa se vuelve la interfaz. La luz sigue un menú, el origen de un ingrediente, un atardecer o una cena privada. El servicio sigue siendo humano. La atmósfera evoluciona alrededor del plato.',
+      di1: 'Los huéspedes se sientan. La superficie ya es un campo.',
+      di2: 'Una mano, un tiempo, una historia — el patrón responde.',
+      di3: 'El muro sostiene el mismo lenguaje. El jardín sigue siendo el borde de la sala.',
+      so_eye: 'Capa social', so_t: 'Diseñado para el espacio físico — y para el feed',
+      so_p: 'La experiencia en sitio es la obra. Compartir es cómo continúa la memoria. Este sitio no pide cámara.',
+      so1_t: 'Entrar', so1: 'Caminar a la amenidad.', so2_t: 'Activar', so2: 'La presencia transforma el campo.',
+      so3_t: 'Ser', so3: 'El huésped completa la pieza.', so4_t: 'Capturar', so4: 'Foto o video opcional.',
+      so5_t: 'Recibir', so5: 'En privado, por QR.', so6_t: 'Compartir', so6: 'Una memoria ligada al destino.',
+      so7_t: 'Volver', so7: 'Otro estado visual espera.',
+      e_eye: 'Sistema modular', e_t: 'Entradas. Motor. Salidas.',
+      e_p: 'ANDATA no vende un solo pasillo ni una sola pantalla. Un sistema de tecnología creativa, especificado a la arquitectura que ya existe — o a la que estás por construir.',
+      e1_t: 'Entradas', e1a: 'Datos ambientales y marinos', e1b: 'Sensores en sitio', e1c: 'Movimiento del huésped', e1d: 'Música y audio', e1e: 'Tiempo y horarios del hotel', e1f: 'Material cultural curado',
+      e2_t: 'Motor en tiempo real', e2b: 'GLSL y gráficos generativos', e2c: 'Interacción con cámara de profundidad', e2d: 'Lógica de sensores a medida', e2f: 'Programación y control de contenido',
+      e3_t: 'Salidas', e3a: 'LED arquitectónico', e3b: 'Videomapping', e3c: 'Pantallas interactivas', e3d: 'Audio espacial', e3e: 'Iluminación receptiva', e3f: 'QR privados',
+      o_eye: 'Operación', o_t: 'Diseñado para vivir en el hotel',
+      o_p: 'El arte es la superficie. La confiabilidad es el producto.',
+      o1_t: 'Sensado discreto', o1: 'Cámaras de profundidad integradas a la arquitectura. Sin reconocimiento facial. Sin identidad almacenada por defecto.',
+      o2_t: 'Computadora en el borde', o2: 'Procesamiento local para cuando la red no está.',
+      o3_t: 'Horario hotelero', o3: 'Encendido y apagado programados. Recuperación automática.',
+      o4_t: 'Hardware servible', o4: 'Componentes modulares. Monitoreo, calibración y mantenimiento.',
+      o5_t: 'Contenido de temporada', o5: 'Actualizaciones remotas. Un sistema, distintos estados.',
+      o6_t: 'Staff, no espectáculo', o6: 'Capacitación, documentación y coordinación con iluminación, acústica y arquitectura.',
+      pr_eye: 'Sistemas comprobados', pr_t: 'Capacidades que se trasladan a hospitalidad',
+      pr_gap: 'ANDATA aún no ha instalado una amenidad permanente en un resort. Las obras de abajo son reales. Muestran cómo el mismo motor puede vivir en un hotel, sin pretender que ya lo hace.',
+      pr1_k: 'Realizado · Ciudad de México', pr1: 'Sensado y motor en tiempo real. La misma arquitectura de presencia — no de identidad — que usaría Portrait of Place.',
+      pr2_k: 'Realizado · Aguascalientes', pr2: 'Salas con seguimiento de movimiento. El patrón operativo detrás de Family Discovery.',
+      pr3_k: 'Realizado · Jalisco', pr3: 'Proyección sobre arquitectura compleja. El lenguaje de calibración de un Event Canvas.',
+      pr4_k: 'Tecnología demostrada', pr4_t: 'Salas inmersivas', pr4: 'Proyección, sonido espacial y luz como una sola narrativa.',
+      pi_eye: 'Piloto', pi_t: 'Empieza con una propiedad. Una zona. Una experiencia inolvidable.',
+      pi1_t: 'Elegir', pi1: 'La propiedad y el momento del huésped.',
+      pi2_t: 'Estudiar', pi2: 'Arquitectura, audiencia y operación.',
+      pi3_t: 'Prototipar', pi3: 'Interacción y lenguaje visual, en movimiento.',
+      pi4_t: 'Validar', pi4: 'Diseño y operaciones juntos.',
+      pi5_t: 'Instalar', pi5: 'Calibrar, capacitar, operar.',
+      pi6_t: 'Evolucionar', pi6: 'Contenido de temporada. Escalar solo donde se gane el lugar.',
+      cta_t: 'Diseñemos el primer piloto',
+      cta_p: 'Cuéntanos el espacio, el momento del huésped y la realidad operativa. Respondemos en 24–48 horas.',
+      cta_1: 'Iniciar un proyecto', cta_2: 'Escribir por correo',
+      label_email: 'Correo', label_based: 'Ubicación', label_reply: 'Respuesta',
+      based: 'México · trabajamos en todo el mundo', rights: 'Todos los derechos reservados.',
+      doc_title: 'ANDATA Hospitality | Amenidades inmersivas permanentes | ANDATA LAB'
+    }
+  };
+
+  function pickLang() {
+    var saved = null;
+    try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
+    if (saved === 'en' || saved === 'es') return saved;
+    return (navigator.language || 'en').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+  }
+  var lang = pickLang();
+
+  function applyLang() {
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach(function (node) {
+      var k = node.getAttribute('data-i18n');
+      if (dict[k] != null) node.innerHTML = dict[k];
+    });
+    if (dict.doc_title) document.title = dict.doc_title;
+    var btn = $('#lang-toggle');
+    if (btn) {
+      btn.textContent = (lang === 'en') ? 'ES' : 'EN';
+      btn.setAttribute('aria-label', lang === 'en' ? 'Cambiar a español' : 'Switch to English');
+    }
+  }
+  var langBtn = $('#lang-toggle');
+  if (langBtn) langBtn.addEventListener('click', function () {
+    lang = (lang === 'en') ? 'es' : 'en';
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  });
+
+  var reveals = $$('.reveal');
+  if (reduced || !('IntersectionObserver' in window)) {
+    reveals.forEach(function (r) { r.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach(function (r) { io.observe(r); });
+  }
+
+  (function scrollChrome() {
+    var progress = $('#scroll-progress');
+    var queued = false;
+    function frame() {
+      queued = false;
+      var y = window.scrollY || window.pageYOffset;
+      document.body.classList.toggle('is-scrolled', y > 48);
+      if (progress) {
+        var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        progress.style.transform = 'scaleX(' + Math.min(1, y / max) + ')';
+      }
+      var chain = $$('#chain span');
+      if (chain.length) {
+        var data = $('#data');
+        if (data) {
+          var r = data.getBoundingClientRect();
+          var p = Math.min(1, Math.max(0, (window.innerHeight * 0.45 - r.top) / Math.max(1, r.height)));
+          var i = Math.min(chain.length - 1, Math.floor(p * chain.length));
+          chain.forEach(function (el, k) { el.classList.toggle('is-on', k === i); });
+        }
+      }
+    }
+    function onScroll() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    frame();
+  })();
+
+  (function lazyVideos() {
+    var vids = $$('.lazy-vid');
+    if (!vids.length) return;
+    function play(v) {
+      var s = v.getAttribute('data-src');
+      if (s && v.getAttribute('src') !== s) { v.setAttribute('src', s); v.load(); }
+      if (v.readyState >= 2) { v.classList.add('is-loaded'); v.play().catch(function () {}); return; }
+      v.addEventListener('loadeddata', function once() {
+        v.removeEventListener('loadeddata', once);
+        v.classList.add('is-loaded');
+        v.play().catch(function () {});
+      }, { once: true });
+    }
+    if (!('IntersectionObserver' in window)) { vids.forEach(play); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) play(en.target);
+        else en.target.pause();
+      });
+    }, { rootMargin: '120px 0px', threshold: 0.12 });
+    vids.forEach(function (v) { io.observe(v); });
+  })();
+
+  (function field() {
+    var canvas = $('#field');
+    if (!canvas || reduced) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(1.5, window.devicePixelRatio || 1);
+    var pts = [];
+    var mx = 0.5, my = 0.4, running = true;
+    var n = mqNarrow.matches ? 70 : 120;
+
+    function resize() {
+      var w = window.innerWidth, h = window.innerHeight;
+      canvas.width = Math.floor(w * dpr); canvas.height = Math.floor(h * dpr);
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function seed() {
+      pts = [];
+      for (var i = 0; i < n; i++) {
+        pts.push({ x: Math.random(), y: Math.random(), vx: 0, vy: 0, r: 0.6 + Math.random() * 1.6 });
+      }
+    }
+    function mode() {
+      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      return Math.min(1, Math.max(0, (window.scrollY || 0) / max));
+    }
+    function tick() {
+      if (!running) return;
+      var w = window.innerWidth, h = window.innerHeight, p = mode();
+      ctx.clearRect(0, 0, w, h);
+      var c1 = p < 0.35 ? [60, 220, 255] : p < 0.65 ? [80, 200, 170] : [224, 138, 106];
+      for (var i = 0; i < pts.length; i++) {
+        var a = pts[i];
+        var wind = (p * 0.0018) + 0.0004;
+        a.vx += (Math.sin(i + p * 8) * wind);
+        a.vy += (Math.cos(i * 0.7 + p * 6) * wind * 0.6);
+        a.vx += (mx - a.x) * 0.0008; a.vy += (my - a.y) * 0.0008;
+        if (p > 0.55) { a.vx += (0.5 - a.x) * 0.0012; a.vy += (0.42 - a.y) * 0.0012; }
+        a.vx *= 0.96; a.vy *= 0.96;
+        a.x += a.vx; a.y += a.vy;
+        if (a.x < -0.05) a.x = 1.05; if (a.x > 1.05) a.x = -0.05;
+        if (a.y < -0.05) a.y = 1.05; if (a.y > 1.05) a.y = -0.05;
+        ctx.fillStyle = 'rgba(' + c1[0] + ',' + c1[1] + ',' + c1[2] + ',' + (0.18 + a.r * 0.12) + ')';
+        ctx.beginPath();
+        ctx.arc(a.x * w, a.y * h, a.r * (p > 0.7 ? 2.1 : 1.4), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    window.addEventListener('pointermove', function (e) {
+      mx = e.clientX / Math.max(1, window.innerWidth);
+      my = e.clientY / Math.max(1, window.innerHeight);
+    }, { passive: true });
+    document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) tick(); });
+    window.addEventListener('resize', function () { resize(); }, { passive: true });
+    resize(); seed(); tick();
+  })();
+
+  applyLang();
+})();
+</script>
+</body>
+</html>

@@ -52,7 +52,7 @@
   header.nav:not(.solid) .brand-mark{ filter:invert(1); }
   header.nav.solid .brand-mark{ filter:none; }
   .brand-asterisk{ margin-left:-.07em; letter-spacing:0; font-weight:inherit; }
-  .nav-links{ display:flex; gap:26px; margin-left:auto; align-items:center; }
+  .nav-links{ display:flex; gap:clamp(14px,1.8vw,26px); margin-left:auto; align-items:center; }
   .nav-links a{ font-size:14px; cursor:pointer; text-decoration:none; color:rgba(255,255,255,.78); transition:color .3s, opacity .3s; }
   header.nav.solid .nav-links a{ color:var(--ink-2); }
   .nav-links a:hover{ opacity:.6; }
@@ -707,6 +707,7 @@
     <nav class="nav-links">
       <a data-target="s-work" data-i18n="nav_work">Work</a>
       <a href="dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="hospitality/" data-i18n="nav_hosp">Hospitality</a>
       <a data-target="s-process" data-i18n="nav_process">Process</a>
       <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language" data-i18n="lang_switch">ES</button>
       <button class="nav-cta" data-target="s-contact" data-i18n="cta_start">Start a project</button>
@@ -722,6 +723,7 @@
     <nav class="nav-drawer-panel" aria-label="Mobile menu">
       <a data-target="s-work" data-i18n="nav_work">Work</a>
       <a href="dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="hospitality/" data-i18n="nav_hosp">Hospitality</a>
       <a data-target="s-process" data-i18n="nav_process">Process</a>
       <button type="button" class="nav-drawer-cta" data-target="s-contact" data-i18n="cta_start">Start a project</button>
       <button type="button" class="nav-drawer-lang" id="lang-toggle-drawer" data-i18n="lang_switch">ES</button>
