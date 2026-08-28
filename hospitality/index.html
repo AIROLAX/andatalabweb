@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://www.andatalab.com/hospitality/img/portrait-of-place.jpg">
 
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
-<link rel="preload" as="image" href="img/portrait-of-place.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/portrait-of-place-poster.jpg" fetchpriority="high">
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="hospitality.css">
 </head>
@@ -55,10 +55,10 @@
 
   <section class="hero" id="inicio">
     <div class="hero-media">
-      <picture>
-        <source type="image/webp" srcset="img/portrait-of-place.webp">
-        <img src="img/portrait-of-place.jpg" width="2400" height="1600" alt="Concept visualization — ANDATA LAB: guests in a resort lobby as portraits and butterflies emerge from interactive screens" fetchpriority="high" decoding="sync">
-      </picture>
+      <img src="img/portrait-of-place-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: guests in a resort lobby as portraits and butterflies emerge from interactive screens" fetchpriority="high" decoding="sync">
+      <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata" poster="img/portrait-of-place-poster.jpg" aria-hidden="true">
+        <source src="img/portrait-of-place.mp4?v=3" type="video/mp4">
+      </video>
     </div>
     <div class="hero-grad" aria-hidden="true"></div>
     <canvas class="hero-field" id="hero-field" aria-hidden="true"></canvas>
@@ -70,12 +70,9 @@
         <span class="l2" data-i18n="h_t2">becomes alive.</span>
       </h1>
       <p class="hero-sub" data-i18n="h_sub">Permanent data-art environments shaped by place, time and guest presence.</p>
-      <p class="hero-id" data-i18n="h_id">Portrait of Place — flagship concept</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="#experiences" data-i18n="h_cta1">Explore experiences</a>
-        <a class="btn btn-ghost" href="#pilot" data-i18n="h_cta2">Design a pilot</a>
       </div>
-      <p class="hero-map" data-i18n="h_map">Tide → rhythm · Wind → movement · Moon → density · Presence → response</p>
       </div>
     </div>
   </section>
@@ -126,10 +123,11 @@
     </article>
 
     <article class="story" id="family" data-ambient="#142218">
-      <picture>
-        <source type="image/webp" srcset="img/family-discovery.webp">
-        <img src="img/family-discovery.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a child and parent discover Caribbean species on an interactive floor" loading="lazy" decoding="async">
-      </picture>
+      <img src="img/family-discovery-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: a child discovers Caribbean species on a living data wall" loading="lazy" decoding="async">
+      <video class="lazy-vid" muted loop playsinline preload="none"
+             poster="img/family-discovery-poster.jpg"
+             data-src="img/family-discovery.mp4"
+             aria-hidden="true"></video>
       <div class="story-grad" aria-hidden="true"></div>
       <div class="story-copy wrap">
         <span class="tag" data-i18n="ph_label">Concept visualization</span>

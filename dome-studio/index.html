@@ -167,18 +167,37 @@
     position:relative; height:100svh; min-height:100svh; max-height:100svh;
     display:flex; align-items:center; justify-content:center;
     overflow:hidden; background:#02040a; isolation:isolate;
+    --acc:#3CDCFF;
   }
-  .hero-amb{ position:absolute; inset:0; z-index:0; }
+  .hero-amb{ position:absolute; inset:0; z-index:0; overflow:hidden; }
   .hero-amb img{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    transform:scale(1.18); filter:blur(42px) brightness(.38) saturate(1.25);
+    object-position:50% 28%;
+    opacity:0; transform:scale(1.22);
+    filter:blur(7px) brightness(.78) saturate(2.2) contrast(1.28);
+    transition:opacity 1.05s ease, filter .8s ease;
+    animation:amb-drift 14s ease-in-out infinite alternate;
+    will-change:opacity, transform;
+  }
+  .hero-amb img.is-on{ opacity:1; z-index:1; }
+  .hero-amb.is-swap img.is-on{
+    filter:blur(3px) brightness(.92) saturate(2.55) contrast(1.34);
+  }
+  @keyframes amb-drift{
+    from{ transform:scale(1.12) translate3d(-4%,-2.6%,0); }
+    to{ transform:scale(1.38) translate3d(4.2%,3%,0); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-amb img{ animation:none; }
   }
   #dome-fx{ position:absolute; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; }
   .hero-scrim{
     position:absolute; inset:0; z-index:2; pointer-events:none;
     background:
-      radial-gradient(120% 80% at 50% 116%, rgba(60,220,255,.16) 0%, rgba(60,220,255,0) 58%),
-      linear-gradient(180deg, rgba(4,6,11,.7) 0%, rgba(4,6,11,.28) 40%, rgba(4,6,11,.7) 82%, var(--d-0) 100%);
+      radial-gradient(90% 70% at 50% 42%, color-mix(in srgb, var(--acc) 34%, transparent) 0%, transparent 64%),
+      radial-gradient(120% 80% at 50% 116%, color-mix(in srgb, var(--acc) 46%, transparent) 0%, transparent 58%),
+      linear-gradient(180deg, rgba(4,6,11,.38) 0%, rgba(4,6,11,.06) 42%, rgba(4,6,11,.42) 82%, var(--d-0) 100%);
+    transition:background 1s ease;
   }
   .hero-inner{
     position:relative; z-index:3; width:100%; max-width:720px;
@@ -1374,7 +1393,8 @@
   <!-- 1 · HERO -->
   <section class="hero" id="inicio">
     <div class="hero-amb" aria-hidden="true">
-      <img src="img/dome-whale-concept.jpg" alt="">
+      <img class="is-on" src="img/dome-whale-concept.jpg" alt="">
+      <img src="img/dome-destination-pv.jpg" alt="">
     </div>
     <canvas id="dome-fx" aria-hidden="true"></canvas>
     <div class="hero-scrim" aria-hidden="true"></div>
@@ -2661,12 +2681,30 @@
 
   /* Hero orb: 3D tilt + story swap */
   var orbStories = [
-    { src: 'img/dome-whale-concept.jpg', t: 'c1_t', acc: '#3CDCFF', cap: 'Projection Mapping' },
-    { src: 'img/dome-memory-concept.jpg', t: 'c2_t', acc: '#FF2E8A', cap: 'Interactive Installation' },
-    { src: 'img/dome-destination-pv.jpg', t: 'c3_t', acc: '#FF8A3C', cap: '3D Animation' },
-    { src: 'img/dome-data-experience.jpg', t: 'c4_t', acc: '#9b7aff', cap: '360 Production' },
-    { src: 'img/dome-cosmos-concept.jpg', t: 'c5_t', acc: '#5CE1B0', cap: 'Audiovisual Sound Systems' }
+    { src: 'img/dome-whale-concept.jpg', bg: 'img/dome-whale-concept.jpg', t: 'c1_t', acc: '#3CDCFF', cap: 'Projection Mapping' },
+    { src: 'img/dome-memory-concept.jpg', bg: 'img/dome-whale-generative.jpg', t: 'c2_t', acc: '#FF2E8A', cap: 'Interactive Installation' },
+    { src: 'img/dome-destination-pv.jpg', bg: 'img/dome-destination-pv.jpg', t: 'c3_t', acc: '#FF8A3C', cap: '3D Animation' },
+    { src: 'img/dome-data-experience.jpg', bg: 'img/dome-data-experience.jpg', t: 'c4_t', acc: '#9b7aff', cap: '360 Production' },
+    { src: 'img/dome-cosmos-concept.jpg', bg: 'img/dome-data-kiosk.jpg', t: 'c5_t', acc: '#5CE1B0', cap: 'Audiovisual Sound Systems' }
   ];
+  window.__setHeroLook = function (story) {
+    if (!story) return;
+    var hero = document.querySelector('.hero');
+    if (hero) hero.style.setProperty('--acc', story.acc || '#3CDCFF');
+    var amb = document.querySelector('.hero-amb');
+    var src = story.bg || story.src;
+    var layers = amb ? amb.querySelectorAll('img') : [];
+    if (!layers.length || !src) return;
+    var on = amb.querySelector('img.is-on') || layers[0];
+    if (on.getAttribute('src') === src) return;
+    var off = layers[0] === on ? (layers[1] || layers[0]) : layers[0];
+    off.src = src;
+    off.classList.add('is-on');
+    if (off !== on) on.classList.remove('is-on');
+    amb.classList.add('is-swap');
+    clearTimeout(window.__heroSwapT);
+    window.__heroSwapT = setTimeout(function () { amb.classList.remove('is-swap'); }, 900);
+  };
   var heroIndex = 0;
   function paintHeroNow() {
     var orbEl = $('#orb');
@@ -2711,6 +2749,7 @@
       }, 180);
       var cap = $('#orb-cap');
       if (cap) cap.textContent = s.cap || '';
+      if (typeof window.__setHeroLook === 'function') window.__setHeroLook(s);
       dots.forEach(function (d, k) {
         if (k === heroIndex) d.setAttribute('aria-current', 'true');
         else d.removeAttribute('aria-current');
@@ -2855,12 +2894,12 @@
     function spawn() {
       return {
         x: Math.random(), y: Math.random(),
-        r: Math.random() * 1.5 + 0.3,
-        vy: -(Math.random() * 0.00035 + 0.00008),
-        sway: Math.random() * 0.5 + 0.1,
+        r: Math.random() * (mode === 'hero' ? 2.4 : 1.5) + (mode === 'hero' ? 0.55 : 0.3),
+        vy: -(Math.random() * (mode === 'hero' ? 0.00055 : 0.00035) + (mode === 'hero' ? 0.00014 : 0.00008)),
+        sway: Math.random() * 0.7 + 0.14,
         ph: Math.random() * Math.PI * 2,
-        a: Math.random() * 0.32 + 0.07,
-        tint: Math.random() < 0.42
+        a: Math.random() * (mode === 'hero' ? 0.5 : 0.32) + (mode === 'hero' ? 0.12 : 0.07),
+        tint: Math.random() < (mode === 'hero' ? 0.7 : 0.42)
       };
     }
     function resize() {
@@ -2869,12 +2908,14 @@
       if (!w || !h) return;
       canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.round(Math.min(mode === 'hero' ? 70 : 46, Math.max(16, w / (mode === 'hero' ? 26 : 12))));
+      var n = Math.round(Math.min(mode === 'hero' ? 120 : 46, Math.max(16, w / (mode === 'hero' ? 18 : 12))));
       parts = [];
       for (var i = 0; i < n; i++) parts.push(spawn());
     }
     function accent() {
-      var host = mode === 'hero' ? document.documentElement : (canvas.closest('.disc') || document.documentElement);
+      var host = mode === 'hero'
+        ? (canvas.closest('.hero') || document.documentElement)
+        : (canvas.closest('.disc') || document.documentElement);
       var c = getComputedStyle(host).getPropertyValue('--acc').trim();
       return c || '#3CDCFF';
     }
@@ -2922,7 +2963,7 @@
     }
     function loop() {
       if (!live) { running = false; return; }
-      t += 0.006;
+      t += mode === 'hero' ? 0.011 : 0.006;
       draw();
       raf = requestAnimationFrame(loop);
     }
@@ -2952,11 +2993,11 @@
 
 <script type="application/json" id="dome-hero-stories">
 [
-  { "src": "img/dome-whale-concept.jpg", "video": "../videos/DEMOREEL_AIROLAX%202026.mp4", "t": "c1_t", "acc": "#3CDCFF", "cap": "Projection Mapping" },
-  { "src": "img/dome-memory-concept.jpg", "video": "../videos/immersive-audiovisual.mp4", "t": "c2_t", "acc": "#FF2E8A", "cap": "Interactive Installation" },
-  { "src": "img/dome-destination-pv.jpg", "video": "../videos/concept-immersive.mp4", "t": "c3_t", "acc": "#FF8A3C", "cap": "3D Animation" },
-  { "src": "img/dome-data-experience.jpg", "video": "../videos/real-time-generative.mp4", "t": "c4_t", "acc": "#9b7aff", "cap": "360 Production" },
-  { "src": "img/dome-cosmos-concept.jpg", "video": "../videos/interactive-installations.mp4", "t": "c5_t", "acc": "#5CE1B0", "cap": "Audiovisual Sound Systems" }
+  { "src": "img/dome-whale-concept.jpg", "bg": "img/dome-whale-concept.jpg", "video": "../videos/DEMOREEL_AIROLAX%202026.mp4", "t": "c1_t", "acc": "#3CDCFF", "cap": "Projection Mapping" },
+  { "src": "img/dome-memory-concept.jpg", "bg": "img/dome-whale-generative.jpg", "video": "../videos/immersive-audiovisual.mp4", "t": "c2_t", "acc": "#FF2E8A", "cap": "Interactive Installation" },
+  { "src": "img/dome-destination-pv.jpg", "bg": "img/dome-destination-pv.jpg", "video": "../videos/concept-immersive.mp4", "t": "c3_t", "acc": "#FF8A3C", "cap": "3D Animation" },
+  { "src": "img/dome-data-experience.jpg", "bg": "img/dome-data-experience.jpg", "video": "../videos/real-time-generative.mp4", "t": "c4_t", "acc": "#9b7aff", "cap": "360 Production" },
+  { "src": "img/dome-cosmos-concept.jpg", "bg": "img/dome-data-kiosk.jpg", "video": "../videos/interactive-installations.mp4", "t": "c5_t", "acc": "#5CE1B0", "cap": "Audiovisual Sound Systems" }
 ]
 </script>
 <script type="module" src="js/dome-scenes.js"></script>

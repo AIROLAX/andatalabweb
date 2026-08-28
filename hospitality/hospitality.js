@@ -16,9 +16,7 @@
       nav_home: 'Home', nav_contact: 'Contact',
       h_t1: 'The resort', h_t2: 'becomes alive.',
       h_sub: 'Permanent data-art environments shaped by place, time and guest presence.',
-      h_cta1: 'Explore experiences', h_cta2: 'Design a pilot',
-      h_id: 'Portrait of Place — flagship concept',
-      h_map: 'Tide → rhythm · Wind → movement · Moon → density · Presence → response',
+      h_cta1: 'Explore experiences',
       d_eye: 'Data art', d_t: 'Data, made physical.',
       d_p: 'Tide becomes rhythm. Wind becomes movement. Moon becomes density. Presence becomes response.',
       d_note: 'A visual explanation of the system — not a live property feed.',
@@ -76,9 +74,7 @@
       nav_home: 'Inicio', nav_contact: 'Contacto',
       h_t1: 'El resort', h_t2: 'cobra vida.',
       h_sub: 'Entornos permanentes de data art moldeados por el lugar, el tiempo y la presencia del huésped.',
-      h_cta1: 'Explorar experiencias', h_cta2: 'Diseñar un piloto',
-      h_id: 'Portrait of Place — concepto insignia',
-      h_map: 'Marea → ritmo · Viento → movimiento · Luna → densidad · Presencia → respuesta',
+      h_cta1: 'Explorar experiencias',
       d_eye: 'Data art', d_t: 'Datos, hechos espacio.',
       d_p: 'La marea se convierte en ritmo. El viento en movimiento. La luna en densidad. La presencia en respuesta.',
       d_note: 'Una explicación visual del sistema — no una señal en vivo de un hotel.',
@@ -173,9 +169,9 @@
         var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
         progress.style.transform = 'scaleX(' + Math.min(1, y / max) + ')';
       }
-      var heroImg = $('.hero-media img');
-      if (heroImg && !reduced && y < window.innerHeight) {
-        heroImg.style.transform = 'translate3d(0,' + (y * 0.035) + 'px,0)';
+      var heroMedia = $('.hero-media');
+      if (heroMedia && !reduced && y < window.innerHeight) {
+        heroMedia.style.transform = 'translate3d(0,' + (y * 0.035) + 'px,0)';
       }
     }
     function onScroll() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
@@ -196,6 +192,31 @@
       });
     }, { threshold: 0.45 });
     nodes.forEach(function (n) { io.observe(n); });
+  })();
+
+  (function heroVideo() {
+    var v = $('#hero-video');
+    var hero = $('#inicio');
+    if (!v || !hero) return;
+    if (reduced) {
+      v.pause();
+      return;
+    }
+    function show() { v.classList.add('is-on'); }
+    function play() {
+      var p = v.play();
+      if (p && p.then) p.then(show).catch(function () {});
+      else show();
+    }
+    v.addEventListener('playing', show);
+    if (v.readyState >= 2) play();
+    else v.addEventListener('canplay', play, { once: true });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) play();
+        else v.pause();
+      }, { threshold: 0.04 }).observe(hero);
+    }
   })();
 
   (function heroField() {
@@ -369,7 +390,7 @@
 
   /* Proof videos — play when visible */
   (function proofVideos() {
-    var vids = $$('.proof .lazy-vid');
+    var vids = $$('.proof .lazy-vid, .story .lazy-vid');
     if (!vids.length) return;
     function play(v) {
       var s = v.getAttribute('data-src');

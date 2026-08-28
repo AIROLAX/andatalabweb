@@ -113,7 +113,8 @@ export function initDomeHero() {
     if (disc) disc.style.setProperty('--acc', s.acc);
 
     img.src = s.src;
-    if (amb) amb.src = s.src;
+    if (typeof window.__setHeroLook === 'function') window.__setHeroLook(s);
+    else if (amb) amb.src = s.bg || s.src;
     var cap = document.getElementById('orb-cap');
     if (cap) cap.textContent = s.cap || '';
 
