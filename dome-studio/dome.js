@@ -22,7 +22,7 @@
       nav_work: 'Work', nav_hosp: 'Hospitality', nav_cta: 'Design a pilot', nav_home: 'Home', nav_contact: 'Contact',
       h_t1: 'One dome.', h_t2: 'Many reasons to return.',
       h_sub: 'Immersive content, live data and audience interaction—programmed to keep one venue changing.',
-      h_hint: 'Drag to look inside · Select a program',
+      h_hint: 'Drag to look around · Select a program',
       h_cta1: 'Explore the program', h_cta2: 'Design a pilot',
       c1_t: 'Journey of the Whales', c1_cat: 'Immersive story',
       c1_d: 'Monumental whales, spatial sound and environmental data turn the dome into a living ocean.',
@@ -83,7 +83,7 @@
       nav_work: 'Proyectos', nav_hosp: 'Hospitality', nav_cta: 'Diseñar un piloto', nav_home: 'Inicio', nav_contact: 'Contacto',
       h_t1: 'Un domo.', h_t2: 'Muchas razones para volver.',
       h_sub: 'Contenido inmersivo, datos en vivo e interacción con el público, programados para mantener un mismo espacio en constante cambio.',
-      h_hint: 'Arrastra para mirar dentro · Selecciona un programa',
+      h_hint: 'Arrastra para mirar alrededor · Selecciona un programa',
       h_cta1: 'Explorar programación', h_cta2: 'Diseñar un piloto',
       c1_t: 'Viaje de las Ballenas', c1_cat: 'Historia inmersiva',
       c1_d: 'Ballenas monumentales, audio espacial y datos ambientales convierten el domo en un océano vivo.',
@@ -203,7 +203,7 @@
   var fallback = $('#dome-fallback');
   var shell = $('#dome-shell');
   var canvas = $('#dome-gl');
-  var canGL = canvas && !reduced && !saveData && !weak && window.DomeGL;
+  var canGL = canvas && !reduced && !saveData && !weak && window.THREE && window.DomeGL;
 
   function paintProgram(i) {
     var p = PROGRAMS[i];
@@ -283,7 +283,7 @@
         function start(x, y) { down = true; lx = x; ly = y; }
         function move(x, y) {
           if (!down) return;
-          dome.look((x - lx) * 0.0035, (ly - y) * 0.0028);
+          dome.look((x - lx) * 0.008, (ly - y) * 0.006);
           lx = x; ly = y;
         }
         shell.addEventListener('pointerdown', function (e) {
