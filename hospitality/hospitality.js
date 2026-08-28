@@ -11,7 +11,8 @@
 
   var I18N = {
     en: {
-      nav_work: 'Work', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_cta: 'Design a pilot',
+      nav_work: 'Work', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_process: 'Process',
+      nav_cta: 'Design a pilot', cta_start: 'Start a project',
       nav_home: 'Home', nav_contact: 'Contact',
       h_t1: 'The resort', h_t2: 'becomes alive.',
       h_sub: 'Permanent data-art environments shaped by place, time and guest presence.',
@@ -70,7 +71,8 @@
       doc_title: 'ANDATA Hospitality | Permanent immersive guest amenities | ANDATA LAB'
     },
     es: {
-      nav_work: 'Proyectos', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_cta: 'Diseñar un piloto',
+      nav_work: 'Proyectos', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_process: 'Proceso',
+      nav_cta: 'Diseñar un piloto', cta_start: 'Inicia un proyecto',
       nav_home: 'Inicio', nav_contact: 'Contacto',
       h_t1: 'El resort', h_t2: 'cobra vida.',
       h_sub: 'Entornos permanentes de data art moldeados por el lugar, el tiempo y la presencia del huésped.',

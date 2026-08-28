@@ -29,7 +29,11 @@
 
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
 <link rel="preload" as="image" href="img/dome-whale-concept.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="../colors_and_type.css">
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+</script>
 
 <style>
   :root{
@@ -72,9 +76,14 @@
   .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:#fff; }
   .brand-mark{ width:22px; height:22px; object-fit:contain; filter:invert(1); }
   .brand-asterisk{ margin-left:-.07em; }
+  .brand-studio{
+    font-size:10px; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+    color:rgba(255,255,255,.42); margin-left:2px; padding-left:10px;
+    border-left:1px solid rgba(255,255,255,.2);
+  }
   .nav-links{ display:flex; gap:clamp(14px,2.4vw,26px); margin-left:auto; align-items:center; }
   .nav-links a{ font-size:14px; color:rgba(255,255,255,.7); transition:color .3s; white-space:nowrap; }
-  .nav-links a:hover{ color:#fff; }
+  .nav-links a:hover, .nav-links a.is-here{ color:#fff; }
   .lang-toggle{
     font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
     width:40px; height:30px; border-radius:999px; cursor:pointer; flex:0 0 auto;
@@ -91,6 +100,9 @@
   .nav-links a.nav-cta:hover{ color:#0b0f19; transform:translateY(-1px); box-shadow:0 10px 30px rgba(60,220,255,.22); }
   @media (max-width:860px){ .nav-more{ display:none; } }
   @media (max-width:720px){ .nav-cta{ display:none; } }
+  @media (max-width:620px){
+    .brand-studio{ display:none; }
+  }
 
   .scroll-progress{
     position:fixed; top:var(--safe-t); left:0; right:0; height:2px; z-index:70; pointer-events:none;
@@ -178,7 +190,11 @@
     box-sizing:border-box;
   }
   .hero-copy{ max-width:34rem; flex:0 0 auto; }
-  .hero-copy .eyebrow{ margin:0; }
+  .hero-copy .eyebrow{ margin:0; gap:8px; }
+  .hero-copy .eyebrow .ds-label + .ds-label{
+    padding-left:10px; border-left:1px solid rgba(255,255,255,.22);
+    color:rgba(255,255,255,.5);
+  }
   .hero-visual{
     perspective:1400px; width:100%; flex:0 1 auto;
     display:flex; flex-direction:column; align-items:center; min-height:0;
@@ -188,8 +204,11 @@
     width:min(56vw, 46vh, 360px);
     margin:0 auto;
     aspect-ratio:1; transform-style:preserve-3d;
-    cursor:grab; touch-action:none; user-select:none;
+    cursor:grab; touch-action:pan-y; user-select:none;
     flex:0 0 auto;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .orb{ touch-action:none; }
   }
   .orb:active{ cursor:grabbing; }
   .orb-spin{
@@ -204,21 +223,90 @@
     transform:scale(1.02);
   }
   .orb.is-drag .disc-img{ transform:scale(1.05); }
-  .hero-visual-cap{
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    text-align:center; margin:10px auto 0; max-width:36ch;
+  .disc-webgl{
+    position:absolute; inset:0; z-index:2;
+    width:100%; height:100%;
+    opacity:0; pointer-events:none;
+    transition:opacity .7s var(--ease);
   }
-  .hero-visual-cap .ds-label{ font-size:10px; color:rgba(255,255,255,.55); letter-spacing:.14em; }
-  .hero-dots{ display:flex; gap:7px; justify-content:center; margin-top:8px; }
+  .orb.is-dome3d .disc-webgl{ opacity:1; }
+  .orb.is-dome3d .orb-spin{ transform:none; will-change:auto; filter:none; }
+  .orb.is-dome3d .disc-img{ opacity:0 !important; pointer-events:none; }
+  .orb.is-dome3d .disc-rings,
+  .orb.is-dome3d .disc-ribs,
+  .orb.is-dome3d .disc-fx{ opacity:0; visibility:hidden; }
+  /* Full-landing 3D dome: leave the square disc. Canvas fills the hero. */
+  .hero:has(.orb.is-dome3d) .hero-inner{
+    max-width:none;
+    width:100%;
+    padding-left:0;
+    padding-right:0;
+  }
+  .hero:has(.orb.is-dome3d) .hero-visual{
+    perspective:none;
+    flex:1 1 auto;
+    width:100%;
+    min-height:0;
+    justify-content:flex-end;
+  }
+  .hero:has(.orb.is-dome3d) .hero-copy,
+  .hero:has(.orb.is-dome3d) .hero-dots,
+  .hero:has(.orb.is-dome3d) .hero-visual-cap{
+    position:relative;
+    z-index:5;
+    padding-left:max(var(--pad),var(--safe-l));
+    padding-right:max(var(--pad),var(--safe-r));
+  }
+  .hero:has(.orb.is-dome3d) .hero-copy,
+  .hero:has(.orb.is-dome3d) .hero-visual{
+    pointer-events:none;
+  }
+  .hero:has(.orb.is-dome3d) .hero-dots{
+    pointer-events:auto;
+  }
+  .orb.is-dome3d{
+    position:absolute;
+    inset:0;
+    width:auto !important;
+    height:auto;
+    aspect-ratio:auto;
+    margin:0;
+    z-index:1;
+    pointer-events:auto;
+    cursor:grab;
+  }
+  .orb.is-dome3d.is-drag{ cursor:grabbing; }
+  .orb.is-dome3d .orb-spin,
+  .orb.is-dome3d .disc{
+    width:100%;
+    height:100%;
+    aspect-ratio:auto;
+    border-radius:0;
+    overflow:visible;
+    background:transparent;
+    box-shadow:none;
+  }
+  .orb.is-dome3d .disc::after{ display:none; }
+  .hero-dots{ display:flex; gap:8px; justify-content:center; align-items:center; margin-top:8px; }
   .hero-dots button{
-    width:22px; height:3px; padding:8px 0; border:0; background:transparent; cursor:pointer;
+    width:auto; height:auto; padding:8px 2px; border:0; background:transparent; cursor:pointer;
   }
   .hero-dots button i{
-    display:block; width:22px; height:3px; border-radius:2px; background:rgba(255,255,255,.22);
-    transition:background .4s, width .4s, box-shadow .4s;
+    display:block; width:4px; height:4px; border-radius:999px;
+    background:rgba(255,255,255,.4);
+    box-shadow:0 0 0 1px rgba(0,0,0,.35);
+    transition:width .4s var(--ease), background .4s;
   }
   .hero-dots button[aria-current="true"] i{
-    width:34px; background:var(--spec-cyan); box-shadow:0 0 12px rgba(60,220,255,.6);
+    width:11px; background:#fff;
+  }
+  .hero-visual-cap{
+    display:block; margin:10px 0 28px; text-align:center;
+  }
+  .hero-visual-cap #orb-cap{
+    font-size:10px; font-weight:650; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.78);
+    text-shadow:0 1px 8px rgba(0,0,0,.65);
   }
   .hero h1{
     font-size:clamp(1.35rem,2.8vw,2rem); font-weight:800; letter-spacing:-.035em; line-height:1.1;
@@ -239,8 +327,8 @@
   @media (max-height:740px){
     .orb{ width:min(48vw, 34vh, 280px); }
     .hero h1{ font-size:clamp(1.2rem,2.4vw,1.7rem); margin-top:4px; }
+    .hero-dots{ margin-top:6px; }
     .hero-visual-cap{ margin-top:6px; }
-    .hero-dots{ margin-top:4px; }
     .scroll-cue{ display:none; }
   }
   @keyframes pulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
@@ -418,7 +506,7 @@
   .concept-media .disc{ max-width:clamp(260px,38vw,460px); margin:0 auto; }
   /* Editorial frame: the venue as the audience would see it. */
   .shot{
-    position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1;
+    position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:auto;
     background:#05070d; max-width:none; width:100%; margin:0;
     box-shadow:
       0 0 0 1px rgba(255,255,255,.07),
@@ -426,13 +514,11 @@
       0 0 70px color-mix(in srgb, var(--acc) 14%, transparent);
   }
   .shot img{
-    width:100%; height:100%; display:block; object-fit:cover;
-    transform:scale(1.01); transition:transform 1.4s var(--ease);
+    width:100%; height:auto; display:block; object-fit:contain;
+    transform:none;
   }
-  .concept:hover .shot img{ transform:scale(1.05); }
   .shot::after{
     content:''; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(120% 95% at 50% 2%, transparent 52%, rgba(4,6,11,.5) 100%);
     box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
   }
   .shot-tag{
@@ -442,6 +528,240 @@
   }
   .shot-tag .ds-label{ font-size:9px; color:rgba(255,255,255,.72); }
 
+  /* Concept 02 — Día de Muertos trio. Safe to delete with .shot-trio. */
+  .shot-trio{
+    display:grid; grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:3px; height:auto; background:#05070d;
+  }
+  .shot-trio .trio-cell, .shot-duo .trio-cell{
+    position:relative; overflow:hidden; min-width:0; min-height:0;
+  }
+  .shot-trio .trio-a{ grid-column:1 / -1; }
+  .shot-trio img, .shot-duo img{
+    position:static; width:100%; height:auto; display:block; object-fit:contain;
+    transform:none;
+  }
+
+  /* Concept 01 — whale image left, live data right. */
+  .concept.is-whale{
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    align-items:start;
+  }
+  .concept.is-whale .shot{ aspect-ratio:auto; height:auto; min-height:0; }
+  .concept.is-whale .shot img{ object-position:center; }
+  .concept.is-whale .data-how{ max-width:none; padding:14px; }
+  .whale-panel .whale-map{
+    position:relative; margin-top:12px; aspect-ratio:16/9; min-height:148px;
+    border-radius:12px; overflow:hidden;
+    border:1px solid color-mix(in srgb, var(--acc) 28%, transparent);
+    background:
+      radial-gradient(ellipse at 82% 88%, rgba(60,220,255,.2) 0%, transparent 48%),
+      radial-gradient(ellipse at 18% 18%, rgba(60,220,255,.1) 0%, transparent 42%),
+      #05070d;
+  }
+  .whale-panel .whale-map svg{
+    position:absolute; inset:10% 6% 16% 6%; width:auto; height:auto;
+  }
+  .whale-signals{
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px; margin-top:10px;
+  }
+  .whale-sig{
+    padding:8px 8px 10px; border-radius:10px;
+    border:1px solid var(--d-line-2); background:rgba(4,6,11,.45);
+    color:var(--acc);
+  }
+  .whale-sig svg{ width:100%; height:42px; display:block; overflow:visible; }
+  .whale-sig em{
+    display:block; margin-top:6px; font-style:normal;
+    font-size:9px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:rgba(255,255,255,.7);
+  }
+  .whale-stats{
+    display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;
+  }
+  .whale-stat{
+    padding:10px 12px; border:1px solid var(--d-line-2); background:rgba(255,255,255,.03);
+  }
+  .whale-stat b{
+    display:block; font-size:clamp(1.05rem,2vw,1.35rem); font-weight:700;
+    letter-spacing:-.03em; color:#fff; font-variant-numeric:tabular-nums;
+  }
+  .whale-stat span{
+    display:block; margin-top:3px; font-size:10px; font-weight:600;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--spec-cyan);
+  }
+  .whale-eq{ transform-box:fill-box; transform-origin:center bottom; animation:whale-eq 1.05s ease-in-out infinite; }
+  .whale-eq:nth-child(2){ animation-delay:.12s; }
+  .whale-eq:nth-child(3){ animation-delay:.24s; }
+  .whale-eq:nth-child(4){ animation-delay:.36s; }
+  .whale-eq:nth-child(5){ animation-delay:.18s; }
+  .whale-arc{
+    stroke-dasharray:70; stroke-dashoffset:42;
+    animation:whale-arc 2.8s ease-in-out infinite;
+  }
+  .whale-tide{ animation:whale-tide 3.2s ease-in-out infinite; }
+  @keyframes whale-eq{
+    0%,100%{ transform:scaleY(.32); }
+    50%{ transform:scaleY(1); }
+  }
+  @keyframes whale-arc{
+    0%,100%{ stroke-dashoffset:48; }
+    50%{ stroke-dashoffset:16; }
+  }
+  @keyframes whale-tide{
+    0%,100%{ transform:translateY(7px); }
+    50%{ transform:translateY(-3px); }
+  }
+  .whale-dash{
+    stroke-dasharray:5 8;
+    animation:whale-dash 2.2s linear infinite;
+  }
+  @keyframes whale-dash{ to{ stroke-dashoffset:-39; } }
+  .concept .whale-map-from,.concept .whale-map-to{
+    position:absolute; z-index:1; margin:0; max-width:none;
+    font-size:8.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    line-height:1.3;
+  }
+  .concept .whale-map-from{ top:11px; left:12px; color:#3CDCFF; }
+  .concept .whale-map-to{ right:12px; bottom:11px; color:#fff; text-align:right; }
+
+  .trio-cap{
+    position:absolute; left:8px; bottom:8px; z-index:1;
+    font-size:8.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    padding:4px 8px; border-radius:999px; pointer-events:none;
+    background:rgba(4,6,11,.62); border:1px solid rgba(255,255,255,.12); color:#fff;
+  }
+
+  /* Concept 02 — contained images + live data. */
+  .concept.is-muertos{
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    align-items:start;
+    overflow:hidden;
+  }
+  .concept.is-muertos:nth-child(even) .concept-media{ order:0; }
+  .concept.is-muertos .shot{
+    aspect-ratio:auto; height:auto; overflow:hidden;
+  }
+  .concept.is-muertos .shot-duo{
+    height:auto; min-height:0;
+    border-radius:inherit;
+  }
+  .concept.is-muertos .whale-stat span{ color:var(--acc); }
+  .muertos-map{
+    position:relative; margin-top:12px; aspect-ratio:16/9; min-height:148px;
+    border-radius:12px; overflow:hidden;
+    border:1px solid color-mix(in srgb, var(--acc) 28%, transparent);
+    background:
+      radial-gradient(ellipse at 78% 30%, rgba(255,46,138,.2) 0%, transparent 48%),
+      radial-gradient(ellipse at 18% 80%, rgba(255,46,138,.1) 0%, transparent 42%),
+      #05070d;
+  }
+  .muertos-map svg{ position:absolute; inset:8% 5% 14% 5%; width:auto; height:auto; overflow:visible; }
+  .muertos-from,.muertos-mid,.muertos-to{
+    position:absolute; z-index:1; margin:0; max-width:none;
+    font-size:8.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; line-height:1.3;
+  }
+  .muertos-from{ top:10px; left:12px; color:#FF2E8A; }
+  .muertos-mid{ top:10px; left:50%; transform:translateX(-50%); color:rgba(255,255,255,.7); }
+  .muertos-to{ right:12px; bottom:10px; color:#fff; text-align:right; }
+  .muertos-iris{ transform-box:fill-box; transform-origin:center; animation:muertos-iris 2.4s ease-in-out infinite; }
+  .muertos-shutter{ transform-box:fill-box; transform-origin:center; animation:muertos-shutter 7s linear infinite; }
+  .muertos-petal{ animation:muertos-petal 3.4s ease-in-out infinite; }
+  .muertos-petal:nth-child(2){ animation-delay:.5s; }
+  .muertos-petal:nth-child(3){ animation-delay:1s; }
+  .muertos-face{ animation:muertos-face 2.6s ease-in-out infinite; }
+  .muertos-face:nth-child(2){ animation-delay:.4s; }
+  .muertos-face:nth-child(3){ animation-delay:.8s; }
+  @keyframes muertos-iris{
+    0%,100%{ transform:scale(.55); opacity:.4; }
+    50%{ transform:scale(1); opacity:1; }
+  }
+  @keyframes muertos-shutter{ to{ transform:rotate(360deg); } }
+  @keyframes muertos-petal{
+    0%,100%{ transform:translateY(4px) rotate(-8deg); opacity:.45; }
+    50%{ transform:translateY(-6px) rotate(10deg); opacity:1; }
+  }
+  @keyframes muertos-face{
+    0%,100%{ opacity:.25; }
+    45%{ opacity:1; }
+  }
+
+  /* Concept 02 — graphic data-art rite. Safe to delete with .rite-flow. */
+  .rite-flow{ padding-bottom:14px; }
+  .rite-steps{
+    list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:0;
+  }
+  .rite-steps li{
+    display:grid; grid-template-columns:28px minmax(0,1fr); gap:10px; align-items:center;
+    position:relative; padding:7px 0;
+  }
+  .rite-steps li + li::before{
+    content:''; position:absolute; left:13px; top:-6px; width:1px; height:12px;
+    background:color-mix(in srgb, var(--acc) 55%, transparent);
+  }
+  .rite-ico{
+    width:28px; height:28px; border-radius:8px;
+    display:grid; place-items:center; color:var(--acc);
+    border:1px solid color-mix(in srgb, var(--acc) 55%, transparent);
+    background:color-mix(in srgb, var(--acc) 12%, transparent);
+  }
+  .rite-ico svg{ width:15px; height:15px; display:block; }
+  .rite-steps .rite-label{
+    font-size:.86rem; line-height:1.35; color:rgba(255,255,255,.86);
+  }
+
+  .shot-duo{
+    display:grid; grid-template-columns:1fr;
+    grid-template-rows:auto auto;
+    gap:3px; height:auto; background:#05070d;
+  }
+  .data-how-row{
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(96px,.95fr);
+    gap:10px; align-items:center; margin-top:8px;
+  }
+  .data-how-row .rite-steps{ margin:0; }
+  .data-map-inline{
+    aspect-ratio:16/10; min-height:84px; border-radius:12px;
+    border:1px solid color-mix(in srgb, var(--acc) 28%, transparent);
+  }
+  .data-map-inline svg{ width:92%; }
+  @media (max-width:860px){
+    .data-how-row{ grid-template-columns:1fr; }
+    .data-map-inline{ min-height:100px; }
+  }
+
+  /* Concept 03 — Data Dome flow. Safe to delete with .data-map. */
+  .data-map{
+    display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(ellipse at 78% 52%, rgba(155,122,255,.22) 0%, transparent 42%),
+      #05070d;
+  }
+  .data-map svg{ width:90%; height:auto; overflow:visible; position:relative; z-index:0; }
+  .flow-dash{
+    stroke-dasharray:6 10;
+    animation:flow-dash 1.6s linear infinite;
+  }
+  .flow-node{ animation:flow-node 2.8s ease-in-out infinite; }
+  .flow-node:nth-child(1){ animation-delay:0s; }
+  .flow-dome{ animation:flow-dome 2.8s ease-in-out infinite; }
+  .flow-glow{ animation:flow-glow 2.8s ease-in-out infinite; }
+  @keyframes flow-dash{ to{ stroke-dashoffset:-32; } }
+  @keyframes flow-node{
+    0%,100%{ opacity:.45; }
+    40%{ opacity:1; }
+  }
+  @keyframes flow-dome{
+    0%,100%{ opacity:.7; }
+    55%{ opacity:1; }
+  }
+  @keyframes flow-glow{
+    0%,100%{ opacity:.2; }
+    55%{ opacity:.55; }
+  }
+
   /* Changeable / nomadic content — the argument that follows the concepts. */
   .nomad{
     margin-top:clamp(54px,8vw,104px); display:grid; gap:1px;
@@ -450,9 +770,126 @@
   }
   .nomad-i{ background:var(--d-0); padding:clamp(24px,3vw,34px); }
   .nomad-i .ds-label{ font-size:9.5px; color:var(--spec-cyan); }
-  .nomad-i h3{ font-size:1.05rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:12px 0 0; }
-  .nomad-i p{ margin:10px 0 0; font-size:.9rem; line-height:1.5; color:var(--d-ink-2); max-width:36ch; }
+  .nomad-i .sym{ margin-top:18px; color:var(--spec-cyan); }
+  .nomad-i h3{ font-size:1.05rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:14px 0 0; }
+  .nomad-i p{ display:none; }
   @media (max-width:880px){ .nomad{ grid-template-columns:1fr; } }
+
+  .concept.is-jalisco{
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+    align-items:start;
+    gap:clamp(20px,3.6vw,48px);
+  }
+  .concept.is-jalisco:nth-child(even){
+    grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+  }
+  .concept.is-jalisco:nth-child(even) .concept-media{ order:0; }
+  .concept.is-jalisco .shot{
+    aspect-ratio:1;
+    width:100%;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+  }
+  .concept.is-jalisco .shot::after{ content:none; }
+  .concept.is-jalisco .shot img{
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    object-position:center;
+    max-height:none;
+    display:block;
+  }
+  .concept.is-jalisco > div:not(.concept-media){
+    display:block;
+  }
+  .concept.is-jalisco .data-how{
+    max-width:none;
+    margin-top:12px;
+  }
+  .concept.is-jalisco .data-how-row{
+    grid-template-columns:minmax(0,.9fr) minmax(140px,1.1fr);
+  }
+  .concept.is-jalisco .data-map-inline{ min-height:140px; }
+  .jalisco-map{
+    background:
+      radial-gradient(ellipse at 80% 70%, rgba(255,138,60,.2) 0%, transparent 48%),
+      #05070d;
+  }
+  .concept.is-data:nth-child(even) .concept-media{ order:0; }
+  .concept.is-data{ align-items:start; }
+  @media (max-width:860px){
+    .concept.is-jalisco,
+    .concept.is-jalisco:nth-child(even){ grid-template-columns:1fr; }
+    .concept.is-jalisco .data-how-row{ grid-template-columns:1fr; }
+  }
+
+  .sym{
+    width:56px; height:56px; flex:0 0 auto;
+    color:currentColor;
+  }
+  .sym svg{ width:100%; height:100%; display:block; overflow:visible; }
+  .sym .sym-spin,.sym .sym-orbit,.sym .sym-orbit-r,.sym .sym-ripple,.sym .sym-ping,.sym .sym-tick{
+    transform-box:view-box; transform-origin:center;
+  }
+  .jalisco-map .sym-spin,.jalisco-map .sym-breathe{
+    transform-box:fill-box; transform-origin:center;
+  }
+  .sym-spin{ animation:sym-spin 14s linear infinite; }
+  .sym-breathe{ animation:sym-breathe 2.6s ease-in-out infinite; }
+  .sym-orbit{ animation:sym-orbit 9s linear infinite; }
+  .sym-orbit-r{ animation:sym-orbit 13s linear infinite reverse; }
+  .sym-slide{ animation:sym-slide 2.8s ease-in-out infinite; }
+  .sym-ripple{ animation:sym-ripple 2.5s ease-out infinite; }
+  .sym-ripple-2{ animation-delay:.9s; }
+  .sym-wind{ animation:sym-wind 1.7s linear infinite; }
+  .sym-wind-2{ animation-delay:.4s; }
+  .sym-wind-3{ animation-delay:.85s; }
+  .sym-ping{ animation:sym-ping 2.3s ease-out infinite; }
+  .sym-tick{ animation:sym-tick 3s ease-in-out infinite; }
+  .sym-pick{ animation:sym-pick 2.4s ease-in-out infinite; }
+  .sym-d1{ animation-delay:.8s; }
+  .sym-d2{ animation-delay:1.6s; }
+  .sym-draw{
+    stroke-dasharray:90; stroke-dashoffset:90;
+    animation:sym-draw 2.2s linear infinite;
+  }
+  .sym-hem{
+    stroke-dasharray:70; stroke-dashoffset:70;
+    animation:sym-draw 2.8s ease-in-out infinite;
+  }
+  @keyframes sym-spin{ to{ transform:rotate(360deg); } }
+  @keyframes sym-breathe{
+    0%,100%{ opacity:.45; transform:scaleY(.92); }
+    50%{ opacity:1; transform:scaleY(1); }
+  }
+  @keyframes sym-orbit{ to{ transform:rotate(360deg); } }
+  @keyframes sym-slide{
+    0%,100%{ transform:translateX(-6px); }
+    50%{ transform:translateX(6px); }
+  }
+  @keyframes sym-ripple{
+    0%{ opacity:.7; transform:scale(.55); }
+    100%{ opacity:0; transform:scale(1.35); }
+  }
+  @keyframes sym-wind{
+    0%{ transform:translateX(-8px); opacity:0; }
+    30%{ opacity:1; }
+    100%{ transform:translateX(10px); opacity:0; }
+  }
+  @keyframes sym-ping{
+    0%{ opacity:.8; transform:scale(.7); }
+    100%{ opacity:0; transform:scale(1.4); }
+  }
+  @keyframes sym-tick{
+    0%,100%{ transform:rotate(-40deg); }
+    50%{ transform:rotate(50deg); }
+  }
+  @keyframes sym-pick{
+    0%,100%{ opacity:.25; }
+    40%{ opacity:1; }
+  }
+  @keyframes sym-draw{ to{ stroke-dashoffset:0; } }
 
   /* ── Data art — how live data becomes the dome ── */
   .dataart{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
@@ -463,18 +900,17 @@
   }
   .dataart-map{ list-style:none; margin:28px 0 0; padding:0; display:grid; gap:10px; }
   .dataart-map li{
-    display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1.2fr);
-    gap:12px; align-items:center;
+    display:flex; align-items:center; gap:14px;
     padding:12px 14px; border:1px solid var(--d-line-2); background:rgba(255,255,255,.03);
+    color:var(--spec-cyan);
   }
+  .dataart-map .sym{ width:48px; height:48px; }
   .dataart-map .from{ font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--spec-cyan); }
-  .dataart-map .arrow{ color:rgba(255,255,255,.35); font-size:14px; }
-  .dataart-map .to{ font-size:.92rem; color:var(--d-ink-2); line-height:1.4; }
   .dataart-note{
     margin:18px 0 0; font-size:12.5px; line-height:1.5; color:var(--d-ink-3); max-width:48ch;
   }
   .dataart-fig{ margin:0; position:relative; overflow:hidden; background:#05070d; border:1px solid var(--d-line-2); }
-  .dataart-fig img{ width:100%; height:min(48vh,420px); object-fit:cover; display:block; }
+  .dataart-fig img{ width:100%; height:auto; object-fit:contain; display:block; }
   .dataart-fig figcaption{
     position:absolute; left:0; right:0; bottom:0; padding:16px 18px;
     background:linear-gradient(transparent, rgba(4,6,11,.9));
@@ -485,15 +921,15 @@
     display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px;
     background:var(--d-line-2); border:1px solid var(--d-line-2);
   }
-  .dataart-steps article{ background:var(--d-0); padding:clamp(18px,2.4vw,26px); }
+  .dataart-steps article{ background:var(--d-0); padding:clamp(18px,2.4vw,26px); color:var(--spec-cyan); }
   .dataart-steps .n{ display:block; font-size:10px; font-weight:700; letter-spacing:.16em; color:var(--spec-cyan); }
-  .dataart-steps h3{ margin:10px 0 0; font-size:1.05rem; color:#fff; letter-spacing:-.02em; }
-  .dataart-steps p{ margin:8px 0 0; font-size:.9rem; line-height:1.5; color:var(--d-ink-2); }
+  .dataart-steps .sym{ margin:12px 0 0; }
+  .dataart-steps h3{ margin:12px 0 0; font-size:1.05rem; color:#fff; letter-spacing:-.02em; }
+  .dataart-steps p{ display:none; }
   @media (max-width:860px){
     .dataart-grid{ grid-template-columns:1fr; }
-    .dataart-fig img{ height:240px; }
-    .dataart-map li{ grid-template-columns:1fr; gap:4px; }
-    .dataart-map .arrow{ display:none; }
+    .dataart-fig img{ height:auto; }
+    .dataart-map li{ gap:10px; }
     .dataart-steps{ grid-template-columns:1fr; }
   }
 
@@ -523,78 +959,12 @@
     .concept{ grid-template-columns:1fr; gap:26px; }
     .concept:nth-child(even) .concept-media{ order:0; }
     .concept-media .disc{ max-width:min(340px,72vw); }
+    .concept.is-jalisco:nth-child(even),
+    .concept.is-whale,
+    .concept.is-muertos,
+    .concept.is-data{ grid-template-columns:1fr; }
   }
 
-  /* ══════════════════════════════════════════
-     5 · INTERACTIVITY
-     ══════════════════════════════════════════ */
-  .inter{ background:var(--d-1); border-top:1px solid var(--d-line-2); }
-  .inter-media{
-    position:relative; margin:clamp(34px,5vw,56px) 0 0; border-radius:var(--r-xl); overflow:hidden;
-    aspect-ratio:16/8; background:#05070d; border:1px solid var(--d-line-2);
-  }
-  .inter-media video,.inter-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .inter-media video{ opacity:0; transition:opacity .8s ease; }
-  .inter-media video.is-loaded{ opacity:1; }
-  .inter-media figcaption{
-    position:absolute; z-index:2; left:0; right:0; bottom:0;
-    padding:clamp(20px,3vw,30px);
-    background:linear-gradient(transparent, rgba(4,6,11,.86));
-  }
-  .inter-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
-  .inter-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:52ch; }
-  .inter-carousel{
-    margin-top:clamp(18px,2.4vw,28px); position:relative;
-  }
-  .inter-carousel-head{
-    display:flex; align-items:center; justify-content:flex-end; gap:10px; margin-bottom:12px;
-  }
-  .inter-carousel-btn{
-    width:42px; height:42px; border-radius:999px; cursor:pointer; flex:0 0 auto;
-    border:1px solid var(--d-line); background:rgba(255,255,255,.04); color:#fff;
-    display:inline-flex; align-items:center; justify-content:center;
-    transition:background .3s, border-color .3s, opacity .3s, transform .3s var(--ease);
-  }
-  .inter-carousel-btn:hover{ background:rgba(255,255,255,.11); border-color:#fff; }
-  .inter-carousel-btn:disabled{ opacity:.3; cursor:default; }
-  .inter-carousel-btn svg{ width:17px; height:17px; }
-  .inter-track{
-    display:flex; gap:0; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
-    scrollbar-width:none; -ms-overflow-style:none;
-    border-radius:var(--r-xl); border:1px solid var(--d-line-2); background:#05070d;
-  }
-  .inter-track::-webkit-scrollbar{ display:none; }
-  .inter-slide{
-    margin:0; position:relative; flex:0 0 100%; scroll-snap-align:start; scroll-snap-stop:always;
-    aspect-ratio:16/10; min-height:min(62svh,520px); overflow:hidden;
-  }
-  .inter-slide img{ width:100%; height:100%; display:block; object-fit:cover; }
-  .inter-slide figcaption{
-    position:absolute; left:0; right:0; bottom:0; z-index:2;
-    padding:clamp(22px,3.5vw,40px);
-    background:linear-gradient(transparent, rgba(4,6,11,.9));
-  }
-  .inter-slide .ds-label{ font-size:10px; color:rgba(255,255,255,.7); }
-  .inter-slide h3{
-    font-size:clamp(1.35rem,2.8vw,2.1rem); font-weight:700; letter-spacing:-.03em;
-    color:#fff; margin:10px 0 0; max-width:18ch;
-  }
-  .inter-slide p{
-    font-size:clamp(.95rem,1.4vw,1.08rem); line-height:1.5;
-    color:rgba(255,255,255,.82); margin:10px 0 0; max-width:42ch;
-  }
-  .inter-dots{
-    display:flex; justify-content:center; gap:8px; margin-top:16px;
-  }
-  .inter-dots button{
-    width:8px; height:8px; border-radius:999px; border:0; padding:0; cursor:pointer;
-    background:rgba(255,255,255,.28); transition:background .3s, transform .3s var(--ease);
-  }
-  .inter-dots button[aria-current="true"]{ background:#3CDCFF; transform:scale(1.25); }
-  @media (max-width:720px){
-    .inter-carousel-head{ display:none; }
-    .inter-slide{ aspect-ratio:4/5; min-height:0; }
-  }
   /* ══════════════════════════════════════════
      5b · HOW IT WORKS — cameras, data, pipeline
      ══════════════════════════════════════════ */
@@ -644,9 +1014,9 @@
   .how-note p{ font-size:.88rem; line-height:1.6; color:var(--d-ink-2); margin:0; }
   .how-media{
     position:relative; margin:clamp(34px,5vw,56px) 0 0; border-radius:var(--r-xl); overflow:hidden;
-    aspect-ratio:16/8; background:#05070d; border:1px solid var(--d-line-2);
+    aspect-ratio:auto; background:#05070d; border:1px solid var(--d-line-2);
   }
-  .how-media video,.how-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .how-media video,.how-media img{ position:static; width:100%; height:auto; object-fit:contain; display:block; }
   .how-media video{ opacity:0; transition:opacity .8s ease; }
   .how-media video.is-loaded{ opacity:1; }
   .how-media figcaption{
@@ -836,10 +1206,10 @@
   }
   .proof:hover{ transform:translateY(-6px); box-shadow:var(--shadow-lift); }
   .proof-media{ position:relative; aspect-ratio:16/10; overflow:hidden; background:var(--surface); }
-  .proof-media img,.proof-media video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease), opacity .5s ease; }
+  .proof-media img,.proof-media video{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#111; transition:opacity .5s ease; }
   .proof-media video{ opacity:0; }
   .proof-media video.is-loaded{ opacity:1; }
-  .proof:hover .proof-media img,.proof:hover .proof-media video{ transform:scale(1.05); }
+  .proof:hover .proof-media img,.proof:hover .proof-media video{ transform:none; }
   .badge{
     position:absolute; z-index:2; top:12px; left:12px;
     padding:5px 11px; border-radius:999px; font-size:9.5px; font-weight:600;
@@ -903,6 +1273,54 @@
   .foot-links a{ font-size:13px; font-weight:500; color:var(--d-ink-2); transition:color .3s; }
   .foot-links a:hover{ color:#fff; }
 
+  /* ══════════════════════════════════════════
+     SPATIAL FIELD — isolated 3D "cubes" scene.
+     Delete this block + #espacialidad + js/spatial-field.js to remove it.
+     ══════════════════════════════════════════ */
+  .spatial{ background:var(--d-0); border-top:1px solid var(--d-line-2); }
+  .spatial .sec-lead :where(strong){ color:#fff; font-weight:600; }
+  .spatial-stage{
+    position:relative;
+    width:min(100%, 820px);
+    margin:clamp(36px,5vw,56px) auto 0;
+    aspect-ratio:1;
+    max-height:min(78vh, 720px);
+    border-radius:50%;
+    overflow:hidden;
+    isolation:isolate;
+    background:
+      radial-gradient(circle at 50% 42%, #0c1a28 0%, #070c14 52%, #04060b 78%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.08),
+      0 0 80px rgba(60,220,255,.12),
+      inset 0 0 90px rgba(0,0,0,.5);
+    cursor:pointer;
+  }
+  .spatial-stage canvas{
+    position:absolute; inset:0; width:100%; height:100%; display:block;
+  }
+  .spatial-tip{
+    position:absolute; z-index:3;
+    transform:translate(-50%, calc(-100% - 12px));
+    padding:8px 14px; border-radius:999px;
+    background:rgba(4,6,11,.78); border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    color:#fff; font-size:12px; font-weight:600; letter-spacing:.04em;
+    white-space:nowrap; pointer-events:none; max-width:min(80%, 280px);
+    overflow:hidden; text-overflow:ellipsis;
+  }
+  .spatial-fallback{ position:absolute; inset:0; pointer-events:none; }
+  .spatial-fallback i{
+    position:absolute; display:block;
+    border:1px solid rgba(158,233,255,.38);
+    background:rgba(60,220,255,.08);
+    box-shadow:0 0 18px rgba(60,220,255,.12);
+  }
+  .spatial-fallback i.s{ border-radius:50%; }
+  .spatial-fallback i.w{ background:transparent; }
+  .spatial-fallback i:nth-child(3n){ border-color:rgba(246,240,228,.28); background:rgba(246,240,228,.06); }
+  .spatial-fallback i:nth-child(4n){ border-color:rgba(26,163,138,.45); background:rgba(26,163,138,.08); }
+
   /* ── Scroll reveal (Apple-style: rise + settle) ── */
   .reveal{
     opacity:0; transform:translateY(30px);
@@ -917,26 +1335,31 @@
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
-    .disc-ribs,.opp-glow,.hero-visual-cap .pulse,.scroll-cue i{ animation:none; }
+    .disc-ribs,.opp-glow,.hero-visual-cap .pulse,.scroll-cue i,
+    .flow-dash,.flow-node,.flow-dome,.flow-glow,.whale-dash,.whale-eq,.whale-arc,.whale-tide,
+    .muertos-iris,.muertos-shutter,.muertos-petal,.muertos-face,
+    .sym-spin,.sym-breathe,.sym-orbit,.sym-orbit-r,.sym-slide,
+    .sym-ripple,.sym-wind,.sym-ping,.sym-tick,.sym-pick,.sym-draw,.sym-hem{ animation:none; }
     .rail{ scroll-behavior:auto; }
     .cap,.mod,.proof,.step-row,.rail-item{ transition:none; }
     .cap:hover,.mod:hover,.proof:hover,.step-row:hover,.rail-item:hover{ transform:none; }
+    .spatial-fallback i{ box-shadow:none; }
   }
 </style>
 </head>
 <body data-brand="andata">
 
 <header class="nav">
-  <a class="brand" href="../" aria-label="Andata Lab — inicio">
+  <a class="brand" href="../" aria-label="Andata Lab">
     <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
   </a>
   <nav class="nav-links" aria-label="Navegación principal">
-    <a href="#experiencias" data-i18n="nav_stories">Historias</a>
-    <a class="nav-more" href="#data-art" data-i18n="nav_data">Data art</a>
     <a href="../#work" data-i18n="nav_work">Proyectos</a>
-    <a class="nav-more" href="#capacidades" data-i18n="nav_caps">Capacidades</a>
+    <a class="is-here" href="./" data-i18n="nav_dome">Dome Studio</a>
+    <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+    <a href="../#process" data-i18n="nav_process">Proceso</a>
     <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Cambiar idioma">EN</button>
-    <a class="nav-cta" href="#contacto" data-i18n="nav_cta">Hablemos</a>
+    <a class="nav-cta" href="../#contact" data-i18n="cta_start">Inicia un proyecto</a>
   </nav>
 </header>
 <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
@@ -958,7 +1381,7 @@
 
     <div class="hero-inner wrap">
       <div class="hero-copy">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">Andata Lab*</span><span class="ds-label">Dome Studio</span></span>
         <h1 class="reveal reveal-d1">
           <span class="l" data-i18n="h_t1">Contenido vivo</span>
           <span class="l l2" data-i18n="h_t2">para espacios inmersivos</span>
@@ -966,9 +1389,10 @@
       </div>
 
       <div class="hero-visual reveal reveal-d1">
-        <div class="orb" id="orb" role="img" aria-label="Cúpula interactiva. Click para cambiar historia. Arrastra para girarla.">
+        <div class="orb" id="orb" role="img" aria-label="Cúpula interactiva 360">
           <div class="orb-spin" id="orb-spin">
             <div class="disc is-filled" style="--acc:#3CDCFF">
+              <canvas class="disc-webgl" id="orb-webgl" aria-hidden="true"></canvas>
               <img class="disc-img" id="orb-img" src="img/dome-whale-concept.jpg" width="1024" height="1024"
                    alt="Visualización conceptual: ballena monumental en formato domemaster">
               <canvas class="disc-fx" aria-hidden="true"></canvas>
@@ -977,21 +1401,18 @@
             </div>
           </div>
         </div>
-        <p class="hero-visual-cap">
-          <span class="ds-label" id="orb-cap" data-i18n="c1_t">Viaje de las Ballenas</span>
-        </p>
-        <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Historias en la cúpula">
-          <button type="button" aria-current="true" aria-label="Viaje de las Ballenas"><i></i></button>
-          <button type="button" aria-label="Memoria Viva"><i></i></button>
-          <button type="button" aria-label="El Destino Vivo"><i></i></button>
-          <button type="button" aria-label="Data Dome"><i></i></button>
+        <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Capacidades">
+          <button type="button" aria-current="true" aria-label="Projection Mapping"><i></i></button>
+          <button type="button" aria-label="Interactive Installation"><i></i></button>
+          <button type="button" aria-label="3D Animation"><i></i></button>
+          <button type="button" aria-label="360 Production"><i></i></button>
+          <button type="button" aria-label="Audiovisual Sound Systems"><i></i></button>
         </div>
+        <p class="hero-visual-cap">
+          <span id="orb-cap">Projection Mapping</span>
+        </p>
       </div>
 
-      <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Click para cambiar · arrastra para girar</p>
-      <div class="hero-cta reveal reveal-d3">
-        <a class="btn btn-primary" href="#contacto" data-i18n="h_cta1">Hablemos de tu espacio</a>
-      </div>
     </div>
 
     <a class="scroll-cue" href="#experiencias" aria-label="Bajar a las historias">
@@ -1005,97 +1426,337 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="con_eyebrow">Historias</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="con_title">Cuatro historias. Un recinto.</h2>
-        <div class="honest reveal reveal-d2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-          <p data-i18n="con_tag">Propuestas de dirección creativa — se cambian, no se construyen.</p>
-        </div>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="con_title">Un recinto. Muchos universos.</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="con_kicker">Estos son 4 ejemplos de una programación que se renueva cada temporada — un momento importante del año, convertido en experiencia propia dentro de la cúpula.</p>
       </div>
 
       <div class="concept-list">
-        <!-- Concept 01 -->
-        <article class="concept reveal" style="--acc:#3CDCFF">
+        <!-- Concept 01 — Viaje de las Jorobadas -->
+        <article class="concept is-whale reveal" style="--acc:#3CDCFF">
           <div class="concept-media">
             <figure class="shot">
               <img src="img/dome-whale-concept.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: una ballena monumental atraviesa la cúpula mientras el público la observa desde el suelo del domo">
-              <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+                   alt="Una ballena jorobada monumental recorre la cúpula mientras el público la observa desde el suelo del domo">
             </figure>
           </div>
-          <div>
+          <div class="whale-panel">
             <span class="concept-n" data-i18n="cn1">Concepto 01</span>
-            <h3 data-i18n="c1_t">Viaje de las Ballenas</h3>
-            <p data-i18n="c1_d">Una travesía inmersiva por el océano donde ballenas monumentales y sonido espacial envuelven al público.</p>
-            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c1_data">Marea, corrientes y clima se interpretan como ritmo del agua, brillo bioluminiscente y deriva de las ballenas — no como gráficos, sino como atmósfera artística en la cúpula.</span></p>
-            <div class="concept-chips">
-              <span class="chip" data-i18n="c1_k1">Océano y bioluminiscencia</span>
-              <span class="chip" data-i18n="c1_k2">Audio espacial</span>
-              <span class="chip" data-i18n="c1_k3">Datos ambientales</span>
+            <h3 data-i18n="c1_t">Viaje de las Jorobadas</h3>
+            <div class="data-how rite-flow">
+              <b data-i18n="c_data_l">Cómo usamos data art</b>
+              <div class="whale-map" role="img" aria-label="Migración: del Pacífico Norte a Bahía de Banderas">
+                <svg viewBox="0 0 400 200" fill="none" aria-hidden="true">
+                  <path d="M18 20 H382 M18 180 H382 M40 8 V192" stroke="rgba(60,220,255,.12)" stroke-width=".8"/>
+                  <path id="c1-route" class="whale-dash" d="M36 52 C 120 28, 230 78, 360 148" stroke="#3CDCFF" stroke-width="1.7" stroke-linecap="round"/>
+                  <circle cx="36" cy="52" r="5" fill="#3CDCFF"/>
+                  <circle cx="36" cy="52" r="10" stroke="#3CDCFF" stroke-width="1" opacity=".35"/>
+                  <circle cx="360" cy="148" r="6" fill="#fff"/>
+                  <circle cx="360" cy="148" r="12" stroke="#3CDCFF" stroke-width="1" opacity=".45"/>
+                  <g>
+                    <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+                      <mpath href="#c1-route"/>
+                    </animateMotion>
+                    <path d="M-16 0 C-9 -7 -2 -8 7 -2 C12 -1 16 0 20 2 C14 6 6 7 -1 5 C-8 3 -13 2 -16 0Z" fill="#3CDCFF"/>
+                    <path d="M-11 -1 C-14 -7 -9 -9 -6 -3" stroke="#05070d" stroke-width=".9" fill="none"/>
+                  </g>
+                </svg>
+                <p class="whale-map-from" data-i18n="c1_from">Pacífico Norte</p>
+                <p class="whale-map-to" data-i18n="c1_to">Bahía de Banderas</p>
+              </div>
+              <div class="whale-signals">
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <path d="M4 32 H60" stroke="currentColor" opacity=".35"/>
+                    <g class="whale-tide">
+                      <path d="M4 26 C12 18 20 34 28 26 S44 18 52 26 60 34 64 26" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                      <path d="M4 32 C14 38 22 28 32 34 S50 38 64 30" stroke="currentColor" stroke-width="1.1" opacity=".55" stroke-linecap="round"/>
+                    </g>
+                  </svg>
+                  <em data-i18n="c1_sig1">Marea</em>
+                </div>
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <circle cx="32" cy="24" r="14" stroke="currentColor" opacity=".28"/>
+                    <path class="whale-arc" d="M20 32 a14 14 0 0 1 24-16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="32" cy="24" r="3" fill="currentColor"/>
+                  </svg>
+                  <em data-i18n="c1_sig2">Temperatura</em>
+                </div>
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <rect class="whale-eq" x="12" y="10" width="5" height="24" rx="1" fill="currentColor"/>
+                    <rect class="whale-eq" x="22" y="6" width="5" height="28" rx="1" fill="currentColor"/>
+                    <rect class="whale-eq" x="32" y="12" width="5" height="22" rx="1" fill="currentColor"/>
+                    <rect class="whale-eq" x="42" y="8" width="5" height="26" rx="1" fill="currentColor"/>
+                    <rect class="whale-eq" x="52" y="14" width="5" height="20" rx="1" fill="currentColor"/>
+                  </svg>
+                  <em data-i18n="c1_sig3">Canto</em>
+                </div>
+              </div>
+              <div class="whale-stats">
+                <div class="whale-stat">
+                  <b data-i18n="c1_n1">8–10 mil km</b>
+                  <span data-i18n="c1_n1_l">Ruta migratoria</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c1_n2">~500</b>
+                  <span data-i18n="c1_n2_l">Jorobadas / temporada</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c1_n3">22–25 °C</b>
+                  <span data-i18n="c1_n3_l">Agua de cría</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c1_n4">Dic–Mar</b>
+                  <span data-i18n="c1_n4_l">Temporada en Vallarta</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <!-- Concept 02 -->
-        <article class="concept reveal" style="--acc:#FF2E8A">
+        <!-- Concept 02 — Día de Muertos -->
+        <article class="concept is-muertos reveal" style="--acc:#FF2E8A">
           <div class="concept-media">
-            <figure class="shot">
-              <img src="img/dome-memory-concept.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: retratos compartidos por el público giran en la cúpula sobre una celebración de Día de Muertos">
-              <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            <figure class="shot shot-duo">
+              <div class="trio-cell">
+                <img src="img/dome-memory-concept.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                     alt="Espectáculo inmersivo de Día de Muertos en la cúpula: el relato envuelve a la sala">
+              </div>
+              <div class="trio-cell">
+                <img src="img/dome-memory-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                     alt="Interactividad: el público alimenta la escena desde la sala, sin app">
+              </div>
             </figure>
           </div>
-          <div>
+          <div class="muertos-panel">
             <span class="concept-n" data-i18n="cn2">Concepto 02</span>
-            <h3 data-i18n="c2_t">Memoria Viva</h3>
-            <p data-i18n="c2_d">Una interpretación contemporánea de Día de Muertos: retratos voluntarios, cempasúchil, luz y sonido como rito colectivo.</p>
-            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c2_data">La presencia y los retratos opt-in se leen como señales: cada persona suma una chispa a una constelación viva en la cúpula. El dato es humano; la imagen es ceremonial.</span></p>
-            <div class="concept-chips">
-              <span class="chip" data-i18n="c2_k1">Participación del público</span>
-              <span class="chip" data-i18n="c2_k2">Retratos voluntarios</span>
-              <span class="chip" data-i18n="c2_k3">Ritual contemporáneo</span>
+            <h3 data-i18n="c2_t">Día de Muertos</h3>
+            <div class="data-how rite-flow">
+              <b data-i18n="c_data_l">Cómo usamos data art</b>
+              <div class="muertos-map" role="img" aria-label="De la sala a la captura y a la cúpula">
+                <svg viewBox="0 0 400 200" fill="none" aria-hidden="true">
+                  <g transform="translate(42 108)">
+                    <circle cx="0" cy="-18" r="8" stroke="#FF2E8A" stroke-width="1.5"/>
+                    <path d="M-14 22c0-10 6-16 14-16s14 6 14 16" stroke="#FF2E8A" stroke-width="1.5" stroke-linecap="round"/>
+                  </g>
+                  <path class="flow-dash" d="M70 108 H148" stroke="#FF2E8A" stroke-width="1.5" stroke-linecap="round"/>
+                  <g transform="translate(188 108)">
+                    <circle cx="0" cy="0" r="22" stroke="#FF8AB8" stroke-width="1.3"/>
+                    <g class="muertos-shutter">
+                      <path d="M0-18 L6-4 L-6-4Z" fill="rgba(255,46,138,.55)"/>
+                      <path d="M16 9 L4 8 L8 -6Z" fill="rgba(255,46,138,.4)"/>
+                      <path d="M-16 9 L-8-6 L-4 8Z" fill="rgba(255,46,138,.4)"/>
+                    </g>
+                    <circle class="muertos-iris" cx="0" cy="0" r="7" stroke="#fff" stroke-width="1.6"/>
+                    <circle cx="0" cy="0" r="2.4" fill="#FF2E8A"/>
+                  </g>
+                  <path class="flow-dash" d="M224 108 H292" stroke="#FF2E8A" stroke-width="1.5" stroke-linecap="round"/>
+                  <g transform="translate(338 118)">
+                    <path d="M-34 12 a34 34 0 0 1 68 0" stroke="#FFB0D0" stroke-width="1.7" fill="rgba(255,46,138,.12)"/>
+                    <path d="M-22 12 a22 22 0 0 1 44 0" stroke="#FF2E8A" stroke-width="1" opacity=".7"/>
+                    <g class="muertos-petal" transform="translate(-10 -10)">
+                      <path d="M0 0 C4 -8 10 -8 8 -1 C10 6 3 8 0 0Z" fill="#FF2E8A"/>
+                    </g>
+                    <g class="muertos-petal" transform="translate(8 -18)">
+                      <path d="M0 0 C4 -8 10 -8 8 -1 C10 6 3 8 0 0Z" fill="#FF8AB8"/>
+                    </g>
+                    <g class="muertos-petal" transform="translate(16 -4)">
+                      <path d="M0 0 C4 -8 10 -8 8 -1 C10 6 3 8 0 0Z" fill="#fff" opacity=".7"/>
+                    </g>
+                    <g class="muertos-face" transform="translate(-12 0)">
+                      <circle r="4" stroke="#fff" stroke-width="1"/>
+                    </g>
+                    <g class="muertos-face" transform="translate(2 -6)">
+                      <circle r="3.2" stroke="#FFB0D0" stroke-width="1"/>
+                    </g>
+                    <g class="muertos-face" transform="translate(14 2)">
+                      <circle r="3.6" stroke="#fff" stroke-width="1"/>
+                    </g>
+                  </g>
+                </svg>
+                <p class="muertos-from" data-i18n="c2_from">Sala</p>
+                <p class="muertos-mid" data-i18n="c2_mid">Captura</p>
+                <p class="muertos-to" data-i18n="c2_to">Cúpula</p>
+              </div>
+              <div class="whale-signals">
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <path d="M8 34 a24 24 0 0 1 48 0" stroke="currentColor" stroke-width="1.6"/>
+                    <path d="M16 34 a16 16 0 0 1 32 0" stroke="currentColor" opacity=".5"/>
+                    <g class="muertos-petal" transform="translate(28 16)">
+                      <path d="M0 0 C3 -7 9 -7 7 0 C8 6 2 7 0 0Z" fill="currentColor"/>
+                    </g>
+                  </svg>
+                  <em data-i18n="c2_sig1">Espectáculo</em>
+                </div>
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <rect x="18" y="10" width="28" height="22" rx="4" stroke="currentColor" stroke-width="1.4"/>
+                    <circle class="muertos-iris" cx="32" cy="21" r="6" stroke="currentColor" stroke-width="1.5"/>
+                    <circle cx="32" cy="21" r="2" fill="currentColor"/>
+                  </svg>
+                  <em data-i18n="c2_sig2">Interactividad</em>
+                </div>
+                <div class="whale-sig">
+                  <svg viewBox="0 0 64 42" fill="none">
+                    <circle class="muertos-face" cx="18" cy="22" r="5" stroke="currentColor"/>
+                    <circle class="muertos-face" cx="32" cy="18" r="6" stroke="currentColor"/>
+                    <circle class="muertos-face" cx="46" cy="23" r="5" stroke="currentColor"/>
+                  </svg>
+                  <em data-i18n="c2_sig3">Presencia</em>
+                </div>
+              </div>
+              <div class="whale-stats">
+                <div class="whale-stat">
+                  <b data-i18n="c2_n1">Relato inmersivo</b>
+                  <span data-i18n="c2_n1_l">Espectáculo en cúpula</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c2_n2">Gesto en vivo</b>
+                  <span data-i18n="c2_n2_l">Cámaras y sensores</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c2_n3">Sin app</b>
+                  <span data-i18n="c2_n3_l">Participación voluntaria</span>
+                </div>
+                <div class="whale-stat">
+                  <b data-i18n="c2_n4">Tiempo real</b>
+                  <span data-i18n="c2_n4_l">La sala responde</span>
+                </div>
+              </div>
             </div>
           </div>
         </article>
 
-        <!-- Concept 03 -->
-        <article class="concept reveal" style="--acc:#FF8A3C">
+        <!-- Concept 03 — Jalisco Vivo -->
+        <article class="concept is-jalisco reveal" style="--acc:#FF8A3C">
           <div class="concept-media">
             <figure class="shot">
               <img src="img/dome-destination-pv.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: Puerto Vallarta proyectado en un recinto inmersivo, con kioscos de participación y público de pie">
-              <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+                   alt="Bahía de Banderas proyectada en un recinto inmersivo, con público de pie bajo el paisaje de Jalisco">
             </figure>
           </div>
           <div>
             <span class="concept-n" data-i18n="cn3">Concepto 03</span>
-            <h3 data-i18n="c3_t">El Destino Vivo</h3>
-            <p data-i18n="c3_d">El territorio contado con dron, paisaje, arquitectura y cultura local — el destino como relato envolvente.</p>
-            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c3_data">Clima local, hora del día y flujos del destino modulan color, densidad y movimiento sobre la captura del lugar. Los datos no reemplazan la imagen: la hacen respirar.</span></p>
+            <h3 data-i18n="c3_t">Jalisco Vivo</h3>
+            <p data-i18n="c3_d">Bahía de Banderas contada con dron: sierra, selva y costa de Jalisco, arquitectura y cultura local — el territorio real, no un genérico tropical de banco de imágenes.</p>
+            <div class="data-how rite-flow">
+              <b data-i18n="c_data_l">Cómo usamos data art</b>
+              <div class="data-how-row">
+                <ol class="rite-steps">
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 9h14M4 13h16M6 17h12" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c3_f1">La marea mueve el color</span>
+                  </li>
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.5 1.5M16.9 16.9l1.5 1.5M5.6 18.4l1.5-1.5M16.9 7.1l1.5-1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c3_f2">La hora enciende la costa</span>
+                  </li>
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 18l5-7 4 4 4-6 5 9H3z"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c3_f3">El territorio respira</span>
+                  </li>
+                </ol>
+                <div class="data-map data-map-inline jalisco-map" role="img" aria-label="Sol, marea y sierra traducidos a la cúpula">
+                  <svg class="flow-svg" viewBox="0 0 400 220" fill="none" aria-hidden="true">
+                    <g transform="translate(56 88)">
+                      <g class="sym-spin">
+                        <circle r="16" stroke="#FF8A3C" stroke-width="1.6"/>
+                        <path d="M0-26v8M0 18v8M-26 0h8M18 0h8M-18-18l5 5M13 13l5 5M-18 18l5-5M13-13l5-5" stroke="#FF8A3C" stroke-width="1.3" stroke-linecap="round"/>
+                      </g>
+                    </g>
+                    <path class="flow-dash" d="M88 88 H156" stroke="#FF8A3C" stroke-width="1.6" stroke-linecap="round"/>
+                    <path class="sym-breathe" d="M164 88c8-16 16-16 24 0s16 16 24 0 16-16 24 0" stroke="#FFD4A8" stroke-width="1.6" stroke-linecap="round"/>
+                    <path class="flow-dash" d="M244 88 H300" stroke="#FF8A3C" stroke-width="1.6" stroke-linecap="round"/>
+                    <g class="sym-breathe">
+                      <path d="M304 128 L328 86 L348 108 L368 72 L392 128 Z" stroke="#FF8A3C" stroke-width="1.5" fill="rgba(255,138,60,.12)"/>
+                      <path d="M304 128 H392" stroke="#FFD4A8" stroke-width="1.2"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
             <div class="concept-chips">
-              <span class="chip" data-i18n="c3_k1">Captura con dron</span>
-              <span class="chip" data-i18n="c3_k2">Identidad del destino</span>
-              <span class="chip" data-i18n="c3_k3">Turismo cultural</span>
+              <span class="chip" data-i18n="c3_k1">Bahía de Banderas</span>
+              <span class="chip" data-i18n="c3_k2">Sierra y selva de Jalisco</span>
+              <span class="chip" data-i18n="c3_k3">Identidad del destino</span>
             </div>
           </div>
         </article>
 
-        <!-- Concept 04 -->
-        <article class="concept reveal" style="--acc:#9b7aff">
+        <!-- Concept 04 — Data Dome -->
+        <article class="concept is-data reveal" style="--acc:#9b7aff">
           <div class="concept-media">
-            <figure class="shot">
-              <img src="img/dome-data-experience.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: la Tierra, corrientes y datos climáticos desplegados en el recinto">
-              <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
+            <figure class="shot shot-duo">
+              <div class="trio-cell">
+                <img src="img/dome-data-experience.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                     alt="Datos ambientales y corrientes proyectados en la cúpula mientras el público observa">
+              </div>
+              <div class="trio-cell">
+                <img src="img/dome-data-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                     alt="El público alimenta la escena de datos desde kioscos; la señal sube a la pantalla">
+              </div>
             </figure>
           </div>
           <div>
             <span class="concept-n" data-i18n="cn4">Concepto 04</span>
             <h3 data-i18n="c4_t">Data Dome</h3>
-            <p data-i18n="c4_d">La pieza donde el data art es el protagonista: la función se compone en vivo y nunca se repite igual.</p>
-            <p class="data-how"><b data-i18n="c_data_l">Cómo usamos data art</b><span data-i18n="c4_data">Marea, clima, sonido y participación se mapean a forma, color y audio espacial. Interpretamos el dato como lenguaje visual — artístico, legible y envolvente.</span></p>
+            <div class="data-how rite-flow">
+              <b data-i18n="c_data_l">Cómo usamos data art</b>
+              <div class="data-how-row">
+                <ol class="rite-steps">
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c4_f1">Sensores leen al público</span>
+                  </li>
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 14c4-8 6 8 10 0s6 8 8 0" stroke-linecap="round"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c4_f2">NVIDIA traduce a imagen</span>
+                  </li>
+                  <li>
+                    <span class="rite-ico" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 18a8 8 0 0 1 16 0"/><path d="M7 18a5 5 0 0 1 10 0"/></svg>
+                    </span>
+                    <span class="rite-label" data-i18n="c4_f3">Cada cuadro es distinto</span>
+                  </li>
+                </ol>
+                <div class="data-map data-map-inline" role="img" aria-label="Flujo: sensor, señal de datos, cúpula">
+                  <svg class="flow-svg" viewBox="0 0 400 220" fill="none" aria-hidden="true">
+                    <g class="flow-node">
+                      <rect x="18" y="78" width="64" height="64" rx="14" stroke="#9b7aff" stroke-width="1.6" fill="rgba(155,122,255,.08)"/>
+                      <circle cx="50" cy="110" r="14" stroke="#cbb8ff" stroke-width="1.4"/>
+                      <circle cx="50" cy="110" r="4" fill="#9b7aff"/>
+                      <path d="M38 132h24" stroke="#9b7aff" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+                    </g>
+                    <path class="flow-dash" d="M90 110 H168" stroke="#9b7aff" stroke-width="1.6" stroke-linecap="round"/>
+                    <g class="flow-node">
+                      <path d="M176 110c8-18 16-18 24 0s16 18 24 0 16-18 24 0" stroke="#cbb8ff" stroke-width="1.6" stroke-linecap="round"/>
+                      <circle cx="224" cy="110" r="3.2" fill="#fff"/>
+                    </g>
+                    <path class="flow-dash" d="M256 110 H318" stroke="#9b7aff" stroke-width="1.6" stroke-linecap="round"/>
+                    <g class="flow-dome">
+                      <ellipse class="flow-glow" cx="352" cy="142" rx="34" ry="10" fill="#9b7aff"/>
+                      <path d="M318 142a34 34 0 0 1 68 0" stroke="#e8e0ff" stroke-width="1.8" fill="rgba(155,122,255,.16)"/>
+                      <path d="M328 142a24 24 0 0 1 48 0" stroke="#9b7aff" stroke-width="1" opacity=".7"/>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </div>
             <div class="concept-chips">
-              <span class="chip" data-i18n="c4_k1">Datos en vivo</span>
-              <span class="chip" data-i18n="c4_k2">Sistemas generativos</span>
+              <span class="chip" data-i18n="c4_k1">Sensores en tiempo real</span>
+              <span class="chip" data-i18n="c4_k2">Renderizado NVIDIA</span>
               <span class="chip" data-i18n="c4_k3">Nunca igual dos veces</span>
             </div>
           </div>
@@ -1106,17 +1767,45 @@
         <div class="nomad-i">
           <span class="ds-label" data-i18n="nm1_k">01 · Interpretar</span>
           <h3 data-i18n="nm1_t">El dato se vuelve imagen artística</h3>
-          <p data-i18n="nm1_d">No mostramos tablas. Traducimos clima, marea o presencia a ritmo, color y movimiento en la cúpula — data art legible y sensorial.</p>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 24 H20" stroke-linecap="round"/>
+              <path d="M22 10 L34 38 H10 Z"/>
+              <g class="sym-breathe">
+                <path d="M34 18 L44 10" stroke="#3CDCFF" stroke-linecap="round"/>
+                <path d="M34 24 L44 24" stroke="#fff" stroke-linecap="round"/>
+                <path d="M34 30 L44 38" stroke="#FF8A3C" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
         </div>
         <div class="nomad-i">
           <span class="ds-label" data-i18n="nm2_k">02 · Componer</span>
           <h3 data-i18n="nm2_t">Cada función puede ser distinta</h3>
-          <p data-i18n="nm2_d">Las señales cambian durante el show. Quien regresa ve otra composición sin cambiar la infraestructura del recinto.</p>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="24" r="3.2" fill="currentColor" stroke="none"/>
+              <g class="sym-orbit">
+                <circle cx="24" cy="24" r="10"/>
+                <circle cx="24" cy="14" r="2.2" fill="currentColor" stroke="none"/>
+              </g>
+              <g class="sym-orbit-r">
+                <circle cx="24" cy="24" r="16"/>
+                <circle cx="24" cy="8" r="2.2" fill="currentColor" stroke="none"/>
+              </g>
+            </svg>
+          </div>
         </div>
         <div class="nomad-i">
           <span class="ds-label" data-i18n="nm3_k">03 · Adaptar</span>
           <h3 data-i18n="nm3_t">El mismo motor, otra historia</h3>
-          <p data-i18n="nm3_d">Se cambia el programa (Ballenas, Memoria, Destino, Data Dome) o se recalibra a otro espacio. El sistema viaja; la obra se reescribe.</p>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="12" width="16" height="24" rx="2" opacity=".45"/>
+              <rect x="28" y="12" width="16" height="24" rx="2" opacity=".45"/>
+              <path class="sym-slide" d="M18 24 L30 16 L30 32 Z" fill="currentColor" stroke="none" opacity=".9"/>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -1135,24 +1824,45 @@
         <div class="reveal">
           <ul class="dataart-map" aria-label="Cómo se traduce el dato en la cúpula">
             <li>
+              <div class="sym" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="24" cy="24" r="5"/>
+                  <circle class="sym-ripple" cx="24" cy="24" r="16"/>
+                  <circle class="sym-ripple sym-ripple-2" cx="24" cy="24" r="16"/>
+                </svg>
+              </div>
               <span class="from" data-i18n="da_i1">Marea / clima</span>
-              <span class="arrow" aria-hidden="true">→</span>
-              <span class="to" data-i18n="da_o1">Ritmo, densidad y color en la superficie fulldome</span>
             </li>
             <li>
+              <div class="sym" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path class="sym-wind" d="M6 14 H32" stroke-linecap="round"/>
+                  <path class="sym-wind sym-wind-2" d="M10 24 H40" stroke-linecap="round"/>
+                  <path class="sym-wind sym-wind-3" d="M8 34 H28" stroke-linecap="round"/>
+                </svg>
+              </div>
               <span class="from" data-i18n="da_i2">Viento / hora</span>
-              <span class="arrow" aria-hidden="true">→</span>
-              <span class="to" data-i18n="da_o2">Campos de movimiento y deriva generativa</span>
             </li>
             <li>
+              <div class="sym" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle class="sym-ping" cx="24" cy="24" r="16"/>
+                  <path d="M24 14c3.2 0 5.4 2.4 5.4 5.4 0 4.2-5.4 9.2-5.4 9.2s-5.4-5-5.4-9.2c0-3 2.2-5.4 5.4-5.4z"/>
+                  <path d="M16 38c0-4.2 3.6-6.8 8-6.8s8 2.6 8 6.8" stroke-linecap="round"/>
+                </svg>
+              </div>
               <span class="from" data-i18n="da_i3">Presencia del público</span>
-              <span class="arrow" aria-hidden="true">→</span>
-              <span class="to" data-i18n="da_o3">Capas interactivas sin app — silueta, zona, participación</span>
             </li>
             <li>
+              <div class="sym" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="24" cy="24" r="15"/>
+                  <path d="M24 12 v3M36 24 h-3M24 36 v-3M12 24 h3" stroke-linecap="round"/>
+                  <path class="sym-tick" d="M24 24 L33 17" stroke-linecap="round"/>
+                  <circle cx="24" cy="24" r="2.2" fill="currentColor" stroke="none"/>
+                </svg>
+              </div>
               <span class="from" data-i18n="da_i4">Operador / show</span>
-              <span class="arrow" aria-hidden="true">→</span>
-              <span class="to" data-i18n="da_o4">Control en vivo: intensidad, escenas y momentos de marca</span>
             </li>
           </ul>
           <p class="dataart-note" data-i18n="da_note">Explicación del sistema del proyecto. Las fuentes se confirman por recinto — no es un feed en vivo hoy.</p>
@@ -1167,76 +1877,37 @@
       <div class="dataart-steps reveal">
         <article>
           <span class="n">01</span>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="currentColor" stroke="none">
+              <circle class="sym-pick" cx="10" cy="24" r="4.5"/>
+              <circle class="sym-pick sym-d1" cx="24" cy="24" r="4.5"/>
+              <circle class="sym-pick sym-d2" cx="38" cy="24" r="4.5"/>
+            </svg>
+          </div>
           <h3 data-i18n="da_s1_t">Elegir las señales</h3>
-          <p data-i18n="da_s1_d">Clima, marea, sensores en sitio o participación voluntaria — según el brief del recinto.</p>
         </article>
         <article>
           <span class="n">02</span>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path class="sym-draw" d="M6 30 C12 10 16 38 22 18 S32 8 42 26" stroke-linecap="round"/>
+            </svg>
+          </div>
           <h3 data-i18n="da_s2_t">Componer en tiempo real</h3>
-          <p data-i18n="da_s2_d">Un motor (TouchDesigner / generativo) traduce esas señales en imagen, audio y luz.</p>
         </article>
         <article>
           <span class="n">03</span>
+          <div class="sym" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path class="sym-hem" d="M8 36 a16 16 0 0 1 32 0"/>
+              <path d="M24 20 v16" opacity=".5"/>
+              <path d="M14 28 q10 -8 20 0" opacity=".5"/>
+              <ellipse cx="24" cy="36" rx="16" ry="4" opacity=".45"/>
+            </svg>
+          </div>
           <h3 data-i18n="da_s3_t">Envolver la cúpula</h3>
-          <p data-i18n="da_s3_d">El resultado se calibra al fulldome: cada función puede ser distinta sin cambiar la infraestructura.</p>
         </article>
       </div>
-    </div>
-  </section>
-
-  <!-- ══ 5 · INTERACTIVITY ══ -->
-  <section class="inter block" id="interactividad">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="int_eyebrow">Interactividad</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="int_title">El público entra y la escena responde</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="int_p">Kioscos, sensores y control en vivo — sin app.</p>
-      </div>
-
-      <figure class="inter-media reveal">
-        <img src="../Imagenes/interactive-installations-poster.jpg" alt="" aria-hidden="true">
-        <video class="lazy-vid" muted loop playsinline preload="none"
-               poster="../Imagenes/interactive-installations-poster.jpg"
-               data-src="../videos/interactive-installations.mp4"
-               aria-label="Instalación interactiva de ANDATA LAB donde el movimiento del público genera visuales en tiempo real"></video>
-        <figcaption>
-          <span class="ds-label" data-i18n="badge_tech">Tecnología demostrada</span>
-          <p data-i18n="int_cap">Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.</p>
-        </figcaption>
-      </figure>
-
-      <div class="inter-carousel reveal" id="inter-carousel">
-        <div class="inter-carousel-head">
-          <button type="button" class="inter-carousel-btn" id="inter-prev" aria-label="Anterior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button type="button" class="inter-carousel-btn" id="inter-next" aria-label="Siguiente">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-        </div>
-        <div class="inter-track" id="inter-track" tabindex="0" aria-label="Escenas interactivas">
-          <figure class="inter-slide">
-            <img src="img/dome-portrait-capture.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                 alt="Visualización conceptual: estación de captura voluntaria de retratos que alimenta una pantalla envolvente de rostros">
-            <figcaption>
-              <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
-              <h3 data-i18n="int_s1_t">Captura voluntaria</h3>
-              <p data-i18n="int_s1_d">Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.</p>
-            </figcaption>
-          </figure>
-          <figure class="inter-slide">
-            <img src="img/dome-memory-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                 alt="Visualización conceptual: el público alimenta una pantalla envolvente de retratos, flores y mariposas desde mesas táctiles">
-            <figcaption>
-              <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
-              <h3 data-i18n="int_s2_t">De la mesa a la pared</h3>
-              <p data-i18n="int_s2_d">Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.</p>
-            </figcaption>
-          </figure>
-        </div>
-        <div class="inter-dots" id="inter-dots" role="tablist" aria-label="Escenas"></div>
-      </div>
-
     </div>
   </section>
 
@@ -1323,6 +1994,39 @@
         <a href="../#s-work" data-i18n="pr_more">Más proyectos →</a>
       </p>
 
+    </div>
+  </section>
+
+  <!-- ══ Spatial field — isolated 3D scene (js/spatial-field.js) ══ -->
+  <section class="spatial block" id="espacialidad">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="op_eyebrow">La oportunidad</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="op_title">Más que proyectar contenido</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="op_p1">Un domo no tiene que funcionar como una pantalla que repite el mismo material. Puede convertirse en una <strong>plataforma viva</strong> para cultura, turismo, entretenimiento, marcas y experiencias participativas.</p>
+      </div>
+      <div class="spatial-stage reveal" id="spatial-stage">
+        <canvas id="spatial-canvas" hidden aria-hidden="true"></canvas>
+        <div class="spatial-fallback" id="spatial-fallback" aria-hidden="true">
+          <i class="s" style="left:48%;top:18%;width:9%;height:9%"></i>
+          <i class="w" style="left:22%;top:28%;width:7%;height:7%"></i>
+          <i class="s w" style="left:68%;top:26%;width:11%;height:11%"></i>
+          <i style="left:38%;top:42%;width:8%;height:8%"></i>
+          <i class="s" style="left:58%;top:48%;width:6%;height:6%"></i>
+          <i class="w" style="left:30%;top:58%;width:10%;height:10%"></i>
+          <i class="s" style="left:72%;top:56%;width:8%;height:8%"></i>
+          <i style="left:46%;top:66%;width:7%;height:7%"></i>
+          <i class="s w" style="left:18%;top:48%;width:6%;height:6%"></i>
+          <i style="left:80%;top:40%;width:5%;height:5%"></i>
+          <i class="s" style="left:40%;top:30%;width:5%;height:5%"></i>
+          <i class="w" style="left:54%;top:22%;width:8%;height:8%"></i>
+          <i class="s" style="left:26%;top:72%;width:9%;height:9%"></i>
+          <i style="left:62%;top:70%;width:6%;height:6%"></i>
+          <i class="s w" style="left:50%;top:52%;width:12%;height:12%"></i>
+          <i style="left:14%;top:36%;width:5%;height:5%"></i>
+        </div>
+        <span class="spatial-tip" id="spatial-tip" hidden></span>
+      </div>
     </div>
   </section>
 
@@ -1435,6 +2139,9 @@
     <div class="foot-links">
       <a href="../" data-i18n="nav_home">Inicio</a>
       <a href="../#work" data-i18n="nav_work">Proyectos</a>
+      <a href="./" data-i18n="nav_dome">Dome Studio</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#process" data-i18n="nav_process">Proceso</a>
       <a href="../#contact" data-i18n="nav_contact">Contacto</a>
     </div>
   </div>
@@ -1494,8 +2201,9 @@
   /* ─────────── i18n (same dictionary pattern as the other project pages) ─────────── */
   var I18N = {
     es: {
-      nav_stories: 'Historias', nav_data: 'Data art', nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_proof: 'Prueba', nav_contact: 'Contacto', nav_home: 'Inicio',
-      nav_cta: 'Hablemos', back: 'Volver al inicio', scroll: 'Desliza',
+      nav_work: 'Proyectos', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_process: 'Proceso',
+      nav_stories: 'Historias', nav_data: 'Data art', nav_caps: 'Capacidades', nav_proof: 'Prueba', nav_contact: 'Contacto', nav_home: 'Inicio',
+      nav_cta: 'Hablemos', cta_start: 'Inicia un proyecto', back: 'Volver al inicio', scroll: 'Desliza',
       h_t1: 'Contenido vivo', h_t2: 'para espacios inmersivos',
       h_sub: 'Click para cambiar · arrastra para girar',
       h_cta1: 'Hablemos de tu espacio', h_cta2: 'Ver las historias',
@@ -1522,26 +2230,35 @@
       cap7_t: 'Producción local', cap7_d: 'Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.',
       cap8_t: 'Programación continua', cap8_d: 'Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.',
 
-      con_eyebrow: 'Historias', con_title: 'Cuatro historias. Un recinto.',
-      con_tag: 'Propuestas de dirección creativa — se cambian, no se construyen.',
+      con_eyebrow: 'Historias', con_title: 'Un recinto. Muchos universos.',
+      con_kicker: 'Estos son 4 ejemplos de una programación que se renueva cada temporada — un momento importante del año, convertido en experiencia propia dentro de la cúpula.',
       ph_label: 'Visualización conceptual',
       cn1: 'Concepto 01', cn2: 'Concepto 02', cn3: 'Concepto 03', cn4: 'Concepto 04',
-      c1_t: 'Viaje de las Ballenas',
-      c1_d: 'Una travesía inmersiva por el océano donde ballenas monumentales y sonido espacial envuelven al público.',
-      c1_data: 'Marea, corrientes y clima se interpretan como ritmo del agua, brillo bioluminiscente y deriva de las ballenas — no como gráficos, sino como atmósfera artística en la cúpula.',
-      c1_k1: 'Océano y bioluminiscencia', c1_k2: 'Audio espacial', c1_k3: 'Datos ambientales',
-      c2_t: 'Memoria Viva',
-      c2_d: 'Una interpretación contemporánea de Día de Muertos: retratos voluntarios, cempasúchil, luz y sonido como rito colectivo.',
-      c2_data: 'La presencia y los retratos opt-in se leen como señales: cada persona suma una chispa a una constelación viva en la cúpula. El dato es humano; la imagen es ceremonial.',
-      c2_k1: 'Participación del público', c2_k2: 'Retratos voluntarios', c2_k3: 'Ritual contemporáneo',
-      c3_t: 'El Destino Vivo',
-      c3_d: 'El territorio contado con dron, paisaje, arquitectura y cultura local — el destino como relato envolvente.',
-      c3_data: 'Clima local, hora del día y flujos del destino modulan color, densidad y movimiento sobre la captura del lugar. Los datos no reemplazan la imagen: la hacen respirar.',
-      c3_k1: 'Captura con dron', c3_k2: 'Identidad del destino', c3_k3: 'Turismo cultural',
+      c1_t: 'Viaje de las Jorobadas',
+      c1_sig1: 'Marea', c1_sig2: 'Temperatura', c1_sig3: 'Canto',
+      c1_n1: '8–10 mil km', c1_n1_l: 'Ruta migratoria',
+      c1_n2: '~500', c1_n2_l: 'Jorobadas / temporada',
+      c1_n3: '22–25 °C', c1_n3_l: 'Agua de cría',
+      c1_n4: 'Dic–Mar', c1_n4_l: 'Temporada en Vallarta',
+      c1_from: 'Pacífico Norte', c1_to: 'Bahía de Banderas',
+      c2_t: 'Día de Muertos',
+      c2_from: 'Sala', c2_mid: 'Captura', c2_to: 'Cúpula',
+      c2_sig1: 'Espectáculo', c2_sig2: 'Interactividad', c2_sig3: 'Presencia',
+      c2_n1: 'Relato inmersivo', c2_n1_l: 'Espectáculo en cúpula',
+      c2_n2: 'Gesto en vivo', c2_n2_l: 'Cámaras y sensores',
+      c2_n3: 'Sin app', c2_n3_l: 'Participación voluntaria',
+      c2_n4: 'Tiempo real', c2_n4_l: 'La sala responde',
+      c3_t: 'Jalisco Vivo',
+      c3_d: 'Bahía de Banderas contada con dron: sierra, selva y costa de Jalisco, arquitectura y cultura local — el territorio real, no un genérico tropical de banco de imágenes.',
+      c3_f1: 'La marea mueve el color',
+      c3_f2: 'La hora enciende la costa',
+      c3_f3: 'El territorio respira',
+      c3_k1: 'Bahía de Banderas', c3_k2: 'Sierra y selva de Jalisco', c3_k3: 'Identidad del destino',
       c4_t: 'Data Dome',
-      c4_d: 'La pieza donde el data art es el protagonista: la función se compone en vivo y nunca se repite igual.',
-      c4_data: 'Marea, clima, sonido y participación se mapean a forma, color y audio espacial. Interpretamos el dato como lenguaje visual — artístico, legible y envolvente.',
-      c4_k1: 'Datos en vivo', c4_k2: 'Sistemas generativos', c4_k3: 'Nunca igual dos veces',
+      c4_f1: 'Sensores leen al público',
+      c4_f2: 'NVIDIA traduce a imagen',
+      c4_f3: 'Cada cuadro es distinto',
+      c4_k1: 'Sensores en tiempo real', c4_k2: 'Renderizado NVIDIA', c4_k3: 'Nunca igual dos veces',
       c_data_l: 'Cómo usamos data art',
 
       nm1_k: '01 · Interpretar', nm1_t: 'El dato se vuelve imagen artística',
@@ -1563,13 +2280,6 @@
       da_s2_t: 'Componer en tiempo real', da_s2_d: 'Un motor (TouchDesigner / generativo) traduce esas señales en imagen, audio y luz.',
       da_s3_t: 'Envolver la cúpula', da_s3_d: 'El resultado se calibra al fulldome: cada función puede ser distinta sin cambiar la infraestructura.',
 
-      int_eyebrow: 'Interactividad', int_title: 'El público entra y la escena responde',
-      int_p: 'Kioscos, sensores y control en vivo — sin app.',
-      int_cap: 'ANDATA LAB, en vivo: el movimiento se vuelve imagen.',
-      int_s1_t: 'Captura voluntaria',
-      int_s1_d: 'Cámara, luz, permiso. El retrato entra a la escena.',
-      int_s2_t: 'De la mesa a la pared',
-      int_s2_d: 'Lo que tocas en la mesa sube a la cúpula. Al instante.',
       i1_t: 'Tracking corporal', i1_d: 'El cuerpo del visitante se convierte en imagen dentro de la cúpula.',
       i2_t: 'Siluetas y partículas', i2_d: 'La presencia se traduce en luz, estelas y movimiento.',
       i3_t: 'Dinámicas colectivas', i3_d: 'El grupo completo modifica la escena en conjunto.',
@@ -1686,8 +2396,9 @@
       doc_title: 'Dome Studio | Contenido e interactividad para domos | ANDATA LAB'
     },
     en: {
-      nav_stories: 'Stories', nav_data: 'Data art', nav_caps: 'Capabilities', nav_work: 'Work', nav_proof: 'Proof', nav_contact: 'Contact', nav_home: 'Home',
-      nav_cta: "Let's talk", back: 'Back to home', scroll: 'Scroll',
+      nav_work: 'Work', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_process: 'Process',
+      nav_stories: 'Stories', nav_data: 'Data art', nav_caps: 'Capabilities', nav_proof: 'Proof', nav_contact: 'Contact', nav_home: 'Home',
+      nav_cta: "Let's talk", cta_start: 'Start a project', back: 'Back to home', scroll: 'Scroll',
       h_t1: 'Living content', h_t2: 'for immersive spaces',
       h_sub: 'Click to switch · drag to spin',
       h_cta1: "Let's talk about your space", h_cta2: 'See the stories',
@@ -1714,26 +2425,35 @@
       cap7_t: 'Local production', cap7_d: 'Photography, video, drone, 360 capture and original material tied to each destination.',
       cap8_t: 'Ongoing programming', cap8_d: 'Seasons, premieres, sponsored activations and periodic content updates.',
 
-      con_eyebrow: 'Stories', con_title: 'Four stories. One venue.',
-      con_tag: 'Creative-direction proposals — you change the content, not the building.',
+      con_eyebrow: 'Stories', con_title: 'One venue. Many universes.',
+      con_kicker: 'These are 4 examples of a program that renews every season — an important moment of the year, turned into its own experience inside the dome.',
       ph_label: 'Conceptual visualization',
       cn1: 'Concept 01', cn2: 'Concept 02', cn3: 'Concept 03', cn4: 'Concept 04',
-      c1_t: 'Journey of the Whales',
-      c1_d: 'An immersive ocean journey where monumental whales and spatial sound wrap the audience.',
-      c1_data: 'Tide, currents and weather become water rhythm, bioluminescent glow and whale drift — not charts, but artistic atmosphere on the dome.',
-      c1_k1: 'Ocean & bioluminescence', c1_k2: 'Spatial audio', c1_k3: 'Environmental data',
-      c2_t: 'Living Memory',
-      c2_d: 'A contemporary Día de Muertos: volunteered portraits, marigold, light and sound as a collective ritual.',
-      c2_data: 'Presence and opt-in portraits are read as signals: each person adds a spark to a living constellation on the dome. The data is human; the image is ceremonial.',
-      c2_k1: 'Audience participation', c2_k2: 'Volunteered portraits', c2_k3: 'Contemporary ritual',
-      c3_t: 'The Living Destination',
-      c3_d: 'The territory told through drone, landscape, architecture and local culture — the destination as a wraparound story.',
-      c3_data: 'Local weather, time of day and destination flows modulate color, density and motion over place capture. Data does not replace the image — it makes it breathe.',
-      c3_k1: 'Drone capture', c3_k2: 'Destination identity', c3_k3: 'Cultural tourism',
+      c1_t: 'Journey of the Humpbacks',
+      c1_sig1: 'Tide', c1_sig2: 'Temperature', c1_sig3: 'Song',
+      c1_n1: '8–10 thousand km', c1_n1_l: 'Migration route',
+      c1_n2: '~500', c1_n2_l: 'Humpbacks / season',
+      c1_n3: '22–25 °C', c1_n3_l: 'Calving water',
+      c1_n4: 'Dec–Mar', c1_n4_l: 'Season in Vallarta',
+      c1_from: 'North Pacific', c1_to: 'Bahía de Banderas',
+      c2_t: 'Día de Muertos',
+      c2_from: 'Room', c2_mid: 'Capture', c2_to: 'Dome',
+      c2_sig1: 'Spectacle', c2_sig2: 'Interactivity', c2_sig3: 'Presence',
+      c2_n1: 'Immersive tale', c2_n1_l: 'Spectacle on the dome',
+      c2_n2: 'Live gesture', c2_n2_l: 'Cameras and sensors',
+      c2_n3: 'No app', c2_n3_l: 'Opt-in participation',
+      c2_n4: 'Real time', c2_n4_l: 'The room answers',
+      c3_t: 'Jalisco Vivo',
+      c3_d: 'Bahía de Banderas told by drone: Jalisco sierra, jungle and coast, architecture and local culture — the real territory, not a generic tropical stock shot.',
+      c3_f1: 'The tide moves the color',
+      c3_f2: 'The hour lights the coast',
+      c3_f3: 'The territory breathes',
+      c3_k1: 'Bahía de Banderas', c3_k2: 'Jalisco sierra and jungle', c3_k3: 'Destination identity',
       c4_t: 'Data Dome',
-      c4_d: 'The piece where data art leads: the show is composed live and never plays the same way twice.',
-      c4_data: 'Tide, weather, sound and participation map to form, color and spatial audio. We interpret data as visual language — artistic, readable and enveloping.',
-      c4_k1: 'Live data', c4_k2: 'Generative systems', c4_k3: 'Never twice the same',
+      c4_f1: 'Sensors read the audience',
+      c4_f2: 'NVIDIA turns it into image',
+      c4_f3: 'Every frame is different',
+      c4_k1: 'Real-time sensors', c4_k2: 'NVIDIA rendering', c4_k3: 'Never twice the same',
       c_data_l: 'How we use data art',
 
       da_eye: 'Data art', da_t: 'Data that becomes the dome.',
@@ -1755,13 +2475,6 @@
       nm3_k: '03 · Adapt', nm3_t: 'Same engine, another story',
       nm3_d: 'Swap the program (Whales, Memory, Destination, Data Dome) or recalibrate to another space. The system travels; the work is rewritten.',
 
-      int_eyebrow: 'Interactivity', int_title: 'The audience walks in and the scene answers',
-      int_p: 'Kiosks, sensors and live control — no app.',
-      int_cap: 'ANDATA LAB, live: movement becomes image.',
-      int_s1_t: 'Voluntary capture',
-      int_s1_d: 'Camera, light, consent. The portrait enters the scene.',
-      int_s2_t: 'From table to wall',
-      int_s2_d: 'What you touch on the table goes up on the dome. Instantly.',
       i1_t: 'Body tracking', i1_d: 'The visitor\u2019s body becomes image inside the dome.',
       i2_t: 'Silhouettes & particles', i2_d: 'Presence translated into light, trails and motion.',
       i3_t: 'Collective dynamics', i3_d: 'The whole group reshapes the scene together.',
@@ -1948,25 +2661,39 @@
 
   /* Hero orb: 3D tilt + story swap */
   var orbStories = [
-    { src: 'img/dome-whale-concept.jpg', t: 'c1_t', acc: '#3CDCFF' },
-    { src: 'img/dome-memory-concept.jpg', t: 'c2_t', acc: '#FF2E8A' },
-    { src: 'img/dome-destination-pv.jpg', t: 'c3_t', acc: '#FF8A3C' },
-    { src: 'img/dome-data-experience.jpg', t: 'c4_t', acc: '#9b7aff' }
+    { src: 'img/dome-whale-concept.jpg', t: 'c1_t', acc: '#3CDCFF', cap: 'Projection Mapping' },
+    { src: 'img/dome-memory-concept.jpg', t: 'c2_t', acc: '#FF2E8A', cap: 'Interactive Installation' },
+    { src: 'img/dome-destination-pv.jpg', t: 'c3_t', acc: '#FF8A3C', cap: '3D Animation' },
+    { src: 'img/dome-data-experience.jpg', t: 'c4_t', acc: '#9b7aff', cap: '360 Production' },
+    { src: 'img/dome-cosmos-concept.jpg', t: 'c5_t', acc: '#5CE1B0', cap: 'Audiovisual Sound Systems' }
   ];
   var heroIndex = 0;
   function paintHeroNow() {
-    var dict = I18N[lang] || I18N.es;
-    var s = orbStories[heroIndex];
-    var cap = $('#orb-cap');
-    if (cap && dict[s.t]) cap.textContent = dict[s.t];
+    var orbEl = $('#orb');
+    if (orbEl && orbEl.dataset.story != null) {
+      var n = parseInt(orbEl.dataset.story, 10);
+      if (!isNaN(n)) heroIndex = n;
+    }
   }
-  (function orbControl() {
+  window.addEventListener('dome-hero:index', function (e) {
+    heroIndex = e.detail;
+    paintHeroNow();
+  });
+
+  /* CSS-orb fallback. The 3D module calls this if WebGL / reduced-motion decline.
+     A timeout covers the case where the ES module never loads (blocked CDN). */
+  window.__initDomeOrbFallback = function orbControl() {
     var orb = $('#orb'), spin = $('#orb-spin'), img = $('#orb-img');
     if (!orb || !spin || !img) return;
+    if (orb.classList.contains('is-dome3d') || orb.dataset.orbBound === '1') return;
+    orb.dataset.orbBound = '1';
+    var fx = orb.querySelector('.disc-fx');
+    if (fx) domeCanvas(fx, { mode: 'disc' });
     var dots = $$('#hero-dots button');
     var rx = -8, ry = 12;
     var dragging = false, lastX = 0, lastY = 0, idle = true, moved = 0;
     var reducedMotion = reduced;
+    var mobile = window.matchMedia('(pointer: coarse), (max-width: 768px)').matches;
 
     function apply() {
       spin.style.setProperty('--rx', rx.toFixed(2) + 'deg');
@@ -1975,12 +2702,15 @@
     function show(i) {
       heroIndex = (i + orbStories.length) % orbStories.length;
       var s = orbStories[heroIndex];
+      orb.dataset.story = String(heroIndex);
       img.style.opacity = '0';
       setTimeout(function () {
         img.src = s.src;
         img.style.opacity = '1';
         orb.querySelector('.disc').style.setProperty('--acc', s.acc);
       }, 180);
+      var cap = $('#orb-cap');
+      if (cap) cap.textContent = s.cap || '';
       dots.forEach(function (d, k) {
         if (k === heroIndex) d.setAttribute('aria-current', 'true');
         else d.removeAttribute('aria-current');
@@ -1998,6 +2728,7 @@
       var dx = x - lastX, dy = y - lastY;
       lastX = x; lastY = y;
       moved += Math.abs(dx) + Math.abs(dy);
+      if (mobile) return;
       ry += dx * 0.42;
       rx = Math.max(-32, Math.min(32, rx - dy * 0.32));
       apply();
@@ -2010,14 +2741,14 @@
     }
 
     orb.addEventListener('pointerdown', function (e) {
-      orb.setPointerCapture(e.pointerId);
+      if (!mobile && orb.setPointerCapture) orb.setPointerCapture(e.pointerId);
       down(e.clientX, e.clientY);
     });
     orb.addEventListener('pointermove', function (e) { move(e.clientX, e.clientY); });
     orb.addEventListener('pointerup', up);
     orb.addEventListener('pointercancel', up);
 
-    if (!reducedMotion) {
+    if (!reducedMotion && !mobile) {
       (function loop() {
         if (idle && !dragging) {
           ry += 0.12;
@@ -2027,7 +2758,10 @@
         requestAnimationFrame(loop);
       })();
     } else { apply(); }
-  })();
+  };
+  setTimeout(function () {
+    if (typeof window.__initDomeOrbFallback === 'function') window.__initDomeOrbFallback();
+  }, 1600);
 
   /* ─────────── Lazy videos in cards / bands ─────────── */
   (function lazyVideos() {
@@ -2084,49 +2818,6 @@
       entries.forEach(function (en) { if (en.isIntersecting) activate(en.target); });
     }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
     items.forEach(function (i) { io.observe(i); });
-  })();
-
-  /* ─────────── Interactivity carousel ─────────── */
-  (function interCarousel() {
-    var track = $('#inter-track'), prev = $('#inter-prev'), next = $('#inter-next'), dots = $('#inter-dots');
-    if (!track) return;
-    var slides = $$('.inter-slide', track);
-    if (!slides.length) return;
-    var i = 0;
-
-    function go(n) {
-      i = Math.max(0, Math.min(slides.length - 1, n));
-      var left = slides[i].offsetLeft;
-      track.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
-      sync();
-    }
-    function sync() {
-      var w = track.clientWidth || 1;
-      i = Math.round(track.scrollLeft / w);
-      i = Math.max(0, Math.min(slides.length - 1, i));
-      if (prev) prev.disabled = i <= 0;
-      if (next) next.disabled = i >= slides.length - 1;
-      if (dots) {
-        $$('button', dots).forEach(function (b, idx) {
-          b.setAttribute('aria-current', idx === i ? 'true' : 'false');
-        });
-      }
-    }
-    if (dots) {
-      slides.forEach(function (s, idx) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.setAttribute('aria-label', 'Escena ' + (idx + 1));
-        if (idx === 0) b.setAttribute('aria-current', 'true');
-        b.addEventListener('click', function () { go(idx); });
-        dots.appendChild(b);
-      });
-    }
-    if (prev) prev.addEventListener('click', function () { go(i - 1); });
-    if (next) next.addEventListener('click', function () { go(i + 1); });
-    track.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-    sync();
   })();
 
   /* ─────────── Season rail arrows ─────────── */
@@ -2250,10 +2941,24 @@
   }
 
   domeCanvas($('#dome-fx'), { mode: 'hero' });
-  $$('.disc-fx').forEach(function (c) { domeCanvas(c, { mode: 'disc' }); });
+  $$('.disc-fx').forEach(function (c) {
+    if (c.closest && c.closest('.orb')) return;
+    domeCanvas(c, { mode: 'disc' });
+  });
 
   applyLang();
 })();
 </script>
+
+<script type="application/json" id="dome-hero-stories">
+[
+  { "src": "img/dome-whale-concept.jpg", "video": "../videos/DEMOREEL_AIROLAX%202026.mp4", "t": "c1_t", "acc": "#3CDCFF", "cap": "Projection Mapping" },
+  { "src": "img/dome-memory-concept.jpg", "video": "../videos/immersive-audiovisual.mp4", "t": "c2_t", "acc": "#FF2E8A", "cap": "Interactive Installation" },
+  { "src": "img/dome-destination-pv.jpg", "video": "../videos/concept-immersive.mp4", "t": "c3_t", "acc": "#FF8A3C", "cap": "3D Animation" },
+  { "src": "img/dome-data-experience.jpg", "video": "../videos/real-time-generative.mp4", "t": "c4_t", "acc": "#9b7aff", "cap": "360 Production" },
+  { "src": "img/dome-cosmos-concept.jpg", "video": "../videos/interactive-installations.mp4", "t": "c5_t", "acc": "#5CE1B0", "cap": "Audiovisual Sound Systems" }
+]
+</script>
+<script type="module" src="js/dome-scenes.js"></script>
 </body>
 </html>

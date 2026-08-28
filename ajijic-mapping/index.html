@@ -32,8 +32,14 @@
   .brand-mark{ width:22px; height:22px; object-fit:contain; }
   .brand-asterisk{ margin-left:-.07em; }
   .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
-  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; }
-  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.is-here{ color:var(--ink); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:8px 16px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--ink); background:var(--ink); color:#fff;
+  }
+  @media (max-width:860px){ .nav-cta{ display:none; } }
   .lang-toggle{
     font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
     width:40px; height:30px; border-radius:999px; cursor:pointer;
@@ -168,9 +174,12 @@
       <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
     </a>
     <nav class="nav-links">
-      <a href="../#work" data-i18n="nav_work">Work</a>
-      <a href="../#contact" data-i18n="nav_contact">Contact</a>
+      <a class="is-here" href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#process" data-i18n="nav_process">Process</a>
       <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+      <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
     </nav>
   </header>
 
@@ -362,6 +371,9 @@
       <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
       <div class="foot-links">
         <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+        <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+        <a href="../#process" data-i18n="nav_process">Process</a>
         <a href="../#contact" data-i18n="nav_contact">Contact</a>
       </div>
     </div>
@@ -373,7 +385,8 @@
     var LANG_KEY = 'andata_lang';
     var I18N = {
       en: {
-        nav_work:'Work', nav_contact:'Contact', back:'Back to work',
+        nav_work:'Work', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Process',
+        nav_contact:'Contact', cta_start:'Start a project', back:'Back to work',
         eyebrow:'Selected work · Projection mapping',
         hero_sub:'An immersive audiovisual installation that turned the historic building on the Chapala malecón into a living canvas — narrating the origins, myths and spirits that surround Lake Chapala.',
         m_studio:'Studio', m_disc:'Discipline', m_disc_v:'Projection mapping + cultural art', m_loc:'Location', m_year:'Year',
@@ -410,7 +423,8 @@
         rights:'All rights reserved.'
       },
       es: {
-        nav_work:'Proyectos', nav_contact:'Contacto', back:'Volver a proyectos',
+        nav_work:'Proyectos', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
+        nav_contact:'Contacto', cta_start:'Inicia un proyecto', back:'Volver a proyectos',
         eyebrow:'Proyecto destacado · Videomapping',
         hero_sub:'Una instalación audiovisual inmersiva que convirtió el edificio histórico del malecón de Chapala en un lienzo vivo — narrando los orígenes, mitos y espíritus que rodean el Lago de Chapala.',
         m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Videomapping + arte cultural', m_loc:'Ubicación', m_year:'Año',
