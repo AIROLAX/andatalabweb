@@ -122,9 +122,9 @@
     font-size:clamp(1.85rem,4.2vw,3.1rem); font-weight:700; letter-spacing:-.032em;
     line-height:1.08; margin:16px 0 0; color:var(--d-ink);
   }
-  .sec-lead{ font-size:var(--fs-lead); line-height:1.6; color:var(--d-ink-2); margin:22px 0 0; max-width:60ch; }
+  .sec-lead{ font-size:var(--fs-lead); line-height:1.55; color:var(--d-ink-2); margin:16px 0 0; max-width:46ch; }
   .sec-head{ max-width:780px; }
-  .block{ padding:clamp(76px,13vh,150px) 0; background:var(--d-0); }
+  .block{ padding:clamp(64px,10vh,120px) 0; background:var(--d-0); }
   .block--alt{ background:var(--d-1); }
   .block--hair{ border-top:1px solid var(--d-line-2); }
 
@@ -150,91 +150,88 @@
   .btn-dark:hover{ transform:translateY(-2px); box-shadow:var(--shadow-lift); }
   .btn:active{ transform:scale(.985); }
 
-  /* ══════════════════════════════════════════
-     HERO
-     ══════════════════════════════════════════ */
-  /* The hero is one dome whose content changes as you scroll: extra section
-     height gives the pinned stage room to cycle through the programme. */
-  .hero{ position:relative; height:340svh; background:#02040a; }
-  .hero-stage{
-    position:sticky; top:0; height:100svh; overflow:hidden;
-    display:flex; align-items:flex-end; isolation:isolate;
+  /* HERO — circular dome you can turn */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center;
+    overflow:hidden; background:#02040a; isolation:isolate;
   }
-  .hero-layer{
-    position:absolute; inset:0; z-index:0; opacity:0; visibility:hidden;
-    transition:opacity 1.05s var(--ease);
+  .hero-amb{ position:absolute; inset:0; z-index:0; }
+  .hero-amb img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transform:scale(1.18); filter:blur(42px) brightness(.38) saturate(1.25);
   }
-  .hero-layer.is-near{ visibility:visible; }
-  .hero-layer.is-on{ opacity:1; }
-  .hero-layer img{
-    width:100%; height:100%; object-fit:cover; object-position:50% 34%;
-    transform:scale(var(--z,1.06)); transition:transform 1.6s var(--ease);
-  }
-  .hero-layer.is-on img{ --z:1; }
   #dome-fx{ position:absolute; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; }
   .hero-scrim{
     position:absolute; inset:0; z-index:2; pointer-events:none;
     background:
-      linear-gradient(180deg, rgba(4,6,11,.74) 0%, rgba(4,6,11,.20) 26%, rgba(4,6,11,.12) 44%, rgba(4,6,11,.74) 78%, rgba(4,6,11,.94) 100%),
-      linear-gradient(90deg, rgba(4,6,11,.62) 0%, rgba(4,6,11,.16) 46%, rgba(4,6,11,0) 72%);
+      radial-gradient(120% 80% at 50% 116%, rgba(60,220,255,.16) 0%, rgba(60,220,255,0) 58%),
+      linear-gradient(180deg, rgba(4,6,11,.78) 0%, rgba(4,6,11,.42) 36%, rgba(4,6,11,.72) 78%, var(--d-0) 100%);
   }
   .hero-inner{
     position:relative; z-index:3; width:100%;
-    padding-top:calc(var(--nav-h) + var(--safe-t) + 24px);
-    padding-bottom:calc(clamp(74px,11vh,116px) + var(--safe-b));
-    display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:flex-end; gap:28px;
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    align-items:center; gap:clamp(28px,5vw,68px);
+    padding-top:calc(var(--nav-h) + var(--safe-t) + clamp(36px,6vh,72px));
+    padding-bottom:calc(clamp(64px,10vh,110px) + var(--safe-b));
+  }
+  .hero-visual{ perspective:1400px; }
+  .orb{
+    position:relative; width:min(100%, clamp(280px,40vw,520px)); margin:0 auto;
+    aspect-ratio:1; transform-style:preserve-3d;
+    cursor:grab; touch-action:none; user-select:none;
+  }
+  .orb:active{ cursor:grabbing; }
+  .orb-spin{
+    width:100%; height:100%; transform-style:preserve-3d;
+    transform:rotateX(var(--rx, -8deg)) rotateY(var(--ry, 12deg));
+    will-change:transform;
+    filter:drop-shadow(0 28px 48px rgba(0,0,0,.55));
+  }
+  .orb .disc{ width:100%; height:100%; }
+  .orb .disc-img{
+    opacity:1; transition:opacity .6s ease, transform .6s var(--ease);
+    transform:scale(1.04);
+  }
+  .orb.is-drag .disc-img{ transform:scale(1.08); }
+  .hero-visual-cap{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    text-align:center; margin:18px auto 0; max-width:36ch;
+  }
+  .hero-visual-cap .ds-label{ font-size:10px; color:rgba(255,255,255,.5); }
+  .hero-dots{ display:flex; gap:7px; justify-content:center; margin-top:14px; }
+  .hero-dots button{
+    width:22px; height:3px; padding:8px 0; border:0; background:transparent; cursor:pointer;
+  }
+  .hero-dots button i{
+    display:block; width:22px; height:3px; border-radius:2px; background:rgba(255,255,255,.22);
+    transition:background .4s, width .4s, box-shadow .4s;
+  }
+  .hero-dots button[aria-current="true"] i{
+    width:34px; background:var(--spec-cyan); box-shadow:0 0 12px rgba(60,220,255,.6);
   }
   .hero h1{
-    font-size:clamp(2.2rem,4.9vw,4.05rem); font-weight:800; letter-spacing:-.04em; line-height:1.03;
-    margin:18px 0 0; color:#fff; max-width:16ch;
-    text-shadow:0 2px 40px rgba(0,0,0,.5);
+    font-size:clamp(2.2rem,4.6vw,3.9rem); font-weight:800; letter-spacing:-.04em; line-height:1.03;
+    margin:18px 0 0; color:#fff; max-width:15ch;
   }
   .hero h1 .l{ display:block; }
-  .hero h1 .l2{ color:rgba(255,255,255,.62); }
+  .hero h1 .l2{ color:rgba(255,255,255,.52); }
   .hero-sub{
-    font-size:clamp(1rem,1.35vw,1.2rem); line-height:1.55; color:rgba(255,255,255,.84);
-    margin:22px 0 0; max-width:50ch; text-shadow:0 1px 24px rgba(0,0,0,.55);
+    font-size:clamp(1.02rem,1.4vw,1.22rem); line-height:1.55; color:rgba(255,255,255,.8);
+    margin:22px 0 0; max-width:36ch;
   }
-  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
-
-  /* "Now showing" — names the concept currently filling the dome. */
-  .hero-now{
-    position:relative; z-index:3; text-align:right; padding-bottom:4px;
-    display:flex; flex-direction:column; align-items:flex-end; gap:12px;
-  }
-  .hero-now-card{
-    padding:14px 18px; border-radius:var(--r-md); max-width:270px;
-    background:rgba(6,9,15,.52); border:1px solid var(--d-line);
-    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
-  }
-  .hero-now-card .ds-label{ font-size:9.5px; color:rgba(255,255,255,.52); }
-  .hero-now-card b{
-    display:block; margin-top:7px; font-size:1.02rem; font-weight:600;
-    letter-spacing:-.02em; color:#fff; line-height:1.25;
-  }
-  .hero-now-card span{ display:block; margin-top:6px; font-size:11.5px; line-height:1.45; color:var(--d-ink-3); }
-  .hero-dots{ display:flex; gap:7px; }
-  .hero-dots i{
-    width:22px; height:3px; border-radius:2px; background:rgba(255,255,255,.22);
-    transition:background .5s var(--ease), width .5s var(--ease);
-  }
-  .hero-dots i.on{ width:34px; background:var(--spec-cyan); box-shadow:0 0 12px rgba(60,220,255,.6); }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
   @media (max-width:900px){
-    .hero{ height:300svh; }
-    .hero-layer img{ object-position:50% 30%; }
+    .hero{ align-items:flex-end; }
     .hero-inner{
-      grid-template-columns:1fr; gap:22px; align-items:flex-start;
-      padding-top:calc(var(--nav-h) + var(--safe-t) + 18px);
-      padding-bottom:calc(64px + var(--safe-b));
+      grid-template-columns:1fr; gap:22px;
+      padding-top:calc(var(--nav-h) + var(--safe-t) + 22px);
+      padding-bottom:calc(70px + var(--safe-b));
     }
+    .hero-visual{ order:-1; }
+    .orb{ width:min(320px,62vw); }
     .hero h1{ font-size:clamp(2.05rem,8.2vw,2.9rem); max-width:18ch; }
-    .hero-sub{ margin-top:16px; font-size:1rem; }
-    .hero-cta{ margin-top:22px; gap:10px; }
+    .hero-sub{ margin-top:16px; }
     .hero-cta .btn{ flex:1 1 100%; justify-content:center; padding:14px 22px; }
-    .hero-now{ order:-1; align-items:flex-start; text-align:left; padding-bottom:0; }
-    .hero-now-card{ max-width:none; width:100%; padding:11px 14px; }
-    .hero-now-card b{ font-size:.95rem; margin-top:5px; }
-    .hero-now-card #hero-now-desc{ display:none; }
   }
   @keyframes pulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
   .scroll-cue{
@@ -398,21 +395,21 @@
      ══════════════════════════════════════════ */
   .concepts{ background:var(--d-0); border-top:1px solid var(--d-line-2); }
   .honest{
-    display:inline-flex; align-items:flex-start; gap:11px; margin-top:26px;
-    padding:13px 18px 13px 16px; border-radius:var(--r-md);
-    background:rgba(255,255,255,.035); border:1px solid var(--d-line-2);
-    max-width:64ch;
+    display:inline-flex; align-items:flex-start; gap:11px; margin-top:18px;
+    padding:0; border-radius:0;
+    background:transparent; border:0;
+    max-width:46ch;
   }
   .honest svg{ width:16px; height:16px; flex:0 0 auto; margin-top:2px; color:var(--spec-cyan); }
   .honest p{ margin:0; font-size:.93rem; line-height:1.55; color:var(--d-ink-2); }
-  .concept-list{ margin-top:clamp(46px,7vw,86px); display:flex; flex-direction:column; gap:clamp(56px,9vw,132px); }
-  .concept{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(28px,5vw,72px); align-items:center; }
+  .concept-list{ margin-top:clamp(36px,5vw,64px); display:flex; flex-direction:column; gap:clamp(36px,6vw,80px); }
+  .concept{ display:grid; grid-template-columns:minmax(0,1.38fr) minmax(0,.62fr); gap:clamp(20px,3.6vw,48px); align-items:center; }
   .concept:nth-child(even) .concept-media{ order:2; }
   .concept-media .disc{ max-width:clamp(260px,38vw,460px); margin:0 auto; }
   /* Editorial frame: the venue as the audience would see it. */
   .shot{
     position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1;
-    background:#05070d; max-width:clamp(280px,44vw,540px); margin:0 auto;
+    background:#05070d; max-width:none; width:100%; margin:0;
     box-shadow:
       0 0 0 1px rgba(255,255,255,.07),
       0 34px 90px rgba(0,0,0,.55),
@@ -444,7 +441,8 @@
   .nomad-i{ background:var(--d-0); padding:clamp(24px,3vw,34px); }
   .nomad-i .ds-label{ font-size:9.5px; color:var(--spec-cyan); }
   .nomad-i h3{ font-size:1.12rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:12px 0 0; }
-  .nomad-i p{ font-size:.94rem; line-height:1.68; color:var(--d-ink-2); margin:10px 0 0; }
+  .nomad-i p{ display:none; }
+  .nomad-i h3{ font-size:1.02rem; }
   @media (max-width:880px){ .nomad{ grid-template-columns:1fr; } }
   .concept-n{
     display:inline-flex; align-items:center; gap:10px;
@@ -452,7 +450,7 @@
   }
   .concept-n::after{ content:''; width:clamp(24px,4vw,52px); height:1px; background:linear-gradient(90deg, var(--acc), transparent); }
   .concept h3{ font-size:clamp(1.55rem,3.2vw,2.4rem); font-weight:700; letter-spacing:-.03em; line-height:1.1; margin:16px 0 0; color:#fff; }
-  .concept p{ font-size:1.04rem; line-height:1.72; color:var(--d-ink-2); margin:18px 0 0; max-width:52ch; }
+  .concept p{ font-size:.98rem; line-height:1.55; color:var(--d-ink-2); margin:12px 0 0; max-width:36ch; }
   .concept-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
   .chip{
     font-size:11.5px; font-weight:500; letter-spacing:.02em; padding:7px 13px; border-radius:999px;
@@ -483,8 +481,8 @@
   .inter-media figcaption .ds-label{ color:rgba(255,255,255,.7); font-size:10px; }
   .inter-media figcaption p{ margin:8px 0 0; font-size:.98rem; line-height:1.5; color:#fff; max-width:52ch; }
   .inter-shots{
-    margin-top:clamp(18px,2.4vw,28px); display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:clamp(14px,2vw,22px);
+    margin-top:clamp(18px,2.4vw,28px); display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(12px,1.8vw,18px);
   }
   .inter-shot{
     margin:0; position:relative; border-radius:var(--r-lg); overflow:hidden; aspect-ratio:1;
@@ -499,7 +497,8 @@
   .inter-shot .ds-label{ font-size:9px; color:rgba(255,255,255,.7); }
   .inter-shot h3{ font-size:1.02rem; font-weight:650; letter-spacing:-.02em; color:#fff; margin:7px 0 0; }
   .inter-shot p{ font-size:.88rem; line-height:1.5; color:rgba(255,255,255,.78); margin:6px 0 0; max-width:36ch; }
-  @media (max-width:720px){ .inter-shots{ grid-template-columns:1fr; } }
+  @media (max-width:900px){ .inter-shots{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .inter-shots{ grid-template-columns:1fr; } }
   /* ══════════════════════════════════════════
      5b · HOW IT WORKS — cameras, data, pipeline
      ══════════════════════════════════════════ */
@@ -866,9 +865,9 @@
     <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
   </a>
   <nav class="nav-links" aria-label="Navegación principal">
-    <a href="#capacidades" data-i18n="nav_caps">Capacidades</a>
-    <a class="nav-more" href="#como-funciona" data-i18n="nav_how">Cómo funciona</a>
+    <a href="#experiencias" data-i18n="nav_stories">Historias</a>
     <a href="../#work" data-i18n="nav_work">Proyectos</a>
+    <a class="nav-more" href="#capacidades" data-i18n="nav_caps">Capacidades</a>
     <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Cambiar idioma">EN</button>
     <a class="nav-cta" href="#contacto" data-i18n="nav_cta">Hablemos</a>
   </nav>
@@ -882,159 +881,67 @@
 
 <main>
 
-  <!-- ══ 1 · HERO ══ -->
+  <!-- 1 · HERO -->
   <section class="hero" id="inicio">
-    <div class="hero-stage" id="hero-stage">
-      <!-- One dome, five programmes. Layers cross-fade with scroll position. -->
-      <div class="hero-layer is-near is-on" data-slide="0">
-        <img src="img/dome-whale-concept.jpg" width="1024" height="1024" fetchpriority="high"
-             alt="Visualización conceptual: una ballena monumental recorre la cúpula sobre un público sentado en el suelo del domo">
-      </div>
-      <div class="hero-layer" data-slide="1">
-        <img data-src="img/dome-cosmos-concept.jpg" width="1024" height="1024" decoding="async"
-             alt="Visualización conceptual: red generativa de luz y partículas cubriendo el domo ante un auditorio lleno">
-      </div>
-      <div class="hero-layer" data-slide="2">
-        <img data-src="img/dome-territory-capture.jpg" width="1024" height="1024" decoding="async"
-             alt="Visualización conceptual: atardecer sobre una bahía mexicana proyectado en el domo durante una cena">
-      </div>
-      <div class="hero-layer" data-slide="3">
-        <img data-src="img/dome-memory-concept.jpg" width="1024" height="1024" decoding="async"
-             alt="Visualización conceptual: retratos del público girando en la cúpula durante una celebración">
-      </div>
-      <div class="hero-layer" data-slide="4">
-        <img data-src="img/dome-data-experience.jpg" width="1024" height="1024" decoding="async"
-             alt="Visualización conceptual: la Tierra, corrientes y datos climáticos en vivo desplegados en el domo">
+    <div class="hero-amb" aria-hidden="true">
+      <img src="img/dome-whale-concept.jpg" alt="">
+    </div>
+    <canvas id="dome-fx" aria-hidden="true"></canvas>
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="hero-inner wrap">
+      <div class="hero-copy">
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
+        <h1 class="reveal reveal-d1">
+          <span class="l" data-i18n="h_t1">Contenido vivo</span>
+          <span class="l l2" data-i18n="h_t2">para espacios inmersivos</span>
+        </h1>
+        <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Arrastra la cúpula. Cuatro historias, un solo recinto.</p>
+        <div class="hero-cta reveal reveal-d3">
+          <a class="btn btn-primary" href="#contacto" data-i18n="h_cta1">Hablemos de tu espacio</a>
+          <a class="btn btn-ghost" href="#experiencias" data-i18n="h_cta2">Ver las historias</a>
+        </div>
       </div>
 
-      <canvas id="dome-fx" aria-hidden="true"></canvas>
-      <div class="hero-scrim" aria-hidden="true"></div>
-
-      <div class="hero-inner wrap">
-        <div class="hero-copy">
-          <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
-          <h1 class="reveal reveal-d1">
-            <span class="l" data-i18n="h_t1">Contenido vivo</span>
-            <span class="l l2" data-i18n="h_t2">para espacios inmersivos</span>
-          </h1>
-          <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Un mismo domo, contenido distinto cada temporada. Creamos experiencias audiovisuales, interactivas y generativas para domos, recintos fulldome y superficies de gran formato.</p>
-          <div class="hero-cta reveal reveal-d3">
-            <a class="btn btn-primary" href="#contacto" data-i18n="h_cta1">Hablemos de tu espacio</a>
-            <a class="btn btn-ghost" href="#capacidades" data-i18n="h_cta2">Explorar capacidades</a>
+      <div class="hero-visual reveal reveal-d2">
+        <div class="orb" id="orb" role="img" aria-label="Cúpula interactiva. Arrastra para girarla.">
+          <div class="orb-spin" id="orb-spin">
+            <div class="disc is-filled" style="--acc:#3CDCFF">
+              <img class="disc-img" id="orb-img" src="img/dome-whale-concept.jpg" width="1024" height="1024"
+                   alt="Visualización conceptual: ballena monumental en formato domemaster">
+              <canvas class="disc-fx" aria-hidden="true"></canvas>
+              <span class="disc-rings" aria-hidden="true"></span>
+              <span class="disc-ribs" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
-
-        <div class="hero-now reveal reveal-d3" aria-live="polite">
-          <div class="hero-now-card">
-            <span class="ds-label" data-i18n="h_now">En la cúpula · visualización conceptual</span>
-            <b id="hero-now-title">Viaje de las Ballenas</b>
-            <span id="hero-now-desc">Océano, sonido espacial y datos ambientales.</span>
-          </div>
-          <div class="hero-dots" id="hero-dots" aria-hidden="true">
-            <i class="on"></i><i></i><i></i><i></i><i></i>
-          </div>
-        </div>
-      </div>
-
-      <a class="scroll-cue" href="#oportunidad" aria-label="Bajar a la siguiente sección">
-        <span class="ds-label" data-i18n="scroll">Desliza</span>
-        <i aria-hidden="true"></i>
-      </a>
-    </div>
-  </section>
-
-  <!-- ══ 2 · THE OPPORTUNITY ══ -->
-  <section class="opp" id="oportunidad">
-    <div class="opp-sticky">
-      <div class="opp-glow" aria-hidden="true"></div>
-      <div class="opp-inner wrap">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="op_eyebrow">La oportunidad</span></span>
-        <h2 class="reveal reveal-d1" data-i18n="op_title">Más que proyectar contenido</h2>
-        <div class="opp-cols">
-          <p class="reveal reveal-d2" data-i18n="op_p1">Un domo no tiene que funcionar como una pantalla que repite el mismo material. Puede convertirse en una <strong>plataforma viva</strong> para cultura, turismo, entretenimiento, marcas y experiencias participativas.</p>
-          <p class="reveal reveal-d3" data-i18n="op_p2">ANDATA LAB combina dirección creativa, producción audiovisual y tecnología en tiempo real para desarrollar contenido que <strong>evoluciona con el espacio, el público y cada temporada</strong>.</p>
+        <p class="hero-visual-cap">
+          <span class="ds-label" id="orb-cap" data-i18n="c1_t">Viaje de las Ballenas</span>
+        </p>
+        <div class="hero-dots" id="hero-dots" role="tablist" aria-label="Historias en la cúpula">
+          <button type="button" aria-current="true" aria-label="Viaje de las Ballenas"><i></i></button>
+          <button type="button" aria-label="Memoria Viva"><i></i></button>
+          <button type="button" aria-label="El Destino Vivo"><i></i></button>
+          <button type="button" aria-label="Data Dome"><i></i></button>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ══ 3 · CAPABILITIES ══ -->
-  <section class="caps" id="capacidades">
-    <div class="wrap caps-head">
-      <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="cap_eyebrow">Capacidades</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="cap_title">Todo lo que puede vivir dentro de una cúpula.</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="cap_lead">Un solo estudio para dirección creativa, producción, sistemas en tiempo real e integración técnica. Elegimos las piezas según el espacio y el objetivo.</p>
-      </div>
-    </div>
-
-    <div class="wrap caps-grid">
-      <div class="caps-visual">
-        <div class="disc" id="caps-disc" aria-hidden="true">
-          <canvas class="disc-fx" id="caps-fx"></canvas>
-          <span class="disc-rings"></span>
-          <span class="disc-ribs"></span>
-        </div>
-        <div class="caps-visual-cap" aria-live="polite">
-          <b id="caps-label">Contenido fulldome</b>
-          <span class="ds-label" data-i18n="cap_format">Formato domemaster · 360°</span>
-        </div>
-      </div>
-
-      <ol class="caps-list" id="caps-list">
-        <li class="cap reveal">
-          <span class="cap-n">01</span>
-          <h3 data-i18n="cap1_t">Contenido fulldome</h3>
-          <p data-i18n="cap1_d">Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">02</span>
-          <h3 data-i18n="cap2_t">Experiencias interactivas</h3>
-          <p data-i18n="cap2_d">Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">03</span>
-          <h3 data-i18n="cap3_t">Visuales generativos</h3>
-          <p data-i18n="cap3_d">Sistemas creados en TouchDesigner que producen experiencias dinámicas y operables en tiempo real.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">04</span>
-          <h3 data-i18n="cap4_t">Data experiences</h3>
-          <p data-i18n="cap4_d">Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">05</span>
-          <h3 data-i18n="cap5_t">Live Dome</h3>
-          <p data-i18n="cap5_d">Shows audiovisuales sincronizados con músicos, DJ, performances y eventos especiales.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">06</span>
-          <h3 data-i18n="cap6_t">Audio espacial y DMX</h3>
-          <p data-i18n="cap6_d">Integración de sonido envolvente e iluminación para extender la experiencia más allá de la proyección.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">07</span>
-          <h3 data-i18n="cap7_t">Producción local</h3>
-          <p data-i18n="cap7_d">Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.</p>
-        </li>
-        <li class="cap reveal">
-          <span class="cap-n">08</span>
-          <h3 data-i18n="cap8_t">Programación continua</h3>
-          <p data-i18n="cap8_d">Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.</p>
-        </li>
-      </ol>
-    </div>
+    <a class="scroll-cue" href="#experiencias" aria-label="Bajar a las historias">
+      <span class="ds-label" data-i18n="scroll">Desliza</span>
+      <i aria-hidden="true"></i>
+    </a>
   </section>
 
   <!-- ══ 4 · FLAGSHIP CONCEPTS ══ -->
   <section class="concepts block" id="experiencias">
     <div class="wrap">
       <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="con_eyebrow">Experiencias insignia</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="con_title">Cuatro maneras de llenar la cúpula — y ninguna se queda fija.</h2>
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="con_eyebrow">Historias</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="con_title">Cuatro historias. Un recinto.</h2>
         <div class="honest reveal reveal-d2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-          <p data-i18n="con_tag">Conceptos adaptables a cada destino, temporada o identidad de marca. Son propuestas de dirección creativa, no producciones ya realizadas.</p>
+          <p data-i18n="con_tag">Propuestas de dirección creativa — se cambian, no se construyen.</p>
         </div>
       </div>
 
@@ -1106,8 +1013,8 @@
         <article class="concept reveal" style="--acc:#9b7aff">
           <div class="concept-media">
             <figure class="shot">
-              <img src="img/dome-data-kiosk.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-                   alt="Visualización conceptual: un destino en datos sobre una pantalla envolvente, alimentado desde kioscos táctiles">
+              <img src="img/dome-data-experience.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+                   alt="Visualización conceptual: la Tierra, corrientes y datos climáticos desplegados en el recinto">
               <span class="shot-tag"><span class="ds-label" data-i18n="ph_label">Visualización conceptual</span></span>
             </figure>
           </div>
@@ -1149,8 +1056,8 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="int_eyebrow">Interactividad</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="int_title">El público activa la experiencia</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="int_p">Una experiencia interactiva no requiere tocar la superficie del domo. El movimiento, el sonido y la participación pueden modificar el contenido en tiempo real.</p>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="int_title">El público entra y la escena responde</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="int_p">Kioscos, sensores y control en vivo — sin app.</p>
       </div>
 
       <figure class="inter-media reveal">
@@ -1184,250 +1091,40 @@
             <p data-i18n="int_s2_d">Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.</p>
           </figcaption>
         </figure>
-      </div>
-
-      <div class="inter-grid reveal">
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i1_t">Tracking corporal</h3><p data-i18n="i1_d">El cuerpo del visitante se convierte en imagen dentro de la cúpula.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i2_t">Siluetas y partículas</h3><p data-i18n="i2_d">La presencia se traduce en luz, estelas y movimiento.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i3_t">Dinámicas colectivas</h3><p data-i18n="i3_d">El grupo completo modifica la escena en conjunto.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i4_t">Audio reactivo</h3><p data-i18n="i4_d">La música y las voces dibujan lo que se proyecta.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i5_t">Participación por QR</h3><p data-i18n="i5_d">El teléfono como control, sin instalar ninguna aplicación.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i6_t">Retratos voluntarios</h3><p data-i18n="i6_d">Rostros compartidos con permiso, convertidos en visual.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i7_t">Datos del público</h3><p data-i18n="i7_d">Respuestas y presencia convertidas en composición audiovisual.</p></div>
-        <div class="inter-item"><span class="dot" aria-hidden="true"></span><h3 data-i18n="i8_t">Control en vivo</h3><p data-i18n="i8_d">Artistas y operadores dirigen la experiencia en tiempo real.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ 5b · HOW IT WORKS ══ -->
-  <section class="how block" id="como-funciona">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="how_eyebrow">Cómo funciona</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="how_title">Del sensor a la cúpula, en tiempo real</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="how_p">Sin tecnicismos: así es como el movimiento del público y los datos de un lugar acaban convertidos en imagen sobre la cúpula.</p>
-      </div>
-
-      <div class="how-grid reveal">
-        <div class="how-col">
-          <span class="how-k"><i aria-hidden="true"></i><span data-i18n="how_a_k">Las cámaras</span></span>
-          <h3 data-i18n="how_a_t">Leen presencia, no identidad</h3>
-          <ol class="how-steps">
-            <li>
-              <span class="how-n">01</span>
-              <div>
-                <h4 data-i18n="how_a1_t">Cámara de profundidad</h4>
-                <p data-i18n="how_a1_d">En lugar de grabar video, mide a qué distancia está cada persona. Lo que entrega es una silueta y un esqueleto de puntos, no un rostro reconocible.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">02</span>
-              <div>
-                <h4 data-i18n="how_a2_t">Lectura del espacio</h4>
-                <p data-i18n="how_a2_d">De esa silueta el sistema saca unos cuantos números por cuadro: dónde está la gente, hacia dónde se mueve, cuántas personas hay y qué tan cerca están entre sí.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">03</span>
-              <div>
-                <h4 data-i18n="how_a3_t">Traducción a imagen</h4>
-                <p data-i18n="how_a3_d">Esos números empujan partículas, luz, color o sonido dentro de la escena que ya diseñamos. La estética la definimos antes; el público decide cómo se comporta.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">04</span>
-              <div>
-                <h4 data-i18n="how_a4_t">Respuesta en la cúpula</h4>
-                <p data-i18n="how_a4_d">El resultado sale proyectado en fracciones de segundo, así que la gente reconoce que la cúpula responde a ella. Ese es el momento que convierte una proyección en una experiencia.</p>
-              </div>
-            </li>
-          </ol>
-          <div class="how-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/></svg>
-            <p data-i18n="how_a_note">Sin grabación, sin reconocimiento facial y sin datos personales. Si un concepto usa retratos, el visitante los comparte de forma voluntaria y pueden borrarse al terminar la función.</p>
-          </div>
-        </div>
-
-        <div class="how-col">
-          <span class="how-k"><i aria-hidden="true"></i><span data-i18n="how_b_k">Los datos</span></span>
-          <h3 data-i18n="how_b_t">Un número se vuelve imagen</h3>
-          <ol class="how-steps">
-            <li>
-              <span class="how-n">01</span>
-              <div>
-                <h4 data-i18n="how_b1_t">Fuentes</h4>
-                <p data-i18n="how_b1_d">Marea, viento, temperatura, calidad del aire, avistamientos de ballena, ocupación del recinto, votos por QR o el propio calendario de la ciudad.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">02</span>
-              <div>
-                <h4 data-i18n="how_b2_t">Reglas</h4>
-                <p data-i18n="how_b2_d">Definimos contigo qué significa cada dato dentro de la narrativa: la marea mueve el horizonte, el viento cambia la densidad, la asistencia enciende más luz.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">03</span>
-              <div>
-                <h4 data-i18n="how_b3_t">Escena</h4>
-                <p data-i18n="how_b3_d">El dato entra al motor y modifica color, ritmo, densidad o incluso el capítulo que se está contando. Nada de esto exige volver a producir el contenido.</p>
-              </div>
-            </li>
-            <li>
-              <span class="how-n">04</span>
-              <div>
-                <h4 data-i18n="how_b4_t">Función irrepetible</h4>
-                <p data-i18n="how_b4_d">La versión de hoy no es la de ayer, y queda registro de lo que ocurrió cada día: material útil para prensa, patrocinios y reportes del recinto.</p>
-              </div>
-            </li>
-          </ol>
-          <div class="how-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 17l5-6 4 3 5-7 4 4"/><path d="M3 21h18"/></svg>
-            <p data-i18n="how_b_note">Trabajamos con datos públicos o del propio recinto. Si una fuente no existe todavía, se puede sustituir por captura propia o por participación del público.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- The generative engine, in ANDATA LAB's own footage. -->
-      <figure class="how-media reveal">
-        <img src="../Imagenes/real-time-generative-poster.jpg" alt="" aria-hidden="true">
-        <video class="lazy-vid" muted loop playsinline preload="none"
-               poster="../Imagenes/real-time-generative-poster.jpg"
-               data-src="../videos/real-time-generative.mp4"
-               data-src-mobile="../videos/services-mobile/real-time-generative.mp4"
-               aria-label="Motor generativo en tiempo real de ANDATA LAB reaccionando a datos y audio"></video>
-        <figcaption>
-          <span class="ds-label" data-i18n="badge_tech">Tecnología demostrada</span>
-          <p data-i18n="how_media_cap">Motor generativo de ANDATA LAB corriendo en vivo: cada parámetro visible puede engancharse a una cámara, a un dato o a la mano de un operador. Es la misma base que alimenta una cúpula.</p>
-        </figcaption>
-      </figure>
-
-      <div class="how-pair reveal">
-        <figure class="how-shot">
-          <span class="badge" data-i18n="badge_tech">Tecnología demostrada</span>
-          <img src="img/dome-warp-calibration.png" width="550" height="321" loading="lazy" decoding="async"
-               alt="Previsualización de contenido montado dentro de un modelo tridimensional de cúpula, con la malla de calibración y el grado de apertura del domo">
+      <figure class="inter-shot">
+          <img src="img/dome-interactive-consoles.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+               alt="Visualización conceptual: consolas interactivas frente a una pantalla envolvente">
+          <figcaption>
+            <span class="ds-label" data-i18n="ph_label">Visualización conceptual</span>
+            <h3 data-i18n="int_s3_t">Listo para operar</h3>
+            <p data-i18n="int_s3_d">Mesas, kioscos y control en vivo. El público entra; el recinto ya está armado.</p>
+          </figcaption>
         </figure>
-        <div class="how-pair-copy">
-          <span class="how-k"><i aria-hidden="true"></i><span data-i18n="how_c_k">Previsualización</span></span>
-          <h3 data-i18n="how_c_t">Cada cúpula se calibra antes de llegar</h3>
-          <p data-i18n="how_c_d1">Antes de producir, el contenido se monta dentro de un modelo de la cúpula real: diámetro, grado de apertura, número de proyectores y posición del público. Lo que ves aquí es esa previsualización.</p>
-          <p data-i18n="how_c_d2">Eso evita sorpresas en sitio. Cuando llegamos al recinto el trabajo es de ajuste fino, no de rediseño, y el calendario de estreno se sostiene.</p>
-        </div>
+
       </div>
 
-      <div class="pipe reveal">
-        <div class="pipe-i">
-          <span class="pipe-n">01</span>
-          <h4 data-i18n="pipe1_t">Formato domemaster</h4>
-          <p data-i18n="pipe1_d">El contenido se produce circular, a 180°: el centro de la imagen es el cenit, justo arriba del público.</p>
-        </div>
-        <div class="pipe-i">
-          <span class="pipe-n">02</span>
-          <h4 data-i18n="pipe2_t">Warping y blending</h4>
-          <p data-i18n="pipe2_d">La imagen se deforma según la curva real de la cúpula y se mezclan los bordes para que no se noten las uniones.</p>
-        </div>
-        <div class="pipe-i">
-          <span class="pipe-n">03</span>
-          <h4 data-i18n="pipe3_t">Salidas sincronizadas</h4>
-          <p data-i18n="pipe3_d">Cada proyector recibe su porción en cuadro con los demás, junto con el audio espacial y la iluminación.</p>
-        </div>
-        <div class="pipe-i">
-          <span class="pipe-n">04</span>
-          <h4 data-i18n="pipe4_t">Operación de la función</h4>
-          <p data-i18n="pipe4_d">La función se lanza sola por calendario o la dirige un operador que puede intervenirla en vivo.</p>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- ══ 6 · YEAR-ROUND PROGRAMMING ══ -->
-  <section class="season block" id="programacion">
-    <div class="wrap">
-      <div class="rail-head">
-        <div class="sec-head">
-          <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="sea_eyebrow">Programación anual</span></span>
-          <h2 class="sec-title reveal reveal-d1" data-i18n="sea_title">Un espacio que cambia durante todo el año</h2>
-          <p class="sec-lead reveal reveal-d2" data-i18n="sea_p">Diseñamos bibliotecas de contenido y temporadas que mantienen vigente la experiencia, generan nuevas razones para regresar y abren oportunidades de colaboración con marcas e instituciones.</p>
-        </div>
-        <div class="rail-nav reveal">
-          <button class="rail-btn" id="rail-prev" type="button" aria-label="Ver temporadas anteriores">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
-          <button class="rail-btn" id="rail-next" type="button" aria-label="Ver más temporadas">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="rail reveal" id="rail" tabindex="0" role="group" aria-label="Temporadas y bloques de programación">
-      <article class="rail-item"><span class="ds-label">01</span><h3 data-i18n="s1_t">Temporada de ballenas</h3><p data-i18n="s1_d">Migración, océano y sonido espacial.</p></article>
-      <article class="rail-item"><span class="ds-label">02</span><h3 data-i18n="s2_t">Primavera y naturaleza</h3><p data-i18n="s2_d">Ciclos, agua, semillas y color.</p></article>
-      <article class="rail-item"><span class="ds-label">03</span><h3 data-i18n="s3_t">Pride</h3><p data-i18n="s3_d">Identidad, comunidad y celebración.</p></article>
-      <article class="rail-item"><span class="ds-label">04</span><h3 data-i18n="s4_t">Vacaciones de verano</h3><p data-i18n="s4_d">Programación familiar de alta rotación.</p></article>
-      <article class="rail-item"><span class="ds-label">05</span><h3 data-i18n="s5_t">Día de Muertos</h3><p data-i18n="s5_d">Memoria, retratos y ritual contemporáneo.</p></article>
-      <article class="rail-item"><span class="ds-label">06</span><h3 data-i18n="s6_t">Navidad</h3><p data-i18n="s6_d">Luz, orquesta visual y calidez.</p></article>
-      <article class="rail-item"><span class="ds-label">07</span><h3 data-i18n="s7_t">Año Nuevo</h3><p data-i18n="s7_d">Cuenta regresiva audiovisual en vivo.</p></article>
-      <article class="rail-item"><span class="ds-label">08</span><h3 data-i18n="s8_t">Programación infantil</h3><p data-i18n="s8_d">Formatos cortos, juego y asombro.</p></article>
-      <article class="rail-item"><span class="ds-label">09</span><h3 data-i18n="s9_t">Bienestar</h3><p data-i18n="s9_d">Respiración, ritmo lento y sonido envolvente.</p></article>
-      <article class="rail-item"><span class="ds-label">10</span><h3 data-i18n="s10_t">Ciencia y exploración</h3><p data-i18n="s10_d">Cosmos, datos y divulgación.</p></article>
-      <article class="rail-item"><span class="ds-label">11</span><h3 data-i18n="s11_t">Eventos deportivos</h3><p data-i18n="s11_d">Transmisión envolvente y momentos colectivos.</p></article>
-      <article class="rail-item"><span class="ds-label">12</span><h3 data-i18n="s12_t">Activaciones de marca</h3><p data-i18n="s12_d">Brand takeover con narrativa propia.</p></article>
-      <article class="rail-item"><span class="ds-label">13</span><h3 data-i18n="s13_t">Conciertos y sesiones</h3><p data-i18n="s13_d">Live dome con músicos, DJ y performance.</p></article>
-    </div>
-  </section>
-
-  <!-- ══ 7 · COLLABORATION MODEL ══ -->
-  <section class="block block--light block--tint" id="modelo">
-    <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="mod_eyebrow">Modelo de colaboración</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="mod_title">De una pieza original a una programación completa</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="mod_p">Módulos que se combinan según el momento del proyecto. Puedes empezar por una sola pieza y crecer hacia un calendario anual.</p>
-      </div>
-      <div class="mod-grid">
-        <div class="mod reveal"><span class="n">01</span><h3 data-i18n="m1_t">Pieza insignia</h3><p data-i18n="m1_d">Una obra original diseñada para tu domo y su público.</p></div>
-        <div class="mod reveal reveal-d1"><span class="n">02</span><h3 data-i18n="m2_t">Temporada temática</h3><p data-i18n="m2_d">Un bloque de contenido con estreno, vigencia y cierre.</p></div>
-        <div class="mod reveal reveal-d2"><span class="n">03</span><h3 data-i18n="m3_t">Sistema interactivo</h3><p data-i18n="m3_d">Sensores, tracking y comportamiento en tiempo real.</p></div>
-        <div class="mod reveal reveal-d3"><span class="n">04</span><h3 data-i18n="m4_t">Live audiovisual show</h3><p data-i18n="m4_d">Función en vivo con operación creativa y músicos invitados.</p></div>
-        <div class="mod reveal"><span class="n">05</span><h3 data-i18n="m5_t">Brand takeover</h3><p data-i18n="m5_d">Adaptación del espacio a una marca o campaña.</p></div>
-        <div class="mod reveal reveal-d1"><span class="n">06</span><h3 data-i18n="m6_t">Producción local</h3><p data-i18n="m6_d">Captura original del destino, su cultura y su paisaje.</p></div>
-        <div class="mod reveal reveal-d2"><span class="n">07</span><h3 data-i18n="m7_t">Programación anual</h3><p data-i18n="m7_d">Calendario completo de contenido, estrenos y activaciones.</p></div>
-        <div class="mod reveal reveal-d3"><span class="n">08</span><h3 data-i18n="m8_t">Soporte y evolución</h3><p data-i18n="m8_d">Actualizaciones, mantenimiento y nuevas versiones.</p></div>
-      </div>
-      <p class="note reveal" data-i18n="mod_note">Cada módulo se cotiza según alcance, formato del domo y calendario. Lo definimos juntos después de conocer el espacio.</p>
-    </div>
-  </section>
-
-  <!-- ══ 8 · TECHNOLOGY ══ -->
-  <section class="tech block" id="tecnologia">
-    <div class="wrap">
-      <div class="tech-cols">
-        <div>
-          <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="tec_eyebrow">Tecnología</span></span>
-          <h2 class="sec-title reveal reveal-d1" data-i18n="tec_title">Tecnología al servicio de la experiencia</h2>
-        </div>
-        <div class="reveal reveal-d2">
-          <p data-i18n="tec_p1">No empezamos por el equipo. Empezamos por lo que debe sentir el público y por la infraestructura que ya existe en el recinto.</p>
-          <p data-i18n="tec_p2">A partir de ahí seleccionamos el stack: motores en tiempo real, sensado, sonido, iluminación y control. La tecnología queda invisible; lo que se recuerda es la experiencia.</p>
+  <!-- ══ 10b · THE VENUE ══ -->
+  <section class="venue" id="recinto" aria-labelledby="venue-title">
+    <figure class="venue-hero">
+      <img src="img/dome-venue-gala.jpg" width="1024" height="1024" loading="lazy" decoding="async"
+           alt="Visualización conceptual: cena bajo una cúpula con una ballena monumental — el recinto como producto, no solo el contenido">
+      <div class="venue-copy">
+        <div class="wrap">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="vn_eyebrow">El recinto</span></span>
+          <h2 id="venue-title" data-i18n="vn_title">El recinto, listo.</h2>
+          <p data-i18n="vn_p">Domo, LED curva o salón. El contenido se recalibra; no se vuelve a producir.</p>
+          <div class="venue-formats" aria-label="Formatos de superficie">
+            <span data-i18n="vn_f1">Domo / fulldome</span>
+            <span data-i18n="vn_f2">LED curva</span>
+            <span data-i18n="vn_f3">Pantalla envolvente</span>
+            <span data-i18n="vn_f4">Salón y cena</span>
+          </div>
         </div>
       </div>
-      <div class="tags reveal">
-        <span class="tag">TouchDesigner</span>
-        <span class="tag" data-i18n="t_map">Projection mapping</span>
-        <span class="tag" data-i18n="t_sens">Sensores y cámaras de profundidad</span>
-        <span class="tag">Orbbec</span>
-        <span class="tag" data-i18n="t_gen">Sistemas generativos</span>
-        <span class="tag">OSC · MIDI</span>
-        <span class="tag">Ableton Live</span>
-        <span class="tag">Resolume</span>
-        <span class="tag" data-i18n="t_audio">Audio reactivo</span>
-        <span class="tag" data-i18n="t_dmx">Control DMX</span>
-        <span class="tag" data-i18n="t_ai">Inteligencia artificial aplicada a contenido</span>
-        <span class="tag" data-i18n="t_rt">Integración audiovisual en tiempo real</span>
-      </div>
-    </div>
+    </figure>
   </section>
 
   <!-- ══ 9 · EXPERIENCE / PROOF ══ -->
@@ -1435,15 +1132,8 @@
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="exp_eyebrow">Experiencia ANDATA LAB</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="exp_title">Experiencia que se adapta a nuevas superficies</h2>
-        <p class="sec-lead reveal reveal-d2" data-i18n="exp_p1">ANDATA LAB desarrolla instalaciones interactivas, sistemas audiovisuales, mapping y experiencias generativas para espacios físicos, eventos y marcas.</p>
-        <p class="sec-lead reveal reveal-d2" data-i18n="exp_p2">Nuestra experiencia con cámaras, sensores, contenido en tiempo real y superficies de gran formato nos permite diseñar nuevas posibilidades para el formato fulldome.</p>
-        <div class="legend reveal reveal-d3">
-          <span><i class="lg-real" aria-hidden="true"></i><span data-i18n="lg_real">Proyecto realizado</span></span>
-          <span><i class="lg-tech" aria-hidden="true"></i><span data-i18n="lg_tech">Tecnología demostrada</span></span>
-          <span><i class="lg-con" aria-hidden="true"></i><span data-i18n="lg_con">Concepto para domo</span></span>
-          <span><i class="lg-vis" aria-hidden="true"></i><span data-i18n="lg_vis">Visualización conceptual</span></span>
-        </div>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="exp_title">Ya lo hacemos en otras superficies.</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="exp_p1">Instalaciones, mapping y sistemas en tiempo real — ahora en cúpula.</p>
       </div>
 
       <div class="proof-grid">
@@ -1519,43 +1209,72 @@
     </div>
   </section>
 
-  <!-- ══ 10 · PROCESS ══ -->
-  <section class="block block--light block--tint" id="proceso">
-    <div class="wrap">
+  <!-- ══ 3 · CAPABILITIES ══ -->
+  <section class="caps" id="capacidades">
+    <div class="wrap caps-head">
       <div class="sec-head">
-        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="pro_eyebrow">Proceso</span></span>
-        <h2 class="sec-title reveal reveal-d1" data-i18n="pro_title">Cómo llegamos del espacio a la función</h2>
-      </div>
-      <div class="steps">
-        <div class="step-row reveal"><span class="n">01</span><div><h3 data-i18n="pp1_t">Descubrimiento</h3><p data-i18n="pp1_d">Conocemos el espacio, audiencia, calendario y objetivos.</p></div></div>
-        <div class="step-row reveal"><span class="n">02</span><div><h3 data-i18n="pp2_t">Diseño creativo</h3><p data-i18n="pp2_d">Definimos narrativa, lenguaje visual e interacción.</p></div></div>
-        <div class="step-row reveal"><span class="n">03</span><div><h3 data-i18n="pp3_t">Prototipo</h3><p data-i18n="pp3_d">Validamos contenido, formato y comportamiento técnico.</p></div></div>
-        <div class="step-row reveal"><span class="n">04</span><div><h3 data-i18n="pp4_t">Producción</h3><p data-i18n="pp4_d">Creamos visuales, sonido, sistemas y adaptaciones.</p></div></div>
-        <div class="step-row reveal"><span class="n">05</span><div><h3 data-i18n="pp5_t">Integración</h3><p data-i18n="pp5_d">Probamos dentro del recinto y ajustamos la experiencia.</p></div></div>
-        <div class="step-row reveal"><span class="n">06</span><div><h3 data-i18n="pp6_t">Evolución</h3><p data-i18n="pp6_d">Actualizamos temporadas, contenido y nuevas activaciones.</p></div></div>
+        <span class="eyebrow reveal"><span class="dot"></span><span class="ds-label" data-i18n="cap_eyebrow">Capacidades</span></span>
+        <h2 class="sec-title reveal reveal-d1" data-i18n="cap_title">Todo lo que puede vivir dentro.</h2>
+        <p class="sec-lead reveal reveal-d2" data-i18n="cap_lead">Dirección, producción, tiempo real e integración. Las piezas que pida el espacio.</p>
       </div>
     </div>
-  </section>
 
-  <!-- ══ 10b · THE VENUE ══ -->
-  <section class="venue" id="recinto" aria-labelledby="venue-title">
-    <figure class="venue-hero">
-      <img src="img/dome-venue-gala.jpg" width="1024" height="1024" loading="lazy" decoding="async"
-           alt="Visualización conceptual: cena bajo una cúpula con una ballena monumental — el recinto como producto, no solo el contenido">
-      <div class="venue-copy">
-        <div class="wrap">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="vn_eyebrow">El recinto</span></span>
-          <h2 id="venue-title" data-i18n="vn_title">El mismo contenido, en la superficie que vas a comprar.</h2>
-          <p data-i18n="vn_p">Domo, LED curva, pantalla envolvente o un salón de hotel. Diseñamos la experiencia para el hardware que el recinto ya tiene — o para el que estás a punto de especificar. El contenido se recalibra; no se vuelve a producir.</p>
-          <div class="venue-formats" aria-label="Formatos de superficie">
-            <span data-i18n="vn_f1">Domo / fulldome</span>
-            <span data-i18n="vn_f2">LED curva</span>
-            <span data-i18n="vn_f3">Pantalla envolvente</span>
-            <span data-i18n="vn_f4">Salón y cena</span>
-          </div>
+    <div class="wrap caps-grid">
+      <div class="caps-visual">
+        <div class="disc" id="caps-disc" aria-hidden="true">
+          <canvas class="disc-fx" id="caps-fx"></canvas>
+          <span class="disc-rings"></span>
+          <span class="disc-ribs"></span>
+        </div>
+        <div class="caps-visual-cap" aria-live="polite">
+          <b id="caps-label">Contenido fulldome</b>
+          <span class="ds-label" data-i18n="cap_format">Formato domemaster · 360°</span>
         </div>
       </div>
-    </figure>
+
+      <ol class="caps-list" id="caps-list">
+        <li class="cap reveal">
+          <span class="cap-n">01</span>
+          <h3 data-i18n="cap1_t">Contenido fulldome</h3>
+          <p data-i18n="cap1_d">Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">02</span>
+          <h3 data-i18n="cap2_t">Experiencias interactivas</h3>
+          <p data-i18n="cap2_d">Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">03</span>
+          <h3 data-i18n="cap3_t">Visuales generativos</h3>
+          <p data-i18n="cap3_d">Sistemas creados en TouchDesigner que producen experiencias dinámicas y operables en tiempo real.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">04</span>
+          <h3 data-i18n="cap4_t">Data experiences</h3>
+          <p data-i18n="cap4_d">Datos ambientales, culturales o participativos convertidos en narrativas audiovisuales.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">05</span>
+          <h3 data-i18n="cap5_t">Live Dome</h3>
+          <p data-i18n="cap5_d">Shows audiovisuales sincronizados con músicos, DJ, performances y eventos especiales.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">06</span>
+          <h3 data-i18n="cap6_t">Audio espacial y DMX</h3>
+          <p data-i18n="cap6_d">Integración de sonido envolvente e iluminación para extender la experiencia más allá de la proyección.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">07</span>
+          <h3 data-i18n="cap7_t">Producción local</h3>
+          <p data-i18n="cap7_d">Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.</p>
+        </li>
+        <li class="cap reveal">
+          <span class="cap-n">08</span>
+          <h3 data-i18n="cap8_t">Programación continua</h3>
+          <p data-i18n="cap8_d">Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.</p>
+        </li>
+      </ol>
+    </div>
   </section>
 
   <!-- ══ 11 · FINAL CTA ══ -->
@@ -1565,7 +1284,7 @@
         <span class="disc-rings" aria-hidden="true"></span>
         <span class="eyebrow"><span class="dot"></span><span class="ds-label">ANDATA DOME STUDIO</span></span>
         <h2 data-i18n="cta_title">Hagamos que el espacio cobre vida</h2>
-        <p data-i18n="cta_p">Creamos contenido, interacción y programación para convertir domos y superficies inmersivas en destinos que la gente quiera volver a experimentar.</p>
+        <p data-i18n="cta_p">Contenido, interacción y programación. El recinto deja de ser una pantalla.</p>
         <div class="final-cta">
           <a class="btn btn-primary" href="../#contact" data-i18n="cta_btn1">Cuéntanos sobre tu espacio</a>
           <a class="btn btn-ghost" href="mailto:airolaxx@gmail.com?subject=ANDATA%20DOME%20STUDIO%20%E2%80%94%20mi%20espacio%20inmersivo" data-i18n="cta_btn2">Escribir por correo</a>
@@ -1658,12 +1377,11 @@
   /* ─────────── i18n (same dictionary pattern as the other project pages) ─────────── */
   var I18N = {
     es: {
-      nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_contact: 'Contacto', nav_home: 'Inicio',
-      nav_how: 'Cómo funciona',
+      nav_stories: 'Historias', nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_contact: 'Contacto', nav_home: 'Inicio',
       nav_cta: 'Hablemos', back: 'Volver al inicio', scroll: 'Desliza',
       h_t1: 'Contenido vivo', h_t2: 'para espacios inmersivos',
-      h_sub: 'Un mismo domo, contenido distinto cada temporada. Creamos experiencias audiovisuales, interactivas y generativas para domos, recintos fulldome y superficies de gran formato.',
-      h_cta1: 'Hablemos de tu espacio', h_cta2: 'Explorar capacidades',
+      h_sub: 'Arrastra la cúpula. Cuatro historias, un solo recinto.',
+      h_cta1: 'Hablemos de tu espacio', h_cta2: 'Ver las historias',
       h_now: 'En la cúpula · visualización conceptual',
       hs1_d: 'Océano, sonido espacial y datos ambientales.',
       hs2_t: 'Sistema Generativo', hs2_d: 'Un organismo de luz que se dibuja durante la función.',
@@ -1675,8 +1393,8 @@
       op_p1: 'Un domo no tiene que funcionar como una pantalla que repite el mismo material. Puede convertirse en una <strong>plataforma viva</strong> para cultura, turismo, entretenimiento, marcas y experiencias participativas.',
       op_p2: 'ANDATA LAB combina dirección creativa, producción audiovisual y tecnología en tiempo real para desarrollar contenido que <strong>evoluciona con el espacio, el público y cada temporada</strong>.',
 
-      cap_eyebrow: 'Capacidades', cap_title: 'Todo lo que puede vivir dentro de una cúpula.',
-      cap_lead: 'Un solo estudio para dirección creativa, producción, sistemas en tiempo real e integración técnica. Elegimos las piezas según el espacio y el objetivo.',
+      cap_eyebrow: 'Capacidades', cap_title: 'Todo lo que puede vivir dentro.',
+      cap_lead: 'Dirección, producción, tiempo real e integración. Las piezas que pida el espacio.',
       cap_format: 'Formato domemaster · 360°',
       cap1_t: 'Contenido fulldome', cap1_d: 'Producción y adaptación de piezas audiovisuales diseñadas para envolver al público.',
       cap2_t: 'Experiencias interactivas', cap2_d: 'Cámaras de profundidad, sensores y tracking corporal para transformar la presencia del público en imagen y movimiento.',
@@ -1687,21 +1405,21 @@
       cap7_t: 'Producción local', cap7_d: 'Fotografía, video, dron, captura 360 y creación de material original vinculado con cada destino.',
       cap8_t: 'Programación continua', cap8_d: 'Temporadas, estrenos, activaciones patrocinadas y actualización periódica de contenido.',
 
-      con_eyebrow: 'Experiencias insignia', con_title: 'Cuatro maneras de llenar la cúpula — y ninguna se queda fija.',
-      con_tag: 'Conceptos adaptables a cada destino, temporada o identidad de marca. Son propuestas de dirección creativa, no producciones ya realizadas.',
+      con_eyebrow: 'Historias', con_title: 'Cuatro historias. Un recinto.',
+      con_tag: 'Propuestas de dirección creativa — se cambian, no se construyen.',
       ph_label: 'Visualización conceptual',
       cn1: 'Concepto 01', cn2: 'Concepto 02', cn3: 'Concepto 03', cn4: 'Concepto 04',
       c1_t: 'Viaje de las Ballenas',
-      c1_d: 'Una travesía inmersiva por el océano donde ballenas monumentales, sonido espacial, datos ambientales y movimiento generativo transforman el domo en un ecosistema vivo.',
+      c1_d: 'Ballenas, océano y sonido espacial. El recinto se convierte en un ecosistema.',
       c1_k1: 'Océano y bioluminiscencia', c1_k2: 'Audio espacial', c1_k3: 'Datos ambientales',
       c2_t: 'Memoria Viva',
-      c2_d: 'Una interpretación contemporánea de Día de Muertos donde memorias, retratos voluntarios, cempasúchil, agua, luz y sonido se convierten en una experiencia colectiva.',
+      c2_d: 'Día de Muertos contemporáneo: retratos, cempasúchil y una memoria compartida.',
       c2_k1: 'Participación del público', c2_k2: 'Retratos voluntarios', c2_k3: 'Ritual contemporáneo',
       c3_t: 'El Destino Vivo',
-      c3_d: 'El territorio contado mediante imágenes de dron, paisajes, arquitectura, cultura local y datos transformados en movimiento, luz y sonido.',
+      c3_d: 'El destino, desde el dron hasta la cúpula.',
       c3_k1: 'Captura con dron', c3_k2: 'Identidad del destino', c3_k3: 'Turismo cultural',
       c4_t: 'Data Dome',
-      c4_d: 'Mareas, clima, sonido, movimiento y participación del público convertidos en una composición audiovisual irrepetible.',
+      c4_d: 'Clima, marea y público en vivo. Nunca igual dos veces.',
       c4_k1: 'Datos en vivo', c4_k2: 'Sistemas generativos', c4_k3: 'Nunca igual dos veces',
 
       nm1_k: 'Se genera', nm1_t: 'Ninguna función es idéntica',
@@ -1711,13 +1429,14 @@
       nm3_k: 'Se mueve', nm3_t: 'Sistemas que viajan',
       nm3_d: 'Lo que producimos para una cúpula se recalibra para otro recinto, otro tamaño u otra superficie. El motor viaja; solo se ajusta el warping y la escala.',
 
-      int_eyebrow: 'Interactividad', int_title: 'El público activa la experiencia',
-      int_p: 'Una experiencia interactiva no requiere tocar la superficie del domo. El movimiento, el sonido y la participación pueden modificar el contenido en tiempo real.',
-      int_cap: 'Instalación interactiva de ANDATA LAB: sensores y tracking convirtiendo el movimiento del público en imagen. La misma base técnica se adapta a una cúpula.',
+      int_eyebrow: 'Interactividad', int_title: 'El público entra y la escena responde',
+      int_p: 'Kioscos, sensores y control en vivo — sin app.',
+      int_cap: 'ANDATA LAB, en vivo: el movimiento se vuelve imagen.',
       int_s1_t: 'Captura voluntaria',
-      int_s1_d: 'Un kiosco con cámara y luz. Quien quiere, se retrata. El retrato entra a la escena y se borra al terminar la función.',
+      int_s1_d: 'Cámara, luz, permiso. El retrato entra a la escena.',
       int_s2_t: 'De la mesa a la pared',
-      int_s2_d: 'Lo que tocas en el kiosco sube a la superficie grande. El grupo ve el resultado al instante, sin app y sin explicación técnica.',
+      int_s2_d: 'Lo que tocas en la mesa sube a la cúpula. Al instante.',
+      int_s3_t: 'Listo para operar', int_s3_d: 'Mesas, kioscos y control en vivo. El público entra; el recinto ya está armado.',
       i1_t: 'Tracking corporal', i1_d: 'El cuerpo del visitante se convierte en imagen dentro de la cúpula.',
       i2_t: 'Siluetas y partículas', i2_d: 'La presencia se traduce en luz, estelas y movimiento.',
       i3_t: 'Dinámicas colectivas', i3_d: 'El grupo completo modifica la escena en conjunto.',
@@ -1797,8 +1516,8 @@
       t_audio: 'Audio reactivo', t_dmx: 'Control DMX', t_ai: 'Inteligencia artificial aplicada a contenido',
       t_rt: 'Integración audiovisual en tiempo real',
 
-      exp_eyebrow: 'Experiencia ANDATA LAB', exp_title: 'Experiencia que se adapta a nuevas superficies',
-      exp_p1: 'ANDATA LAB desarrolla instalaciones interactivas, sistemas audiovisuales, mapping y experiencias generativas para espacios físicos, eventos y marcas.',
+      exp_eyebrow: 'Experiencia ANDATA LAB', exp_title: 'Ya lo hacemos en otras superficies.',
+      exp_p1: 'Instalaciones, mapping y sistemas en tiempo real — ahora en cúpula.',
       exp_p2: 'Nuestra experiencia con cámaras, sensores, contenido en tiempo real y superficies de gran formato nos permite diseñar nuevas posibilidades para el formato fulldome.',
       lg_real: 'Proyecto realizado', lg_tech: 'Tecnología demostrada', lg_con: 'Concepto para domo', lg_vis: 'Visualización conceptual',
       badge_real: 'Proyecto realizado', badge_tech: 'Tecnología demostrada', see: 'Ver proyecto →',
@@ -1825,12 +1544,12 @@
       pp6_t: 'Evolución', pp6_d: 'Actualizamos temporadas, contenido y nuevas activaciones.',
 
       vn_eyebrow: 'El recinto',
-      vn_title: 'El mismo contenido, en la superficie que vas a comprar.',
-      vn_p: 'Domo, LED curva, pantalla envolvente o un salón de hotel. Diseñamos la experiencia para el hardware que el recinto ya tiene — o para el que estás a punto de especificar. El contenido se recalibra; no se vuelve a producir.',
+      vn_title: 'El recinto, listo.',
+      vn_p: 'Domo, LED curva o salón. El contenido se recalibra; no se vuelve a producir.',
       vn_f1: 'Domo / fulldome', vn_f2: 'LED curva', vn_f3: 'Pantalla envolvente', vn_f4: 'Salón y cena',
 
       cta_title: 'Hagamos que el espacio cobre vida',
-      cta_p: 'Creamos contenido, interacción y programación para convertir domos y superficies inmersivas en destinos que la gente quiera volver a experimentar.',
+      cta_p: 'Contenido, interacción y programación. El recinto deja de ser una pantalla.',
       cta_btn1: 'Cuéntanos sobre tu espacio', cta_btn2: 'Escribir por correo',
       label_email: 'Correo', label_based: 'Ubicación', label_reply: 'Respuesta',
       based: 'México · trabajamos en todo el mundo', reply: '24–48 horas',
@@ -1838,12 +1557,11 @@
       doc_title: 'Dome Studio | Contenido e interactividad para domos | ANDATA LAB'
     },
     en: {
-      nav_caps: 'Capabilities', nav_work: 'Work', nav_contact: 'Contact', nav_home: 'Home',
-      nav_how: 'How it works',
+      nav_stories: 'Stories', nav_caps: 'Capabilities', nav_work: 'Work', nav_contact: 'Contact', nav_home: 'Home',
       nav_cta: "Let's talk", back: 'Back to home', scroll: 'Scroll',
       h_t1: 'Living content', h_t2: 'for immersive spaces',
-      h_sub: 'One dome, different content every season. We create audiovisual, interactive and generative experiences for domes, fulldome venues and large-format surfaces.',
-      h_cta1: "Let's talk about your space", h_cta2: 'Explore capabilities',
+      h_sub: 'Drag the dome. Four stories, one venue.',
+      h_cta1: "Let's talk about your space", h_cta2: 'See the stories',
       h_now: 'On the dome · conceptual visualization',
       hs1_d: 'Ocean, spatial sound and environmental data.',
       hs2_t: 'Generative System', hs2_d: 'An organism of light drawn during the show.',
@@ -1855,8 +1573,8 @@
       op_p1: 'A dome doesn\u2019t have to work like a screen replaying the same material. It can become a <strong>living platform</strong> for culture, tourism, entertainment, brands and participatory experiences.',
       op_p2: 'ANDATA LAB combines creative direction, audiovisual production and real-time technology to build content that <strong>evolves with the space, the audience and every season</strong>.',
 
-      cap_eyebrow: 'Capabilities', cap_title: 'Everything that can live inside a dome.',
-      cap_lead: 'One studio for creative direction, production, real-time systems and technical integration. We pick the pieces that fit the space and the goal.',
+      cap_eyebrow: 'Capabilities', cap_title: 'Everything that can live inside.',
+      cap_lead: 'Direction, production, real-time and integration. The pieces the space asks for.',
       cap_format: 'Domemaster format · 360°',
       cap1_t: 'Fulldome content', cap1_d: 'Production and adaptation of audiovisual pieces designed to wrap around the audience.',
       cap2_t: 'Interactive experiences', cap2_d: 'Depth cameras, sensors and body tracking that turn the audience\u2019s presence into image and movement.',
@@ -1867,21 +1585,21 @@
       cap7_t: 'Local production', cap7_d: 'Photography, video, drone, 360 capture and original material tied to each destination.',
       cap8_t: 'Ongoing programming', cap8_d: 'Seasons, premieres, sponsored activations and periodic content updates.',
 
-      con_eyebrow: 'Flagship experiences', con_title: 'Four ways to fill the dome — and none of them stays put.',
-      con_tag: 'Concepts adaptable to each destination, season or brand identity. These are creative-direction proposals, not productions already delivered.',
+      con_eyebrow: 'Stories', con_title: 'Four stories. One venue.',
+      con_tag: 'Creative-direction proposals — you change the content, not the building.',
       ph_label: 'Conceptual visualization',
       cn1: 'Concept 01', cn2: 'Concept 02', cn3: 'Concept 03', cn4: 'Concept 04',
       c1_t: 'Journey of the Whales',
-      c1_d: 'An immersive ocean crossing where monumental whales, spatial sound, environmental data and generative motion turn the dome into a living ecosystem.',
+      c1_d: 'Whales, ocean and spatial sound. The venue becomes an ecosystem.',
       c1_k1: 'Ocean & bioluminescence', c1_k2: 'Spatial audio', c1_k3: 'Environmental data',
       c2_t: 'Living Memory',
-      c2_d: 'A contemporary reading of Día de Muertos where memories, volunteered portraits, marigold, water, light and sound become a collective experience.',
+      c2_d: 'A contemporary Día de Muertos: portraits, marigold and shared memory.',
       c2_k1: 'Audience participation', c2_k2: 'Volunteered portraits', c2_k3: 'Contemporary ritual',
       c3_t: 'The Living Destination',
-      c3_d: 'The territory told through drone imagery, landscape, architecture, local culture and data transformed into movement, light and sound.',
+      c3_d: 'The destination, from drone to dome.',
       c3_k1: 'Drone capture', c3_k2: 'Destination identity', c3_k3: 'Cultural tourism',
       c4_t: 'Data Dome',
-      c4_d: 'Tides, weather, sound, movement and audience participation turned into an audiovisual composition that never repeats.',
+      c4_d: 'Weather, tide and a live audience. Never twice the same.',
       c4_k1: 'Live data', c4_k2: 'Generative systems', c4_k3: 'Never twice the same',
 
       nm1_k: 'Generated', nm1_t: 'No two shows are identical',
@@ -1891,13 +1609,14 @@
       nm3_k: 'Portable', nm3_t: 'Systems that travel',
       nm3_d: 'What we produce for one dome can be recalibrated for another venue, another size or another surface. The engine travels; only warping and scale get adjusted.',
 
-      int_eyebrow: 'Interactivity', int_title: 'The audience activates the experience',
-      int_p: 'An interactive experience doesn\u2019t require touching the dome surface. Movement, sound and participation can reshape the content in real time.',
-      int_cap: 'ANDATA LAB interactive installation: sensors and tracking turning audience movement into image. The same technical base adapts to a dome.',
+      int_eyebrow: 'Interactivity', int_title: 'The audience walks in and the scene answers',
+      int_p: 'Kiosks, sensors and live control — no app.',
+      int_cap: 'ANDATA LAB, live: movement becomes image.',
       int_s1_t: 'Voluntary capture',
-      int_s1_d: 'A kiosk with a camera and a light. Whoever wants to, sits for a portrait. It enters the scene and can be deleted when the show ends.',
+      int_s1_d: 'Camera, light, consent. The portrait enters the scene.',
       int_s2_t: 'From table to wall',
-      int_s2_d: 'What you touch on the kiosk rises to the large surface. The group sees the result instantly — no app, no technical briefing.',
+      int_s2_d: 'What you touch on the table goes up on the dome. Instantly.',
+      int_s3_t: 'Ready to run', int_s3_d: 'Tables, kiosks and live control. The audience walks in; the venue is already standing.',
       i1_t: 'Body tracking', i1_d: 'The visitor\u2019s body becomes image inside the dome.',
       i2_t: 'Silhouettes & particles', i2_d: 'Presence translated into light, trails and motion.',
       i3_t: 'Collective dynamics', i3_d: 'The whole group reshapes the scene together.',
@@ -1977,8 +1696,8 @@
       t_audio: 'Audio reactive', t_dmx: 'DMX control', t_ai: 'AI applied to content',
       t_rt: 'Real-time audiovisual integration',
 
-      exp_eyebrow: 'ANDATA LAB experience', exp_title: 'Experience that adapts to new surfaces',
-      exp_p1: 'ANDATA LAB builds interactive installations, audiovisual systems, mapping and generative experiences for physical spaces, events and brands.',
+      exp_eyebrow: 'ANDATA LAB experience', exp_title: 'We already do this on other surfaces.',
+      exp_p1: 'Installations, mapping and real-time systems — now in a dome.',
       exp_p2: 'Our experience with cameras, sensors, real-time content and large-format surfaces lets us design new possibilities for the fulldome format.',
       lg_real: 'Delivered project', lg_tech: 'Proven technology', lg_con: 'Dome concept', lg_vis: 'Conceptual visualization',
       badge_real: 'Delivered project', badge_tech: 'Proven technology', see: 'View project →',
@@ -2005,12 +1724,12 @@
       pp6_t: 'Evolution', pp6_d: 'We update seasons, content and new activations.',
 
       vn_eyebrow: 'The venue',
-      vn_title: 'The same content, on the surface you are about to buy.',
-      vn_p: 'Dome, curved LED, wraparound wall or a hotel ballroom. We design the experience for the hardware the venue already has — or for the spec you are about to write. Content is recalibrated; it is not produced twice.',
+      vn_title: 'The venue, ready.',
+      vn_p: 'Dome, curved LED or ballroom. Content is recalibrated; it is not produced again.',
       vn_f1: 'Dome / fulldome', vn_f2: 'Curved LED', vn_f3: 'Wraparound screen', vn_f4: 'Ballroom & dinner',
 
       cta_title: 'Let\u2019s bring the space to life',
-      cta_p: 'We create content, interaction and programming to turn domes and immersive surfaces into destinations people want to experience again.',
+      cta_p: 'Content, interaction and programming. The venue stops being a screen.',
       cta_btn1: 'Tell us about your space', cta_btn2: 'Send us an email',
       label_email: 'Email', label_based: 'Based', label_reply: 'Reply',
       based: 'Mexico · working worldwide', reply: '24–48 hours',
@@ -2074,7 +1793,7 @@
     function frame() {
       queued = false;
       var y = window.scrollY || window.pageYOffset;
-      document.body.classList.toggle('is-scrolled', y > window.innerHeight * 0.6);
+      document.body.classList.toggle('is-scrolled', y > 48);
       if (progress) {
         var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
         progress.style.transform = 'scaleX(' + Math.min(1, y / max) + ')';
@@ -2086,72 +1805,86 @@
     frame();
   })();
 
-  /* ─────────── Hero: the dome changes programme as you scroll ─────────── */
-  var heroSlides = [
-    { t: 'c1_t', d: 'hs1_d' },
-    { t: 'hs2_t', d: 'hs2_d' },
-    { t: 'c3_t', d: 'hs3_d' },
-    { t: 'c2_t', d: 'hs4_d' },
-    { t: 'c4_t', d: 'hs5_d' }
+  /* Hero orb: 3D tilt + story swap */
+  var orbStories = [
+    { src: 'img/dome-whale-concept.jpg', t: 'c1_t', acc: '#3CDCFF' },
+    { src: 'img/dome-memory-concept.jpg', t: 'c2_t', acc: '#FF2E8A' },
+    { src: 'img/dome-destination-pv.jpg', t: 'c3_t', acc: '#FF8A3C' },
+    { src: 'img/dome-data-experience.jpg', t: 'c4_t', acc: '#9b7aff' }
   ];
   var heroIndex = 0;
   function paintHeroNow() {
     var dict = I18N[lang] || I18N.es;
-    var s = heroSlides[heroIndex];
-    var title = $('#hero-now-title'), desc = $('#hero-now-desc');
-    if (title && dict[s.t]) title.textContent = dict[s.t];
-    if (desc && dict[s.d]) desc.textContent = dict[s.d];
+    var s = orbStories[heroIndex];
+    var cap = $('#orb-cap');
+    if (cap && dict[s.t]) cap.textContent = dict[s.t];
   }
-  (function heroScroll() {
-    var hero = $('.hero'), stage = $('#hero-stage');
-    if (!hero || !stage) return;
-    var layers = $$('.hero-layer', stage);
-    var dots = $$('#hero-dots i');
-    var n = layers.length;
-    if (!n) return;
+  (function orbControl() {
+    var orb = $('#orb'), spin = $('#orb-spin'), img = $('#orb-img');
+    if (!orb || !spin || !img) return;
+    var dots = $$('#hero-dots button');
+    var rx = -8, ry = 12;
+    var dragging = false, lastX = 0, lastY = 0, idle = true;
+    var reducedMotion = reduced;
 
-    // Decode the off-screen programme frames once the hero is in play.
-    var warmed = false;
-    function warm() {
-      if (warmed) return;
-      warmed = true;
-      layers.forEach(function (l) {
-        var img = l.querySelector('img[data-src]');
-        if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
-      });
+    function apply() {
+      spin.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+      spin.style.setProperty('--ry', ry.toFixed(2) + 'deg');
     }
-
     function show(i) {
       if (i === heroIndex) return;
-      heroIndex = i;
-      layers.forEach(function (l, k) {
-        var near = Math.abs(k - i) <= 1;
-        l.classList.toggle('is-near', near);
-        l.classList.toggle('is-on', k === i);
+      heroIndex = (i + orbStories.length) % orbStories.length;
+      var s = orbStories[heroIndex];
+      img.style.opacity = '0';
+      setTimeout(function () {
+        img.src = s.src;
+        img.style.opacity = '1';
+        orb.querySelector('.disc').style.setProperty('--acc', s.acc);
+      }, 180);
+      dots.forEach(function (d, k) {
+        if (k === heroIndex) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
       });
-      dots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
       paintHeroNow();
     }
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); }); });
 
-    var queued = false;
-    function frame() {
-      queued = false;
-      var box = hero.getBoundingClientRect();
-      var span = box.height - window.innerHeight;
-      if (span <= 0) return;
-      var p = Math.min(1, Math.max(0, -box.top / span));
-      // Hold the opening frame briefly, then walk the programme.
-      var walk = Math.max(0, (p - 0.1) / 0.9);
-      show(Math.min(n - 1, Math.floor(walk * n)));
+    function down(x, y) {
+      dragging = true; idle = false; orb.classList.add('is-drag');
+      lastX = x; lastY = y;
     }
-    function onScroll() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
+    function move(x, y) {
+      if (!dragging) return;
+      var dx = x - lastX, dy = y - lastY;
+      lastX = x; lastY = y;
+      ry += dx * 0.42;
+      rx = Math.max(-32, Math.min(32, rx - dy * 0.32));
+      apply();
+    }
+    function up() {
+      if (!dragging) return;
+      dragging = false; orb.classList.remove('is-drag');
+      idle = true;
+    }
 
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) { if (es[0].isIntersecting) warm(); }, { rootMargin: '200px' }).observe(hero);
-    } else { warm(); }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    frame();
+    orb.addEventListener('pointerdown', function (e) {
+      orb.setPointerCapture(e.pointerId);
+      down(e.clientX, e.clientY);
+    });
+    orb.addEventListener('pointermove', function (e) { move(e.clientX, e.clientY); });
+    orb.addEventListener('pointerup', up);
+    orb.addEventListener('pointercancel', up);
+
+    if (!reducedMotion) {
+      (function loop() {
+        if (idle && !dragging) {
+          ry += 0.12;
+          rx += ( -8 - rx ) * 0.02;
+          apply();
+        }
+        requestAnimationFrame(loop);
+      })();
+    } else { apply(); }
   })();
 
   /* ─────────── Lazy videos in cards / bands ─────────── */
