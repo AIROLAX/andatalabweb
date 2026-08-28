@@ -150,9 +150,10 @@
   .btn-dark:hover{ transform:translateY(-2px); box-shadow:var(--shadow-lift); }
   .btn:active{ transform:scale(.985); }
 
-  /* HERO — circular dome you can turn */
+  /* HERO — compact full-viewport, centered orb */
   .hero{
-    position:relative; min-height:100svh; display:flex; align-items:center;
+    position:relative; height:100svh; min-height:100svh; max-height:100svh;
+    display:flex; align-items:center; justify-content:center;
     overflow:hidden; background:#02040a; isolation:isolate;
   }
   .hero-amb{ position:absolute; inset:0; z-index:0; }
@@ -165,41 +166,50 @@
     position:absolute; inset:0; z-index:2; pointer-events:none;
     background:
       radial-gradient(120% 80% at 50% 116%, rgba(60,220,255,.16) 0%, rgba(60,220,255,0) 58%),
-      linear-gradient(180deg, rgba(4,6,11,.78) 0%, rgba(4,6,11,.42) 36%, rgba(4,6,11,.72) 78%, var(--d-0) 100%);
+      linear-gradient(180deg, rgba(4,6,11,.7) 0%, rgba(4,6,11,.28) 40%, rgba(4,6,11,.7) 82%, var(--d-0) 100%);
   }
   .hero-inner{
-    position:relative; z-index:3; width:100%;
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    gap:clamp(14px,2.4vh,22px);
-    padding-top:calc(var(--nav-h) + var(--safe-t) + clamp(18px,3vh,36px));
-    padding-bottom:calc(clamp(56px,9vh,96px) + var(--safe-b));
+    position:relative; z-index:3; width:100%; max-width:720px;
+    height:100%;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    gap:clamp(6px,1.2vh,12px);
+    padding-top:calc(var(--nav-h) + var(--safe-t) + 8px);
+    padding-bottom:calc(36px + var(--safe-b));
+    box-sizing:border-box;
   }
-  .hero-copy{ max-width:34rem; }
-  .hero-visual{ perspective:1600px; width:100%; }
+  .hero-copy{ max-width:34rem; flex:0 0 auto; }
+  .hero-copy .eyebrow{ margin:0; }
+  .hero-visual{
+    perspective:1400px; width:100%; flex:0 1 auto;
+    display:flex; flex-direction:column; align-items:center; min-height:0;
+  }
   .orb{
-    position:relative; width:min(92vw, clamp(320px,72vmin,640px)); margin:0 auto;
+    position:relative;
+    width:min(56vw, 46vh, 360px);
+    margin:0 auto;
     aspect-ratio:1; transform-style:preserve-3d;
     cursor:grab; touch-action:none; user-select:none;
+    flex:0 0 auto;
   }
   .orb:active{ cursor:grabbing; }
   .orb-spin{
     width:100%; height:100%; transform-style:preserve-3d;
     transform:rotateX(var(--rx, -8deg)) rotateY(var(--ry, 12deg));
     will-change:transform;
-    filter:drop-shadow(0 36px 64px rgba(0,0,0,.6));
+    filter:drop-shadow(0 22px 40px rgba(0,0,0,.55));
   }
   .orb .disc{ width:100%; height:100%; }
   .orb .disc-img{
     opacity:1; transition:opacity .6s ease, transform .6s var(--ease);
-    transform:scale(1.04);
+    transform:scale(1.02);
   }
-  .orb.is-drag .disc-img{ transform:scale(1.08); }
+  .orb.is-drag .disc-img{ transform:scale(1.05); }
   .hero-visual-cap{
     display:flex; align-items:center; justify-content:center; gap:10px;
-    text-align:center; margin:16px auto 0; max-width:36ch;
+    text-align:center; margin:10px auto 0; max-width:36ch;
   }
-  .hero-visual-cap .ds-label{ font-size:11px; color:rgba(255,255,255,.55); letter-spacing:.14em; }
-  .hero-dots{ display:flex; gap:7px; justify-content:center; margin-top:12px; }
+  .hero-visual-cap .ds-label{ font-size:10px; color:rgba(255,255,255,.55); letter-spacing:.14em; }
+  .hero-dots{ display:flex; gap:7px; justify-content:center; margin-top:8px; }
   .hero-dots button{
     width:22px; height:3px; padding:8px 0; border:0; background:transparent; cursor:pointer;
   }
@@ -211,25 +221,33 @@
     width:34px; background:var(--spec-cyan); box-shadow:0 0 12px rgba(60,220,255,.6);
   }
   .hero h1{
-    font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:800; letter-spacing:-.035em; line-height:1.08;
-    margin:12px 0 0; color:#fff;
+    font-size:clamp(1.35rem,2.8vw,2rem); font-weight:800; letter-spacing:-.035em; line-height:1.1;
+    margin:8px 0 0; color:#fff;
   }
   .hero h1 .l{ display:inline; }
   .hero h1 .l2{ color:rgba(255,255,255,.5); }
   .hero-sub{
-    font-size:clamp(.95rem,1.2vw,1.1rem); line-height:1.45; color:rgba(255,255,255,.72);
-    margin:10px 0 0;
+    font-size:clamp(.85rem,1.1vw,.98rem); line-height:1.4; color:rgba(255,255,255,.68);
+    margin:4px 0 0;
   }
-  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:8px; }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:4px; }
+  .hero-cta .btn{ padding:12px 22px; font-size:14px; }
   @media (max-width:900px){
-    .orb{ width:min(86vw, 420px); }
-    .hero-cta .btn{ justify-content:center; padding:14px 22px; }
+    .orb{ width:min(62vw, 40vh, 300px); }
+    .hero-cta .btn{ justify-content:center; }
+  }
+  @media (max-height:740px){
+    .orb{ width:min(48vw, 34vh, 280px); }
+    .hero h1{ font-size:clamp(1.2rem,2.4vw,1.7rem); margin-top:4px; }
+    .hero-visual-cap{ margin-top:6px; }
+    .hero-dots{ margin-top:4px; }
+    .scroll-cue{ display:none; }
   }
   @keyframes pulse{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
   .scroll-cue{
-    position:absolute; left:50%; bottom:calc(18px + var(--safe-b)); z-index:4;
-    transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px;
-    opacity:.7; transition:opacity .3s;
+    position:absolute; left:50%; bottom:calc(10px + var(--safe-b)); z-index:4;
+    transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:6px;
+    opacity:.65; transition:opacity .3s;
   }
   .scroll-cue:hover{ opacity:1; }
   body.is-scrolled .scroll-cue{ opacity:0; pointer-events:none; }
@@ -851,7 +869,7 @@
   .reveal-d1{ transition-delay:.08s; }
   .reveal-d2{ transition-delay:.16s; }
   .reveal-d3{ transition-delay:.24s; }
-  .hero .reveal{ transition-duration:1.15s; }
+  .hero .reveal{ opacity:1; transform:none; transition-duration:1.15s; }
 
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
@@ -904,7 +922,7 @@
       </div>
 
       <div class="hero-visual reveal reveal-d1">
-        <div class="orb" id="orb" role="img" aria-label="Cúpula interactiva. Arrastra para girarla.">
+        <div class="orb" id="orb" role="img" aria-label="Cúpula interactiva. Click para cambiar historia. Arrastra para girarla.">
           <div class="orb-spin" id="orb-spin">
             <div class="disc is-filled" style="--acc:#3CDCFF">
               <img class="disc-img" id="orb-img" src="img/dome-whale-concept.jpg" width="1024" height="1024"
@@ -926,7 +944,7 @@
         </div>
       </div>
 
-      <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Arrastra la cúpula · cambia de historia</p>
+      <p class="hero-sub reveal reveal-d2" data-i18n="h_sub">Click para cambiar · arrastra para girar</p>
       <div class="hero-cta reveal reveal-d3">
         <a class="btn btn-primary" href="#contacto" data-i18n="h_cta1">Hablemos de tu espacio</a>
       </div>
@@ -1389,7 +1407,7 @@
       nav_stories: 'Historias', nav_caps: 'Capacidades', nav_work: 'Proyectos', nav_proof: 'Prueba', nav_contact: 'Contacto', nav_home: 'Inicio',
       nav_cta: 'Hablemos', back: 'Volver al inicio', scroll: 'Desliza',
       h_t1: 'Contenido vivo', h_t2: 'para espacios inmersivos',
-      h_sub: 'Arrastra la cúpula · cambia de historia',
+      h_sub: 'Click para cambiar · arrastra para girar',
       h_cta1: 'Hablemos de tu espacio', h_cta2: 'Ver las historias',
       h_now: 'En la cúpula · visualización conceptual',
       hs1_d: 'Océano, sonido espacial y datos ambientales.',
@@ -1570,7 +1588,7 @@
       nav_stories: 'Stories', nav_caps: 'Capabilities', nav_work: 'Work', nav_proof: 'Proof', nav_contact: 'Contact', nav_home: 'Home',
       nav_cta: "Let's talk", back: 'Back to home', scroll: 'Scroll',
       h_t1: 'Living content', h_t2: 'for immersive spaces',
-      h_sub: 'Drag the dome · switch stories',
+      h_sub: 'Click to switch · drag to spin',
       h_cta1: "Let's talk about your space", h_cta2: 'See the stories',
       h_now: 'On the dome · conceptual visualization',
       hs1_d: 'Ocean, spatial sound and environmental data.',
@@ -1835,7 +1853,7 @@
     if (!orb || !spin || !img) return;
     var dots = $$('#hero-dots button');
     var rx = -8, ry = 12;
-    var dragging = false, lastX = 0, lastY = 0, idle = true;
+    var dragging = false, lastX = 0, lastY = 0, idle = true, moved = 0;
     var reducedMotion = reduced;
 
     function apply() {
@@ -1843,7 +1861,6 @@
       spin.style.setProperty('--ry', ry.toFixed(2) + 'deg');
     }
     function show(i) {
-      if (i === heroIndex) return;
       heroIndex = (i + orbStories.length) % orbStories.length;
       var s = orbStories[heroIndex];
       img.style.opacity = '0';
@@ -1861,13 +1878,14 @@
     dots.forEach(function (d, k) { d.addEventListener('click', function () { show(k); }); });
 
     function down(x, y) {
-      dragging = true; idle = false; orb.classList.add('is-drag');
+      dragging = true; idle = false; moved = 0; orb.classList.add('is-drag');
       lastX = x; lastY = y;
     }
     function move(x, y) {
       if (!dragging) return;
       var dx = x - lastX, dy = y - lastY;
       lastX = x; lastY = y;
+      moved += Math.abs(dx) + Math.abs(dy);
       ry += dx * 0.42;
       rx = Math.max(-32, Math.min(32, rx - dy * 0.32));
       apply();
@@ -1876,6 +1894,7 @@
       if (!dragging) return;
       dragging = false; orb.classList.remove('is-drag');
       idle = true;
+      if (moved < 10) show(heroIndex + 1);
     }
 
     orb.addEventListener('pointerdown', function (e) {
