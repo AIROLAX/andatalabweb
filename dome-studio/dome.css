@@ -124,11 +124,13 @@ body.is-scrolled header.nav{
 .hero-hint{ margin:14px 0 0; font-size:11px; font-weight:650; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); }
 .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
 .hero-stage{
-  position:relative; z-index:2; width:118%; margin-right:-18%;
+  position:relative; z-index:2; width:100%; margin:0;
   min-height:100svh; display:flex; align-items:center; justify-content:center;
+  padding:calc(var(--nav-h) + var(--safe-t)) max(var(--pad),var(--safe-r)) calc(24px + var(--safe-b)) 0;
 }
 .dome-shell{
-  position:relative; width:min(100%, 720px); aspect-ratio:1;
+  position:relative; width:min(100%, 520px); max-height:min(52vh, 520px);
+  aspect-ratio:1; margin:0 auto;
   cursor:grab; touch-action:none; user-select:none;
 }
 .dome-shell:active{ cursor:grabbing; }
@@ -203,7 +205,7 @@ body.is-scrolled header.nav{
   .hero-stage{
     width:100%; margin:0; min-height:0; padding-bottom:calc(18px + var(--safe-b));
   }
-  .dome-shell{ width:min(88vw,420px); margin:0 auto; }
+  .dome-shell{ width:min(84vw,360px); max-height:min(44vh,360px); margin:0 auto; }
   .hero-cta .btn{ flex:1 1 100%; justify-content:center; }
   .prog-tabs{ margin-top:18px; }
 }

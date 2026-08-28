@@ -271,15 +271,15 @@
       if (!visible) return;
       resize();
 
-      // Inside the hemisphere: look forward-up so the equator (opening) stays in frame.
-      var eyeX = Math.sin(lookYaw) * 0.16;
-      var eyeY = 0.14 + lookPitch * 0.25;
-      var eyeZ = 0.28 - enter * 0.12;
-      var cx = Math.sin(lookYaw) * 0.35;
-      var cy = 0.42 + lookPitch * 0.9;
-      var cz = -0.62 + Math.cos(lookYaw) * 0.08;
+      // Inside the hemisphere: pull back so the full rim stays in frame.
+      var eyeX = Math.sin(lookYaw) * 0.12;
+      var eyeY = 0.12 + lookPitch * 0.2;
+      var eyeZ = 0.44 - enter * 0.1;
+      var cx = Math.sin(lookYaw) * 0.28;
+      var cy = 0.28 + lookPitch * 0.65;
+      var cz = -0.52 + Math.cos(lookYaw) * 0.06;
       var aspect = canvas.width / Math.max(1, canvas.height);
-      var proj = perspective(92 * Math.PI / 180, aspect, 0.05, 6);
+      var proj = perspective(98 * Math.PI / 180, aspect, 0.05, 6);
       var view = lookAt(eyeX, eyeY, eyeZ, cx, cy, cz, 0, 1, 0);
       var mvp = mul(proj, view);
 
