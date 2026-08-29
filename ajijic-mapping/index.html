@@ -4,9 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<title>Whispers of the Lake — Projection Mapping · Andata Lab</title>
-<meta name="description" content="Whispers of the Lake — a projection-mapping installation by Andata Lab that turned the historic building on the Chapala malecón into a living canvas narrating the myths and spirits of Lake Chapala.">
+<meta name="robots" content="index,follow">
+<title>Projection Mapping in Mexico | Whispers of the Lake</title>
+<meta name="description" content="Architectural projection mapping for a 33 × 8 m historic facade in Chapala, Mexico—3D content, TouchDesigner playback, spatial audio and on-site calibration.">
+<link rel="canonical" href="https://www.andatalab.com/ajijic-mapping/">
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="img/hero-poster.jpg">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Projection Mapping in Mexico | Whispers of the Lake">
+<meta property="og:description" content="Architectural projection mapping for a 33 × 8 m historic facade in Chapala, Mexico—3D content, TouchDesigner playback, spatial audio and on-site calibration.">
+<meta property="og:url" content="https://www.andatalab.com/ajijic-mapping/">
+<meta property="og:image" content="https://www.andatalab.com/Imagenes/architectural-mapping-poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="Whispers of the Lake — architectural projection mapping on a historic facade in Chapala, Mexico">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projection Mapping in Mexico | Whispers of the Lake">
+<meta name="twitter:description" content="Architectural projection mapping for a 33 × 8 m historic facade in Chapala, Mexico—3D content, TouchDesigner playback, spatial audio and on-site calibration.">
+<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/architectural-mapping-poster.jpg">
+
 <link rel="stylesheet" href="../colors_and_type.css">
 <style>
   :root{
@@ -149,9 +168,21 @@
   .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
   .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
   .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
-  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:520px; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:560px; }
   .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
   .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  .faq{ display:grid; gap:12px; margin-top:clamp(24px,3vw,36px); }
+  .faq details{ border:1px solid var(--hair-2); border-radius:var(--r-md); padding:18px 22px; background:var(--surface); }
+  .faq summary{ font-size:1.02rem; font-weight:600; letter-spacing:-.015em; cursor:pointer; }
+  .faq details p{ margin:12px 0 0; font-size:.97rem; line-height:1.65; color:var(--ink-2); }
+  .related{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .related a{ display:block; padding:20px 22px; border-radius:var(--r-md); border:1px solid var(--hair-2); background:var(--surface); transition:transform .3s, box-shadow .3s; }
+  .related a:hover{ transform:translateY(-3px); box-shadow:var(--shadow-card); }
+  .related a h3{ font-size:1.02rem; font-weight:600; margin:0 0 6px; }
+  .related a p{ margin:0; font-size:14px; line-height:1.5; color:var(--ink-2); }
+  .prose a, .related a{ color:inherit; }
+  .prose a{ text-decoration:underline; text-underline-offset:3px; }
 
   /* ── Footer ── */
   footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
@@ -193,20 +224,20 @@
     <section class="hero">
       <div class="wrap">
         <div class="hero-head reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Selected work · Projection mapping</span></span>
-          <h1>Whispers of the Lake</h1>
-          <p class="hero-sub" data-i18n="hero_sub">An immersive audiovisual installation that turned the historic building on the Chapala malecón into a living canvas — narrating the origins, myths and spirits that surround Lake Chapala.</p>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Architectural Projection Mapping · Chapala, Mexico</span></span>
+          <h1 data-i18n="hero_h1">Whispers of the Lake — Architectural Projection Mapping</h1>
+          <p class="hero-sub" data-i18n="hero_sub">A site-specific projection mapping experience that transformed a 33 × 8 m historic facade on the Chapala malecón into a living canvas of local myth, Día de Muertos imagery and spatial sound.</p>
         </div>
 
         <div class="hero-media reveal">
-          <video id="hero-video" autoplay muted loop playsinline poster="img/hero-poster.jpg">
+          <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="1280" height="720" aria-label="Whispers of the Lake — architectural projection mapping on a historic facade in Chapala, Mexico">
             <source src="media/hero.mp4" type="video/mp4">
           </video>
         </div>
 
         <dl class="meta reveal">
           <div><dt data-i18n="m_studio">Studio</dt><dd>Andata Lab</dd></div>
-          <div><dt data-i18n="m_disc">Discipline</dt><dd data-i18n="m_disc_v">Projection mapping + cultural art</dd></div>
+          <div><dt data-i18n="m_disc">Discipline</dt><dd data-i18n="m_disc_v">Architectural projection mapping</dd></div>
           <div><dt data-i18n="m_loc">Location</dt><dd>Chapala, Jalisco</dd></div>
           <div><dt data-i18n="m_year">Year</dt><dd>2025</dd></div>
         </dl>
@@ -221,7 +252,7 @@
           <h2 class="sec-title" data-i18n="overview_title">A building that tells the lake's story.</h2>
         </div>
         <div class="prose">
-          <p data-i18n="overview_p1">The historic building on the shores of Lake Chapala became the screen for a <strong>site-specific projection-mapping piece</strong> rooted in local myth — the origins, legends and spirits that surround the lake.</p>
+          <p data-i18n="overview_p1">ANDATA LAB produced this <strong>architectural projection mapping</strong> in Chapala, Jalisco, in 2025: a site-specific piece on a 33 × 8 m historic facade, rooted in local myth — the origins, legends and spirits that surround Lake Chapala.</p>
           <p data-i18n="overview_p2">Día de Muertos imagery, marigold paths and the pier known as <em>Rinconcito de Amor</em> set the tone: a nocturnal, ceremonial journey mapped precisely onto the facade for the community.</p>
         </div>
       </div>
@@ -236,13 +267,13 @@
           <p class="lead-note" data-i18n="concept_note">Concept art anchored the piece before production — the lake, the pier and the marigold-lined path of a Día de Muertos night.</p>
         </div>
         <figure class="feature reveal">
-          <img src="img/concept-malecon.png" alt="Concept art — the Chapala pier dressed for Día de Muertos, marigolds and candles" loading="lazy">
+          <img src="img/concept-malecon.png" alt="Concept art — the Chapala pier dressed for Día de Muertos, marigolds and candles" loading="lazy" decoding="async">
           <figcaption data-i18n="concept_cap">Concept art — the Chapala pier, <em>“Rinconcito de Amor”</em>, dressed for Día de Muertos.</figcaption>
         </figure>
         <div class="art-grid reveal">
-          <figure class="art art--wide"><img src="img/concept-sketch-catrina.png" alt="Concept sketch — a catrina rising from Lake Chapala beside the church" loading="lazy"><figcaption data-i18n="cs_catrina">Story sketch — a catrina rising from the lake beside the lakeside church.</figcaption></figure>
-          <figure class="art"><img src="img/concept-sketch-boy.png" alt="Concept sketch — a boy praying at a grave in the Chapala cemetery" loading="lazy"><figcaption data-i18n="cs_boy">Story sketch — remembrance at the cemetery, the emotional heart of the piece.</figcaption></figure>
-          <figure class="art"><img src="img/concept-musica-del-alma.png" alt="Poster concept — Música del Alma, a mariachi skeleton playing guitar" loading="lazy"><figcaption data-i18n="cs_musica">Poster study — <em>“Música del Alma”</em>, the folk-art tone for the show.</figcaption></figure>
+          <figure class="art art--wide"><img src="img/concept-sketch-catrina.png" alt="Concept sketch — a catrina rising from Lake Chapala beside the church" loading="lazy" decoding="async"><figcaption data-i18n="cs_catrina">Story sketch — a catrina rising from the lake beside the lakeside church.</figcaption></figure>
+          <figure class="art"><img src="img/concept-sketch-boy.png" alt="Concept sketch — a boy praying at a grave in the Chapala cemetery" loading="lazy" decoding="async"><figcaption data-i18n="cs_boy">Story sketch — remembrance at the cemetery, the emotional heart of the piece.</figcaption></figure>
+          <figure class="art"><img src="img/concept-musica-del-alma.png" alt="Poster concept — Música del Alma, a mariachi skeleton playing guitar" loading="lazy" decoding="async"><figcaption data-i18n="cs_musica">Poster study — <em>“Música del Alma”</em>, the folk-art tone for the show.</figcaption></figure>
         </div>
       </div>
     </section>
@@ -256,8 +287,8 @@
           <p class="lead-note" data-i18n="previz_note">AI tools and motion tests explored how the brick facade could dissolve, liquefy and rebuild itself — and how neon wireframes could trace its architecture.</p>
         </div>
         <div class="art-grid reveal">
-          <figure class="art"><img src="img/facade-elevation.png" alt="Measured elevation of the facade — 33 m wide by 8 m tall" loading="lazy"><figcaption data-i18n="fa_elev">Measured elevation — the facade at 33 × 8 m, the canvas we mapped onto.</figcaption></figure>
-          <figure class="art"><img src="img/facade-wireframe-test.png" alt="Wireframe outline projected onto the real building at night" loading="lazy"><figcaption data-i18n="fa_wire">On-site wireframe test — the outline projected and aligned to the real building.</figcaption></figure>
+          <figure class="art"><img src="img/facade-elevation.png" alt="Measured elevation of the Chapala facade for architectural projection mapping — 33 m wide by 8 m tall" loading="lazy" decoding="async"><figcaption data-i18n="fa_elev">Measured elevation — the facade at 33 × 8 m, the canvas we mapped onto.</figcaption></figure>
+          <figure class="art"><img src="img/facade-wireframe-test.png" alt="On-site projector calibration — wireframe outline aligned to the historic building at night" loading="lazy" decoding="async"><figcaption data-i18n="fa_wire">On-site wireframe test — the outline projected and aligned to the real building.</figcaption></figure>
         </div>
         <div class="vid-grid reveal">
           <figure class="tile"><video class="lazy-vid" data-src="media/previz-facade-build.mp4" muted loop playsinline preload="none"></video><figcaption data-i18n="pz1">The facade builds itself, brick by brick.</figcaption></figure>
@@ -279,7 +310,7 @@
           <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Concept &amp; story</h3><p data-i18n="p1_d">Researching the myths and spirits of Lake Chapala and shaping a nocturnal, Día de Muertos narrative for the facade.</p></div></div>
           <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Facade study &amp; pre-viz</h3><p data-i18n="p2_d">Using AI tools to test facade transformations — dissolving, liquefying and rebuilding the brickwork, plus neon wireframe passes.</p></div></div>
           <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Content production</h3><p data-i18n="p3_d">Modelling and animating the mapped content in Blender and After Effects, matched to the real geometry of the building.</p></div></div>
-          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Real-time &amp; spatial audio</h3><p data-i18n="p4_d">Driving playback and cues in TouchDesigner and pairing the visuals with a spatial audio score.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">TouchDesigner playback &amp; spatial audio</h3><p data-i18n="p4_d">Driving playback and cues in TouchDesigner and pairing the visuals with spatial audio and interactive sound.</p></div></div>
           <div class="phase reveal"><div class="phase-n">05</div><div><h3 data-i18n="p5_t">On-site calibration &amp; show</h3><p data-i18n="p5_d">High-lumen projectors warped precisely to the architecture, calibrated on site for a live show on the malecón.</p></div></div>
         </div>
       </div>
@@ -311,15 +342,15 @@
         <div class="reveal">
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gallery">On site</span></span>
           <h2 class="sec-title" data-i18n="gallery_title">Mapped onto the building.</h2>
-          <p class="lead-note" data-i18n="gallery_note">Documentation from the night — the content projected and calibrated across the facade.</p>
+          <p class="lead-note" data-i18n="gallery_note">Documentation from the night — 3D projection mapping content warped and calibrated across the facade.</p>
         </div>
         <div class="gallery reveal">
-          <div class="shot shot--wide"><video class="lazy-vid" data-src="media/site-6.mp4" muted loop playsinline preload="none"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/site-4.mp4" muted loop playsinline preload="none"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/site-5.mp4" muted loop playsinline preload="none"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/site-1.mp4" muted loop playsinline preload="none"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/site-3.mp4" muted loop playsinline preload="none"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/site-2.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="shot shot--wide"><video class="lazy-vid" data-src="media/site-6.mp4" muted loop playsinline preload="none" poster="../Imagenes/architectural-mapping-poster.jpg" aria-label="Whispers of the Lake — wide view of the mapped historic facade in Chapala"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/site-4.mp4" muted loop playsinline preload="none" aria-label="On-site architectural projection mapping, Chapala malecón"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/site-5.mp4" muted loop playsinline preload="none" aria-label="Mapped facade detail — Whispers of the Lake"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/site-1.mp4" muted loop playsinline preload="none" aria-label="Live projection mapping show on the Chapala waterfront"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/site-3.mp4" muted loop playsinline preload="none" aria-label="Architectural mapping calibrated to windows and cornices"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/site-2.mp4" muted loop playsinline preload="none" aria-label="Nocturnal projection mapping for the Chapala community"></video></div>
         </div>
       </div>
     </section>
@@ -348,9 +379,66 @@
         </div>
         <dl class="credits reveal">
           <div class="credit"><dt data-i18n="c_studio">Studio</dt><dd>Andata Lab</dd></div>
-          <div class="credit"><dt data-i18n="c_disc">Disciplines</dt><dd data-i18n="c_disc_v">Projection mapping · Cultural art</dd></div>
+          <div class="credit"><dt data-i18n="c_disc">Disciplines</dt><dd data-i18n="c_disc_v">Architectural projection mapping · Cultural art</dd></div>
           <div class="credit"><dt data-i18n="c_tech">Engineering</dt><dd data-i18n="c_tech_v">Blender · After Effects · TouchDesigner</dd></div>
         </dl>
+      </div>
+    </section>
+
+    <!-- PRODUCTION -->
+    <section class="block" id="production">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_prod">Projection Mapping Production</span></span>
+          <h2 class="sec-title" data-i18n="prod_title">Architectural projection mapping, end to end.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="prod_p">ANDATA LAB designs and produces site-specific projection mapping for architecture, cultural events, museums and brand experiences. Our process can include facade study, creative direction, 3D and motion content, real-time playback, spatial audio, projector warping, on-site calibration and show operation.</p>
+          <p data-i18n="prod_link">See <a href="../projection-mapping/">projection mapping services</a> for the full production offering, or <a href="../dome-studio/">fulldome and 360° content</a> when the surface is a dome rather than a facade.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="block" id="faq">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_faq">Questions</span></span>
+          <h2 class="sec-title" data-i18n="faq_title">Planning an architectural mapping.</h2>
+        </div>
+        <div class="faq reveal">
+          <details>
+            <summary data-i18n="fq1_q">What does an architectural projection mapping production include?</summary>
+            <p data-i18n="fq1_a">Depending on the brief, a production can include facade study, creative direction, 3D and motion content, TouchDesigner playback, spatial audio, projector warping, on-site calibration and show operation — the same path used on Whispers of the Lake.</p>
+          </details>
+          <details>
+            <summary data-i18n="fq2_q">What information is needed to quote a facade?</summary>
+            <p data-i18n="fq2_a">Architecture and photos or drawings of the surface, location, intended dates, audience context, and whether the show needs spatial audio or interactivity. Exact projector counts and budgets are defined after a site study — we do not quote from a title alone.</p>
+          </details>
+          <details>
+            <summary data-i18n="fq3_q">Can ANDATA LAB produce projection mapping outside Mexico?</summary>
+            <p data-i18n="fq3_a">Yes. The studio is based in Mexico and works worldwide. We design and deliver on site when the project requires it.</p>
+          </details>
+          <details>
+            <summary data-i18n="fq4_q">Can projection mapping respond to music, sensors or audience movement?</summary>
+            <p data-i18n="fq4_a">Yes, when the brief calls for it. ANDATA builds real-time systems in TouchDesigner with sensors, motion tracking and show control — as in <a href="../biointerface/">Biointerface</a> and <a href="../museo-descubre/">Museo Descubre</a>. Whispers of the Lake was a calibrated playback show with spatial audio; interactive mapping is a separate production choice.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED -->
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Related capabilities</span></span>
+          <h2 class="sec-title" data-i18n="rel_title">More from the same studio.</h2>
+        </div>
+        <div class="related">
+          <a href="../projection-mapping/" class="reveal"><h3 data-i18n="r1_t">Projection mapping services</h3><p data-i18n="r1_d">The commercial offering: architecture, brands, culture, playback and calibration.</p></a>
+          <a href="../dome-studio/" class="reveal"><h3 data-i18n="r2_t">Fulldome and 360° content</h3><p data-i18n="r2_d">Dome projection, spatial audio and interactive dome experiences.</p></a>
+          <a href="../hospitality/" class="reveal"><h3 data-i18n="r3_t">Permanent hospitality experiences</h3><p data-i18n="r3_d">Responsive environments for resorts — mapping as a lasting amenity.</p></a>
+        </div>
       </div>
     </section>
 
@@ -358,9 +446,9 @@
     <section class="cta">
       <div class="wrap reveal">
         <div class="cta-panel">
-          <h2 data-i18n="cta_title">Have a facade that should tell a story?</h2>
-          <p data-i18n="cta_sub">We design and produce projection mapping and immersive experiences for heritage spaces, cities and cultural events.</p>
-          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+          <h2 data-i18n="cta_title">Have a facade or space that should come alive?</h2>
+          <p data-i18n="cta_sub">Tell us about the architecture, location, audience and intended dates. We can help define the creative concept, technical approach and production scope.</p>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Discuss a Projection Mapping Project</span> →</a>
         </div>
       </div>
     </section>
@@ -371,13 +459,70 @@
       <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
       <div class="foot-links">
         <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../projection-mapping/" data-i18n="nav_map">Projection Mapping</a>
         <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
         <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
-        <a href="../#process" data-i18n="nav_process">Process</a>
         <a href="../#contact" data-i18n="nav_contact">Contact</a>
       </div>
     </div>
   </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "name": "ANDATA LAB",
+      "alternateName": "Andata Lab",
+      "url": "https://www.andatalab.com/",
+      "email": "airolaxx@gmail.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
+      "description": "Experiential technology studio. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.",
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/ajijic-mapping/#webpage",
+      "url": "https://www.andatalab.com/ajijic-mapping/",
+      "name": "Projection Mapping in Mexico | Whispers of the Lake",
+      "description": "Architectural projection mapping for a 33 × 8 m historic facade in Chapala, Mexico—3D content, TouchDesigner playback, spatial audio and on-site calibration.",
+      "isPartOf": { "@id": "https://www.andatalab.com/#website" },
+      "mainEntity": { "@id": "https://www.andatalab.com/ajijic-mapping/#work" }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.andatalab.com/ajijic-mapping/#work",
+      "name": "Whispers of the Lake",
+      "creator": { "@id": "https://www.andatalab.com/#organization" },
+      "producer": { "@id": "https://www.andatalab.com/#organization" },
+      "dateCreated": "2025",
+      "genre": "Architectural projection mapping",
+      "description": "A site-specific projection mapping experience that transformed a 33 × 8 m historic facade on the Chapala malecón into a living canvas of local myth, Día de Muertos imagery and spatial sound.",
+      "image": "https://www.andatalab.com/Imagenes/architectural-mapping-poster.jpg",
+      "locationCreated": {
+        "@type": "Place",
+        "name": "Chapala, Jalisco",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chapala",
+          "addressRegion": "Jalisco",
+          "addressCountry": "MX"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Projection Mapping", "item": "https://www.andatalab.com/projection-mapping/" },
+        { "@type": "ListItem", "position": 3, "name": "Whispers of the Lake", "item": "https://www.andatalab.com/ajijic-mapping/" }
+      ]
+    }
+  ]
+}
+</script>
 
   <script>
   (function(){
@@ -385,13 +530,14 @@
     var LANG_KEY = 'andata_lang';
     var I18N = {
       en: {
-        nav_work:'Work', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Process',
+        nav_work:'Work', nav_map:'Projection Mapping', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Process',
         nav_contact:'Contact', cta_start:'Start a project', back:'Back to work',
-        eyebrow:'Selected work · Projection mapping',
-        hero_sub:'An immersive audiovisual installation that turned the historic building on the Chapala malecón into a living canvas — narrating the origins, myths and spirits that surround Lake Chapala.',
-        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'Projection mapping + cultural art', m_loc:'Location', m_year:'Year',
+        eyebrow:'Architectural Projection Mapping · Chapala, Mexico',
+        hero_h1:'Whispers of the Lake — Architectural Projection Mapping',
+        hero_sub:'A site-specific projection mapping experience that transformed a 33 × 8 m historic facade on the Chapala malecón into a living canvas of local myth, Día de Muertos imagery and spatial sound.',
+        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'Architectural projection mapping', m_loc:'Location', m_year:'Year',
         e_overview:'Overview', overview_title:'A building that tells the lake\u2019s story.',
-        overview_p1:'The historic building on the shores of Lake Chapala became the screen for a <strong>site-specific projection-mapping piece</strong> rooted in local myth — the origins, legends and spirits that surround the lake.',
+        overview_p1:'ANDATA LAB produced this <strong>architectural projection mapping</strong> in Chapala, Jalisco, in 2025: a site-specific piece on a 33 × 8 m historic facade, rooted in local myth — the origins, legends and spirits that surround Lake Chapala.',
         overview_p2:'Día de Muertos imagery, marigold paths and the pier known as <em>Rinconcito de Amor</em> set the tone: a nocturnal, ceremonial journey mapped precisely onto the facade for the community.',
         e_concept:'The concept', concept_title:'Rooted in Chapala\u2019s myth.',
         concept_note:'Concept art anchored the piece before production — the lake, the pier and the marigold-lined path of a Día de Muertos night.',
@@ -408,28 +554,48 @@
         p1_t:'Concept & story', p1_d:'Researching the myths and spirits of Lake Chapala and shaping a nocturnal, Día de Muertos narrative for the facade.',
         p2_t:'Facade study & pre-viz', p2_d:'Using AI tools to test facade transformations — dissolving, liquefying and rebuilding the brickwork, plus neon wireframe passes.',
         p3_t:'Content production', p3_d:'Modelling and animating the mapped content in Blender and After Effects, matched to the real geometry of the building.',
-        p4_t:'Real-time & spatial audio', p4_d:'Driving playback and cues in TouchDesigner and pairing the visuals with a spatial audio score.',
+        p4_t:'TouchDesigner playback & spatial audio', p4_d:'Driving playback and cues in TouchDesigner and pairing the visuals with spatial audio and interactive sound.',
         p5_t:'On-site calibration & show', p5_d:'High-lumen projectors warped precisely to the architecture, calibrated on site for a live show on the malecón.',
         e_tech:'Technologies', tech_title:'The stack behind the mapping.',
         t_map:'3D Projection Mapping', t_ai:'Runway / AI Tools', t_audio:'Spatial Audio', t_proj:'High-lumen Projectors', t_cal:'On-site Calibration',
-        e_gallery:'On site', gallery_title:'Mapped onto the building.', gallery_note:'Documentation from the night — the content projected and calibrated across the facade.',
+        e_gallery:'On site', gallery_title:'Mapped onto the building.', gallery_note:'Documentation from the night — 3D projection mapping content warped and calibrated across the facade.',
         e_results:'At a glance', results_title:'A living facade on the lake.',
         s1_v:'Chapala', s1_c:'On the shores of Lake Chapala, Jalisco.',
         s2_v:'Mapping', s2_c:'Site-specific 3D content warped to the architecture.',
         s3_v:'Live', s3_c:'A nocturnal show for the community on the malecón.',
         e_credits:'Credits', credits_title:'Made by Andata Lab.',
-        c_studio:'Studio', c_disc:'Disciplines', c_disc_v:'Projection mapping · Cultural art', c_tech:'Engineering', c_tech_v:'Blender · After Effects · TouchDesigner',
-        cta_title:'Have a facade that should tell a story?', cta_sub:'We design and produce projection mapping and immersive experiences for heritage spaces, cities and cultural events.', cta_btn:'Start a project',
-        rights:'All rights reserved.'
+        c_studio:'Studio', c_disc:'Disciplines', c_disc_v:'Architectural projection mapping · Cultural art', c_tech:'Engineering', c_tech_v:'Blender · After Effects · TouchDesigner',
+        e_prod:'Projection Mapping Production', prod_title:'Architectural projection mapping, end to end.',
+        prod_p:'ANDATA LAB designs and produces site-specific projection mapping for architecture, cultural events, museums and brand experiences. Our process can include facade study, creative direction, 3D and motion content, real-time playback, spatial audio, projector warping, on-site calibration and show operation.',
+        prod_link:'See <a href="../projection-mapping/">projection mapping services</a> for the full production offering, or <a href="../dome-studio/">fulldome and 360° content</a> when the surface is a dome rather than a facade.',
+        e_faq:'Questions', faq_title:'Planning an architectural mapping.',
+        fq1_q:'What does an architectural projection mapping production include?',
+        fq1_a:'Depending on the brief, a production can include facade study, creative direction, 3D and motion content, TouchDesigner playback, spatial audio, projector warping, on-site calibration and show operation — the same path used on Whispers of the Lake.',
+        fq2_q:'What information is needed to quote a facade?',
+        fq2_a:'Architecture and photos or drawings of the surface, location, intended dates, audience context, and whether the show needs spatial audio or interactivity. Exact projector counts and budgets are defined after a site study — we do not quote from a title alone.',
+        fq3_q:'Can ANDATA LAB produce projection mapping outside Mexico?',
+        fq3_a:'Yes. The studio is based in Mexico and works worldwide. We design and deliver on site when the project requires it.',
+        fq4_q:'Can projection mapping respond to music, sensors or audience movement?',
+        fq4_a:'Yes, when the brief calls for it. ANDATA builds real-time systems in TouchDesigner with sensors, motion tracking and show control — as in <a href="../biointerface/">Biointerface</a> and <a href="../museo-descubre/">Museo Descubre</a>. Whispers of the Lake was a calibrated playback show with spatial audio; interactive mapping is a separate production choice.',
+        e_rel:'Related capabilities', rel_title:'More from the same studio.',
+        r1_t:'Projection mapping services', r1_d:'The commercial offering: architecture, brands, culture, playback and calibration.',
+        r2_t:'Fulldome and 360° content', r2_d:'Dome projection, spatial audio and interactive dome experiences.',
+        r3_t:'Permanent hospitality experiences', r3_d:'Responsive environments for resorts — mapping as a lasting amenity.',
+        cta_title:'Have a facade or space that should come alive?',
+        cta_sub:'Tell us about the architecture, location, audience and intended dates. We can help define the creative concept, technical approach and production scope.',
+        cta_btn:'Discuss a Projection Mapping Project',
+        rights:'All rights reserved.',
+        doc_title:'Projection Mapping in Mexico | Whispers of the Lake'
       },
       es: {
-        nav_work:'Proyectos', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
+        nav_work:'Proyectos', nav_map:'Projection Mapping', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
         nav_contact:'Contacto', cta_start:'Inicia un proyecto', back:'Volver a proyectos',
-        eyebrow:'Proyecto destacado · Videomapping',
-        hero_sub:'Una instalación audiovisual inmersiva que convirtió el edificio histórico del malecón de Chapala en un lienzo vivo — narrando los orígenes, mitos y espíritus que rodean el Lago de Chapala.',
-        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Videomapping + arte cultural', m_loc:'Ubicación', m_year:'Año',
+        eyebrow:'Videomapping arquitectónico · Chapala, México',
+        hero_h1:'Whispers of the Lake — Videomapping arquitectónico',
+        hero_sub:'Una experiencia de projection mapping de sitio específico que transformó una fachada histórica de 33 × 8 m en el malecón de Chapala en un lienzo vivo de mito local, imaginería de Día de Muertos y sonido espacial.',
+        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Videomapping arquitectónico', m_loc:'Ubicación', m_year:'Año',
         e_overview:'Resumen', overview_title:'Un edificio que cuenta la historia del lago.',
-        overview_p1:'El edificio histórico a orillas del Lago de Chapala se volvió la pantalla de una <strong>pieza de videomapping de sitio específico</strong> arraigada en el mito local — los orígenes, leyendas y espíritus que rodean el lago.',
+        overview_p1:'ANDATA LAB produjo este <strong>videomapping arquitectónico</strong> en Chapala, Jalisco, en 2025: una pieza de sitio específico sobre una fachada histórica de 33 × 8 m, arraigada en el mito local — los orígenes, leyendas y espíritus que rodean el Lago de Chapala.',
         overview_p2:'Imágenes de Día de Muertos, caminos de cempasúchil y el muelle conocido como <em>Rinconcito de Amor</em> marcaron el tono: un viaje nocturno y ceremonial mapeado con precisión sobre la fachada, para la comunidad.',
         e_concept:'El concepto', concept_title:'Arraigado en el mito de Chapala.',
         concept_note:'El arte conceptual ancló la pieza antes de producción — el lago, el muelle y el camino de cempasúchil de una noche de Día de Muertos.',
@@ -446,19 +612,38 @@
         p1_t:'Concepto e historia', p1_d:'Investigar los mitos y espíritus del Lago de Chapala y dar forma a una narrativa nocturna de Día de Muertos para la fachada.',
         p2_t:'Estudio de fachada y pre-viz', p2_d:'Usar herramientas de IA para probar transformaciones de la fachada — disolver, licuar y reconstruir el ladrillo, además de pases de wireframe de neón.',
         p3_t:'Producción de contenido', p3_d:'Modelar y animar el contenido mapeado en Blender y After Effects, ajustado a la geometría real del edificio.',
-        p4_t:'Tiempo real y audio espacial', p4_d:'Controlar reproducción y cues en TouchDesigner y unir los visuales con una banda de audio espacial.',
+        p4_t:'Playback en TouchDesigner y audio espacial', p4_d:'Controlar reproducción y cues en TouchDesigner y unir los visuales con audio espacial y sonido interactivo.',
         p5_t:'Calibración en sitio y show', p5_d:'Proyectores de alta luminosidad deformados con precisión a la arquitectura, calibrados en sitio para un show en vivo en el malecón.',
         e_tech:'Tecnologías', tech_title:'La tecnología detrás del mapping.',
-        t_map:'Videomapping 3D', t_ai:'Runway / Herramientas de IA', t_audio:'Audio Espacial', t_proj:'Proyectores de Alta Luminosidad', t_cal:'Calibración en Sitio',
-        e_gallery:'En sitio', gallery_title:'Mapeado sobre el edificio.', gallery_note:'Documentación de la noche — el contenido proyectado y calibrado sobre la fachada.',
+        t_map:'Videomapping 3D', t_ai:'Runway / Herramientas de IA', t_audio:'Audio espacial', t_proj:'Proyectores de alta luminosidad', t_cal:'Calibración en sitio',
+        e_gallery:'En sitio', gallery_title:'Mapeado sobre el edificio.', gallery_note:'Documentación de la noche — contenido de videomapping 3D deformado y calibrado sobre la fachada.',
         e_results:'De un vistazo', results_title:'Una fachada viva sobre el lago.',
         s1_v:'Chapala', s1_c:'A orillas del Lago de Chapala, Jalisco.',
         s2_v:'Mapping', s2_c:'Contenido 3D de sitio específico ajustado a la arquitectura.',
         s3_v:'En vivo', s3_c:'Un show nocturno para la comunidad en el malecón.',
         e_credits:'Créditos', credits_title:'Hecho por Andata Lab.',
-        c_studio:'Estudio', c_disc:'Disciplinas', c_disc_v:'Videomapping · Arte cultural', c_tech:'Ingeniería', c_tech_v:'Blender · After Effects · TouchDesigner',
-        cta_title:'¿Tienes una fachada que debería contar una historia?', cta_sub:'Diseñamos y producimos videomapping y experiencias inmersivas para espacios patrimoniales, ciudades y eventos culturales.', cta_btn:'Inicia un proyecto',
-        rights:'Todos los derechos reservados.'
+        c_studio:'Estudio', c_disc:'Disciplinas', c_disc_v:'Videomapping arquitectónico · Arte cultural', c_tech:'Ingeniería', c_tech_v:'Blender · After Effects · TouchDesigner',
+        e_prod:'Producción de projection mapping', prod_title:'Videomapping arquitectónico, de principio a fin.',
+        prod_p:'ANDATA LAB diseña y produce projection mapping de sitio específico para arquitectura, eventos culturales, museos y experiencias de marca. El proceso puede incluir estudio de fachada, dirección creativa, contenido 3D y motion, reproducción en tiempo real, audio espacial, warping de proyectores, calibración en sitio y operación del show.',
+        prod_link:'Ver <a href="../projection-mapping/">servicios de projection mapping</a> para la oferta completa, o <a href="../dome-studio/">contenido fulldome y 360°</a> cuando la superficie es una cúpula y no una fachada.',
+        e_faq:'Preguntas', faq_title:'Planear un mapping arquitectónico.',
+        fq1_q:'¿Qué incluye una producción de videomapping arquitectónico?',
+        fq1_a:'Según el brief, una producción puede incluir estudio de fachada, dirección creativa, contenido 3D y motion, reproducción en TouchDesigner, audio espacial, warping de proyectores, calibración en sitio y operación del show — el mismo camino de Whispers of the Lake.',
+        fq2_q:'¿Qué información se necesita para cotizar una fachada?',
+        fq2_a:'Arquitectura y fotos o planos de la superficie, ubicación, fechas previstas, contexto de público, y si el show necesita audio espacial o interactividad. Conteos exactos de proyectores y presupuestos se definen después de un estudio de sitio — no cotizamos solo con un título.',
+        fq3_q:'¿ANDATA LAB puede producir projection mapping fuera de México?',
+        fq3_a:'Sí. El estudio está en México y trabaja en todo el mundo. Diseñamos y entregamos en sitio cuando el proyecto lo requiere.',
+        fq4_q:'¿El projection mapping puede responder a música, sensores o movimiento del público?',
+        fq4_a:'Sí, cuando el brief lo pide. ANDATA construye sistemas en tiempo real en TouchDesigner con sensores, seguimiento de movimiento y show control — como en <a href="../biointerface/">Biointerface</a> y <a href="../museo-descubre/">Museo Descubre</a>. Whispers of the Lake fue un show de playback calibrado con audio espacial; el mapping interactivo es una decisión de producción aparte.',
+        e_rel:'Capacidades relacionadas', rel_title:'Más del mismo estudio.',
+        r1_t:'Servicios de projection mapping', r1_d:'La oferta comercial: arquitectura, marcas, cultura, playback y calibración.',
+        r2_t:'Contenido fulldome y 360°', r2_d:'Proyección en domo, audio espacial y experiencias interactivas de cúpula.',
+        r3_t:'Hospitality inmersivo permanente', r3_d:'Entornos responsivos para resorts — mapping como amenidad permanente.',
+        cta_title:'¿Tienes una fachada o un espacio que debería cobrar vida?',
+        cta_sub:'Cuéntanos la arquitectura, el lugar, el público y las fechas. Podemos ayudar a definir el concepto creativo, el enfoque técnico y el alcance de producción.',
+        cta_btn:'Conversar un proyecto de projection mapping',
+        rights:'Todos los derechos reservados.',
+        doc_title:'Projection Mapping in Mexico | Whispers of the Lake'
       }
     };
 
@@ -476,6 +661,7 @@
         var k = node.getAttribute('data-i18n');
         if(dict[k]!=null) node.innerHTML = dict[k];
       });
+      if(dict.doc_title) document.title = dict.doc_title;
       var btn = document.getElementById('lang-toggle');
       if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
     }

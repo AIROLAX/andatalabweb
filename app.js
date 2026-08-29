@@ -631,6 +631,10 @@
     });
     document.documentElement.lang = lang;
     if (ui.doc_title) document.title = ui.doc_title;
+    if (ui.meta_desc) {
+      var meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', ui.meta_desc);
+    }
   }
 
   function setLang(next) {

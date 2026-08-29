@@ -7,10 +7,28 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="format-detection" content="telephone=no">
-<title>Andata Lab — Immersive & Creative Technology Studio</title>
-<meta name="description" content="Andata Lab designs and builds immersive installations — projection mapping, real-time visuals and interactive systems for museums, brands and cultural spaces.">
+<title>ANDATA LAB | Immersive Experiences &amp; Projection Mapping</title>
+<meta name="description" content="ANDATA LAB is an experiential technology studio in Mexico. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems — worldwide.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://www.andatalab.com/">
 <link rel="icon" type="image/png" href="Imagenes/logo-mark.png">
 <link rel="preload" as="image" href="Imagenes/MOTION.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="ANDATA LAB | Immersive Experiences &amp; Projection Mapping">
+<meta property="og:description" content="Experiential technology studio. Projection mapping, interactive installations, real-time 3D and immersive audiovisual systems for brands, museums, hospitality and cultural spaces.">
+<meta property="og:url" content="https://www.andatalab.com/">
+<meta property="og:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
+<meta property="og:image:width" content="1348">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="ANDATA LAB — architectural projection mapping and immersive experiences">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ANDATA LAB | Immersive Experiences &amp; Projection Mapping">
+<meta name="twitter:description" content="Experiential technology studio. Projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.">
+<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
+
 <link rel="stylesheet" href="colors_and_type.css">
 <style>
   :root{
@@ -216,9 +234,21 @@
   .hero h1 .line2{ color:rgba(255,255,255,.55); }
   .hero-sub{
     font-size:clamp(1.02rem,1.5vw,1.3rem); font-weight:400; line-height:1.5; color:rgba(255,255,255,.82);
-    max-width:580px; margin:24px 0 0; text-shadow:0 1px 24px rgba(0,0,0,.5);
+    max-width:680px; margin:24px 0 0; text-shadow:0 1px 24px rgba(0,0,0,.5);
     transform:translate3d(calc(var(--mx) * 7px), calc(var(--my) * 5px), 0);
   }
+  .hero-caps{
+    font-size:11px; font-weight:500; letter-spacing:.08em; text-transform:uppercase; line-height:1.7;
+    color:rgba(255,255,255,.58); max-width:720px; margin:16px 0 0;
+    text-shadow:0 1px 18px rgba(0,0,0,.45);
+    transform:translate3d(calc(var(--mx) * 5px), calc(var(--my) * 4px), 0);
+  }
+  .home-intlinks{
+    display:flex; flex-wrap:wrap; gap:10px 22px; margin-top:28px; padding-top:22px;
+    border-top:1px solid var(--hair-2);
+  }
+  .home-intlinks a{ font-size:13.5px; font-weight:500; color:var(--ink-2); text-decoration:none; transition:color .25s; }
+  .home-intlinks a:hover{ color:var(--ink); }
   .hero-cta{ display:flex; gap:14px; margin-top:38px; flex-wrap:wrap; transform:translate3d(calc(var(--mx) * 4px), calc(var(--my) * 3px), 0); }
   .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:16px 32px; border-radius:999px; cursor:pointer; border:1px solid transparent; text-decoration:none; display:inline-flex; align-items:center; transition:transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s, background .25s, border-color .25s; }
   .btn-ghost{ background:rgba(255,255,255,.08); color:#fff; border-color:rgba(255,255,255,.45); backdrop-filter:blur(6px); }
@@ -565,6 +595,7 @@
   footer.site .name{ font-size:13px; font-weight:600; letter-spacing:.04em; }
   footer.site a{ font-size:13px; color:var(--ink-2); text-decoration:none; transition:color .25s; }
   footer.site a:hover{ color:var(--ink); }
+  footer.site .foot-links{ display:flex; flex-wrap:wrap; gap:14px 18px; width:100%; margin-top:4px; }
 
   /* ── Reveal ── */
   .reveal{ opacity:0; transform:translateY(36px) scale(.985); filter:blur(6px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1), filter .9s cubic-bezier(.16,1,.3,1); }
@@ -619,6 +650,7 @@
   }
   .is-mobile .hero h1{ font-size:clamp(1.95rem,9.5vw,2.75rem); line-height:1.02; }
   .is-mobile .hero-sub{ font-size:.95rem; margin-top:14px; max-width:100%; }
+  .is-mobile .hero-caps{ font-size:10px; margin-top:12px; letter-spacing:.06em; }
   .is-mobile .hero-cta{
     margin-top:20px; gap:8px; flex-wrap:nowrap; width:100%; max-width:100%;
   }
@@ -746,7 +778,8 @@
 
     <div class="hero-inner">
       <h1><span class="line"><span class="line-in" data-i18n="hero_h1a">Immersive Experiences,</span></span><span class="line"><span class="line-in line2" data-i18n="hero_h1b">Engineered.</span></span></h1>
-      <p class="hero-sub hero-anim" style="animation-delay:.32s" data-i18n="hero_sub">Real-time visuals, interactive installations and audiovisual systems for brands, museums and cultural spaces.</p>
+      <p class="hero-sub hero-anim" style="animation-delay:.32s" data-i18n="hero_sub">Projection mapping, interactive installations, real-time 3D and immersive audiovisual systems for brands, museums, hospitality and cultural spaces.</p>
+      <p class="hero-caps hero-anim" style="animation-delay:.38s" data-i18n="hero_caps">Projection Mapping / Interactive Installations / Real-Time 3D / Generative &amp; AI Visuals / Immersive Rooms / Spatial Audio / Sensor-Driven Systems</p>
       <div class="hero-cta hero-anim" style="animation-delay:.44s">
         <a class="btn btn-ghost" data-target="s-work" data-i18n="cta_work">View Work</a>
         <a class="btn btn-primary" data-target="s-contact" data-i18n="cta_start">Start a Project</a>
@@ -776,8 +809,13 @@
     <div class="wrap">
       <div class="statement-panel">
         <canvas id="statement-fx" aria-hidden="true"></canvas>
-        <p><span class="lead" data-i18n="statement_lead">We design and build immersive installations — projection mapping, real-time visuals and interactive systems</span> <span class="muted" data-i18n="statement_muted">for museums, brands and cultural spaces. Concept to on-site delivery, by one studio.</span></p>
+        <p><span class="lead" data-i18n="statement_lead">We design and build immersive experiences — projection mapping, interactive installations and real-time systems</span> <span class="muted" data-i18n="statement_muted">for brands, museums, hospitality and cultural spaces. Experiential technology, concept to on-site, by one studio.</span></p>
       </div>
+      <nav class="home-intlinks" aria-label="Capabilities">
+        <a href="projection-mapping/" data-i18n="link_map">Architectural Projection Mapping</a>
+        <a href="museo-descubre/" data-i18n="link_museum">Interactive Museum Exhibits</a>
+        <a href="hospitality/" data-i18n="link_hosp">Permanent Immersive Hospitality Experiences</a>
+      </nav>
     </div>
   </section>
 
@@ -854,11 +892,51 @@
     <img class="brand-mark" src="Imagenes/logo-mark.png" width="26" height="26" alt="">
     <span class="name">Andata&nbsp;Lab<span class="brand-asterisk">*</span></span>
     <a href="https://airolax.com" target="_blank" rel="noopener noreferrer" style="margin-left:10px">AIROLAX ↗</a>
-    <span class="ds-label" style="color:var(--ink-3);margin-left:auto" data-i18n="footer_copy">© 2026 — Immersive &amp; Creative Technology Studio</span>
+    <span class="ds-label" style="color:var(--ink-3);margin-left:auto" data-i18n="footer_copy">© 2026 — Experiential Technology Studio · Mexico / Worldwide</span>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="projection-mapping/" data-i18n="link_map">Architectural Projection Mapping</a>
+      <a href="museo-descubre/" data-i18n="link_museum">Interactive Museum Exhibits</a>
+      <a href="dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="hospitality/" data-i18n="link_hosp">Permanent Immersive Hospitality Experiences</a>
+    </nav>
   </footer>
 
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "name": "ANDATA LAB",
+      "alternateName": "Andata Lab",
+      "url": "https://www.andatalab.com/",
+      "email": "airolaxx@gmail.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
+      "description": "Experiential technology studio. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.",
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.andatalab.com/#website",
+      "url": "https://www.andatalab.com/",
+      "name": "ANDATA LAB",
+      "description": "Immersive experiences and projection mapping by ANDATA LAB, an experiential technology studio.",
+      "publisher": { "@id": "https://www.andatalab.com/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/#webpage",
+      "url": "https://www.andatalab.com/",
+      "name": "ANDATA LAB | Immersive Experiences & Projection Mapping",
+      "isPartOf": { "@id": "https://www.andatalab.com/#website" },
+      "about": { "@id": "https://www.andatalab.com/#organization" }
+    }
+  ]
+}
+</script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 <script>

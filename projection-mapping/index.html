@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="index,follow">
+<title>Projection Mapping Studio | ANDATA LAB</title>
+<meta name="description" content="ANDATA LAB designs and produces projection mapping for architecture, brands and culture — from facade study and 3D content to TouchDesigner playback and on-site calibration.">
+<link rel="canonical" href="https://www.andatalab.com/projection-mapping/">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="../Imagenes/architectural-mapping-poster.jpg">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Projection Mapping Studio | ANDATA LAB">
+<meta property="og:description" content="Projection mapping for architecture, brands and culture — concept, 3D content, real-time playback and on-site calibration.">
+<meta property="og:url" content="https://www.andatalab.com/projection-mapping/">
+<meta property="og:image" content="https://www.andatalab.com/Imagenes/architectural-mapping-poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="Whispers of the Lake — architectural projection mapping on a historic facade in Chapala, Mexico, by ANDATA LAB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Projection Mapping Studio | ANDATA LAB">
+<meta name="twitter:description" content="Projection mapping for architecture, brands and culture — from facade study to on-site calibration.">
+<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/architectural-mapping-poster.jpg">
+
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+  .skip{ position:absolute; left:-999px; top:8px; z-index:80; padding:10px 16px; background:var(--ink); color:#fff; border-radius:999px; }
+  .skip:focus{ left:12px; }
+
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.is-here{ color:var(--ink); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:8px 16px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--ink); background:var(--ink); color:#fff;
+  }
+  @media (max-width:860px){ .nav-cta{ display:none; } }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:900px; }
+  .hero h1{ font-size:clamp(2.2rem,5.8vw,4.4rem); font-weight:800; letter-spacing:-.04em; line-height:1.03; margin:16px 0 0; text-wrap:balance; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:720px; }
+  .hero-studio{ margin:14px 0 0; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#000; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
+  .hero-media video,.hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+  .lead-note{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); max-width:720px; margin:16px 0 0; }
+  .prose a, .lead-note a, .related a, .case-card .go{ color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+
+  .offers{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:700px){ .offers{ grid-template-columns:1fr; } }
+  .offer{ padding:24px clamp(20px,3vw,28px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .offer:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .offer h3{ font-size:1.08rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .offer p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  .case-card{
+    display:grid; grid-template-columns:1.15fr .85fr; gap:0; margin-top:clamp(28px,4vw,44px);
+    border-radius:var(--r-xl); overflow:hidden; background:var(--surface); border:1px solid var(--hair-2);
+    box-shadow:var(--shadow-card); color:inherit;
+  }
+  @media (max-width:760px){ .case-card{ grid-template-columns:1fr; } }
+  .case-card .media{ position:relative; aspect-ratio:16/9; background:#0b1020; }
+  .case-card img, .case-card video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .case-card .body{ padding:clamp(24px,4vw,40px); display:flex; flex-direction:column; justify-content:center; }
+  .case-card h3{ font-size:1.35rem; font-weight:700; letter-spacing:-.03em; margin:10px 0 0; }
+  .case-card p{ font-size:.98rem; line-height:1.6; color:var(--ink-2); margin:12px 0 0; }
+  .case-card .go{ margin-top:18px; font-size:14px; font-weight:600; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  .related{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .related a{ display:block; padding:20px 22px; border-radius:var(--r-md); border:1px solid var(--hair-2); background:var(--surface); text-decoration:none; transition:transform .3s, box-shadow .3s; }
+  .related a:hover{ transform:translateY(-3px); box-shadow:var(--shadow-card); }
+  .related a h3{ font-size:1.02rem; font-weight:600; margin:0 0 6px; }
+  .related a p{ margin:0; font-size:14px; line-height:1.5; color:var(--ink-2); }
+
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:560px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+</style>
+</head>
+<body data-brand="andata">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="brand" href="../" aria-label="Andata Lab">
+    <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+  </a>
+  <nav class="nav-links">
+    <a href="../#work" data-i18n="nav_work">Work</a>
+    <a class="is-here" href="./" data-i18n="nav_map">Projection Mapping</a>
+    <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+    <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+    <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-head reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Experiential Technology Studio · Mexico / Worldwide</span></span>
+        <h1 data-i18n="hero_h1">Projection Mapping for Architecture, Brands and Culture</h1>
+        <p class="hero-sub" data-i18n="hero_sub">ANDATA LAB designs and produces projection mapping experiences from concept and facade study to 3D content, real-time systems and on-site calibration.</p>
+        <p class="hero-studio" data-i18n="hero_studio">Immersive experiences, engineered.</p>
+      </div>
+      <div class="hero-media reveal">
+        <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="../Imagenes/architectural-mapping-poster.jpg" width="1280" height="720" aria-label="Architectural projection mapping by ANDATA LAB — Whispers of the Lake, Chapala, Mexico">
+          <source src="../videos/architectural-mapping.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap two-col reveal">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_offer">What we produce</span></span>
+        <h2 class="sec-title" data-i18n="offer_title">A projection mapping studio for built space.</h2>
+      </div>
+      <div class="prose">
+        <p data-i18n="offer_p1">We treat architecture as the canvas: heritage facades, museums, brands and cultural events. The work is site-specific — measured, modelled and calibrated to the real surface, then operated as a show.</p>
+        <p data-i18n="offer_p2">When the brief calls for it, mapping can sit inside a wider experiential system: <a href="../biointerface/">sensor-driven interactive installations</a>, <a href="../museo-descubre/">museum exhibits</a>, <a href="../dome-studio/">fulldome and 360° content</a>, or <a href="../hospitality/">permanent hospitality environments</a>.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="offers">
+        <article class="offer reveal"><h3 data-i18n="o1_t">Architectural projection mapping</h3><p data-i18n="o1_d">Facade study, 3D content and on-site warping for buildings and heritage architecture.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o2_t">Interactive projection mapping</h3><p data-i18n="o2_d">Real-time playback that can respond to music, sensors or audience movement when the project requires it.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o3_t">Cultural and heritage storytelling</h3><p data-i18n="o3_d">Narratives written for a place — local myth, ceremony and architecture held together in one mapped sequence.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o4_t">Brand and product experiences</h3><p data-i18n="o4_d">Mapped environments for launches, stages and spatial brand moments, produced as installed shows.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o5_t">3D and motion content</h3><p data-i18n="o5_d">Modelled and animated content matched to the geometry of the surface, from still studies to full motion sequences.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o6_t">TouchDesigner and real-time playback</h3><p data-i18n="o6_d">Show control and playback in TouchDesigner — cues, warping and live operation, not only pre-rendered files.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o7_t">Spatial audio and show control</h3><p data-i18n="o7_d">Spatial audio and interactive sound designed with the picture, plus the control layer that runs the night.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o8_t">Projector alignment, warping and calibration</h3><p data-i18n="o8_d">On-site alignment to irregular architecture so the image sits on cornices, windows and brick — not beside them.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_case">Featured case study</span></span>
+        <h2 class="sec-title" data-i18n="case_title">Proof on a historic facade.</h2>
+        <p class="lead-note" data-i18n="case_note">The service is what we sell. The case study is what we have already built.</p>
+      </div>
+      <a class="case-card reveal" href="../ajijic-mapping/">
+        <div class="media">
+          <img src="../Imagenes/architectural-mapping-poster.jpg" width="1280" height="720" alt="Whispers of the Lake — architectural projection mapping on a 33 × 8 m historic facade in Chapala, Mexico" loading="lazy" decoding="async">
+        </div>
+        <div class="body">
+          <span class="ds-label" data-i18n="case_kicker">Architectural projection mapping · Chapala, Mexico</span>
+          <h3>Whispers of the Lake</h3>
+          <p data-i18n="case_p">A site-specific mapping on a 33 × 8 m historic facade on the Chapala malecón — 3D content, TouchDesigner playback, spatial audio and on-site calibration.</p>
+          <span class="go" data-i18n="case_go">Read the Whispers of the Lake case study →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_stack">The production stack</span></span>
+        <h2 class="sec-title" data-i18n="stack_title">Tools we actually run on site.</h2>
+      </div>
+      <div class="tags reveal">
+        <span class="tag" data-i18n="t1">Architectural projection mapping</span>
+        <span class="tag">Blender</span>
+        <span class="tag">After Effects</span>
+        <span class="tag">TouchDesigner</span>
+        <span class="tag" data-i18n="t2">Spatial audio</span>
+        <span class="tag" data-i18n="t3">On-site calibration</span>
+        <span class="tag" data-i18n="t4">Generative &amp; AI-assisted visuals</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Related capabilities</span></span>
+        <h2 class="sec-title" data-i18n="rel_title">The same studio, other surfaces.</h2>
+      </div>
+      <div class="related">
+        <a href="../museo-descubre/" class="reveal"><h3 data-i18n="r1_t">Interactive museum exhibits</h3><p data-i18n="r1_d">Sensor-driven rooms and interactive walls — Museo Descubre, Aguascalientes.</p></a>
+        <a href="../biointerface/" class="reveal"><h3 data-i18n="r2_t">Interactive installations</h3><p data-i18n="r2_d">TouchDesigner, sensors and real-time generative visuals — Biointerface.</p></a>
+        <a href="../dome-studio/" class="reveal"><h3 data-i18n="r3_t">Fulldome and 360° content</h3><p data-i18n="r3_d">Dome projection, spatial audio and interactive dome experiences.</p></a>
+        <a href="../hospitality/" class="reveal"><h3 data-i18n="r4_t">Permanent hospitality experiences</h3><p data-i18n="r4_d">Responsive environments and interactive guest amenities for resorts.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap reveal">
+      <div class="cta-panel">
+        <h2 data-i18n="cta_title">Have a facade or space that should come alive?</h2>
+        <p data-i18n="cta_sub">Tell us about the architecture, location, audience and intended dates. We can help define the creative concept, technical approach and production scope.</p>
+        <a class="btn" href="../#contact"><span data-i18n="cta_btn">Discuss a Projection Mapping Project</span> →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+    <div class="foot-links">
+      <a href="../" data-i18n="nav_home">Home</a>
+      <a href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../ajijic-mapping/" data-i18n="nav_case">Whispers of the Lake</a>
+      <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#contact" data-i18n="nav_contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "name": "ANDATA LAB",
+      "alternateName": "Andata Lab",
+      "url": "https://www.andatalab.com/",
+      "email": "airolaxx@gmail.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
+      "description": "Experiential technology studio. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.",
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.andatalab.com/#website",
+      "url": "https://www.andatalab.com/",
+      "name": "ANDATA LAB",
+      "publisher": { "@id": "https://www.andatalab.com/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/projection-mapping/#webpage",
+      "url": "https://www.andatalab.com/projection-mapping/",
+      "name": "Projection Mapping Studio | ANDATA LAB",
+      "description": "ANDATA LAB designs and produces projection mapping for architecture, brands and culture — from facade study and 3D content to TouchDesigner playback and on-site calibration.",
+      "isPartOf": { "@id": "https://www.andatalab.com/#website" },
+      "about": { "@id": "https://www.andatalab.com/projection-mapping/#service" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.andatalab.com/projection-mapping/#service",
+      "name": "Projection Mapping",
+      "serviceType": "Architectural projection mapping production",
+      "description": "Site-specific projection mapping for architecture, brands and culture: facade study, 3D and motion content, real-time playback, spatial audio, projector warping and on-site calibration.",
+      "url": "https://www.andatalab.com/projection-mapping/",
+      "provider": { "@id": "https://www.andatalab.com/#organization" },
+      "areaServed": [
+        { "@type": "Country", "name": "Mexico" },
+        { "@type": "Place", "name": "Worldwide" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.andatalab.com/projection-mapping/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Projection Mapping", "item": "https://www.andatalab.com/projection-mapping/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function(){
+  'use strict';
+  var LANG_KEY = 'andata_lang';
+  var I18N = {
+    en: {
+      nav_home:'Home', nav_work:'Work', nav_map:'Projection Mapping', nav_dome:'Dome Studio', nav_hosp:'Hospitality',
+      nav_case:'Whispers of the Lake', nav_contact:'Contact', cta_start:'Start a project',
+      eyebrow:'Experiential Technology Studio · Mexico / Worldwide',
+      hero_h1:'Projection Mapping for Architecture, Brands and Culture',
+      hero_sub:'ANDATA LAB designs and produces projection mapping experiences from concept and facade study to 3D content, real-time systems and on-site calibration.',
+      hero_studio:'Immersive experiences, engineered.',
+      e_offer:'What we produce', offer_title:'A projection mapping studio for built space.',
+      offer_p1:'We treat architecture as the canvas: heritage facades, museums, brands and cultural events. The work is site-specific — measured, modelled and calibrated to the real surface, then operated as a show.',
+      offer_p2:'When the brief calls for it, mapping can sit inside a wider experiential system: <a href="../biointerface/">sensor-driven interactive installations</a>, <a href="../museo-descubre/">museum exhibits</a>, <a href="../dome-studio/">fulldome and 360° content</a>, or <a href="../hospitality/">permanent hospitality environments</a>.',
+      o1_t:'Architectural projection mapping', o1_d:'Facade study, 3D content and on-site warping for buildings and heritage architecture.',
+      o2_t:'Interactive projection mapping', o2_d:'Real-time playback that can respond to music, sensors or audience movement when the project requires it.',
+      o3_t:'Cultural and heritage storytelling', o3_d:'Narratives written for a place — local myth, ceremony and architecture held together in one mapped sequence.',
+      o4_t:'Brand and product experiences', o4_d:'Mapped environments for launches, stages and spatial brand moments, produced as installed shows.',
+      o5_t:'3D and motion content', o5_d:'Modelled and animated content matched to the geometry of the surface, from still studies to full motion sequences.',
+      o6_t:'TouchDesigner and real-time playback', o6_d:'Show control and playback in TouchDesigner — cues, warping and live operation, not only pre-rendered files.',
+      o7_t:'Spatial audio and show control', o7_d:'Spatial audio and interactive sound designed with the picture, plus the control layer that runs the night.',
+      o8_t:'Projector alignment, warping and calibration', o8_d:'On-site alignment to irregular architecture so the image sits on cornices, windows and brick — not beside them.',
+      e_case:'Featured case study', case_title:'Proof on a historic facade.',
+      case_note:'The service is what we sell. The case study is what we have already built.',
+      case_kicker:'Architectural projection mapping · Chapala, Mexico',
+      case_p:'A site-specific mapping on a 33 × 8 m historic facade on the Chapala malecón — 3D content, TouchDesigner playback, spatial audio and on-site calibration.',
+      case_go:'Read the Whispers of the Lake case study →',
+      e_stack:'The production stack', stack_title:'Tools we actually run on site.',
+      t1:'Architectural projection mapping', t2:'Spatial audio', t3:'On-site calibration', t4:'Generative & AI-assisted visuals',
+      e_rel:'Related capabilities', rel_title:'The same studio, other surfaces.',
+      r1_t:'Interactive museum exhibits', r1_d:'Sensor-driven rooms and interactive walls — Museo Descubre, Aguascalientes.',
+      r2_t:'Interactive installations', r2_d:'TouchDesigner, sensors and real-time generative visuals — Biointerface.',
+      r3_t:'Fulldome and 360° content', r3_d:'Dome projection, spatial audio and interactive dome experiences.',
+      r4_t:'Permanent hospitality experiences', r4_d:'Responsive environments and interactive guest amenities for resorts.',
+      cta_title:'Have a facade or space that should come alive?',
+      cta_sub:'Tell us about the architecture, location, audience and intended dates. We can help define the creative concept, technical approach and production scope.',
+      cta_btn:'Discuss a Projection Mapping Project',
+      rights:'All rights reserved.',
+      doc_title:'Projection Mapping Studio | ANDATA LAB'
+    },
+    es: {
+      nav_home:'Inicio', nav_work:'Proyectos', nav_map:'Projection Mapping', nav_dome:'Dome Studio', nav_hosp:'Hospitality',
+      nav_case:'Whispers of the Lake', nav_contact:'Contacto', cta_start:'Inicia un proyecto',
+      eyebrow:'Estudio de tecnología experiencial · México / todo el mundo',
+      hero_h1:'Projection mapping para arquitectura, marcas y cultura',
+      hero_sub:'ANDATA LAB diseña y produce experiencias de projection mapping desde el concepto y el estudio de fachada hasta contenido 3D, sistemas en tiempo real y calibración en sitio.',
+      hero_studio:'Experiencias inmersivas, con ingeniería.',
+      e_offer:'Qué producimos', offer_title:'Un estudio de projection mapping para el espacio construido.',
+      offer_p1:'Tratamos la arquitectura como lienzo: fachadas patrimoniales, museos, marcas y eventos culturales. El trabajo es de sitio específico — medido, modelado y calibrado sobre la superficie real, y operado como un show.',
+      offer_p2:'Cuando el brief lo pide, el mapping puede vivir dentro de un sistema experiencial más amplio: <a href="../biointerface/">instalaciones interactivas con sensores</a>, <a href="../museo-descubre/">exhibiciones de museo</a>, <a href="../dome-studio/">contenido fulldome y 360°</a> o <a href="../hospitality/">entornos permanentes de hospitality</a>.',
+      o1_t:'Videomapping arquitectónico', o1_d:'Estudio de fachada, contenido 3D y warping en sitio para edificios y arquitectura patrimonial.',
+      o2_t:'Videomapping interactivo', o2_d:'Reproducción en tiempo real que puede responder a música, sensores o movimiento del público cuando el proyecto lo requiere.',
+      o3_t:'Narrativa cultural y patrimonial', o3_d:'Historias escritas para un lugar — mito local, ceremonia y arquitectura en una sola secuencia mapeada.',
+      o4_t:'Experiencias de marca y producto', o4_d:'Entornos mapeados para lanzamientos, escenarios y momentos de marca, producidos como shows instalados.',
+      o5_t:'Contenido 3D y motion', o5_d:'Contenido modelado y animado ajustado a la geometría de la superficie, de estudios estáticos a secuencias en movimiento.',
+      o6_t:'TouchDesigner y reproducción en tiempo real', o6_d:'Show control y playback en TouchDesigner — cues, warping y operación en vivo, no solo archivos prerenderizados.',
+      o7_t:'Audio espacial y show control', o7_d:'Audio espacial y sonido interactivo diseñados con la imagen, más la capa de control que corre la noche.',
+      o8_t:'Alineación, warping y calibración', o8_d:'Alineación en sitio a arquitectura irregular para que la imagen se asiente en cornisas, ventanas y ladrillo — no al lado.',
+      e_case:'Caso de estudio', case_title:'Prueba sobre una fachada histórica.',
+      case_note:'El servicio es lo que vendemos. El caso de estudio es lo que ya construimos.',
+      case_kicker:'Videomapping arquitectónico · Chapala, México',
+      case_p:'Un mapping de sitio específico sobre una fachada histórica de 33 × 8 m en el malecón de Chapala — contenido 3D, reproducción en TouchDesigner, audio espacial y calibración en sitio.',
+      case_go:'Leer el caso de estudio Whispers of the Lake →',
+      e_stack:'El stack de producción', stack_title:'Herramientas que sí corremos en sitio.',
+      t1:'Videomapping arquitectónico', t2:'Audio espacial', t3:'Calibración en sitio', t4:'Visuales generativos y asistidos por IA',
+      e_rel:'Capacidades relacionadas', rel_title:'El mismo estudio, otras superficies.',
+      r1_t:'Exhibiciones interactivas de museo', r1_d:'Salas con sensores y muros interactivos — Museo Descubre, Aguascalientes.',
+      r2_t:'Instalaciones interactivas', r2_d:'TouchDesigner, sensores y visuales generativos en tiempo real — Biointerface.',
+      r3_t:'Contenido fulldome y 360°', r3_d:'Proyección en domo, audio espacial y experiencias interactivas de cúpula.',
+      r4_t:'Hospitality inmersivo permanente', r4_d:'Entornos responsivos y amenidades interactivas para resorts.',
+      cta_title:'¿Tienes una fachada o un espacio que debería cobrar vida?',
+      cta_sub:'Cuéntanos la arquitectura, el lugar, el público y las fechas. Podemos ayudar a definir el concepto creativo, el enfoque técnico y el alcance de producción.',
+      cta_btn:'Conversar un proyecto de projection mapping',
+      rights:'Todos los derechos reservados.',
+      doc_title:'Projection Mapping Studio | ANDATA LAB'
+    }
+  };
+
+  function pickLang(){
+    var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+    if(saved==='en'||saved==='es') return saved;
+    return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+  }
+  var lang = pickLang();
+
+  function apply(){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(node){
+      var k = node.getAttribute('data-i18n');
+      if(dict[k]!=null) node.innerHTML = dict[k];
+    });
+    if(dict.doc_title) document.title = dict.doc_title;
+    var btn = document.getElementById('lang-toggle');
+    if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+  }
+  apply();
+
+  var toggle = document.getElementById('lang-toggle');
+  if(toggle) toggle.addEventListener('click', function(){
+    lang = (lang==='en') ? 'es' : 'en';
+    try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+    apply();
+  });
+
+  var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    reveals.forEach(function(r){ io.observe(r); });
+  } else {
+    reveals.forEach(function(r){ r.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>

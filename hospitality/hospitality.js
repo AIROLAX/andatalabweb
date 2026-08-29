@@ -49,6 +49,7 @@
       pr2: 'Projection calibrated to historic architecture for a nocturnal lake narrative.',
       pr3_a: 'Delivered interactive system', pr3_b: 'Real-time sensing', pr3_loc: 'Mexico City',
       pr3: 'Presence, not identity — the architecture Portrait of Place would use.',
+      rel_p: 'Related: <a href="../projection-mapping/">Architectural Projection Mapping</a> · <a href="../museo-descubre/">Interactive Museum Exhibits</a> · <a href="../dome-studio/">Fulldome and 360° content</a>',
       o_eye: 'Operations', o_t: 'Designed to live in the hotel.',
       o_p: 'Scheduled. Serviceable. Privacy-first. Ready to evolve.',
       o1_t: 'Local processing', o1: 'Runs when the network does not.',
@@ -66,7 +67,8 @@
       label_email: 'Email', label_based: 'Based', label_reply: 'Reply',
       reply: '24–48 hours',
       based: 'Mexico · working worldwide', rights: 'All rights reserved.',
-      doc_title: 'ANDATA Hospitality | Permanent immersive guest amenities | ANDATA LAB'
+      nav_map: 'Projection Mapping',
+      doc_title: 'ANDATA Hospitality | Permanent Immersive Hotel Experiences'
     },
     es: {
       nav_work: 'Proyectos', nav_dome: 'Dome Studio', nav_hosp: 'Hospitality', nav_process: 'Proceso',
@@ -107,6 +109,7 @@
       pr2: 'Proyección calibrada sobre arquitectura histórica para una narrativa nocturna del lago.',
       pr3_a: 'Sistema interactivo entregado', pr3_b: 'Sensado en tiempo real', pr3_loc: 'Ciudad de México',
       pr3: 'Presencia, no identidad — la arquitectura que usaría Portrait of Place.',
+      rel_p: 'Relacionado: <a href="../projection-mapping/">Videomapping arquitectónico</a> · <a href="../museo-descubre/">Exhibiciones interactivas de museo</a> · <a href="../dome-studio/">Contenido fulldome y 360°</a>',
       o_eye: 'Operación', o_t: 'Diseñado para vivir en el hotel.',
       o_p: 'Programado. Servible. Privacidad primero. Listo para evolucionar.',
       o1_t: 'Procesamiento local', o1: 'Corre cuando la red no está.',
@@ -124,7 +127,8 @@
       label_email: 'Correo', label_based: 'Ubicación', label_reply: 'Respuesta',
       reply: '24–48 horas',
       based: 'México · trabajamos en todo el mundo', rights: 'Todos los derechos reservados.',
-      doc_title: 'ANDATA Hospitality | Amenidades inmersivas permanentes | ANDATA LAB'
+      nav_map: 'Projection Mapping',
+      doc_title: 'ANDATA Hospitality | Experiencias inmersivas permanentes para hoteles'
     }
   };
 
@@ -226,8 +230,11 @@
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(1.5, window.devicePixelRatio || 1);
     var pts = [];
-    var mx = 0.62, my = 0.42, running = true, visible = true;
-    var n = mqNarrow.matches ? 28 : 46;
+    var mx = 0.62, my = 0.42;
+    var hist = [];
+    var HIST = mqNarrow.matches ? 18 : 32;
+    var running = true, visible = true;
+    var n = mqNarrow.matches ? 56 : 128;
     function resize() {
       var r = canvas.getBoundingClientRect();
       var w = Math.max(1, r.width), h = Math.max(1, r.height);
@@ -237,23 +244,63 @@
     }
     function seed() {
       pts = [];
+      hist = [];
+      for (var h = 0; h < HIST; h++) hist.push({ x: mx, y: my });
       for (var i = 0; i < n; i++) {
-        pts.push({ x: Math.random(), y: Math.random(), vx: 0, vy: 0, r: 0.5 + Math.random() * 1.2 });
+        var along = i / n;
+        pts.push({
+          x: Math.random(), y: Math.random(),
+          vx: 0, vy: 0,
+          r: 0.45 + Math.random() * 2.6,
+          lag: 0.018 + (1 - along) * 0.07 + Math.random() * 0.02,
+          ox: (Math.random() - 0.5) * (0.08 + along * 0.38),
+          oy: (Math.random() - 0.5) * (0.06 + along * 0.3),
+          ph: Math.random() * Math.PI * 2,
+          spin: 0.45 + Math.random() * 1.8,
+          slot: Math.min(HIST - 1, Math.floor(along * HIST * 0.92))
+        });
       }
     }
     function tick() {
       if (!running || !visible) return;
       var w = canvas.clientWidth, h = canvas.clientHeight;
       ctx.clearRect(0, 0, w, h);
+      var t = performance.now() * 0.001;
+      hist[0].x = mx; hist[0].y = my;
+      for (var s = 1; s < hist.length; s++) {
+        hist[s].x += (hist[s - 1].x - hist[s].x) * 0.14;
+        hist[s].y += (hist[s - 1].y - hist[s].y) * 0.14;
+      }
       for (var i = 0; i < pts.length; i++) {
         var a = pts[i];
-        a.vx += (mx - a.x) * 0.0012; a.vy += (my - a.y) * 0.0012;
-        a.vx *= 0.96; a.vy *= 0.96;
-        a.x += a.vx; a.y += a.vy;
-        if (a.x < 0) a.x = 1; if (a.x > 1) a.x = 0;
-        if (a.y < 0) a.y = 1; if (a.y > 1) a.y = 0;
-        ctx.fillStyle = 'rgba(246,243,238,' + (0.08 + a.r * 0.08) + ')';
-        ctx.beginPath(); ctx.arc(a.x * w, a.y * h, a.r, 0, Math.PI * 2); ctx.fill();
+        var node = hist[a.slot];
+        var gx = node.x + Math.cos(t * a.spin + a.ph) * a.ox;
+        var gy = node.y + Math.sin(t * a.spin * 0.82 + a.ph) * a.oy;
+        a.vx += (gx - a.x) * a.lag;
+        a.vy += (gy - a.y) * a.lag;
+        a.vx *= 0.78;
+        a.vy *= 0.78;
+        a.x += a.vx;
+        a.y += a.vy;
+        if (a.x < -0.1) a.x = 1.1; if (a.x > 1.1) a.x = -0.1;
+        if (a.y < -0.1) a.y = 1.1; if (a.y > 1.1) a.y = -0.1;
+        var head = 1 - a.slot / HIST;
+        ctx.fillStyle = 'rgba(246,243,238,' + (0.1 + a.r * 0.1 + head * 0.28).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(a.x * w, a.y * h, a.r * (0.9 + head * 0.85), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.lineWidth = 0.85;
+      for (i = 0; i < pts.length; i += 2) {
+        var p = pts[i];
+        var q = pts[(i + 7) % pts.length];
+        var ddx = p.x - q.x, ddy = p.y - q.y;
+        if (ddx * ddx + ddy * ddy > 0.018) continue;
+        ctx.strokeStyle = 'rgba(60,220,255,0.18)';
+        ctx.beginPath();
+        ctx.moveTo(p.x * w, p.y * h);
+        ctx.lineTo(q.x * w, q.y * h);
+        ctx.stroke();
       }
       requestAnimationFrame(tick);
     }
@@ -390,7 +437,7 @@
 
   /* Proof videos — play when visible */
   (function proofVideos() {
-    var vids = $$('.proof .lazy-vid, .story .lazy-vid');
+    var vids = $$('.proof .lazy-vid, .story .lazy-vid, .data-stage .lazy-vid');
     if (!vids.length) return;
     function play(v) {
       var s = v.getAttribute('data-src');
