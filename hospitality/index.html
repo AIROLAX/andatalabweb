@@ -27,7 +27,7 @@
 <meta name="twitter:image" content="https://www.andatalab.com/hospitality/img/portrait-of-place.jpg">
 
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
-<link rel="preload" as="image" href="img/portrait-of-place-poster.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="img/hospitality-hero-poster.jpg" fetchpriority="high">
 <link rel="stylesheet" href="../colors_and_type.css">
 <link rel="stylesheet" href="hospitality.css">
 </head>
@@ -55,9 +55,9 @@
 
   <section class="hero" id="inicio">
     <div class="hero-media">
-      <img src="img/portrait-of-place-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: guests in a resort lobby as portraits and butterflies emerge from interactive screens" fetchpriority="high" decoding="sync">
-      <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata" poster="img/portrait-of-place-poster.jpg" aria-hidden="true">
-        <source src="img/portrait-of-place.mp4?v=4" type="video/mp4">
+      <img src="img/hospitality-hero-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: an immersive resort pool environment responding with light" fetchpriority="high" decoding="sync">
+      <video id="hero-video" class="hero-video" autoplay muted loop playsinline preload="metadata" poster="img/hospitality-hero-poster.jpg" width="1280" height="720" aria-hidden="true">
+        <source src="img/hospitality-hero.mp4" type="video/mp4">
       </video>
     </div>
     <div class="hero-grad" aria-hidden="true"></div>
@@ -79,30 +79,49 @@
   <section class="data block" id="data">
     <div class="wrap">
       <div class="data-grid">
-        <div>
+        <div class="data-intro">
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="d_eye">Data art</span></span>
           <h2 class="sec-title" data-i18n="d_t">Data, made physical.</h2>
           <p class="sec-lead" data-i18n="d_p">Tide becomes rhythm. Wind becomes movement. Moon becomes density. Presence becomes response.</p>
           <p class="data-note" data-i18n="d_note">A visual explanation of the system — not a live property feed.</p>
-          <div class="inputs" role="group" aria-label="Data inputs">
-            <button type="button" aria-pressed="true" data-i18n="d_tide">Tide</button>
-            <button type="button" aria-pressed="false" data-i18n="d_wind">Wind</button>
-            <button type="button" aria-pressed="false" data-i18n="d_moon">Moon</button>
-            <button type="button" aria-pressed="false" data-i18n="d_presence">Presence</button>
+        </div>
+        <div class="data-tabs-wrap">
+          <div class="inputs" role="tablist" aria-label="Data inputs" data-i18n-aria="d_tabs_label">
+            <button type="button" role="tab" id="tab-tide" aria-selected="true" aria-controls="data-panel" tabindex="0" data-state="tide" data-i18n="d_tide">Tide</button>
+            <button type="button" role="tab" id="tab-wind" aria-selected="false" aria-controls="data-panel" tabindex="-1" data-state="wind" data-i18n="d_wind">Wind</button>
+            <button type="button" role="tab" id="tab-moon" aria-selected="false" aria-controls="data-panel" tabindex="-1" data-state="moon" data-i18n="d_moon">Moon</button>
+            <button type="button" role="tab" id="tab-presence" aria-selected="false" aria-controls="data-panel" tabindex="-1" data-state="presence" data-i18n="d_presence">Presence</button>
           </div>
-          <details class="data-src">
-            <summary data-i18n="d_src_sum">Potential sources include verified environmental datasets and on-site sensing, selected per property.</summary>
-            <p data-i18n="d_src">Proposed, not currently wired by ANDATA: CONABIO Geoportal, EncicloVida, SIMAR, Mexico’s Servicio Meteorológico Nacional, Caribbean sargassum monitoring, and on-site sensors — confirmed per property.</p>
-          </details>
         </div>
-        <div class="data-stage">
-          <img src="img/data-art-poster.jpg" width="1920" height="1080" alt="Concept visualization — ANDATA LAB: an interactive data-art wall in a resort lobby" decoding="async">
-          <video class="lazy-vid" muted loop playsinline preload="none"
-                 poster="img/data-art-poster.jpg"
-                 data-src="img/data-art.mp4"
-                 aria-hidden="true"></video>
-          <canvas id="data-field" aria-hidden="true"></canvas>
+        <div class="data-explain" id="data-explain" aria-live="polite" aria-atomic="true">
+          <p class="data-map-inline" id="data-map-inline">TIDE → PULSE</p>
+          <h3 class="data-state-title" id="data-state-title">Tide becomes rhythm.</h3>
+          <p class="data-state-desc" id="data-state-desc">The visual field expands and contracts with the slow cycles of the water.</p>
         </div>
+        <div class="data-stage" id="data-panel" role="tabpanel" aria-labelledby="tab-tide">
+          <div class="data-media">
+            <img id="data-img-a" class="data-base is-on" src="img/living-water.jpg" width="1600" height="1000" alt="Concept visualization — oceanic field: tide becomes a slow visual pulse" decoding="async">
+            <img id="data-img-b" class="data-base" src="img/living-water.jpg" width="1600" height="1000" alt="" decoding="async" aria-hidden="true">
+            <video id="data-vid" muted loop playsinline preload="none"
+                   poster="img/data-art-poster.jpg"
+                   width="1920" height="1080"
+                   aria-hidden="true"></video>
+            <div class="data-veil" aria-hidden="true"></div>
+            <canvas id="data-field" aria-hidden="true"></canvas>
+          </div>
+          <div class="data-grad" aria-hidden="true"></div>
+          <div class="data-hud" aria-hidden="true">
+            <div class="data-hud-top">
+              <p class="data-mapping" id="data-mapping">TIDE → PULSE</p>
+              <p class="data-sim" id="data-sim">CONCEPT DATA</p>
+            </div>
+            <dl class="data-metrics" id="data-metrics"></dl>
+          </div>
+        </div>
+        <details class="data-src">
+          <summary data-i18n="d_src_sum">Potential sources include verified environmental datasets and on-site sensing, selected per property.</summary>
+          <p data-i18n="d_src">Proposed, not currently wired by ANDATA: CONABIO Geoportal, EncicloVida, SIMAR, Mexico’s Servicio Meteorológico Nacional, Caribbean sargassum monitoring, and on-site sensors — confirmed per property.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -116,7 +135,6 @@
              aria-hidden="true"></video>
       <div class="story-grad" aria-hidden="true"></div>
       <div class="story-copy wrap">
-        <span class="tag" data-i18n="ph_label">Concept visualization</span>
         <h3 data-i18n="st1_t">Caribbean Data Portal</h3>
         <p data-i18n="st1">Walk through the living rhythms of the destination.</p>
         <div class="micro">
@@ -135,7 +153,6 @@
              aria-hidden="true"></video>
       <div class="story-grad" aria-hidden="true"></div>
       <div class="story-copy wrap">
-        <span class="tag" data-i18n="ph_label">Concept visualization</span>
         <h3 data-i18n="st2_t">Family Discovery</h3>
         <p data-i18n="st2">Every step reveals a new part of the Caribbean.</p>
         <div class="micro">
@@ -146,14 +163,15 @@
       </div>
     </article>
 
-    <article class="story" id="night" data-ambient="#2a1612">
-      <picture>
-        <source type="image/webp" srcset="img/night-pool-event.webp">
-        <img src="img/night-pool-event.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a night pool and façade as one programmable event canvas" loading="lazy" decoding="async">
-      </picture>
+    <article class="story wm-crop" id="night" data-ambient="#2a1612">
+      <img src="img/night-pool-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: a night pool and façade as one programmable event canvas" loading="lazy" decoding="async">
+      <video class="lazy-vid" muted loop playsinline preload="none"
+             poster="img/night-pool-poster.jpg"
+             data-src="img/night-pool.mp4"
+             width="1280" height="720"
+             aria-hidden="true"></video>
       <div class="story-grad" aria-hidden="true"></div>
       <div class="story-copy wrap">
-        <span class="tag" data-i18n="ph_label">Concept visualization</span>
         <h3 data-i18n="st3_t">Night Pool / Event Canvas</h3>
         <p data-i18n="st3">One permanent system. Infinite programmed moments.</p>
         <div class="micro">
@@ -163,81 +181,98 @@
         </div>
       </div>
     </article>
-  </div>
 
-  <section class="more block" id="more" data-ambient="#1a1610">
-    <div class="wrap">
-      <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="m_eye">The system</span></span>
-      <h2 class="sec-title" data-i18n="m_t">More ways the resort can respond.</h2>
-      <div class="mosaic">
-        <article class="tile t1" id="water" tabindex="0">
-          <picture>
-            <source type="image/webp" srcset="img/living-water.webp">
-            <img src="img/living-water.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: guests in a pool of responsive light" loading="lazy" decoding="async">
-          </picture>
-          <div class="tile-grad" aria-hidden="true"></div>
-          <div class="tile-copy">
-            <span class="cat">Water</span>
-            <h3 data-i18n="t1_t">Living Water</h3>
-            <p data-i18n="t1">Movement becomes light in the water.</p>
-            <p class="more-line" data-i18n="t1m">The guest completes the field by entering it.</p>
-          </div>
-        </article>
-        <article class="tile" id="garden" tabindex="0">
-          <picture>
-            <source type="image/webp" srcset="img/ecological-corridor.webp">
-            <img src="img/ecological-corridor.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a nocturnal garden path of species and light" loading="lazy" decoding="async">
-          </picture>
-          <div class="tile-grad" aria-hidden="true"></div>
-          <div class="tile-copy">
-            <span class="cat">Garden</span>
-            <h3 data-i18n="t2_t">Nocturnal Garden</h3>
-            <p data-i18n="t2">Species gather along the path.</p>
-            <p class="more-line" data-i18n="t2m">Moon and hour change density and glow.</p>
-          </div>
-        </article>
-        <article class="tile" id="well" tabindex="0">
-          <picture>
-            <source type="image/webp" srcset="img/wellness-atmospheres.webp">
-            <img src="img/wellness-atmospheres.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a wellness room of slow light and atmosphere" loading="lazy" decoding="async">
-          </picture>
-          <div class="tile-grad" aria-hidden="true"></div>
-          <div class="tile-copy">
-            <span class="cat">Wellness</span>
-            <h3 data-i18n="t3_t">Wellness Atmospheres</h3>
-            <p data-i18n="t3">The room moves at the pace of the body.</p>
-            <p class="more-line" data-i18n="t3m">Sunset, tide or breath can shift the field.</p>
-          </div>
-        </article>
-        <article class="tile" id="dine" tabindex="0">
-          <picture>
-            <source type="image/webp" srcset="img/immersive-dining.webp">
-            <img src="img/immersive-dining.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: an immersive dining table of light" loading="lazy" decoding="async">
-          </picture>
-          <div class="tile-grad" aria-hidden="true"></div>
-          <div class="tile-copy">
-            <span class="cat">Dining</span>
-            <h3 data-i18n="t4_t">Immersive Dining</h3>
-            <p data-i18n="t4">The table becomes the interface.</p>
-            <p class="more-line" data-i18n="t4m">Light follows a menu, an origin, a night.</p>
-          </div>
-        </article>
-        <article class="tile" id="brand" tabindex="0">
-          <picture>
-            <source type="image/webp" srcset="img/brand-product-moment.webp">
-            <img src="img/brand-product-moment.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a brand moment layered on permanent media architecture" loading="lazy" decoding="async">
-          </picture>
-          <div class="tile-grad" aria-hidden="true"></div>
-          <div class="tile-copy">
-            <span class="cat">Brand</span>
-            <h3 data-i18n="t5_t">Brand &amp; Product</h3>
-            <p data-i18n="t5">A night layer. The system stays.</p>
-            <p class="more-line" data-i18n="t5m">By morning, the amenity returns to the destination.</p>
-          </div>
-        </article>
+    <article class="story wm-crop" id="water" data-ambient="#0e2430">
+      <img src="img/hospitality-hero-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: guests in a pool of responsive light" loading="lazy" decoding="async">
+      <video class="lazy-vid" muted loop playsinline preload="none"
+             poster="img/hospitality-hero-poster.jpg"
+             data-src="img/hospitality-hero.mp4"
+             width="1280" height="720"
+             aria-hidden="true"></video>
+      <div class="story-grad" aria-hidden="true"></div>
+      <div class="story-copy wrap">
+        <h3 data-i18n="t1_t">Living Water</h3>
+        <p data-i18n="t1">Movement becomes light in the water.</p>
+        <div class="micro">
+          <span data-i18n="st4_a">Water</span>
+          <span data-i18n="st4_b">Presence</span>
+          <span data-i18n="st4_c">Light</span>
+        </div>
       </div>
-    </div>
-  </section>
+    </article>
+
+    <article class="story" id="garden" data-ambient="#0a1218">
+      <picture>
+        <source type="image/webp" srcset="img/ecological-corridor.webp">
+        <img src="img/ecological-corridor.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a nocturnal garden path of species and light" loading="lazy" decoding="async">
+      </picture>
+      <div class="story-grad" aria-hidden="true"></div>
+      <div class="story-copy wrap">
+        <h3 data-i18n="t2_t">Nocturnal Garden</h3>
+        <p data-i18n="t2">Species gather along the path.</p>
+        <div class="micro">
+          <span data-i18n="st5_a">Garden</span>
+          <span data-i18n="st5_b">Moon</span>
+          <span data-i18n="st5_c">Species</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="story wm-crop" id="well" data-ambient="#1a1610">
+      <img src="img/wellness-atmospheres-poster.jpg" width="1280" height="720" alt="Concept visualization — ANDATA LAB: a wellness room of slow light and atmosphere" loading="lazy" decoding="async">
+      <video class="lazy-vid" muted loop playsinline preload="none"
+             poster="img/wellness-atmospheres-poster.jpg"
+             data-src="img/wellness-atmospheres.mp4"
+             width="1280" height="720"
+             aria-hidden="true"></video>
+      <div class="story-grad" aria-hidden="true"></div>
+      <div class="story-copy wrap">
+        <h3 data-i18n="t3_t">Wellness Atmospheres</h3>
+        <p data-i18n="t3">The room moves at the pace of the body.</p>
+        <div class="micro">
+          <span data-i18n="st6_a">Wellness</span>
+          <span data-i18n="st6_b">Body</span>
+          <span data-i18n="st6_c">Atmosphere</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="story" id="dine" data-ambient="#1c120c">
+      <img src="img/immersive-dining-poster.jpg" width="1920" height="1080" alt="ANDATA LAB — interactive dining table installation: light and particles respond on the table surface" loading="lazy" decoding="async">
+      <video class="lazy-vid" muted loop playsinline preload="none"
+             poster="img/immersive-dining-poster.jpg"
+             data-src="img/immersive-dining.mp4"
+             width="1920" height="1080"
+             aria-label="Interactive dining table installation — the table becomes the interface"></video>
+      <div class="story-grad" aria-hidden="true"></div>
+      <div class="story-copy wrap">
+        <h3 data-i18n="t4_t">Immersive Dining</h3>
+        <p data-i18n="t4">The table becomes the interface.</p>
+        <div class="micro">
+          <span data-i18n="st7_a">Dining</span>
+          <span data-i18n="st7_b">Table</span>
+          <span data-i18n="st7_c">Light</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="story" id="brand" data-ambient="#141018">
+      <picture>
+        <source type="image/webp" srcset="img/brand-product-moment.webp">
+        <img src="img/brand-product-moment.jpg" width="2489" height="1400" alt="Concept visualization — ANDATA LAB: a brand moment layered on permanent media architecture" loading="lazy" decoding="async">
+      </picture>
+      <div class="story-grad" aria-hidden="true"></div>
+      <div class="story-copy wrap">
+        <h3 data-i18n="t5_t">Brand &amp; Product</h3>
+        <p data-i18n="t5">A night layer. The system stays.</p>
+        <div class="micro">
+          <span data-i18n="st8_a">Brand</span>
+          <span data-i18n="st8_b">Night</span>
+          <span data-i18n="st8_c">Destination</span>
+        </div>
+      </div>
+    </article>
+  </div>
 
   <section class="system block" id="system">
     <div class="wrap">
