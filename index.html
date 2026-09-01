@@ -371,6 +371,9 @@
     transform-style:preserve-3d;
   }
   a.work-card--link{ display:block; text-decoration:none; color:inherit; }
+  a.work-card--link .work-media,
+  a.work-card--link .work-media video,
+  a.work-card--link .work-media img{ pointer-events:none; }
   .work-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-lift); }
   .work-card.tilt-active{ transition:transform .08s ease-out, box-shadow .35s; }
   .work-media{ position:relative; height:236px; overflow:hidden; background:#fff; }

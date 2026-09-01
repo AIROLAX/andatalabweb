@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="index,follow">
+<title>Particle System Art | Ethereal Motion · ANDATA LAB</title>
+<meta name="description" content="Particle System Art — Ethereal Motion by ANDATA LAB: bioluminescent fluid dynamics rendered as real-time generative art in Blender and TouchDesigner.">
+<link rel="canonical" href="https://www.andatalab.com/particle-system/">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Particle System Art | Ethereal Motion · ANDATA LAB">
+<meta property="og:description" content="A visual journey through abstract dimensions — geometry becomes emotion, motion becomes poetry.">
+<meta property="og:url" content="https://www.andatalab.com/particle-system/">
+<meta property="og:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
+<meta property="og:image:alt" content="Particle System Art — bioluminescent generative motion by ANDATA LAB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Particle System Art | Ethereal Motion · ANDATA LAB">
+<meta name="twitter:description" content="Bioluminescent fluid dynamics rendered as real-time generative art.">
+<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
+
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.is-here{ color:var(--ink); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:8px 16px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--ink); background:var(--ink); color:#fff;
+  }
+  @media (max-width:860px){ .nav-cta{ display:none; } }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  .back{
+    position:fixed; top:calc(var(--nav-h) + 14px + var(--safe-t)); left:var(--pad); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2);
+    padding:9px 15px; border-radius:999px; background:rgba(255,255,255,.7);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), color .3s, box-shadow .3s;
+  }
+  .back:hover{ transform:translateY(-2px); color:var(--ink); box-shadow:var(--shadow-lift); }
+  .back svg{ width:15px; height:15px; }
+
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:840px; }
+  .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#05060a; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
+  .hero-media .hero-bg{ display:none; }
+  .hero-media .hero-fg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  .reel{ display:grid; gap:18px; margin-top:clamp(28px,4vw,44px); }
+  .reel .shot{ position:relative; aspect-ratio:16/9; border-radius:var(--r-xl); overflow:hidden; background:#05060a; box-shadow:var(--shadow-card); }
+  .reel .shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
+  .meta div{ background:var(--bg); padding:20px 22px; }
+  .meta dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .meta dd{ margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; color:var(--ink); }
+
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+  .prose a{ color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  .lead-note{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); max-width:720px; margin:16px 0 0; }
+
+  .phases{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .phase{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start; padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .phase:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .phase-n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:4px; }
+  .phase h3{ font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .phase p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  .plate{ margin:clamp(28px,4vw,44px) 0 0; border-radius:var(--r-xl); overflow:hidden; background:#05060a; border:1px solid var(--hair-2); box-shadow:var(--shadow-card); }
+  .plate img,.plate video{ width:100%; height:auto; max-height:70vh; object-fit:contain; background:#05060a; }
+  .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); background:var(--surface); }
+
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .gallery{ grid-template-columns:1fr; } }
+  .shot{ position:relative; aspect-ratio:4/3; border-radius:var(--r-lg); overflow:hidden; background:#05060a; box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .shot:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot img,.shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .shot--wide{ grid-column:span 2; aspect-ratio:16/9; }
+  @media (max-width:560px){ .shot--wide{ grid-column:span 1; } }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .stat{ padding:28px 26px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .stat .big{ font-size:clamp(1.7rem,3.4vw,2.4rem); font-weight:800; letter-spacing:-.03em; line-height:1.05; }
+  .stat .cap{ margin-top:10px; font-size:14px; color:var(--ink-2); line-height:1.5; }
+
+  .credits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .credit{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); }
+  .credit dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .credit dd{ margin:0; font-size:15px; font-weight:600; color:var(--ink); }
+
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:520px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+</style>
+</head>
+<body data-brand="andata">
+
+  <header class="nav">
+    <a class="brand" href="../" aria-label="Andata Lab">
+      <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+    </a>
+    <nav class="nav-links">
+      <a class="is-here" href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#process" data-i18n="nav_process">Process</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+      <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
+    </nav>
+  </header>
+
+  <a class="back" href="../#work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span data-i18n="back">Back to work</span>
+  </a>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-head reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Selected work · Generative art · 3D motion</span></span>
+          <h1 data-i18n="hero_h1">Particle System Art</h1>
+          <p class="hero-sub" data-i18n="hero_sub">Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Bioluminescent fluid dynamics rendered as generative art.</p>
+        </div>
+
+        <div class="hero-media reveal">
+          <img class="hero-bg" src="img/hero-poster.png" alt="" aria-hidden="true">
+          <video id="hero-video" class="hero-fg" autoplay muted loop playsinline poster="img/hero-poster.png">
+            <source src="media/hero.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <dl class="meta reveal">
+          <div><dt data-i18n="m_studio">Studio</dt><dd>Andata Lab</dd></div>
+          <div><dt data-i18n="m_disc">Discipline</dt><dd data-i18n="m_disc_v">3D motion graphics</dd></div>
+          <div><dt data-i18n="m_stack">Stack</dt><dd>Blender · TouchDesigner</dd></div>
+          <div><dt data-i18n="m_year">Year</dt><dd>2025</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_overview">Overview</span></span>
+          <h2 class="sec-title" data-i18n="overview_title">When motion becomes poetry.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="overview_p1">A <strong>generative motion piece</strong> in Blender and TouchDesigner — thousands of points of light simulated as bioluminescent fluid, falling, folding and blooming in the dark.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gallery">Studies</span></span>
+          <h2 class="sec-title" data-i18n="gallery_title">More motion from the series.</h2>
+        </div>
+        <div class="reel reveal">
+          <div class="shot"><video class="lazy-vid" data-src="media/export-10.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/export-8.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
+          <div class="shot"><video class="lazy-vid" data-src="media/export-6.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap reveal">
+        <div class="cta-panel">
+          <h2 data-i18n="cta_title">Need motion that feels alive?</h2>
+          <p data-i18n="cta_sub">We design generative systems and 3D motion for exhibitions, brands and immersive spaces.</p>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+      <div class="foot-links">
+        <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../biointerface/" data-i18n="nav_bio">Biointerface</a>
+        <a href="../projection-mapping/" data-i18n="nav_map">Projection Mapping</a>
+        <a href="../#contact" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "name": "ANDATA LAB",
+      "url": "https://www.andatalab.com/",
+      "email": "airolaxx@gmail.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/particle-system/#webpage",
+      "url": "https://www.andatalab.com/particle-system/",
+      "name": "Particle System Art | Ethereal Motion · ANDATA LAB",
+      "description": "Particle System Art — bioluminescent fluid dynamics rendered as real-time generative art by ANDATA LAB.",
+      "mainEntity": { "@id": "https://www.andatalab.com/particle-system/#work" }
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.andatalab.com/particle-system/#work",
+      "name": "Particle System Art — Ethereal Motion",
+      "creator": { "@id": "https://www.andatalab.com/#organization" },
+      "producer": { "@id": "https://www.andatalab.com/#organization" },
+      "dateCreated": "2025",
+      "genre": "Generative art / 3D motion graphics",
+      "description": "A visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Particle System Art", "item": "https://www.andatalab.com/particle-system/" }
+      ]
+    }
+  ]
+}
+</script>
+
+  <script>
+  (function(){
+    'use strict';
+    var LANG_KEY = 'andata_lang';
+    var I18N = {
+      en: {
+        nav_work:'Work', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Process',
+        nav_bio:'Biointerface', nav_map:'Projection Mapping', nav_contact:'Contact', cta_start:'Start a project', back:'Back to work',
+        eyebrow:'Selected work · Generative art · 3D motion',
+        hero_h1:'Particle System Art',
+        hero_sub:'Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Bioluminescent fluid dynamics rendered as generative art.',
+        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'3D motion graphics', m_stack:'Stack', m_year:'Year',
+        e_overview:'Overview', overview_title:'When motion becomes poetry.',
+        overview_p1:'Particle System Art is a <strong>generative motion piece</strong> — thousands of points of light simulated as bioluminescent fluid, falling, folding and blooming in the dark.',
+        overview_p2:'Built as a visual study for exhibitions and large-format screens: the same engine language we use in real-time installations, here composed as digital poetry.',
+        e_system:'How it works', system_title:'A stream of light, simulated.',
+        system_note:'An emitter at the top of the frame releases particles downward — gravity, turbulence and additive bloom turn density into white-hot cores and cyan edges.',
+        cap_stream:'The particle stream — density, bloom and a downward flow against black.',
+        e_dev:'Development', dev_title:'How it was built.',
+        cap_built:'A study pass — fluid motion composed for a tall, dark canvas.',
+        p1_t:'Concept & emotion', p1_d:'Treating geometry as feeling — a falling ribbon of light instead of a literal subject. The brief: motion that reads as poetry.',
+        p2_t:'Simulation', p2_d:'Particle systems in 3D — emission, gravity, noise and collision — tuned so the stream feels organic, never mechanical.',
+        p3_t:'Look development', p3_d:'Additive blending, bloom and a white-to-cyan palette so overlapping points become luminous cores.',
+        p4_t:'Compositing & grade', p4_d:'Look and color on a black field in Blender and TouchDesigner — contrast, glow and pacing for large screens.',
+        p5_t:'Playback', p5_d:'Loops and live networks ready for exhibition walls, LED canvases or real-time playback in TouchDesigner.',
+        e_tech:'Technologies', tech_title:'The stack behind the motion.',
+        t_3d:'3D Animation', t_md:'Motion Design', t_part:'Particle Systems', t_rt:'Real-time Rendering',
+        e_gallery:'Studies', gallery_title:'More motion from the series.',
+        gallery_note:'Additional passes and loops — the same particle language, different rhythms. More footage coming.',
+        e_results:'At a glance', results_title:'Light, simulated.',
+        s1_v:'Particles', s1_c:'Thousands of points simulated as bioluminescent fluid.',
+        s2_v:'Loops', s2_c:'Seamless motion studies for walls, LED and exhibition.',
+        s3_v:'Real-time', s3_c:'Ready to play back live in a generative engine.',
+        e_credits:'Credits', credits_title:'Made by Andata Lab.',
+        c_studio:'Studio', c_disc:'Disciplines', c_disc_v:'Generative art · 3D motion', c_tech:'Engineering', c_tech_v:'Blender · TouchDesigner',
+        e_rel:'Related capabilities', rel_title:'The same visual language, other briefs.',
+        rel_p:'Particle System Art is a generative motion study. Related work includes <a href="../biointerface/">real-time interactive installations</a>, <a href="../projection-mapping/">projection mapping</a>, and <a href="../hospitality/">permanent hospitality environments</a> that use the same light and playback approach.',
+        cta_title:'Need motion that feels alive?', cta_sub:'We design generative systems and 3D motion for exhibitions, brands and immersive spaces.', cta_btn:'Start a project',
+        rights:'All rights reserved.',
+        doc_title:'Particle System Art | Ethereal Motion · ANDATA LAB'
+      },
+      es: {
+        nav_work:'Proyectos', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
+        nav_bio:'Biointerface', nav_map:'Projection Mapping', nav_contact:'Contacto', cta_start:'Inicia un proyecto', back:'Volver a proyectos',
+        eyebrow:'Proyecto destacado · Arte generativo · Motion 3D',
+        hero_h1:'Particle System Art',
+        hero_sub:'Ethereal Motion — un viaje visual por dimensiones abstractas donde la geometría se vuelve emoción y el movimiento, poesía. Dinámica de fluidos bioluminiscente renderizada como arte generativo.',
+        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Motion graphics 3D', m_stack:'Stack', m_year:'Año',
+        e_overview:'Resumen', overview_title:'Cuando el movimiento se vuelve poesía.',
+        overview_p1:'Particle System Art es una <strong>pieza de motion generativo</strong> — miles de puntos de luz simulados como fluido bioluminiscente, cayendo, plegándose y floreciendo en la oscuridad.',
+        overview_p2:'Hecha como estudio visual para exhibiciones y pantallas de gran formato: el mismo lenguaje de motor que usamos en instalaciones en tiempo real, aquí compuesto como poesía digital.',
+        e_system:'Cómo funciona', system_title:'Un chorro de luz, simulado.',
+        system_note:'Un emisor en la parte alta del cuadro suelta partículas hacia abajo — gravedad, turbulencia y bloom aditivo convierten la densidad en núcleos blancos y bordes cian.',
+        cap_stream:'El chorro de partículas — densidad, bloom y un flujo descendente sobre negro.',
+        e_dev:'Desarrollo', dev_title:'Cómo se construyó.',
+        cap_built:'Un pase de estudio — motion fluido compuesto para un lienzo alto y oscuro.',
+        p1_t:'Concepto y emoción', p1_d:'Tratar la geometría como sentimiento — una cinta de luz que cae, no un sujeto literal. El brief: motion que se lea como poesía.',
+        p2_t:'Simulación', p2_d:'Sistemas de partículas en 3D — emisión, gravedad, ruido y colisión — afinados para que el chorro se sienta orgánico, nunca mecánico.',
+        p3_t:'Look development', p3_d:'Blending aditivo, bloom y una paleta de blanco a cian para que los puntos superpuestos se vuelvan núcleos luminosos.',
+        p4_t:'Composición y grade', p4_d:'Look y color sobre un campo negro en Blender y TouchDesigner — contraste, glow y ritmo para pantallas grandes.',
+        p5_t:'Reproducción', p5_d:'Loops y redes en vivo listos para muros de exhibición, LED o playback en tiempo real en TouchDesigner.',
+        e_tech:'Tecnologías', tech_title:'La tecnología detrás del motion.',
+        t_3d:'Animación 3D', t_md:'Motion Design', t_part:'Sistemas de partículas', t_rt:'Render en tiempo real',
+        e_gallery:'Estudios', gallery_title:'Más motion de la serie.',
+        gallery_note:'Pases y loops adicionales — el mismo lenguaje de partículas, ritmos distintos. Más material en camino.',
+        e_results:'De un vistazo', results_title:'Luz, simulada.',
+        s1_v:'Partículas', s1_c:'Miles de puntos simulados como fluido bioluminiscente.',
+        s2_v:'Loops', s2_c:'Estudios de motion para muros, LED y exhibición.',
+        s3_v:'Tiempo real', s3_c:'Listos para reproducirse en vivo en un motor generativo.',
+        e_credits:'Créditos', credits_title:'Hecho por Andata Lab.',
+        c_studio:'Estudio', c_disc:'Disciplinas', c_disc_v:'Arte generativo · Motion 3D', c_tech:'Ingeniería', c_tech_v:'Blender · TouchDesigner',
+        e_rel:'Capacidades relacionadas', rel_title:'El mismo lenguaje visual, otros briefs.',
+        rel_p:'Particle System Art es un estudio de motion generativo. El trabajo relacionado incluye <a href="../biointerface/">instalaciones interactivas en tiempo real</a>, <a href="../projection-mapping/">projection mapping</a> y <a href="../hospitality/">entornos permanentes de hospitality</a> que usan el mismo enfoque de luz y reproducción.',
+        cta_title:'¿Necesitas motion que se sienta vivo?', cta_sub:'Diseñamos sistemas generativos y motion 3D para exhibiciones, marcas y espacios inmersivos.', cta_btn:'Inicia un proyecto',
+        rights:'Todos los derechos reservados.',
+        doc_title:'Particle System Art | Ethereal Motion · ANDATA LAB'
+      }
+    };
+
+    function pickLang(){
+      var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+      if(saved==='en'||saved==='es') return saved;
+      return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+    }
+    var lang = pickLang();
+
+    function apply(){
+      var dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(function(node){
+        var k = node.getAttribute('data-i18n');
+        if(dict[k]!=null) node.innerHTML = dict[k];
+      });
+      if(dict.doc_title) document.title = dict.doc_title;
+      var btn = document.getElementById('lang-toggle');
+      if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+    }
+    apply();
+
+    var toggle = document.getElementById('lang-toggle');
+    if(toggle) toggle.addEventListener('click', function(){
+      lang = (lang==='en') ? 'es' : 'en';
+      try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+      apply();
+    });
+
+    var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    var reveals = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+      reveals.forEach(function(r){ io.observe(r); });
+    } else {
+      reveals.forEach(function(r){ r.classList.add('in'); });
+    }
+
+    var vids = document.querySelectorAll('video.lazy-vid');
+    if('IntersectionObserver' in window){
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v = en.target;
+          if(en.isIntersecting){
+            if(!v.getAttribute('src')){ v.setAttribute('src', v.getAttribute('data-src')); v.load(); }
+            var p = v.play(); if(p && p.catch) p.catch(function(){});
+          } else if(!v.paused){ v.pause(); }
+        });
+      }, { rootMargin:'200px 0px', threshold:0.2 });
+      vids.forEach(function(v){ vio.observe(v); });
+    } else {
+      vids.forEach(function(v){ v.setAttribute('src', v.getAttribute('data-src')); });
+    }
+  })();
+  </script>
+</body>
+</html>
