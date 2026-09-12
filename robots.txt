@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
 
-Disallow: /index-immersive.html
-
 Sitemap: https://www.andatalab.com/sitemap.xml

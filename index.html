@@ -732,6 +732,7 @@
     .scroll-mouse i{ animation:none; }
   }
 </style>
+<script src="/analytics.js" defer></script>
 </head>
 <body data-brand="andata">
 
@@ -877,6 +878,12 @@
           <input type="hidden" name="subject" value="New project brief — Andata Lab website">
           <input type="hidden" name="from_name" value="Andata Lab Website">
           <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
+          <!-- Atribución interna: rellenados por /analytics.js, invisibles para la persona. -->
+          <input type="hidden" name="landing_page" value="">
+          <input type="hidden" name="referrer" value="">
+          <input type="hidden" name="utm_source" value="">
+          <input type="hidden" name="utm_medium" value="">
+          <input type="hidden" name="utm_campaign" value="">
           <div class="row2">
             <input class="field" name="name" required placeholder="Name" data-i18n-ph="ph_name">
             <input class="field" name="email" type="email" required placeholder="Email" data-i18n-ph="ph_email">
@@ -901,6 +908,8 @@
       <a href="museo-descubre/" data-i18n="link_museum">Interactive Museum Exhibits</a>
       <a href="dome-studio/" data-i18n="nav_dome">Dome Studio</a>
       <a href="hospitality/" data-i18n="link_hosp">Permanent Immersive Hospitality Experiences</a>
+      <a href="https://www.instagram.com/andata_lab/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      <a href="https://www.youtube.com/@ANDATALAB" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
     </nav>
   </footer>
 
@@ -913,6 +922,10 @@
     {
       "@type": "Organization",
       "@id": "https://www.andatalab.com/#organization",
+      "sameAs": [
+        "https://www.instagram.com/andata_lab/",
+        "https://www.youtube.com/@ANDATALAB"
+      ],
       "name": "ANDATA LAB",
       "alternateName": "Andata Lab",
       "url": "https://www.andatalab.com/",

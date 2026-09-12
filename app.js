@@ -706,6 +706,10 @@
         if (errEl) { errEl.textContent = msg; errEl.hidden = false; }
       }
 
+      /* Atribución: /analytics.js rellena landing_page, referrer y UTMs
+         justo antes de serializar, para que viajen con el envío. */
+      if (window.andataFillForm) window.andataFillForm();
+
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
@@ -714,12 +718,16 @@
         .then(function (r) { return r.json(); })
         .then(function (res) {
           if (res && res.success) {
+            /* Conversión confirmada por Web3Forms. Sin datos personales. */
+            if (window.andataTrack) window.andataTrack('lead_form_submit', { form_id: 'brief-form' });
             form.innerHTML = '<div class="sent"><h3>' + (ui.form_thanks_h || 'Thanks — message received.') + '</h3><p>' + (ui.form_thanks_p || 'We reply within 24–48 hours.') + '</p></div>';
           } else {
+            if (window.andataTrack) window.andataTrack('lead_form_error', { error_type: 'api' });
             fail((res && res.message ? res.message + ' — ' : '') + (ui.form_err_send || 'Please email us directly at argel@andatalab.com.'));
           }
         })
         .catch(function () {
+          if (window.andataTrack) window.andataTrack('lead_form_error', { error_type: 'network' });
           fail(ui.form_err_net || 'Network error. Please email us directly at argel@andatalab.com.');
         });
     });
