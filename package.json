@@ -2,7 +2,8 @@
   "name": "andatalab-web",
   "private": true,
   "scripts": {
-    "dev": "serve ."
+    "dev": "serve .",
+    "build": "node -e \"process.exit(0)\""
   },
   "devDependencies": {
     "serve": "^14.2.4"
