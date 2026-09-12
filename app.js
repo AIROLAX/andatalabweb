@@ -716,11 +716,11 @@
           if (res && res.success) {
             form.innerHTML = '<div class="sent"><h3>' + (ui.form_thanks_h || 'Thanks — message received.') + '</h3><p>' + (ui.form_thanks_p || 'We reply within 24–48 hours.') + '</p></div>';
           } else {
-            fail((res && res.message ? res.message + ' — ' : '') + (ui.form_err_send || 'Please email us directly at airolaxx@gmail.com.'));
+            fail((res && res.message ? res.message + ' — ' : '') + (ui.form_err_send || 'Please email us directly at argel@andatalab.com.'));
           }
         })
         .catch(function () {
-          fail(ui.form_err_net || 'Network error. Please email us directly at airolaxx@gmail.com.');
+          fail(ui.form_err_net || 'Network error. Please email us directly at argel@andatalab.com.');
         });
     });
   }
