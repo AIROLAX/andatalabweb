@@ -6,9 +6,10 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="robots" content="index,follow">
 <title>Particle System Art | Ethereal Motion · ANDATA LAB</title>
-<meta name="description" content="Particle System Art — Ethereal Motion by ANDATA LAB: bioluminescent fluid dynamics rendered as real-time generative art in Blender and TouchDesigner.">
+<meta name="description" content="Particle System Art — Ethereal Motion by ANDATA LAB: real-time generative particle systems and reaction-diffusion fields for galleries, events and large-format screens.">
 <link rel="canonical" href="https://www.andatalab.com/particle-system/">
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="img/hero-poster.jpg">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Andata Lab">
@@ -16,12 +17,12 @@
 <meta property="og:title" content="Particle System Art | Ethereal Motion · ANDATA LAB">
 <meta property="og:description" content="A visual journey through abstract dimensions — geometry becomes emotion, motion becomes poetry.">
 <meta property="og:url" content="https://www.andatalab.com/particle-system/">
-<meta property="og:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
-<meta property="og:image:alt" content="Particle System Art — bioluminescent generative motion by ANDATA LAB">
+<meta property="og:image" content="https://www.andatalab.com/particle-system/img/hero-poster.jpg">
+<meta property="og:image:alt" content="Particle System Art — generative motion installed as a gallery screen by ANDATA LAB">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Particle System Art | Ethereal Motion · ANDATA LAB">
-<meta name="twitter:description" content="Bioluminescent fluid dynamics rendered as real-time generative art.">
-<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/MOTION.png">
+<meta name="twitter:description" content="Real-time generative particle systems for galleries, events and large-format screens.">
+<meta name="twitter:image" content="https://www.andatalab.com/particle-system/img/hero-poster.jpg">
 
 <link rel="stylesheet" href="../colors_and_type.css">
 <style>
@@ -82,13 +83,16 @@
   .hero-head{ max-width:840px; }
   .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
   .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
-  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#05060a; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
-  .hero-media .hero-bg{ display:none; }
-  .hero-media .hero-fg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#05060a; aspect-ratio:16/9; box-shadow:var(--shadow-lift); cursor:pointer; }
+  .hero-media .hero-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .hero-media .hero-fg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .7s ease; }
+  .hero-media .hero-fg.is-on{ opacity:1; }
 
-  .reel{ display:grid; gap:18px; margin-top:clamp(28px,4vw,44px); }
-  .reel .shot{ position:relative; aspect-ratio:16/9; border-radius:var(--r-xl); overflow:hidden; background:#05060a; box-shadow:var(--shadow-card); }
-  .reel .shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .stage{ display:grid; grid-template-columns:minmax(200px,.42fr) 1fr; gap:18px; align-items:stretch; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:760px){ .stage{ grid-template-columns:1fr; } }
+  .stage .shot{ margin:0; width:100%; height:min(58vh,540px); aspect-ratio:auto; max-height:none; }
+  .stage .shot--portrait img, .stage .shot--portrait video{ object-fit:contain; background:#05060a; }
+  .stage .shot--land img, .stage .shot--land video{ object-fit:cover; }
 
   .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
   .meta div{ background:var(--bg); padding:20px 22px; }
@@ -119,14 +123,39 @@
   .plate img,.plate video{ width:100%; height:auto; max-height:70vh; object-fit:contain; background:#05060a; }
   .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); background:var(--surface); }
 
-  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .gallery{ display:grid; grid-template-columns:repeat(6,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
   @media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:560px){ .gallery{ grid-template-columns:1fr; } }
-  .shot{ position:relative; aspect-ratio:4/3; border-radius:var(--r-lg); overflow:hidden; background:#05060a; box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
-  .shot:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot{ position:relative; aspect-ratio:1; border-radius:var(--r-lg); overflow:hidden; background:#05060a; box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; padding:0; border:0; display:block; width:100%; cursor:pointer; color:inherit; font:inherit; }
+  .shot:hover, .shot:focus-visible{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
   .shot img,.shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .shot--wide{ grid-column:span 2; aspect-ratio:16/9; }
-  @media (max-width:560px){ .shot--wide{ grid-column:span 1; } }
+  .shot video{ z-index:1; }
+  .shot--lg{ grid-column:span 3; }
+  .shot--sq{ grid-column:span 2; }
+  .shot .hint{
+    position:absolute; right:12px; bottom:12px; z-index:2;
+    width:34px; height:34px; border-radius:999px;
+    background:rgba(5,6,10,.45); border:1px solid rgba(255,255,255,.22);
+    color:#fff; display:grid; place-items:center; backdrop-filter:blur(8px);
+  }
+  .shot .hint svg{ width:14px; height:14px; }
+  @media (max-width:900px){ .shot--lg, .shot--sq{ grid-column:span 1; } }
+
+  .lb{ position:fixed; inset:0; z-index:80; background:rgba(5,6,10,.94); display:flex; align-items:center; justify-content:center; padding:clamp(16px,4vw,48px); }
+  .lb[hidden]{ display:none !important; }
+  .lb video{ max-width:min(94vw,1120px); max-height:86vh; width:auto; height:auto; border-radius:var(--r-lg); background:#000; box-shadow:0 24px 80px rgba(0,0,0,.45); }
+  .lb-close, .lb-nav{
+    position:absolute; z-index:2; width:44px; height:44px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.08); color:#fff;
+    display:grid; place-items:center;
+  }
+  .lb-close{ top:max(16px, env(safe-area-inset-top)); right:max(16px, env(safe-area-inset-right)); }
+  .lb-prev{ left:max(12px, env(safe-area-inset-left)); top:50%; transform:translateY(-50%); }
+  .lb-next{ right:max(12px, env(safe-area-inset-right)); top:50%; transform:translateY(-50%); }
+  .lb-close:hover, .lb-nav:hover{ background:rgba(255,255,255,.16); }
+  .lb-close svg, .lb-nav svg{ width:18px; height:18px; }
+  body.lb-open{ overflow:hidden; }
 
   .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:clamp(28px,4vw,44px); }
   .stat{ padding:28px 26px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
@@ -185,12 +214,12 @@
         <div class="hero-head reveal">
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Selected work · Generative art · 3D motion</span></span>
           <h1 data-i18n="hero_h1">Particle System Art</h1>
-          <p class="hero-sub" data-i18n="hero_sub">Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Bioluminescent fluid dynamics rendered as generative art.</p>
+          <p class="hero-sub" data-i18n="hero_sub">Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Real-time generative systems for galleries, events and large-format screens.</p>
         </div>
 
-        <div class="hero-media reveal">
-          <img class="hero-bg" src="img/hero-poster.png" alt="" aria-hidden="true">
-          <video id="hero-video" class="hero-fg" autoplay muted loop playsinline poster="img/hero-poster.png">
+        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Play Particle System Art in fullscreen">
+          <img class="hero-bg" src="img/hero-poster.jpg" width="1920" height="1080" alt="Particle System Art shown as a gallery screen in a dark room">
+          <video id="hero-video" class="hero-fg" muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="1920" height="1080">
             <source src="media/hero.mp4" type="video/mp4">
           </video>
         </div>
@@ -211,7 +240,30 @@
           <h2 class="sec-title" data-i18n="overview_title">When motion becomes poetry.</h2>
         </div>
         <div class="prose">
-          <p data-i18n="overview_p1">A <strong>generative motion piece</strong> in Blender and TouchDesigner — thousands of points of light simulated as bioluminescent fluid, falling, folding and blooming in the dark.</p>
+          <p data-i18n="overview_p1">A <strong>generative motion series</strong> in TouchDesigner — particle plumes, line fields and reaction-diffusion organisms that bloom, fold and dissolve in real time.</p>
+          <p data-i18n="overview_p2">Built as visual studies for galleries, events and large-format screens: the same engine language we use in live installations, composed here as digital poetry.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_space">In the space</span></span>
+          <h2 class="sec-title" data-i18n="space_title">How the work sits in a room.</h2>
+          <p class="lead-note" data-i18n="space_note">Square canvases in a dark gallery — the system as an object, not a clip. Click any frame for fullscreen.</p>
+        </div>
+        <div class="stage reveal">
+          <button type="button" class="shot shot--portrait" data-src="media/portrait.mp4" data-poster="img/portrait.jpg" aria-label="Gallery portrait study — play fullscreen">
+            <img src="img/portrait.jpg" alt="Particle plume installed as a square screen in a dark gallery, with floor reflection" loading="lazy" decoding="async" width="1080" height="1920">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/portrait.jpg" data-src="media/portrait.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--land" data-src="media/space.mp4" data-poster="img/space.jpg" aria-label="Gallery screen study — play fullscreen">
+            <img src="img/space.jpg" alt="Generative field displayed on a square gallery screen in a black room" loading="lazy" decoding="async" width="1920" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/space.jpg" data-src="media/space.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
         </div>
       </div>
     </section>
@@ -221,11 +273,44 @@
         <div class="reveal">
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gallery">Studies</span></span>
           <h2 class="sec-title" data-i18n="gallery_title">More motion from the series.</h2>
+          <p class="lead-note" data-i18n="gallery_note">Live passes from the same engine — particle waves, cyan line fields, coral organisms. Hover to play, click for fullscreen.</p>
         </div>
-        <div class="reel reveal">
-          <div class="shot"><video class="lazy-vid" data-src="media/export-10.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/export-8.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
-          <div class="shot"><video class="lazy-vid" data-src="media/export-6.mp4" muted loop playsinline preload="none" poster="img/hero-poster.png"></video></div>
+        <div class="gallery reveal" id="studies-gallery">
+          <button type="button" class="shot shot--lg" data-src="media/study-wave.mp4" data-poster="img/study-wave.jpg" aria-label="Particle wave study — play fullscreen">
+            <img src="img/study-wave.jpg" alt="Dense white particle wave curling across black" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-wave.jpg" data-src="media/study-wave.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--lg" data-src="media/study-plume.mp4" data-poster="img/study-plume.jpg" aria-label="Particle plume study — play fullscreen">
+            <img src="img/study-plume.jpg" alt="Pink-white particle plume rising on a black field" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-plume.jpg" data-src="media/study-plume.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--sq" data-src="media/study-organism.mp4" data-poster="img/study-organism.jpg" aria-label="Cellular organism study — play fullscreen">
+            <img src="img/study-organism.jpg" alt="Monochrome cellular organism formed by a reaction-diffusion field" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-organism.jpg" data-src="media/study-organism.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--sq" data-src="media/study-lines.mp4" data-poster="img/study-lines.jpg" aria-label="Cyan line field study — play fullscreen">
+            <img src="img/study-lines.jpg" alt="Intersecting cyan line field on black" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-lines.jpg" data-src="media/study-lines.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--sq" data-src="media/study-field.mp4" data-poster="img/study-field.jpg" aria-label="Colour field study — play fullscreen">
+            <img src="img/study-field.jpg" alt="Blue and red reaction-diffusion colour field" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-field.jpg" data-src="media/study-field.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--lg" data-src="media/study-coral.mp4" data-poster="img/study-coral.jpg" aria-label="Coral organism study — play fullscreen">
+            <img src="img/study-coral.jpg" alt="Swirling coral organism in a blue reaction-diffusion field" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-coral.jpg" data-src="media/study-coral.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
+          <button type="button" class="shot shot--lg" data-src="media/study-rain.mp4" data-poster="img/study-rain.jpg" aria-label="Particle rain study — play fullscreen">
+            <img src="img/study-rain.jpg" alt="Sparse particle rain drifting on black" loading="lazy" decoding="async" width="1080" height="1080">
+            <video class="lazy-vid" muted loop playsinline preload="none" poster="img/study-rain.jpg" data-src="media/study-rain.mp4"></video>
+            <span class="hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+          </button>
         </div>
       </div>
     </section>
@@ -240,6 +325,19 @@
       </div>
     </section>
   </main>
+
+  <div class="lb" id="lightbox" hidden>
+    <button class="lb-close" type="button" id="lb-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <button class="lb-nav lb-prev" type="button" id="lb-prev" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="lb-nav lb-next" type="button" id="lb-next" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <video id="lb-video" muted loop playsinline controls></video>
+  </div>
 
   <footer class="foot">
     <div class="wrap foot-inner">
@@ -287,7 +385,16 @@
       "producer": { "@id": "https://www.andatalab.com/#organization" },
       "dateCreated": "2025",
       "genre": "Generative art / 3D motion graphics",
-      "description": "A visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry."
+      "description": "A visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Real-time generative particle systems and reaction-diffusion fields by ANDATA LAB."
+    },
+    {
+      "@type": "VideoObject",
+      "name": "Particle System Art — gallery screen",
+      "description": "Generative particle artwork presented as a square gallery screen in a dark room.",
+      "thumbnailUrl": "https://www.andatalab.com/particle-system/img/hero-poster.jpg",
+      "contentUrl": "https://www.andatalab.com/particle-system/media/hero.mp4",
+      "uploadDate": "2025-12-13",
+      "creator": { "@id": "https://www.andatalab.com/#organization" }
     },
     {
       "@type": "BreadcrumbList",
@@ -310,11 +417,11 @@
         nav_bio:'Biointerface', nav_map:'Projection Mapping', nav_contact:'Contact', cta_start:'Start a project', back:'Back to work',
         eyebrow:'Selected work · Generative art · 3D motion',
         hero_h1:'Particle System Art',
-        hero_sub:'Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Bioluminescent fluid dynamics rendered as generative art.',
-        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'3D motion graphics', m_stack:'Stack', m_year:'Year',
+        hero_sub:'Ethereal Motion — a visual journey through abstract dimensions where geometry becomes emotion and motion transforms into poetry. Real-time generative systems for galleries, events and large-format screens.',
+        m_studio:'Studio', m_disc:'Discipline', m_disc_v:'Generative art', m_stack:'Stack', m_year:'Year',
         e_overview:'Overview', overview_title:'When motion becomes poetry.',
-        overview_p1:'Particle System Art is a <strong>generative motion piece</strong> — thousands of points of light simulated as bioluminescent fluid, falling, folding and blooming in the dark.',
-        overview_p2:'Built as a visual study for exhibitions and large-format screens: the same engine language we use in real-time installations, here composed as digital poetry.',
+        overview_p1:'A <strong>generative motion series</strong> in TouchDesigner — particle plumes, line fields and reaction-diffusion organisms that bloom, fold and dissolve in real time.',
+        overview_p2:'Built as visual studies for galleries, events and large-format screens: the same engine language we use in live installations, composed here as digital poetry.',
         e_system:'How it works', system_title:'A stream of light, simulated.',
         system_note:'An emitter at the top of the frame releases particles downward — gravity, turbulence and additive bloom turn density into white-hot cores and cyan edges.',
         cap_stream:'The particle stream — density, bloom and a downward flow against black.',
@@ -327,8 +434,10 @@
         p5_t:'Playback', p5_d:'Loops and live networks ready for exhibition walls, LED canvases or real-time playback in TouchDesigner.',
         e_tech:'Technologies', tech_title:'The stack behind the motion.',
         t_3d:'3D Animation', t_md:'Motion Design', t_part:'Particle Systems', t_rt:'Real-time Rendering',
+        e_space:'In the space', space_title:'How the work sits in a room.',
+        space_note:'Square canvases in a dark gallery — the system as an object, not a clip. Click any frame for fullscreen.',
         e_gallery:'Studies', gallery_title:'More motion from the series.',
-        gallery_note:'Additional passes and loops — the same particle language, different rhythms. More footage coming.',
+        gallery_note:'Live passes from the same engine — particle waves, cyan line fields, coral organisms. Hover to play, click for fullscreen.',
         e_results:'At a glance', results_title:'Light, simulated.',
         s1_v:'Particles', s1_c:'Thousands of points simulated as bioluminescent fluid.',
         s2_v:'Loops', s2_c:'Seamless motion studies for walls, LED and exhibition.',
@@ -346,11 +455,11 @@
         nav_bio:'Biointerface', nav_map:'Projection Mapping', nav_contact:'Contacto', cta_start:'Inicia un proyecto', back:'Volver a proyectos',
         eyebrow:'Proyecto destacado · Arte generativo · Motion 3D',
         hero_h1:'Particle System Art',
-        hero_sub:'Ethereal Motion — un viaje visual por dimensiones abstractas donde la geometría se vuelve emoción y el movimiento, poesía. Dinámica de fluidos bioluminiscente renderizada como arte generativo.',
-        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Motion graphics 3D', m_stack:'Stack', m_year:'Año',
+        hero_sub:'Ethereal Motion — un viaje visual por dimensiones abstractas donde la geometría se vuelve emoción y el movimiento, poesía. Sistemas generativos en tiempo real para galerías, eventos y pantallas de gran formato.',
+        m_studio:'Estudio', m_disc:'Disciplina', m_disc_v:'Arte generativo', m_stack:'Stack', m_year:'Año',
         e_overview:'Resumen', overview_title:'Cuando el movimiento se vuelve poesía.',
-        overview_p1:'Particle System Art es una <strong>pieza de motion generativo</strong> — miles de puntos de luz simulados como fluido bioluminiscente, cayendo, plegándose y floreciendo en la oscuridad.',
-        overview_p2:'Hecha como estudio visual para exhibiciones y pantallas de gran formato: el mismo lenguaje de motor que usamos en instalaciones en tiempo real, aquí compuesto como poesía digital.',
+        overview_p1:'Una <strong>serie de motion generativo</strong> en TouchDesigner — plumas de partículas, campos de líneas y organismos de reacción-difusión que florecen, se pliegan y se disuelven en tiempo real.',
+        overview_p2:'Hecha como estudio visual para galerías, eventos y pantallas de gran formato: el mismo lenguaje de motor que usamos en instalaciones en vivo, aquí compuesto como poesía digital.',
         e_system:'Cómo funciona', system_title:'Un chorro de luz, simulado.',
         system_note:'Un emisor en la parte alta del cuadro suelta partículas hacia abajo — gravedad, turbulencia y bloom aditivo convierten la densidad en núcleos blancos y bordes cian.',
         cap_stream:'El chorro de partículas — densidad, bloom y un flujo descendente sobre negro.',
@@ -363,8 +472,10 @@
         p5_t:'Reproducción', p5_d:'Loops y redes en vivo listos para muros de exhibición, LED o playback en tiempo real en TouchDesigner.',
         e_tech:'Tecnologías', tech_title:'La tecnología detrás del motion.',
         t_3d:'Animación 3D', t_md:'Motion Design', t_part:'Sistemas de partículas', t_rt:'Render en tiempo real',
+        e_space:'En el espacio', space_title:'Cómo se ve la obra en una sala.',
+        space_note:'Lienzos cuadrados en una galería oscura — el sistema como objeto, no como clip. Clic en cualquier cuadro para pantalla completa.',
         e_gallery:'Estudios', gallery_title:'Más motion de la serie.',
-        gallery_note:'Pases y loops adicionales — el mismo lenguaje de partículas, ritmos distintos. Más material en camino.',
+        gallery_note:'Pases en vivo del mismo motor — olas de partículas, campos cian, organismos coral. Hover para reproducir, clic para pantalla completa.',
         e_results:'De un vistazo', results_title:'Luz, simulada.',
         s1_v:'Partículas', s1_c:'Miles de puntos simulados como fluido bioluminiscente.',
         s2_v:'Loops', s2_c:'Estudios de motion para muros, LED y exhibición.',
@@ -418,21 +529,135 @@
       reveals.forEach(function(r){ r.classList.add('in'); });
     }
 
-    var vids = document.querySelectorAll('video.lazy-vid');
-    if('IntersectionObserver' in window){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var hoverFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var mobile = window.matchMedia('(max-width: 760px)').matches;
+    var saveData = false;
+    try {
+      var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      saveData = !!(conn && (conn.saveData || conn.effectiveType === '2g' || conn.effectiveType === 'slow-2g'));
+    } catch (e) {}
+
+    var hero = document.getElementById('hero-video');
+    if (hero) {
+      var heroSrc = (mobile || saveData) ? 'media/hero-720.mp4' : 'media/hero.mp4';
+      hero.setAttribute('src', heroSrc);
+      hero.load();
+      hero.addEventListener('loadeddata', function(){ hero.classList.add('is-on'); });
+      if (!reduce) {
+        var hp = hero.play(); if (hp && hp.catch) hp.catch(function(){});
+        if ('IntersectionObserver' in window) {
+          var hio = new IntersectionObserver(function(entries){
+            entries.forEach(function(en){
+              if (en.isIntersecting) { var p = hero.play(); if (p && p.catch) p.catch(function(){}); }
+              else hero.pause();
+            });
+          }, { threshold: 0.2 });
+          hio.observe(hero);
+        }
+      }
+    }
+
+    function armVideo(v) {
+      var src = v.getAttribute('data-src');
+      if (src && v.getAttribute('src') !== src) {
+        v.setAttribute('src', src);
+        v.load();
+      }
+    }
+    function playVid(v) {
+      armVideo(v);
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+    }
+
+    var vids = Array.prototype.slice.call(document.querySelectorAll('video.lazy-vid'));
+    if (!reduce && 'IntersectionObserver' in window) {
+      var playing = [];
       var vio = new IntersectionObserver(function(entries){
         entries.forEach(function(en){
           var v = en.target;
-          if(en.isIntersecting){
-            if(!v.getAttribute('src')){ v.setAttribute('src', v.getAttribute('data-src')); v.load(); }
-            var p = v.play(); if(p && p.catch) p.catch(function(){});
-          } else if(!v.paused){ v.pause(); }
+          if (en.isIntersecting) {
+            playVid(v);
+            if (playing.indexOf(v) < 0) playing.push(v);
+            while (playing.length > 3) {
+              var drop = playing.shift();
+              if (drop && drop !== v && !drop.paused) drop.pause();
+            }
+          } else if (!v.paused) {
+            v.pause();
+            playing = playing.filter(function(x){ return x !== v; });
+          }
         });
-      }, { rootMargin:'200px 0px', threshold:0.2 });
+      }, { rootMargin: '160px 0px', threshold: 0.25 });
       vids.forEach(function(v){ vio.observe(v); });
-    } else {
-      vids.forEach(function(v){ v.setAttribute('src', v.getAttribute('data-src')); });
     }
+
+    if (!reduce && hoverFine) {
+      document.querySelectorAll('.shot').forEach(function(shot){
+        var v = shot.querySelector('video.lazy-vid');
+        if (!v) return;
+        shot.addEventListener('mouseenter', function(){ playVid(v); });
+      });
+    }
+
+    var lb = document.getElementById('lightbox');
+    var lbVid = document.getElementById('lb-video');
+    var shots = Array.prototype.slice.call(document.querySelectorAll('.shot[data-src], #hero-open'));
+    var lbIndex = 0;
+
+    function shotSrc(el) {
+      if (!el) return '';
+      if (el.id === 'hero-open') return 'media/hero.mp4';
+      return el.getAttribute('data-src') || '';
+    }
+    function openLb(i) {
+      if (!lb || !lbVid) return;
+      lbIndex = i;
+      var src = shotSrc(shots[i]);
+      if (!src) return;
+      vids.forEach(function(v){ try { v.pause(); } catch (e) {} });
+      if (hero) hero.pause();
+      lbVid.muted = true;
+      lbVid.loop = true;
+      lbVid.src = src;
+      lb.hidden = false;
+      document.body.classList.add('lb-open');
+      var p = lbVid.play(); if (p && p.catch) p.catch(function(){});
+    }
+    function closeLb() {
+      if (!lb || !lbVid) return;
+      lb.hidden = true;
+      document.body.classList.remove('lb-open');
+      lbVid.pause();
+      lbVid.removeAttribute('src');
+      lbVid.load();
+    }
+    function stepLb(dir) {
+      if (!shots.length) return;
+      openLb((lbIndex + dir + shots.length) % shots.length);
+    }
+
+    shots.forEach(function(shot, i){
+      function go(e){ if (e) e.preventDefault(); openLb(i); }
+      shot.addEventListener('click', go);
+      shot.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') go(e);
+      });
+    });
+    var lbClose = document.getElementById('lb-close');
+    var lbPrev = document.getElementById('lb-prev');
+    var lbNext = document.getElementById('lb-next');
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    if (lbPrev) lbPrev.addEventListener('click', function(){ stepLb(-1); });
+    if (lbNext) lbNext.addEventListener('click', function(){ stepLb(1); });
+    if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function(e){
+      if (lb && !lb.hidden) {
+        if (e.key === 'Escape') closeLb();
+        if (e.key === 'ArrowLeft') stepLb(-1);
+        if (e.key === 'ArrowRight') stepLb(1);
+      }
+    });
   })();
   </script>
 </body>
