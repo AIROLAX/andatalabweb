@@ -2,7 +2,16 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "",
   "outputDirectory": ".",
-  "redirects": [
+  "headers": [
+    {
+      "source": "/conjunto-santander-yoga",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    },
+    {
+      "source": "/conjunto-santander-yoga/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    }
+  ],
     { "source": "/wavey-runaway-show", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runaway-show/", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runway", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
