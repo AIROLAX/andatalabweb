@@ -178,25 +178,116 @@
   }, true);
 
   /* ============================================================
-     4. FORMULARIO — solo rellena los campos ocultos.
+     4. FORMULARIO — campos ocultos (atribución + país aproximado).
      El evento lead_form_submit NO se dispara aquí: lo emite app.js
      únicamente cuando Web3Forms confirma el envío. Ver app.js.
      ============================================================ */
 
+  var GEO_KEY = 'andata_geo';
+  var geo = null;
+
+  function emptyGeo() {
+    return { country: '', countryName: '', region: '', city: '' };
+  }
+
+  function countryNameOf(iso) {
+    if (!iso) return '';
+    try {
+      if (typeof Intl !== 'undefined' && Intl.DisplayNames) {
+        return new Intl.DisplayNames(['es'], { type: 'region' }).of(iso) || iso;
+      }
+    } catch (e) {}
+    return iso;
+  }
+
+  function flagEmoji(iso) {
+    if (!iso || iso.length !== 2) return '';
+    var a = iso.toUpperCase().charCodeAt(0);
+    var b = iso.toUpperCase().charCodeAt(1);
+    if (a < 65 || a > 90 || b < 65 || b > 90) return '';
+    return String.fromCodePoint(127397 + a, 127397 + b);
+  }
+
+  function buildSubject(g) {
+    g = g || emptyGeo();
+    if (!g.country) return 'Nuevo brief — país desconocido — Andata Lab';
+    var flag = flagEmoji(g.country);
+    var name = g.countryName || g.country;
+    var place = g.city ? name + ' (' + g.city + ')' : name;
+    return 'Nuevo brief — ' + (flag ? flag + ' ' : '') + place + ' — Andata Lab';
+  }
+
+  function readGeoStore() {
+    try {
+      var raw = sessionStorage.getItem(GEO_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+
+  function writeGeoStore(obj) {
+    try { sessionStorage.setItem(GEO_KEY, JSON.stringify(obj)); } catch (e) {}
+  }
+
+  function loadGeo() {
+    var cached = readGeoStore();
+    if (cached && cached.country) {
+      geo = cached;
+      return Promise.resolve(geo);
+    }
+    return fetch('/api/geo', { credentials: 'same-origin' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || typeof data !== 'object') throw new Error('bad geo');
+        var cc = String(data.country || '').toUpperCase();
+        geo = {
+          country: cc,
+          countryName: countryNameOf(cc),
+          region: data.region || '',
+          city: data.city || ''
+        };
+        if (geo.country) writeGeoStore(geo);
+        return geo;
+      })
+      .catch(function () {
+        geo = geo || emptyGeo();
+        return geo;
+      });
+  }
+
+  var geoReady = loadGeo();
+  window.andataWaitGeo = function (ms) {
+    return Promise.race([
+      geoReady,
+      new Promise(function (resolve) {
+        setTimeout(function () { resolve(geo || emptyGeo()); }, ms || 1500);
+      })
+    ]);
+  };
+
   function fillHiddenFields() {
     var form = document.getElementById('brief-form');
     if (!form) return;
+    var g = geo || emptyGeo();
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
     var map = {
       landing_page: attrib.landing_page,
       referrer: attrib.referrer,
       utm_source: attrib.utm_source,
       utm_medium: attrib.utm_medium,
-      utm_campaign: attrib.utm_campaign
+      utm_campaign: attrib.utm_campaign,
+      country: g.country,
+      country_name: g.countryName,
+      region: g.region,
+      city: g.city,
+      timezone: tz
     };
     Object.keys(map).forEach(function (name) {
       var input = form.querySelector('input[name="' + name + '"]');
       if (input) input.value = map[name] || '';
     });
+    var sub = form.querySelector('input[name="subject"]');
+    if (sub) sub.value = buildSubject(g);
   }
 
   /* app.js la llama justo antes de construir el FormData. */
