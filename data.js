@@ -77,7 +77,7 @@
     { id: 'museo',  video: 'videos/10-lite.mp4',             poster: 'Imagenes/AUDIOVISUAL TECH.webp', url: 'museo-descubre/' },
     { id: 'ajijic', videos: ['PROJECTS/2.mp4', ARCHITECTURAL_MAPPING.video], poster: 'Imagenes/architectural-mapping-poster.jpg', url: 'ajijic-mapping/' },
     { id: 'touch',  video: 'PROJECTS/1.mp4',                 poster: 'Imagenes/SHOW CONTROL.jpg', url: 'https://airolax.com/work/thermosense.html' },
-    { id: 'santander', video: 'videos/conjunto-santander.mp4', poster: 'Imagenes/conjunto-santander-poster.jpg', url: 'https://airolax.com/work/breathing-space.html' },
+    { id: 'santander', video: 'conjunto-santander-yoga/media/hero.mp4', poster: 'conjunto-santander-yoga/img/hero-poster.jpg', url: 'conjunto-santander-yoga/' },
   ];
 
   function merge(mediaArr, textArr) {
@@ -143,7 +143,7 @@
       { t: 'Museo Descubre',         client: 'Interactive Museum Exhibits · Aguascalientes',        outcome: 'Museum exhibit design with sensor-driven walls and motion-tracked rooms.' },
       { t: 'Whispers of the Lake',   client: 'Architectural Projection Mapping · Chapala, Mexico', outcome: 'Site-specific 3D projection mapping on a historic facade — TouchDesigner playback, spatial audio and on-site calibration.' },
       { t: 'Volumetric TouchScreen', client: 'Interactive Display · Mexico City',         outcome: 'A spatial, touch-driven narrative on a volumetric display.' },
-      { t: 'Conjunto Santander',     client: 'Real-Time Generative Systems · Puebla',      outcome: 'A generative light column and floor grid for a live wellness experience — visuals driven in real time for Conjunto Santander.' },
+      { t: 'Conjunto Santander × Asana Yoga', client: 'Immersive Yoga Experience · Guadalajara', outcome: 'A generative light column and projected canopy that turned a theater into a sold-out immersive yoga class.' },
     ]),
     process: [
       { n: '01', t: 'Concept', d: 'We start with the space, the audience and the story — then design the experience around them.', img: PROCESS_IMG[0] },
@@ -206,7 +206,7 @@
       { t: 'Museo Descubre',                client: 'Exhibiciones interactivas de museo · Aguascalientes',                outcome: 'Diseño de exhibiciones con muros de sensores y salas con seguimiento de movimiento.' },
       { t: 'Whispers of the Lake',          client: 'Videomapping arquitectónico · Chapala, México', outcome: 'Projection mapping 3D de sitio específico sobre una fachada histórica — reproducción en TouchDesigner, audio espacial y calibración en sitio.' },
       { t: 'Pantalla Táctil Volumétrica',   client: 'Pantalla Interactiva · Ciudad de México',           outcome: 'Una narrativa espacial y táctil en una pantalla volumétrica.' },
-      { t: 'Conjunto Santander',            client: 'Sistemas Generativos en Tiempo Real · Puebla',      outcome: 'Columna de luz generativa y piso en grid para una experiencia de bienestar en vivo — visuales en tiempo real para Conjunto Santander.' },
+      { t: 'Conjunto Santander × Asana Yoga', client: 'Experiencia de yoga inmersiva · Guadalajara', outcome: 'Una columna de luz generativa y un canopy proyectado que convirtieron un teatro en una clase de yoga inmersiva sold out.' },
     ]),
     process: [
       { n: '01', t: 'Concepto', d: 'Partimos del espacio, la audiencia y la historia — y diseñamos la experiencia en torno a ellos.', img: PROCESS_IMG[0] },

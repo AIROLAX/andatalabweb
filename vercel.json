@@ -6,6 +6,14 @@
     { "source": "/wavey-runaway-show", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runaway-show/", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runway", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
-    { "source": "/wavey-runway/", "destination": "/wavey-tiktok-runway-show/", "permanent": true }
+    { "source": "/wavey-runway/", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
+    { "source": "/breathing-space", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/breathing-space/", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/santander", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/santander/", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/asana-yoga", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/asana-yoga/", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/conjunto-santander", "destination": "/conjunto-santander-yoga/", "permanent": true },
+    { "source": "/conjunto-santander/", "destination": "/conjunto-santander-yoga/", "permanent": true }
   ]
 }
