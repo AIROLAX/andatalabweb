@@ -23,7 +23,7 @@
   ];
 
   var SERVICE_IMG = [
-    'Imagenes/chapala.png',        // 01 mapping (matches Ajijic work)
+    'Imagenes/MOTION.webp',        // 01 mapping (matches Ajijic work) — PERF: chapala.png era byte-identico a MOTION.png (1.5 MB); WebP = misma imagen, 138 KB. REVERTIR: 'Imagenes/chapala.png'
     'Imagenes/SHOW CONTROL.jpg',   // 02 real-time (matches TouchScreen work)
     'Imagenes/AI INSTA.jpg',       // 03 interactive
     'Imagenes/OHM2.png',             // 04 immersive — laser room install (not used in work grid)
@@ -68,7 +68,8 @@
   // Per-work shared assets (id, video, poster), text added per language
   var WORK_MEDIA = [
     { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'biointerface/' },
-    { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.png',       url: 'particle-system/' },
+    { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.webp',      url: 'particle-system/' }, // PERF: WebP 138 KB vs PNG 1.5 MB. REVERTIR: 'Imagenes/MOTION.png'
+    { id: 'wavey-runway', video: 'wavey-tiktok-runway-show/media/hero.mp4', poster: 'wavey-tiktok-runway-show/img/hero-poster.jpg', url: 'wavey-tiktok-runway-show/' },
     { id: 'rtg',    video: REAL_TIME_GENERATIVE.video,       poster: REAL_TIME_GENERATIVE.poster, url: 'https://airolax.com/work/biointerface-2.html' },
     { id: 'wavey',  video: INTERACTIVE_INSTALLATIONS_SVC.video, poster: INTERACTIVE_INSTALLATIONS_SVC.poster },
     { id: 'ohm',   videos: ['videos/ohm-laser-arp.mp4', IMMERSIVE_AV.video], poster: 'Imagenes/OHM2.png', url: 'https://airolax.com/work/ohm-interactive-laser-sculpture.html' },
@@ -134,6 +135,7 @@
     work: merge(WORK_MEDIA, [
       { t: 'Biointerface',          client: 'Interactive Art Installation · Mexico City', outcome: 'Sensor-driven interactive system — real-time biometric data translated into living digital art.' },
       { t: 'Particle System Art',    client: 'Generative Art Work',                        outcome: 'Bioluminescent fluid dynamics rendered as real-time generative art.' },
+      { t: 'WAVEY × TikTok',         client: 'Fashion Runway Visual Experience',           outcome: 'Real-time visuals and LED architecture for a runway show with TikTok México and Trident.' },
       { t: 'Real-Time & Generative Systems', client: 'Generative Systems · Multi-Screen', outcome: 'TouchDesigner and custom engines generating live visuals across a multi-screen installation — reactive, never the same twice.' },
       { t: 'Mirror Noise',           client: 'Interactive Mirror Installation',            outcome: 'A sensor-driven mirror where the audience becomes part of the artwork — noise, reflection and live behavior.' },
       { t: 'Ohm Sound Laser Sculpture', client: 'Immersive Laser Installation',            outcome: 'A circular chamber of laser light, spatial sound and projection — a full-room audiovisual sculpture experienced in the round.' },
@@ -196,6 +198,7 @@
     work: merge(WORK_MEDIA, [
       { t: 'Biointerfaz',                   client: 'Instalación de arte interactivo · Ciudad de México', outcome: 'Sistema interactivo con sensores — datos biométricos en tiempo real traducidos en arte digital vivo.' },
       { t: 'Particle System Art',           client: 'Obra de Arte Generativo',                         outcome: 'Dinámica de fluidos bioluminiscente renderizada como arte generativo en tiempo real.' },
+      { t: 'WAVEY × TikTok',                client: 'Experiencia visual de pasarela',                  outcome: 'Visuales en tiempo real y arquitectura LED para un show de pasarela con TikTok México y Trident.' },
       { t: 'Sistemas Generativos y en Tiempo Real', client: 'Sistemas Generativos · Multi-Pantalla', outcome: 'TouchDesigner y motores a medida generando visuales en vivo en una instalación multi-pantalla — reactivos, nunca iguales dos veces.' },
       { t: 'Mirror Noise',                  client: 'Instalación de espejo interactivo',                 outcome: 'Un espejo con sensores donde la audiencia se vuelve parte de la obra — ruido, reflejo y comportamiento en vivo.' },
       { t: 'Ohm Sound Laser Sculpture',     client: 'Instalación Láser Inmersiva',                       outcome: 'Una cámara circular de luz láser, sonido espacial y proyección — una escultura audiovisual de sala completa vivida desde adentro.' },

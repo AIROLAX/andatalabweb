@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "",
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/wavey-runaway-show", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
+    { "source": "/wavey-runaway-show/", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
+    { "source": "/wavey-runway", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
+    { "source": "/wavey-runway/", "destination": "/wavey-tiktok-runway-show/", "permanent": true }
+  ]
 }
