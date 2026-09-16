@@ -84,12 +84,15 @@
   .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
   .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:680px; }
   .hero-media{
-    position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden;
-    background:#05060a; height:min(78vh,720px); box-shadow:var(--shadow-lift);
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    position:relative; margin:clamp(32px,5vw,56px) auto 0;
+    width:min(100%, 420px); aspect-ratio:9/16;
+    border-radius:var(--r-xl); overflow:hidden; background:#05060a;
+    box-shadow:var(--shadow-lift); cursor:pointer;
   }
-  .hero-media .hero-bg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:blur(28px) brightness(.5) saturate(1.2); transform:scale(1.12); }
-  .hero-media .hero-fg{ position:relative; z-index:1; height:100%; width:auto; max-width:100%; object-fit:contain; opacity:0; transition:opacity .7s ease; }
+  .hero-media .hero-fg{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .7s ease;
+  }
   .hero-media .hero-fg.is-on{ opacity:1; }
 
   .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
@@ -118,14 +121,40 @@
   .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
 
   .plate{ margin:clamp(28px,4vw,44px) 0 0; border-radius:var(--r-xl); overflow:hidden; background:#05060a; border:1px solid var(--hair-2); box-shadow:var(--shadow-card); }
-  .plate img,.plate video{ width:100%; height:auto; max-height:78vh; object-fit:contain; background:#05060a; }
+  .plate img,.plate video{ width:100%; height:auto; object-fit:contain; background:#05060a; }
   .plate--light{ background:var(--surface); }
   .plate--light img{ background:var(--surface); object-fit:contain; }
-  .plate--portrait{ max-width:min(440px,100%); margin-left:auto; margin-right:auto; }
-  .plate[data-src]{ cursor:pointer; }
+  .plate--show{ max-width:min(480px,100%); margin-left:auto; margin-right:auto; }
+  .plate--setup{ max-width:min(880px,100%); margin-left:auto; margin-right:auto; }
+  .plate--portrait{ max-width:min(400px,100%); margin-left:auto; margin-right:auto; }
+  .plate--land{ max-width:min(640px,100%); margin-left:auto; margin-right:auto; }
+  .plate--led{ max-width:min(560px,100%); margin-left:auto; margin-right:auto; }
+  .plate[data-src]{ cursor:zoom-in; }
   .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); background:var(--surface); }
-  .plate video.lazy-vid{ opacity:0; transition:opacity .45s ease; }
-  .plate video.lazy-vid.is-loaded{ opacity:1; }
+
+  .film{
+    position:relative; overflow:hidden; background:#05060a;
+  }
+  .film--portrait{ aspect-ratio:9/16; }
+  .film--land{ aspect-ratio:16/9; }
+  .film-fg{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
+  .film-fg.lazy-vid{ opacity:0; transition:opacity .45s ease; }
+  .film-fg.lazy-vid.is-loaded{ opacity:1; }
+
+  .film-toggle{
+    position:absolute; z-index:3; left:12px; bottom:12px;
+    width:40px; height:40px; padding:0; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.22); background:rgba(5,6,10,.42); color:#fff;
+    display:grid; place-items:center;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    transition:background .25s, transform .25s;
+  }
+  .film-toggle:hover{ background:rgba(5,6,10,.62); transform:scale(1.04); }
+  .film-toggle:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+  .film-toggle svg{ width:14px; height:14px; display:block; }
+  .hero-media .film-toggle{ left:16px; bottom:16px; }
 
   .pair{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:clamp(28px,4vw,44px); }
   @media (max-width:760px){ .pair{ grid-template-columns:1fr; } }
@@ -157,7 +186,7 @@
 
   .lb{ position:fixed; inset:0; z-index:80; background:rgba(5,6,10,.94); display:flex; align-items:center; justify-content:center; padding:clamp(16px,4vw,48px); }
   .lb[hidden]{ display:none !important; }
-  .lb video{ max-width:min(94vw,1120px); max-height:86vh; width:auto; height:auto; border-radius:var(--r-lg); background:#000; }
+  .lb video{ max-width:min(94vw,640px); max-height:86vh; width:auto; height:auto; border-radius:var(--r-lg); background:#000; }
   .lb-close{
     position:absolute; top:max(16px, env(safe-area-inset-top)); right:max(16px, env(safe-area-inset-right));
     z-index:2; width:44px; height:44px; border-radius:999px; cursor:pointer;
@@ -169,7 +198,11 @@
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
   .reveal.in{ opacity:1; transform:none; }
-  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{ opacity:1; transform:none; }
+    .hero-media .hero-fg{ opacity:1; }
+    .film-toggle:hover{ transform:none; }
+  }
 </style>
 <script src="/analytics.js" defer></script>
 </head>
@@ -203,11 +236,13 @@
           <p class="hero-sub" data-i18n="hero_sub">Real-time visuals developed for an immersive runway experience in Mexico City.</p>
         </div>
 
-        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Play WAVEY × TikTok runway film">
-          <img class="hero-bg" src="img/hero-poster.jpg" width="576" height="1024" alt="" aria-hidden="true">
-          <video id="hero-video" class="hero-fg" autoplay muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="576" height="1024">
+        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Open WAVEY × TikTok runway film">
+          <video id="hero-video" class="hero-fg" muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="576" height="1024">
             <source src="media/hero.mp4" type="video/mp4">
           </video>
+          <button class="film-toggle" type="button" data-film-toggle aria-label="Pause">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
         </div>
 
         <dl class="meta reveal">
@@ -240,14 +275,11 @@
           <h2 class="sec-title" data-i18n="space_title">Two walls, one walk.</h2>
           <p class="lead-note" data-i18n="space_note">A 10-metre runway between paired LED surfaces — the walk happens inside the image.</p>
         </div>
-        <figure class="plate reveal">
-          <picture>
-            <source type="image/webp" srcset="img/runway-show.webp">
-            <img src="img/runway-show.jpg" alt="Model walking the WAVEY runway between two LED walls showing cyan and magenta fabric-like visuals" width="604" height="412" loading="lazy" decoding="async">
-          </picture>
+        <figure class="plate plate--show reveal">
+          <img src="img/runway-show.jpg" alt="Model walking the WAVEY runway between two LED walls showing cyan and magenta fabric-like visuals" width="604" height="412" loading="lazy" decoding="async">
           <figcaption data-i18n="cap_show">Show night — the look and the walls moving as one surface.</figcaption>
         </figure>
-        <figure class="plate reveal">
+        <figure class="plate plate--setup reveal">
           <picture>
             <source type="image/webp" srcset="img/runway-setup.webp">
             <img src="img/runway-setup.jpg" alt="Staging the WAVEY runway: dual LED walls with pink real-time visuals in a Mexico City warehouse" width="880" height="864" loading="lazy" decoding="async">
@@ -264,12 +296,22 @@
           <h2 class="sec-title" data-i18n="night_title">The walk, the walls, the room.</h2>
           <p class="lead-note" data-i18n="night_note">Live films from the show — the collection moving through the LED architecture.</p>
         </div>
-        <figure class="plate plate--portrait reveal" data-src="media/film-walk.mp4" role="button" tabindex="0" aria-label="Play runway walk film">
-          <video class="lazy-vid" muted loop playsinline preload="none" poster="img/film-walk.jpg" data-src="media/film-walk.mp4" width="576" height="1024"></video>
+        <figure class="plate plate--portrait reveal" data-src="media/film-walk.mp4" role="button" tabindex="0" aria-label="Open runway walk film">
+          <div class="film film--portrait">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-walk.jpg" data-src="media/film-walk.mp4" width="576" height="1024"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
           <figcaption data-i18n="cap_walk">From the floor — a look walking the 10-metre runway beside the WAVEY wall.</figcaption>
         </figure>
-        <figure class="plate reveal" data-src="media/film-led.mp4" role="button" tabindex="0" aria-label="Play LED content film">
-          <video class="lazy-vid" muted loop playsinline preload="none" poster="img/film-led.jpg" data-src="media/film-led.mp4" width="1024" height="576"></video>
+        <figure class="plate plate--led reveal" data-src="media/film-led.mp4" role="button" tabindex="0" aria-label="Open LED content film">
+          <div class="film film--land">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-led.jpg" data-src="media/film-led.mp4" width="1024" height="576"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
           <figcaption data-i18n="cap_led">LED content — iridescent liquid form built for the paired surfaces.</figcaption>
         </figure>
         <div class="pair">
@@ -312,8 +354,13 @@
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_plan">The build</span></span>
           <h2 class="sec-title" data-i18n="plan_title">A room scaled to the walk.</h2>
         </div>
-        <figure class="plate reveal" data-src="media/film-system.mp4" role="button" tabindex="0" aria-label="Play TouchDesigner system film">
-          <video class="lazy-vid" muted loop playsinline preload="none" poster="img/film-system.jpg" data-src="media/film-system.mp4" width="1024" height="576"></video>
+        <figure class="plate plate--land reveal" data-src="media/film-system.mp4" role="button" tabindex="0" aria-label="Open TouchDesigner system film">
+          <div class="film film--land">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-system.jpg" data-src="media/film-system.mp4" width="1024" height="576"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
           <figcaption data-i18n="cap_system">TouchDesigner — live cue graph driving the iridescent form.</figcaption>
         </figure>
         <div class="pair">
@@ -504,6 +551,7 @@
         rel_p:'Related work includes <a href="../particle-system/">generative motion systems</a>, <a href="../biointerface/">real-time interactive installations</a>, and <a href="../projection-mapping/">architectural projection mapping</a>.',
         cta_title:'Need visuals that walk with the show?', cta_sub:'We design real-time content and LED systems for runways, launches and live rooms.', cta_btn:'Start a project',
         rights:'All rights reserved.',
+        ui_play:'Play', ui_pause:'Pause',
         doc_title:'WAVEY × TikTok Fashion Runway Visuals | ANDATA LAB'
       },
       es: {
@@ -548,6 +596,7 @@
         rel_p:'El trabajo relacionado incluye <a href="../particle-system/">sistemas de motion generativo</a>, <a href="../biointerface/">instalaciones interactivas en tiempo real</a> y <a href="../projection-mapping/">projection mapping arquitectónico</a>.',
         cta_title:'¿Necesitas visuales que caminen con el show?', cta_sub:'Diseñamos contenido en tiempo real y sistemas LED para pasarelas, lanzamientos y salas en vivo.', cta_btn:'Inicia un proyecto',
         rights:'Todos los derechos reservados.',
+        ui_play:'Reproducir', ui_pause:'Pausa',
         doc_title:'WAVEY × TikTok Fashion Runway Visuals | ANDATA LAB'
       }
     };
@@ -569,6 +618,7 @@
       if(dict.doc_title) document.title = dict.doc_title;
       var btn = document.getElementById('lang-toggle');
       if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+      syncToggles();
     }
     apply();
 
@@ -592,26 +642,33 @@
     }
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
     var hero = document.getElementById('hero-video');
-    var heroWell = document.getElementById('hero-open');
-    if (hero) {
-      function showHero(){ hero.classList.add('is-on'); }
-      hero.addEventListener('loadeddata', showHero);
-      if (hero.readyState >= 2) showHero();
-      if (!reduce) {
-        var hp = hero.play(); if (hp && hp.catch) hp.catch(function(){});
-        if ('IntersectionObserver' in window) {
-          var hio = new IntersectionObserver(function(entries){
-            entries.forEach(function(en){
-              if (en.isIntersecting) { var p = hero.play(); if (p && p.catch) p.catch(function(){}); }
-              else hero.pause();
-            });
-          }, { threshold: 0.15, rootMargin: '80px 0px' });
-          hio.observe(heroWell || hero);
-        }
-      } else {
-        showHero();
-      }
+    var lazyVids = Array.prototype.slice.call(document.querySelectorAll('video.lazy-vid'));
+    var allVids = lazyVids.slice();
+    if (hero) allVids.unshift(hero);
+    var live = [];
+
+    function dict(){ return I18N[lang] || I18N.en; }
+
+    function filmOf(v){
+      return v.closest('.film, .hero-media');
+    }
+    function toggleOf(v){
+      var well = filmOf(v);
+      return well ? well.querySelector('[data-film-toggle]') : null;
+    }
+    function syncToggles(){
+      if (!allVids) return;
+      var d = dict();
+      allVids.forEach(function(v){
+        var btn = toggleOf(v);
+        if (!btn) return;
+        var playing = !v.paused && !v.ended;
+        btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+        btn.setAttribute('aria-label', playing ? (d.ui_pause || 'Pause') : (d.ui_play || 'Play'));
+      });
     }
 
     function armVideo(v) {
@@ -621,34 +678,71 @@
         v.load();
       }
     }
-    function playVid(v) {
+    function requestPlay(v) {
+      if (!v || reduce) return;
       armVideo(v);
-      v.addEventListener('loadeddata', function on(){ v.classList.add('is-loaded'); }, { once: true });
+      v.classList.add('is-loaded', 'is-on');
+      live = live.filter(function(x){ return x && x !== v && !x.paused; });
+      live.push(v);
+      while (live.length > 2) {
+        var drop = live.shift();
+        if (drop) drop.pause();
+      }
       var p = v.play(); if (p && p.catch) p.catch(function(){});
     }
-    var lazyVids = Array.prototype.slice.call(document.querySelectorAll('video.lazy-vid'));
-    if (!reduce && 'IntersectionObserver' in window) {
-      var playing = [];
+    function pauseVid(v) {
+      if (!v) return;
+      v.pause();
+      live = live.filter(function(x){ return x !== v; });
+    }
+
+    allVids.forEach(function(v){
+      v.addEventListener('play', syncToggles);
+      v.addEventListener('pause', syncToggles);
+      v.addEventListener('loadeddata', function(){ v.classList.add('is-loaded', 'is-on'); });
+    });
+
+    if (hero) {
+      if (hero.readyState >= 2) hero.classList.add('is-on');
+      if (!reduce) requestPlay(hero);
+      else hero.classList.add('is-on');
+    }
+
+    if ('IntersectionObserver' in window) {
       var vio = new IntersectionObserver(function(entries){
         entries.forEach(function(en){
           var v = en.target;
           if (en.isIntersecting) {
-            playVid(v);
-            if (playing.indexOf(v) < 0) playing.push(v);
-            while (playing.length > 2) {
-              var drop = playing.shift();
-              if (drop && drop !== v && !drop.paused) drop.pause();
-            }
-          } else if (!v.paused) {
-            v.pause();
-            playing = playing.filter(function(x){ return x !== v; });
+            if (!reduce && v.getAttribute('data-held') !== '1') requestPlay(v);
+          } else {
+            pauseVid(v);
           }
         });
-      }, { rootMargin: '160px 0px', threshold: 0.2 });
+      }, { rootMargin: '80px 0px', threshold: 0.2 });
+      if (hero) vio.observe(hero);
       lazyVids.forEach(function(v){ vio.observe(v); });
+    } else if (!reduce) {
+      lazyVids.forEach(function(v){ v.classList.add('is-loaded'); });
     } else {
       lazyVids.forEach(function(v){ v.classList.add('is-loaded'); });
     }
+
+    document.querySelectorAll('[data-film-toggle]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var well = btn.closest('.film, .hero-media');
+        var v = well ? well.querySelector('video') : null;
+        if (!v) return;
+        if (v.paused) {
+          v.removeAttribute('data-held');
+          requestPlay(v);
+        } else {
+          v.setAttribute('data-held', '1');
+          pauseVid(v);
+        }
+      });
+    });
 
     var lb = document.getElementById('lightbox');
     var lbVid = document.getElementById('lb-video');
@@ -660,10 +754,10 @@
     }
     function openLb(src) {
       if (!lb || !lbVid || !src) return;
-      lazyVids.forEach(function(v){ try { v.pause(); } catch (e) {} });
-      if (hero) hero.pause();
+      allVids.forEach(pauseVid);
       lbVid.muted = true;
       lbVid.loop = true;
+      lbVid.playsInline = true;
       lbVid.src = src;
       lb.hidden = false;
       document.body.classList.add('lb-open');
@@ -679,7 +773,8 @@
     }
     shots.forEach(function(el){
       function go(e){
-        if (e) { e.preventDefault(); }
+        if (e && e.target && e.target.closest && e.target.closest('[data-film-toggle]')) return;
+        if (e) e.preventDefault();
         openLb(shotSrc(el));
       }
       el.addEventListener('click', go);
@@ -691,6 +786,7 @@
     if (lbClose) lbClose.addEventListener('click', closeLb);
     if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
     document.addEventListener('keydown', function(e){ if (lb && !lb.hidden && e.key === 'Escape') closeLb(); });
+    syncToggles();
   })();
   </script>
 </body>
