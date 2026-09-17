@@ -207,18 +207,6 @@
   }
   .hero.is-pointer .hero-cursor-ring{ opacity:.5; }
   .hero.is-pointer .hero-cursor-core{ opacity:.9; }
-  .hero-reel{
-    position:absolute; top:calc(var(--nav-h) + clamp(18px,4vh,44px)); right:var(--pad); left:auto; z-index:5;
-    display:flex; align-items:center; gap:9px;
-    padding:8px 14px; border-radius:999px;
-    background:rgba(0,0,0,.28); border:1px solid rgba(255,255,255,.16);
-    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  }
-  .hero-reel .pulse{ width:7px; height:7px; border-radius:999px; background:#fff; box-shadow:0 0 0 4px rgba(255,255,255,.18); flex-shrink:0; }
-  @media (max-width:520px){
-    .hero-reel{ top:calc(var(--nav-h) + 12px); padding:6px 11px; gap:7px; }
-    .hero-reel .ds-label{ font-size:10px; letter-spacing:.12em; }
-  }
   .hero-inner{ position:relative; z-index:5; height:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--pad) clamp(54px,9vh,112px); display:flex; flex-direction:column; justify-content:flex-end; }
   .hero-inner > *{ transition:transform .35s cubic-bezier(.16,1,.3,1); will-change:transform; }
   .hero h1{
@@ -661,7 +649,6 @@
     width:auto; flex:1 1 0; min-width:0;
     justify-content:center; padding:11px 14px; font-size:13.5px;
   }
-  .is-mobile .hero-reel{ display:none; }
   .is-mobile .hero-cursor-ring,.is-mobile .hero-cursor-core{ display:none !important; }
   .is-mobile .hero-overlay{
     background:linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.14) 45%, rgba(0,0,0,.65) 100%);
@@ -774,11 +761,6 @@
     <div class="hero-overlay"></div>
     <div class="hero-cursor-ring" aria-hidden="true"></div>
     <div class="hero-cursor-core" aria-hidden="true"></div>
-
-    <div class="hero-reel hero-anim" style="animation-delay:.1s">
-      <span class="pulse"></span>
-      <span class="ds-label" style="color:rgba(255,255,255,.85)" data-i18n="hero_reel">Showreel 2026</span>
-    </div>
 
     <div class="hero-inner">
       <h1><span class="line"><span class="line-in" data-i18n="hero_h1a">Immersive Experiences,</span></span><span class="line"><span class="line-in line2" data-i18n="hero_h1b">Engineered.</span></span></h1>
@@ -937,7 +919,14 @@
       "email": "argel@andatalab.com",
       "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
       "description": "Experiential technology studio. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.",
-      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" },
+      "areaServed": [
+        { "@type": "City", "name": "Guadalajara" },
+        { "@type": "City", "name": "Zapopan" },
+        { "@type": "AdministrativeArea", "name": "Jalisco" },
+        { "@type": "Country", "name": "México" },
+        { "@type": "Country", "name": "United States" }
+      ]
     },
     {
       "@type": "WebSite",

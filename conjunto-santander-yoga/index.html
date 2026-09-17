@@ -1,27 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-MX" data-default-lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="robots" content="index,follow">
-<title>Conjunto Santander × Asana Yoga — Immersive Yoga Experience | ANDATA LAB</title>
-<meta name="description" content="A real-time generative light column and projected canopy that turned a theater into a sold-out immersive yoga experience for Asana Yoga at Conjunto Santander, Guadalajara.">
+<title>Yoga inmersivo en Conjunto Santander, Guadalajara | ANDATA LAB</title>
+<meta name="description" content="Columna de luz generativa y videomapping en vivo para Asana Yoga en el Conjunto Santander de Artes Escénicas, Guadalajara. Experiencias inmersivas para eventos.">
 <link rel="canonical" href="https://www.andatalab.com/conjunto-santander-yoga/">
 <link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
 <link rel="preload" as="image" href="img/hero-poster.jpg">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Andata Lab">
-<meta property="og:locale" content="en_US">
-<meta property="og:title" content="Conjunto Santander × Asana Yoga — Immersive Yoga Experience | ANDATA LAB">
-<meta property="og:description" content="A generative light column and projected canopy for a sold-out immersive yoga class at Conjunto Santander, Guadalajara.">
+<meta property="og:locale" content="es_MX">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Yoga inmersivo en Conjunto Santander, Guadalajara | ANDATA LAB">
+<meta property="og:description" content="Columna de luz generativa y videomapping en vivo para Asana Yoga en el Conjunto Santander de Artes Escénicas, Guadalajara. Experiencias inmersivas para eventos.">
 <meta property="og:url" content="https://www.andatalab.com/conjunto-santander-yoga/">
 <meta property="og:image" content="https://www.andatalab.com/conjunto-santander-yoga/img/og.jpg">
-<meta property="og:image:alt" content="Projected light column and yoga class at Conjunto Santander">
+<meta property="og:image:alt" content="Columna de luz con visuales generativos y público practicando yoga en el Conjunto Santander, Guadalajara">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Conjunto Santander × Asana Yoga | ANDATA LAB">
-<meta name="twitter:description" content="A generative light column and projected canopy for Asana Yoga at Conjunto Santander, Guadalajara.">
+<meta name="twitter:title" content="Yoga inmersivo en Conjunto Santander, Guadalajara | ANDATA LAB">
+<meta name="twitter:description" content="Columna de luz generativa y videomapping en vivo para Asana Yoga en el Conjunto Santander, Guadalajara.">
 <meta name="twitter:image" content="https://www.andatalab.com/conjunto-santander-yoga/img/og.jpg">
 
 <link rel="stylesheet" href="../colors_and_type.css">
@@ -82,7 +83,8 @@
   .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
   .hero-head{ max-width:840px; }
   .hero h1{ font-size:clamp(2.15rem,5.8vw,4.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.04; margin:16px 0 0; text-wrap:balance; }
-  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:720px; }
+  .hero-kicker{ font-size:clamp(1.12rem,2.2vw,1.4rem); font-weight:600; letter-spacing:-.02em; color:var(--ink); line-height:1.35; margin:14px 0 0; max-width:720px; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:16px 0 0; max-width:720px; }
   .hero-media{
     position:relative; margin:clamp(32px,5vw,56px) auto 0;
     width:min(100%, 420px); aspect-ratio:796/1280;
@@ -200,6 +202,11 @@
   .stat .cap{ margin-top:10px; font-size:14px; color:var(--ink-2); line-height:1.5; }
 
   .credits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  ul.tags{ list-style:none; padding:0; }
+  .faq{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .faq-item{ padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .faq-item h3{ font-size:1.08rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .faq-item p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
   .credit{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); }
   .credit dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
   .credit dd{ margin:0; font-size:15px; font-weight:600; color:var(--ink); }
@@ -250,42 +257,43 @@
       <a class="is-here" href="../#work" data-i18n="nav_work">Work</a>
       <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
       <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
-      <a href="../#process" data-i18n="nav_process">Process</a>
-      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
-      <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
+      <a href="../#process" data-i18n="nav_process">Proceso</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch to English">EN</button>
+      <a class="nav-cta" href="../#contact" data-i18n="cta_start">Inicia un proyecto</a>
     </nav>
   </header>
 
   <a class="back" href="../#work">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    <span data-i18n="back">Back to work</span>
+    <span data-i18n="back">Volver a proyectos</span>
   </a>
 
   <main>
     <section class="hero">
       <div class="wrap">
         <div class="hero-head reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Case study · Immersive wellness</span></span>
-          <h1 data-i18n="hero_h1">A theater that breathes with the class.</h1>
-          <p class="hero-sub" data-i18n="hero_sub">For Asana Yoga at Conjunto Santander, ANDATA LAB built a generative light column and a projected canopy that moved with the music, the instructor and hundreds of people on their mats.</p>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Case study · Wellness inmersivo</span></span>
+          <h1 data-i18n="hero_h1">Yoga inmersivo en el Conjunto Santander</h1>
+          <p class="hero-kicker" data-i18n="hero_kicker">Un teatro que respira con la clase.</p>
+          <p class="hero-sub" data-i18n="hero_sub">Para Asana Yoga en Conjunto Santander, ANDATA LAB construyó una columna de luz generativa y un canopy proyectado que se movían con la música, la instructora y cientos de personas en sus tapetes.</p>
         </div>
 
-        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Open Conjunto Santander yoga film">
+        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Abrir película del yoga inmersivo en Conjunto Santander">
           <video id="hero-video" class="hero-fg" muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="796" height="1280">
             <source src="media/hero.mp4" type="video/mp4">
           </video>
-          <button class="film-toggle" type="button" data-film-toggle aria-label="Pause">
+          <button class="film-toggle" type="button" data-film-toggle aria-label="Pausa">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
           </button>
         </div>
 
         <dl class="meta reveal">
-          <div><dt data-i18n="m_client">Client</dt><dd>Asana Yoga</dd></div>
-          <div><dt data-i18n="m_venue">Venue</dt><dd data-i18n="m_venue_v">Conjunto Santander de Artes Escénicas</dd></div>
-          <div><dt data-i18n="m_loc">Location</dt><dd data-i18n="m_loc_v">Guadalajara, Mexico</dd></div>
-          <div><dt data-i18n="m_year">Year</dt><dd>2026</dd></div>
-          <div><dt data-i18n="m_role">Role</dt><dd data-i18n="m_role_v">Visual direction · generative systems · live operation</dd></div>
-          <div><dt data-i18n="m_tools">Tools</dt><dd>TouchDesigner · Resolume Arena</dd></div>
+          <div><dt data-i18n="m_client">Cliente</dt><dd>Asana Yoga</dd></div>
+          <div><dt data-i18n="m_venue">Sede</dt><dd data-i18n="m_venue_v">Conjunto Santander de Artes Escénicas</dd></div>
+          <div><dt data-i18n="m_loc">Ubicación</dt><dd data-i18n="m_loc_v">Guadalajara, México</dd></div>
+          <div><dt data-i18n="m_year">Año</dt><dd>2026</dd></div>
+          <div><dt data-i18n="m_role">Rol</dt><dd data-i18n="m_role_v">Dirección visual · sistemas generativos · operación en vivo</dd></div>
+          <div><dt data-i18n="m_tools">Herramientas</dt><dd>TouchDesigner · Resolume Arena</dd></div>
         </dl>
       </div>
     </section>
@@ -294,30 +302,30 @@
       <div class="wrap two-col reveal">
         <div>
           <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_overview">Overview</span></span>
-          <h2 class="sec-title" data-i18n="overview_title">The practice, extended into the room.</h2>
+          <h2 class="sec-title" data-i18n="overview_title">Una experiencia inmersiva en el Conjunto Santander.</h2>
         </div>
         <div class="prose">
-          <p data-i18n="overview_p1">The brief was to turn a performing-arts theater into an immersive practice space — not a screen behind the class, but a room the class could inhabit.</p>
-          <p data-i18n="overview_p2">ANDATA LAB built a <strong>fabric column projected on four sides</strong> at the center of the mats, plus a canopy of cloth over the hall as a second surface. Generative visuals shifted color and tempo with each block of the session.</p>
+          <p data-i18n="overview_p1">El reto era convertir el teatro del Conjunto Santander de Artes Escénicas, en Guadalajara, en una experiencia inmersiva de yoga — no una pantalla detrás de la clase, sino una sala que la clase pudiera habitar.</p>
+          <p data-i18n="overview_p2">ANDATA LAB construyó una <strong>columna de tela proyectada por sus cuatro lados</strong> al centro de los tapetes, más un canopy de tela sobre la sala como segunda superficie. Los visuales generativos cambiaban de color y ritmo con cada bloque de la sesión.</p>
         </div>
       </div>
       <div class="wrap">
         <div class="pair">
-          <figure class="plate reveal" data-src="media/film-column-pink.mp4" role="button" tabindex="0" aria-label="Open pink column film">
+          <figure class="plate reveal" data-src="media/film-column-pink.mp4" role="button" tabindex="0" aria-label="Abrir película de la columna rosa">
             <div class="film film--portrait">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-column-pink-poster.jpg" data-src="media/film-column-pink.mp4" width="720" height="1280"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_pink">The column in the round — mats filling the theater around a four-sided light monolith.</figcaption>
+            <figcaption data-i18n="cap_pink">La columna en 360 — tapetes llenando el teatro alrededor de un monolito de luz de cuatro caras.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/column-pink-crowd.webp">
-              <img src="img/column-pink-crowd.jpg" alt="Yoga class filling the theater around a four-sided projected light column at Conjunto Santander" width="1200" height="1600" loading="lazy" decoding="async">
+              <img src="img/column-pink-crowd.jpg" alt="Columna de luz con visuales generativos rosa y público practicando yoga en el Conjunto Santander, Guadalajara" width="1200" height="1600" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_pink_still">From the floor — the column as the center of the practice, not a backdrop.</figcaption>
+            <figcaption data-i18n="cap_pink_still">Desde el piso — la columna como centro de la práctica, no como fondo.</figcaption>
           </figure>
         </div>
       </div>
@@ -326,61 +334,61 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_space">The space</span></span>
-          <h2 class="sec-title" data-i18n="space_title">One column, one sky.</h2>
-          <p class="lead-note" data-i18n="space_note">Two projection surfaces: a four-faced fabric column in the center of the room, and a canopy overhead that turned the ceiling into sky.</p>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_space">El espacio</span></span>
+          <h2 class="sec-title" data-i18n="space_title">Una columna, un cielo.</h2>
+          <p class="lead-note" data-i18n="space_note">Dos superficies de proyección: una columna de tela de cuatro caras al centro de la sala, y un canopy que convirtió el techo en cielo.</p>
         </div>
         <div class="gallery">
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/column-red.webp">
-              <img src="img/column-red.jpg" alt="Instructor standing at the base of a red and orange projected fabric column during the yoga class" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/column-red.jpg" alt="Instructora junto a una columna de tela con visuales generativos rojos y naranja en el Conjunto Santander, Guadalajara" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_red">The column in heat — instructor at the base, the room in one color.</figcaption>
+            <figcaption data-i18n="cap_red">La columna en calor — instructora en la base, la sala en un solo color.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/column-green-crowd.webp">
-              <img src="img/column-green-crowd.jpg" alt="Crowd practicing around a white and green projected light column" width="1200" height="1600" loading="lazy" decoding="async">
+              <img src="img/column-green-crowd.jpg" alt="Público practicando yoga alrededor de una columna de luz blanca y verde en el Conjunto Santander, Guadalajara" width="1200" height="1600" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_green">A later block — cooler palette, the same monolith.</figcaption>
+            <figcaption data-i18n="cap_green">Un bloque más tarde — paleta más fría, el mismo monolito.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/canopy-flower-red.webp">
-              <img src="img/canopy-flower-red.jpg" alt="Red floral generative projection covering the fabric canopy over the theater" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/canopy-flower-red.jpg" alt="Videomapping floral rojo sobre el canopy de tela del teatro en Guadalajara" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_flower">The canopy as a second surface — organic form over the whole hall.</figcaption>
+            <figcaption data-i18n="cap_flower">El canopy como segunda superficie — forma orgánica sobre toda la sala.</figcaption>
           </figure>
         </div>
         <div class="pair">
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/canopy-crowd.webp">
-              <img src="img/canopy-crowd.jpg" alt="Yoga class lying on mats under a projected floral canopy at Conjunto Santander" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/canopy-crowd.jpg" alt="Clase de yoga bajo un canopy proyectado en el Conjunto Santander de Artes Escénicas, Guadalajara" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_canopy">Practice under the sky — the ceiling doing the work of a second stage.</figcaption>
+            <figcaption data-i18n="cap_canopy">Práctica bajo el cielo — el techo haciendo el trabajo de un segundo escenario.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/columns-twin.webp">
-              <img src="img/columns-twin.jpg" alt="Twin projected fabric columns glowing magenta in the theater" width="1200" height="1600" loading="lazy" decoding="async">
+              <img src="img/columns-twin.jpg" alt="Columnas gemelas de tela con proyección magenta en un evento inmersivo en Guadalajara" width="1200" height="1600" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_twin">Twin columns in the hall — the architecture of the light, not a screen on a wall.</figcaption>
+            <figcaption data-i18n="cap_twin">Columnas gemelas en la sala — la arquitectura de la luz, no una pantalla en un muro.</figcaption>
           </figure>
         </div>
-        <figure class="plate plate--land reveal" data-src="media/film-column-blue.mp4" role="button" tabindex="0" aria-label="Open blue column film">
+        <figure class="plate plate--land reveal" data-src="media/film-column-blue.mp4" role="button" tabindex="0" aria-label="Abrir película de la columna azul">
           <div class="film film--land">
             <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-column-blue-poster.jpg" data-src="media/film-column-blue.mp4" width="1280" height="720"></video>
-            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
-          <figcaption data-i18n="cap_blue">From the seats — the column holding the room while the class moves around it.</figcaption>
+          <figcaption data-i18n="cap_blue">Desde las butacas — la columna sostiene la sala mientras la clase se mueve a su alrededor.</figcaption>
         </figure>
         <div class="cta-mid reveal">
-          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
-          <a class="btn-ghost" href="../#contact" data-i18n="cta_mid">Tell us about your space</a>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Inicia un proyecto</span> →</a>
+          <a class="btn-ghost" href="../#contact" data-i18n="cta_mid">Cuéntanos de tu espacio</a>
         </div>
       </div>
     </section>
@@ -388,14 +396,14 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_approach">Creative approach</span></span>
-          <h2 class="sec-title" data-i18n="approach_title">Not a backdrop. Part of the practice.</h2>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_approach">Enfoque creativo</span></span>
+          <h2 class="sec-title" data-i18n="approach_title">No es un fondo. Es parte de la práctica.</h2>
         </div>
         <div class="phases">
-          <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Visual direction</h3><p data-i18n="p1_d">Palettes by class block — calm, energy, close. Organic language: water, fluids, particles, flowers. The image follows the instructor, not a loop behind her.</p></div></div>
-          <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Generative engine</h3><p data-i18n="p2_d">TouchDesigner in real time, audio-reactive, never the same twice. The system listens to the music and the room rather than playing a fixed timeline.</p></div></div>
-          <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Multi-surface mapping</h3><p data-i18n="p3_d">Four faces of the column plus the canopy, mapped and mixed from Resolume Arena so both surfaces stay one picture.</p></div></div>
-          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Live operation</h3><p data-i18n="p4_d">Show control through the full session — cues tracking the instructor and the live music, from first breath to close.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Dirección visual</h3><p data-i18n="p1_d">Paletas por bloque de clase — calma, energía, cierre. Lenguaje orgánico: agua, fluidos, partículas, flores. La imagen sigue a la instructora, no un loop atrás de ella.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Motor generativo</h3><p data-i18n="p2_d">TouchDesigner en tiempo real, audio-reactivo, nunca dos veces igual. El sistema escucha la música y la sala, no reproduce una línea de tiempo fija.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Mapeo multi-superficie</h3><p data-i18n="p3_d">Cuatro caras de la columna más el canopy, mapeados y mezclados desde Resolume Arena para que ambas superficies sean una sola imagen.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Operación en vivo</h3><p data-i18n="p4_d">Show control durante toda la sesión — cues siguiendo a la instructora y a la música en vivo, del primer aliento al cierre.</p></div></div>
         </div>
       </div>
     </section>
@@ -403,69 +411,69 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_plan">Behind the build</span></span>
-          <h2 class="sec-title" data-i18n="plan_title">From idea to room.</h2>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_plan">Detrás del montaje</span></span>
+          <h2 class="sec-title" data-i18n="plan_title">De la idea al espacio.</h2>
         </div>
         <!-- concept stills removed -->
         <div class="pair">
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/rig-fabric.webp">
-              <img src="img/rig-fabric.jpg" alt="White projection fabric stretched on a metal frame during install" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/rig-fabric.jpg" alt="Tela de proyección blanca tensada sobre estructura metálica durante el montaje en Guadalajara" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_fabric">Install — fabric becoming the column before the first test cue.</figcaption>
+            <figcaption data-i18n="cap_fabric">Montaje — la tela volviéndose columna antes del primer cue de prueba.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/rig-scaffold.webp">
-              <img src="img/rig-scaffold.jpg" alt="Scaffold and canopy fabric hanging in the empty theater during build" width="900" height="1600" loading="lazy" decoding="async">
+              <img src="img/rig-scaffold.jpg" alt="Andamio y tela del canopy colgando en el teatro vacío del Conjunto Santander" width="900" height="1600" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_scaffold">The empty theater — scaffold, cloth and the height of the canopy.</figcaption>
+            <figcaption data-i18n="cap_scaffold">El teatro vacío — andamio, tela y la altura del canopy.</figcaption>
           </figure>
         </div>
-        <figure class="plate plate--land reveal" data-src="media/film-setup.mp4" role="button" tabindex="0" aria-label="Open setup film">
+        <figure class="plate plate--land reveal" data-src="media/film-setup.mp4" role="button" tabindex="0" aria-label="Abrir película del montaje">
           <div class="film film--land">
             <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-setup-poster.jpg" data-src="media/film-setup.mp4" width="1280" height="720"></video>
-            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
             </button>
           </div>
-          <figcaption data-i18n="cap_setup">Build day — fabric, structure and an empty house before the class arrives.</figcaption>
+          <figcaption data-i18n="cap_setup">Día de montaje — tela, estructura y una sala vacía antes de que llegue la clase.</figcaption>
         </figure>
         <div class="pair">
-          <figure class="plate reveal" data-src="media/film-canopy-test.mp4" role="button" tabindex="0" aria-label="Open canopy test film">
+          <figure class="plate reveal" data-src="media/film-canopy-test.mp4" role="button" tabindex="0" aria-label="Abrir prueba del canopy">
             <div class="film film--land">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-canopy-test-poster.jpg" data-src="media/film-canopy-test.mp4" width="1280" height="720"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_test">Canopy test — mapping the cloth before doors.</figcaption>
+            <figcaption data-i18n="cap_test">Prueba del canopy — mapeo de la tela antes de abrir.</figcaption>
           </figure>
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/td-output-map.webp">
-              <img src="img/td-output-map.jpg" alt="TouchDesigner output map showing the column and canopy surfaces" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/td-output-map.jpg" alt="Mapa de salidas de TouchDesigner con las caras de la columna y el canopy" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_map">Output map — column faces and canopy as one generative picture.</figcaption>
+            <figcaption data-i18n="cap_map">Mapa de salidas — caras de la columna y canopy como una sola imagen generativa.</figcaption>
           </figure>
         </div>
         <div class="pair">
           <figure class="plate reveal">
             <picture>
               <source type="image/webp" srcset="img/td-control.webp">
-              <img src="img/td-control.jpg" alt="Live TouchDesigner control surface during the Asana Yoga session" width="1600" height="1200" loading="lazy" decoding="async">
+              <img src="img/td-control.jpg" alt="Mesa de control de TouchDesigner en vivo durante el evento de Asana Yoga en Guadalajara" width="1600" height="1200" loading="lazy" decoding="async">
             </picture>
-            <figcaption data-i18n="cap_desk">Show control — the same engine, live for the full session.</figcaption>
+            <figcaption data-i18n="cap_desk">Show control — el mismo motor, en vivo durante toda la sesión.</figcaption>
           </figure>
-          <figure class="plate reveal" data-src="media/film-operator.mp4" role="button" tabindex="0" aria-label="Open operator film">
+          <figure class="plate reveal" data-src="media/film-operator.mp4" role="button" tabindex="0" aria-label="Abrir película de operación en vivo">
             <div class="film film--portrait">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-operator-poster.jpg" data-src="media/film-operator.mp4" width="720" height="1280"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_op">Live operation under the canopy — cues following instructor and music.</figcaption>
+            <figcaption data-i18n="cap_op">Operación en vivo bajo el canopy — cues siguiendo a la instructora y a la música.</figcaption>
           </figure>
         </div>
       </div>
@@ -474,50 +482,50 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_results">Results</span></span>
-          <h2 class="sec-title" data-i18n="results_title">Built for the room, not the timeline.</h2>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_results">Resultados</span></span>
+          <h2 class="sec-title" data-i18n="results_title">Hecho para vivirse, no solo para postearse.</h2>
         </div>
         <div class="stats reveal">
-          <div class="stat"><div class="big" data-i18n="s1_v">Sold-out</div><div class="cap" data-i18n="s1_c">A sold-out edition — the hall practiced inside the image, not in front of it.</div></div>
-          <div class="stat"><div class="big" data-i18n="s2_v">Two surfaces</div><div class="cap" data-i18n="s2_c">Column and canopy run live for the full session, mixed as one picture.</div></div>
-          <div class="stat"><div class="big" data-i18n="s3_v">Made to be filmed</div><div class="cap" data-i18n="s3_c">Content designed for the room and the phone — the audience did the rest.</div></div>
+          <div class="stat"><div class="big" data-i18n="s1_v">Sold-out</div><div class="cap" data-i18n="s1_c">Edición sold-out — la sala practicó dentro de la imagen, no frente a ella.</div></div>
+          <div class="stat"><div class="big" data-i18n="s2_v">Dos superficies</div><div class="cap" data-i18n="s2_c">Columna y canopy en vivo durante toda la sesión, mezclados como una sola imagen.</div></div>
+          <div class="stat"><div class="big" data-i18n="s3_v">Hecho para filmarse</div><div class="cap" data-i18n="s3_c">Contenido diseñado para la sala y el teléfono — el público hizo el resto.</div></div>
         </div>
         <div class="trio">
-          <figure class="plate reveal" data-src="media/film-column-red.mp4" role="button" tabindex="0" aria-label="Open red column film">
+          <figure class="plate reveal" data-src="media/film-column-red.mp4" role="button" tabindex="0" aria-label="Abrir película de la columna roja">
             <div class="film film--portrait">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-column-red-poster.jpg" data-src="media/film-column-red.mp4" width="720" height="1280"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_red_film">Heat block — instructor at the column, the house in one color.</figcaption>
+            <figcaption data-i18n="cap_red_film">Bloque de calor — instructora en la columna, la sala en un solo color.</figcaption>
           </figure>
-          <figure class="plate reveal" data-src="media/film-canopy-crowd.mp4" role="button" tabindex="0" aria-label="Open canopy crowd film">
+          <figure class="plate reveal" data-src="media/film-canopy-crowd.mp4" role="button" tabindex="0" aria-label="Abrir película del canopy">
             <div class="film film--portrait">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-canopy-crowd-poster.jpg" data-src="media/film-canopy-crowd.mp4" width="720" height="1280"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_canopy_film">Under the canopy — the class inside the projection, not watching it.</figcaption>
+            <figcaption data-i18n="cap_canopy_film">Bajo el canopy — la clase dentro de la proyección, no mirándola.</figcaption>
           </figure>
-          <figure class="plate reveal" data-src="media/film-column-green.mp4" role="button" tabindex="0" aria-label="Open green column film">
+          <figure class="plate reveal" data-src="media/film-column-green.mp4" role="button" tabindex="0" aria-label="Abrir película de la columna verde">
             <div class="film film--portrait">
               <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-column-green-poster.jpg" data-src="media/film-column-green.mp4" width="720" height="1280"></video>
-              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Reproducir">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
               </button>
             </div>
-            <figcaption data-i18n="cap_green_film">Close of the session — white light, the room still moving with the column.</figcaption>
+            <figcaption data-i18n="cap_green_film">Cierre de la sesión — luz blanca, la sala todavía moviéndose con la columna.</figcaption>
           </figure>
         </div>
         <div class="tags reveal">
           <span class="tag">TouchDesigner</span>
           <span class="tag">Resolume Arena</span>
-          <span class="tag" data-i18n="t_rt">Real-time graphics</span>
-          <span class="tag" data-i18n="t_map">Projection mapping</span>
-          <span class="tag" data-i18n="t_gen">Generative systems</span>
-          <span class="tag" data-i18n="t_live">Live operation</span>
+          <span class="tag" data-i18n="t_rt">Gráficos en tiempo real</span>
+          <span class="tag" data-i18n="t_map">Videomapping</span>
+          <span class="tag" data-i18n="t_gen">Sistemas generativos</span>
+          <span class="tag" data-i18n="t_live">Operación en vivo</span>
         </div>
       </div>
     </section>
@@ -525,14 +533,14 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_credits">Credits</span></span>
-          <h2 class="sec-title" data-i18n="credits_title">ANDATA LAB in the room.</h2>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_credits">Créditos</span></span>
+          <h2 class="sec-title" data-i18n="credits_title">ANDATA LAB en la sala.</h2>
         </div>
         <dl class="credits reveal">
-          <div class="credit"><dt data-i18n="c_studio">Studio</dt><dd>Andata Lab</dd></div>
-          <div class="credit"><dt data-i18n="c_role">Role</dt><dd data-i18n="c_role_v">Visual direction · generative systems · projection mapping · live operation</dd></div>
-          <div class="credit"><dt data-i18n="c_client">Client</dt><dd>Asana Yoga</dd></div>
-          <div class="credit"><dt data-i18n="c_venue">Venue</dt><dd data-i18n="c_venue_v">Conjunto Santander de Artes Escénicas, Guadalajara</dd></div>
+          <div class="credit"><dt data-i18n="c_studio">Estudio</dt><dd>Andata Lab</dd></div>
+          <div class="credit"><dt data-i18n="c_role">Rol</dt><dd data-i18n="c_role_v">Dirección visual · sistemas generativos · videomapping · operación en vivo</dd></div>
+          <div class="credit"><dt data-i18n="c_client">Cliente</dt><dd>Asana Yoga</dd></div>
+          <div class="credit"><dt data-i18n="c_venue">Sede</dt><dd data-i18n="c_venue_v">Conjunto Santander de Artes Escénicas, Guadalajara</dd></div>
         </dl>
       </div>
     </section>
@@ -540,22 +548,71 @@
     <section class="block">
       <div class="wrap">
         <div class="reveal">
-          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Related</span></span>
-          <h2 class="sec-title" data-i18n="rel_title">The same engine language, other rooms.</h2>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Relacionado</span></span>
+          <h2 class="sec-title" data-i18n="rel_title">El mismo lenguaje de motor, otras salas.</h2>
         </div>
         <div class="related-cards">
           <a class="related-card" href="../wavey-tiktok-runway-show/">
             <h3>WAVEY × TikTok</h3>
-            <p data-i18n="rel_wavey">Real-time visuals and LED architecture for a runway show.</p>
+            <p data-i18n="rel_wavey">Visuales en tiempo real y arquitectura LED para un show de pasarela.</p>
+          </a>
+          <a class="related-card" href="../projection-mapping/">
+            <h3 data-i18n="rel_map_t">Videomapping arquitectónico</h3>
+            <p data-i18n="rel_map">Fachadas, recintos y eventos — del estudio de superficie a la calibración en sitio.</p>
           </a>
           <a class="related-card" href="../particle-system/">
             <h3>Particle System Art</h3>
-            <p data-i18n="rel_part">Generative motion as a living surface.</p>
+            <p data-i18n="rel_part">Motion generativo como superficie viva.</p>
           </a>
-          <a class="related-card" href="../biointerface/">
-            <h3>Biointerface</h3>
-            <p data-i18n="rel_bio">Sensor-driven installation — the body as input.</p>
-          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="eventos-guadalajara">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_gdl">Guadalajara</span></span>
+          <h2 class="sec-title" data-i18n="gdl_title">Experiencias inmersivas para eventos en Guadalajara</h2>
+          <p class="lead-note" data-i18n="gdl_p">Además de yoga inmersivo en el Conjunto Santander, diseñamos videomapping y visuales en tiempo real para eventos en Guadalajara y Zapopan: del recinto al show en vivo.</p>
+        </div>
+        <ul class="tags reveal">
+          <li class="tag" data-i18n="gdl_1">Eventos de wellness y yoga</li>
+          <li class="tag" data-i18n="gdl_2">Congresos</li>
+          <li class="tag" data-i18n="gdl_3">Lanzamientos de marca</li>
+          <li class="tag" data-i18n="gdl_4">Festivales</li>
+          <li class="tag" data-i18n="gdl_5">Teatros y recintos</li>
+          <li class="tag" data-i18n="gdl_6">Videomapping</li>
+          <li class="tag" data-i18n="gdl_7">Visuales en tiempo real para conciertos</li>
+        </ul>
+        <div class="cta-mid reveal">
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Inicia un proyecto</span> →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="faq">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_faq">Preguntas</span></span>
+          <h2 class="sec-title" data-i18n="faq_title">Yoga inmersivo, videomapping y eventos</h2>
+        </div>
+        <div class="faq">
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q1">¿Pueden hacer una experiencia inmersiva en el Conjunto Santander u otro teatro de Guadalajara?</h3>
+            <p data-i18n="faq_a1">Sí. Trabajamos en el Conjunto Santander de Artes Escénicas y en otros recintos de Guadalajara y Zapopan: teatros, foros y espacios para eventos. Cuéntanos del recinto y lo revisamos juntos.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q2">¿Qué se necesita para proyectar sobre telas o columnas en un evento?</h3>
+            <p data-i18n="faq_a2">Una superficie de tela o volumen, proyectores y un motor en tiempo real para mapear y operar la imagen. En este caso usamos una columna de cuatro caras y un canopy. Escríbenos con el espacio y te decimos qué hace falta.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q3">¿Trabajan eventos de yoga, bienestar y congresos?</h3>
+            <p data-i18n="faq_a3">Sí. Hacemos experiencias inmersivas para yoga, bienestar, congresos, lanzamientos de marca y festivales. El de Asana Yoga en Conjunto Santander es un ejemplo. Platiquemos de tu evento.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q4">¿Operan los visuales en vivo durante el evento?</h3>
+            <p data-i18n="faq_a4">Sí. Operamos los visuales en vivo durante toda la sesión — cues con la música y quien dirige el escenario. Si tu evento lo necesita, vamos con el equipo. Escríbenos.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -563,9 +620,9 @@
     <section class="cta">
       <div class="wrap reveal">
         <div class="cta-panel">
-          <h2 data-i18n="cta_title">Planning a wellness event, festival or brand experience?</h2>
-          <p data-i18n="cta_sub">We design immersive rooms for yoga, meditation, conferences and live shows — from concept to live operation. Tell us about your space.</p>
-          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+          <h2 data-i18n="cta_title">¿Planeas un evento de bienestar, festival o experiencia de marca?</h2>
+          <p data-i18n="cta_sub">Diseñamos espacios inmersivos para yoga, meditación, congresos y shows en vivo — del concepto a la operación en vivo. Cuéntanos de tu espacio.</p>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Inicia un proyecto</span> →</a>
         </div>
       </div>
     </section>
@@ -580,12 +637,12 @@
 
   <footer class="foot">
     <div class="wrap foot-inner">
-      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">Todos los derechos reservados.</span></p>
       <div class="foot-links">
         <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../projection-mapping/" data-i18n="nav_map">Videomapping</a>
         <a href="../wavey-tiktok-runway-show/" data-i18n="nav_next">WAVEY × TikTok</a>
-        <a href="../biointerface/" data-i18n="nav_bio">Biointerface</a>
-        <a href="../#contact" data-i18n="nav_contact">Contact</a>
+        <a href="../#contact" data-i18n="nav_contact">Contacto</a>
       </div>
     </div>
   </footer>
@@ -610,25 +667,29 @@
       "@type": "WebPage",
       "@id": "https://www.andatalab.com/conjunto-santander-yoga/#webpage",
       "url": "https://www.andatalab.com/conjunto-santander-yoga/",
-      "name": "Conjunto Santander × Asana Yoga — Immersive Yoga Experience | ANDATA LAB",
-      "description": "A real-time generative light column and projected canopy that turned a theater into a sold-out immersive yoga experience for Asana Yoga at Conjunto Santander, Guadalajara.",
-      "mainEntity": { "@id": "https://www.andatalab.com/conjunto-santander-yoga/#work" }
+      "inLanguage": "es-MX",
+      "name": "Yoga inmersivo en Conjunto Santander, Guadalajara | ANDATA LAB",
+      "description": "Columna de luz generativa y videomapping en vivo para Asana Yoga en el Conjunto Santander de Artes Escénicas, Guadalajara. Experiencias inmersivas para eventos.",
+      "mainEntity": [
+        { "@id": "https://www.andatalab.com/conjunto-santander-yoga/#work" },
+        { "@id": "https://www.andatalab.com/conjunto-santander-yoga/#faq" }
+      ]
     },
     {
       "@type": "CreativeWork",
       "@id": "https://www.andatalab.com/conjunto-santander-yoga/#work",
-      "name": "Conjunto Santander × Asana Yoga",
+      "name": "Yoga inmersivo en el Conjunto Santander",
       "creator": { "@id": "https://www.andatalab.com/#organization" },
       "producer": { "@id": "https://www.andatalab.com/#organization" },
       "dateCreated": "2026",
-      "genre": "Immersive wellness / real-time generative systems",
-      "locationCreated": "Guadalajara, Jalisco, Mexico",
-      "description": "A generative light column and projected canopy for a sold-out immersive yoga class by Asana Yoga at Conjunto Santander de Artes Escénicas."
+      "genre": "Experiencia inmersiva / videomapping / sistemas generativos",
+      "locationCreated": "Zapopan, Jalisco, México",
+      "description": "Columna de luz generativa y canopy proyectado para una clase de yoga inmersiva de Asana Yoga en el Conjunto Santander de Artes Escénicas, Guadalajara."
     },
     {
       "@type": "Event",
       "@id": "https://www.andatalab.com/conjunto-santander-yoga/#event",
-      "name": "Conjunto Santander × Asana Yoga",
+      "name": "Yoga inmersivo en el Conjunto Santander",
       "startDate": "2026-01-31",
       "endDate": "2026-02-01",
       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
@@ -638,20 +699,71 @@
         "name": "Conjunto Santander de Artes Escénicas",
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Guadalajara",
+          "streetAddress": "Anillo Periférico Norte Manuel Gómez Morín 1695, Parque Industrial Belenes",
+          "addressLocality": "Zapopan",
           "addressRegion": "Jalisco",
+          "postalCode": "45145",
           "addressCountry": "MX"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 20.736268,
+          "longitude": -103.381991
         }
       },
-      "organizer": { "@id": "https://www.andatalab.com/#organization" },
+      "organizer": {
+        "@type": "Organization",
+        "name": "ANDATA LAB",
+        "url": "https://www.andatalab.com/",
+        "logo": "https://www.andatalab.com/Imagenes/logo-mark.png"
+      },
       "performer": { "@id": "https://www.andatalab.com/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.andatalab.com/conjunto-santander-yoga/#faq",
+      "inLanguage": "es-MX",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Pueden hacer una experiencia inmersiva en el Conjunto Santander u otro teatro de Guadalajara?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Trabajamos en el Conjunto Santander de Artes Escénicas y en otros recintos de Guadalajara y Zapopan: teatros, foros y espacios para eventos. Cuéntanos del recinto y lo revisamos juntos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué se necesita para proyectar sobre telas o columnas en un evento?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Una superficie de tela o volumen, proyectores y un motor en tiempo real para mapear y operar la imagen. En este caso usamos una columna de cuatro caras y un canopy. Escríbenos con el espacio y te decimos qué hace falta."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Trabajan eventos de yoga, bienestar y congresos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Hacemos experiencias inmersivas para yoga, bienestar, congresos, lanzamientos de marca y festivales. El de Asana Yoga en Conjunto Santander es un ejemplo. Platiquemos de tu evento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Operan los visuales en vivo durante el evento?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Operamos los visuales en vivo durante toda la sesión — cues con la música y quien dirige el escenario. Si tu evento lo necesita, vamos con el equipo. Escríbenos."
+          }
+        }
+      ]
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
-        { "@type": "ListItem", "position": 2, "name": "Work", "item": "https://www.andatalab.com/#work" },
-        { "@type": "ListItem", "position": 3, "name": "Conjunto Santander × Asana Yoga", "item": "https://www.andatalab.com/conjunto-santander-yoga/" }
+        { "@type": "ListItem", "position": 2, "name": "Proyectos", "item": "https://www.andatalab.com/#work" },
+        { "@type": "ListItem", "position": 3, "name": "Yoga inmersivo en el Conjunto Santander", "item": "https://www.andatalab.com/conjunto-santander-yoga/" }
       ]
     }
   ]
@@ -668,14 +780,15 @@
         nav_next:'WAVEY × TikTok', nav_bio:'Biointerface', nav_contact:'Contact',
         cta_start:'Start a project', back:'Back to work',
         eyebrow:'Case study · Immersive wellness',
-        hero_h1:'A theater that breathes with the class.',
+        hero_h1:'Immersive yoga at Conjunto Santander',
+        hero_kicker:'A theater that breathes with the class.',
         hero_sub:'For Asana Yoga at Conjunto Santander, ANDATA LAB built a generative light column and a projected canopy that moved with the music, the instructor and hundreds of people on their mats.',
         m_client:'Client', m_venue:'Venue', m_venue_v:'Conjunto Santander de Artes Escénicas',
         m_loc:'Location', m_loc_v:'Guadalajara, Mexico', m_year:'Year',
         m_role:'Role', m_role_v:'Visual direction · generative systems · live operation',
         m_tools:'Tools',
-        e_overview:'Overview', overview_title:'The practice, extended into the room.',
-        overview_p1:'The brief was to turn a performing-arts theater into an immersive practice space — not a screen behind the class, but a room the class could inhabit.',
+        e_overview:'Overview', overview_title:'An immersive experience at Conjunto Santander.',
+        overview_p1:'The brief was to turn the theater at Conjunto Santander de Artes Escénicas, in Guadalajara, into an immersive yoga experience — not a screen behind the class, but a room the class could inhabit.',
         overview_p2:'ANDATA LAB built a <strong>fabric column projected on four sides</strong> at the center of the mats, plus a canopy of cloth over the hall as a second surface. Generative visuals shifted color and tempo with each block of the session.',
         cap_pink:'The column in the round — mats filling the theater around a four-sided light monolith.',
         cap_pink_still:'From the floor — the column as the center of the practice, not a backdrop.',
@@ -714,28 +827,48 @@
         c_client:'Client', c_venue:'Venue', c_venue_v:'Conjunto Santander de Artes Escénicas, Guadalajara',
         e_rel:'Related', rel_title:'The same engine language, other rooms.',
         rel_wavey:'Real-time visuals and LED architecture for a runway show.',
+        rel_map_t:'Architectural projection mapping',
+        rel_map:'Facades, venues and events — from surface study to on-site calibration.',
         rel_part:'Generative motion as a living surface.',
         rel_bio:'Sensor-driven installation — the body as input.',
+        e_gdl:'Guadalajara',
+        gdl_title:'Immersive experiences for events in Guadalajara',
+        gdl_p:'Beyond immersive yoga at Conjunto Santander, we design videomapping and real-time visuals for events in Guadalajara and Zapopan — from the venue to live operation.',
+        gdl_1:'Wellness and yoga events', gdl_2:'Conferences', gdl_3:'Brand launches',
+        gdl_4:'Festivals', gdl_5:'Theaters and venues', gdl_6:'Videomapping',
+        gdl_7:'Real-time visuals for concerts',
+        e_faq:'Questions', faq_title:'Immersive yoga, videomapping and events',
+        faq_q1:'Can you build an immersive experience at Conjunto Santander or another theater in Guadalajara?',
+        faq_a1:'Yes. We work at Conjunto Santander de Artes Escénicas and other venues in Guadalajara and Zapopan: theaters, halls and event spaces. Tell us about the room and we will look at it with you.',
+        faq_q2:'What does it take to project onto fabric or columns at an event?',
+        faq_a2:'A fabric surface or volume, projectors, and a real-time engine to map and run the image. Here we used a four-sided column and a canopy. Write us with the space and we will tell you what is needed.',
+        faq_q3:'Do you work yoga, wellness and conference events?',
+        faq_a3:'Yes. We make immersive experiences for yoga, wellness, conferences, brand launches and festivals. Asana Yoga at Conjunto Santander is one example. Write us about your event.',
+        faq_q4:'Do you operate the visuals live during the event?',
+        faq_a4:'Yes. We operate the visuals live through the full session — cues with the music and whoever is leading the room. If your event needs that, we come with the team. Write us.',
+        nav_map:'Videomapping',
         cta_title:'Planning a wellness event, festival or brand experience?',
         cta_sub:'We design immersive rooms for yoga, meditation, conferences and live shows — from concept to live operation. Tell us about your space.',
         cta_btn:'Start a project',
         rights:'All rights reserved.',
         ui_play:'Play', ui_pause:'Pause',
-        doc_title:'Conjunto Santander × Asana Yoga — Immersive Yoga Experience | ANDATA LAB'
+        meta_desc:'Generative light column and live videomapping for Asana Yoga at Conjunto Santander de Artes Escénicas, Guadalajara. Immersive experiences for events.',
+        doc_title:'Immersive yoga at Conjunto Santander, Guadalajara | ANDATA LAB'
       },
       es: {
-        nav_work:'Proyectos', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
+        nav_work:'Work', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
         nav_next:'WAVEY × TikTok', nav_bio:'Biointerface', nav_contact:'Contacto',
         cta_start:'Inicia un proyecto', back:'Volver a proyectos',
         eyebrow:'Case study · Wellness inmersivo',
-        hero_h1:'Un teatro que respira con la clase.',
+        hero_h1:'Yoga inmersivo en el Conjunto Santander',
+        hero_kicker:'Un teatro que respira con la clase.',
         hero_sub:'Para Asana Yoga en Conjunto Santander, ANDATA LAB construyó una columna de luz generativa y un canopy proyectado que se movían con la música, la instructora y cientos de personas en sus tapetes.',
         m_client:'Cliente', m_venue:'Sede', m_venue_v:'Conjunto Santander de Artes Escénicas',
         m_loc:'Ubicación', m_loc_v:'Guadalajara, México', m_year:'Año',
         m_role:'Rol', m_role_v:'Dirección visual · sistemas generativos · operación en vivo',
         m_tools:'Herramientas',
-        e_overview:'Overview', overview_title:'La práctica, extendida a todo el espacio.',
-        overview_p1:'El reto era convertir un teatro de artes escénicas en un espacio de práctica inmersivo — no una pantalla detrás de la clase, sino una sala que la clase pudiera habitar.',
+        e_overview:'Overview', overview_title:'Una experiencia inmersiva en el Conjunto Santander.',
+        overview_p1:'El reto era convertir el teatro del Conjunto Santander de Artes Escénicas, en Guadalajara, en una experiencia inmersiva de yoga — no una pantalla detrás de la clase, sino una sala que la clase pudiera habitar.',
         overview_p2:'ANDATA LAB construyó una <strong>columna de tela proyectada por sus cuatro lados</strong> al centro de los tapetes, más un canopy de tela sobre la sala como segunda superficie. Los visuales generativos cambiaban de color y ritmo con cada bloque de la sesión.',
         cap_pink:'La columna en 360 — tapetes llenando el teatro alrededor de un monolito de luz de cuatro caras.',
         cap_pink_still:'Desde el piso — la columna como centro de la práctica, no como fondo.',
@@ -768,38 +901,66 @@
         cap_red_film:'Bloque de calor — instructora en la columna, la sala en un solo color.',
         cap_canopy_film:'Bajo el canopy — la clase dentro de la proyección, no mirándola.',
         cap_green_film:'Cierre de la sesión — luz blanca, la sala todavía moviéndose con la columna.',
-        t_rt:'Gráficos en tiempo real', t_map:'Projection mapping', t_gen:'Sistemas generativos', t_live:'Operación en vivo',
+        t_rt:'Gráficos en tiempo real', t_map:'Videomapping', t_gen:'Sistemas generativos', t_live:'Operación en vivo',
         e_credits:'Créditos', credits_title:'ANDATA LAB en la sala.',
-        c_studio:'Estudio', c_role:'Rol', c_role_v:'Dirección visual · sistemas generativos · projection mapping · operación en vivo',
+        c_studio:'Estudio', c_role:'Rol', c_role_v:'Dirección visual · sistemas generativos · videomapping · operación en vivo',
         c_client:'Cliente', c_venue:'Sede', c_venue_v:'Conjunto Santander de Artes Escénicas, Guadalajara',
         e_rel:'Relacionado', rel_title:'El mismo lenguaje de motor, otras salas.',
         rel_wavey:'Visuales en tiempo real y arquitectura LED para un show de pasarela.',
+        rel_map_t:'Videomapping arquitectónico',
+        rel_map:'Fachadas, recintos y eventos — del estudio de superficie a la calibración en sitio.',
         rel_part:'Motion generativo como superficie viva.',
         rel_bio:'Instalación con sensores — el cuerpo como input.',
+        e_gdl:'Guadalajara',
+        gdl_title:'Experiencias inmersivas para eventos en Guadalajara',
+        gdl_p:'Además de yoga inmersivo en el Conjunto Santander, diseñamos videomapping y visuales en tiempo real para eventos en Guadalajara y Zapopan: del recinto al show en vivo.',
+        gdl_1:'Eventos de wellness y yoga', gdl_2:'Congresos', gdl_3:'Lanzamientos de marca',
+        gdl_4:'Festivales', gdl_5:'Teatros y recintos', gdl_6:'Videomapping',
+        gdl_7:'Visuales en tiempo real para conciertos',
+        e_faq:'Preguntas', faq_title:'Yoga inmersivo, videomapping y eventos',
+        faq_q1:'¿Pueden hacer una experiencia inmersiva en el Conjunto Santander u otro teatro de Guadalajara?',
+        faq_a1:'Sí. Trabajamos en el Conjunto Santander de Artes Escénicas y en otros recintos de Guadalajara y Zapopan: teatros, foros y espacios para eventos. Cuéntanos del recinto y lo revisamos juntos.',
+        faq_q2:'¿Qué se necesita para proyectar sobre telas o columnas en un evento?',
+        faq_a2:'Una superficie de tela o volumen, proyectores y un motor en tiempo real para mapear y operar la imagen. En este caso usamos una columna de cuatro caras y un canopy. Escríbenos con el espacio y te decimos qué hace falta.',
+        faq_q3:'¿Trabajan eventos de yoga, bienestar y congresos?',
+        faq_a3:'Sí. Hacemos experiencias inmersivas para yoga, bienestar, congresos, lanzamientos de marca y festivales. El de Asana Yoga en Conjunto Santander es un ejemplo. Platiquemos de tu evento.',
+        faq_q4:'¿Operan los visuales en vivo durante el evento?',
+        faq_a4:'Sí. Operamos los visuales en vivo durante toda la sesión — cues con la música y quien dirige el escenario. Si tu evento lo necesita, vamos con el equipo. Escríbenos.',
+        nav_map:'Videomapping',
         cta_title:'¿Planeas un evento de bienestar, festival o experiencia de marca?',
         cta_sub:'Diseñamos espacios inmersivos para yoga, meditación, congresos y shows en vivo — del concepto a la operación en vivo. Cuéntanos de tu espacio.',
         cta_btn:'Inicia un proyecto',
         rights:'Todos los derechos reservados.',
         ui_play:'Reproducir', ui_pause:'Pausa',
-        doc_title:'Conjunto Santander × Asana Yoga — Experiencia de yoga inmersiva | ANDATA LAB'
+        meta_desc:'Columna de luz generativa y videomapping en vivo para Asana Yoga en el Conjunto Santander de Artes Escénicas, Guadalajara. Experiencias inmersivas para eventos.',
+        doc_title:'Yoga inmersivo en Conjunto Santander, Guadalajara | ANDATA LAB'
       }
     };
 
+    function isBot(){
+      return /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|whatsapp|linkedinbot|twitterbot/i.test(navigator.userAgent||'');
+    }
     function pickLang(){
+      if(isBot()) return 'es';
       var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
       if(saved==='en'||saved==='es') return saved;
-      return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+      var def = document.documentElement.getAttribute('data-default-lang') || 'es';
+      return def === 'en' ? 'en' : 'es';
     }
     var lang = pickLang();
 
     function apply(){
-      var dict = I18N[lang] || I18N.en;
-      document.documentElement.lang = lang;
+      var dict = I18N[lang] || I18N.es;
+      document.documentElement.lang = (lang==='es') ? 'es-MX' : 'en';
       document.querySelectorAll('[data-i18n]').forEach(function(node){
         var k = node.getAttribute('data-i18n');
         if(dict[k]!=null) node.innerHTML = dict[k];
       });
       if(dict.doc_title) document.title = dict.doc_title;
+      if(dict.meta_desc){
+        var meta = document.querySelector('meta[name="description"]');
+        if(meta) meta.setAttribute('content', dict.meta_desc);
+      }
       var btn = document.getElementById('lang-toggle');
       if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
       syncToggles();
