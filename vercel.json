@@ -13,6 +13,18 @@
     }
   ],
   "redirects": [
+    { "source": "/work-1/project-two-medls", "destination": "/", "permanent": true },
+    { "source": "/work-1/project-two-medls/", "destination": "/", "permanent": true },
+    { "source": "/work-1", "destination": "/", "permanent": true },
+    { "source": "/work-1/", "destination": "/", "permanent": true },
+    { "source": "/work-1/:path*", "destination": "/", "permanent": true },
+    { "source": "/work", "destination": "/", "permanent": true },
+    { "source": "/work/", "destination": "/", "permanent": true },
+    { "source": "/work/:path*", "destination": "/", "permanent": true },
+    { "source": "/about", "destination": "/#contact", "permanent": true },
+    { "source": "/about/", "destination": "/#contact", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/contact/", "destination": "/#contact", "permanent": true },
     { "source": "/wavey-runaway-show", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runaway-show/", "destination": "/wavey-tiktok-runway-show/", "permanent": true },
     { "source": "/wavey-runway", "destination": "/wavey-tiktok-runway-show/", "permanent": true },

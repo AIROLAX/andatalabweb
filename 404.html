@@ -17,7 +17,13 @@
   h1{ font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-.04em; margin:16px 0 0; }
   p{ color:var(--ink-2); line-height:1.6; max-width:46ch; }
   a{ color:var(--ink); }
-  .links{ display:flex; flex-wrap:wrap; gap:14px 22px; margin-top:28px; }
+  .links{ display:flex; flex-wrap:wrap; gap:14px 22px; margin-top:28px; align-items:center; }
+  .links a:not(.btn){ font-size:15px; font-weight:500; text-underline-offset:3px; }
+  .btn{
+    font-family:inherit; font-size:14px; font-weight:600; letter-spacing:-.01em;
+    padding:11px 20px; border-radius:999px; text-decoration:none;
+    background:var(--ink); color:var(--on-accent,#fff);
+  }
 </style>
 <script src="/analytics.js" defer></script>
 </head>
@@ -27,12 +33,10 @@
   <h1>This page is not here.</h1>
   <p>The URL may have moved. Start from the studio homepage, or go directly to a service or case study.</p>
   <nav class="links" aria-label="Useful links">
-    <a href="/">Home</a>
+    <a href="/#work">Work</a>
     <a href="/projection-mapping/">Projection Mapping</a>
-    <a href="/ajijic-mapping/">Whispers of the Lake</a>
-    <a href="/dome-studio/">Dome Studio</a>
     <a href="/hospitality/">Hospitality</a>
-    <a href="/#contact">Contact</a>
+    <a class="btn" href="/#contact">Start a project</a>
   </nav>
 </main>
 </body>
