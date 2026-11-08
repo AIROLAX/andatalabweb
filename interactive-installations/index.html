@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="index,follow">
+<title>Interactive Installations Studio | ANDATA LAB</title>
+<meta name="description" content="ANDATA LAB designs interactive installations for museums, brands and public spaces — sensor-driven rooms and real-time systems people can shape.">
+<link rel="canonical" href="https://www.andatalab.com/interactive-installations/">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="../Imagenes/interactive-service-poster.jpg">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Interactive Installations Studio | ANDATA LAB">
+<meta property="og:description" content="ANDATA LAB designs interactive installations for museums, brands and public spaces — sensor-driven rooms and real-time systems people can shape.">
+<meta property="og:url" content="https://www.andatalab.com/interactive-installations/">
+<meta property="og:image" content="https://www.andatalab.com/Imagenes/interactive-service-poster.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="768">
+<meta property="og:image:alt" content="Audience around a large LED canvas in an interactive installation by ANDATA LAB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Interactive Installations Studio | ANDATA LAB">
+<meta name="twitter:description" content="Sensor-driven rooms, real-time visuals and systems the public can touch, move and shape.">
+<meta name="twitter:image" content="https://www.andatalab.com/Imagenes/interactive-service-poster.jpg">
+
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+  .skip{ position:absolute; left:-999px; top:8px; z-index:80; padding:10px 16px; background:var(--ink); color:#fff; border-radius:999px; }
+  .skip:focus{ left:12px; }
+
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.is-here{ color:var(--ink); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:8px 16px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--ink); background:var(--ink); color:#fff;
+  }
+  @media (max-width:1120px){
+    .nav-links{ gap:16px; }
+    .nav-links a{ font-size:13px; }
+  }
+  @media (max-width:860px){ .nav-cta{ display:none; } }
+  @media (max-width:760px){
+    header.nav{ gap:12px; }
+    .nav-links{ gap:10px; }
+    .nav-links a:not(.is-here):not(.nav-cta){ display:none; }
+  }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:900px; }
+  .hero h1{ font-size:clamp(2.2rem,5.8vw,4.4rem); font-weight:800; letter-spacing:-.04em; line-height:1.03; margin:16px 0 0; text-wrap:balance; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:20px 0 0; max-width:720px; }
+  .hero-studio{ margin:14px 0 0; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); }
+  .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
+  .hero-media{ position:relative; margin-top:clamp(32px,5vw,56px); border-radius:var(--r-xl); overflow:hidden; background:#000; aspect-ratio:16/9; box-shadow:var(--shadow-lift); }
+  .hero-media video,.hero-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  .btn-solid, .btn-line{
+    font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em;
+    padding:14px 26px; border-radius:999px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s, box-shadow .25s, background .25s;
+  }
+  .btn-solid{ border:1px solid var(--ink); background:var(--ink); color:#fff; }
+  .btn-solid:hover{ transform:translateY(-2px); box-shadow:var(--shadow-lift); }
+  .btn-line{ border:1px solid var(--ink); background:transparent; color:var(--ink); }
+  .btn-line:hover{ transform:translateY(-2px); background:var(--surface); }
+
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+  .lead-note{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); max-width:720px; margin:16px 0 0; }
+  .prose a, .lead-note a, .related a, .case-card .go{ color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+
+  .offers{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:700px){ .offers{ grid-template-columns:1fr; } }
+  .offer{ padding:24px clamp(20px,3vw,28px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .offer:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .offer h3{ font-size:1.08rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .offer p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  .case-card{
+    display:grid; grid-template-columns:1.15fr .85fr; gap:0; margin-top:clamp(28px,4vw,44px);
+    border-radius:var(--r-xl); overflow:hidden; background:var(--surface); border:1px solid var(--hair-2);
+    box-shadow:var(--shadow-card); color:inherit;
+  }
+  @media (max-width:760px){ .case-card{ grid-template-columns:1fr; } }
+  .case-card .media{ position:relative; aspect-ratio:16/9; background:#0b1020; }
+  .case-card img, .case-card video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .case-card .body{ padding:clamp(24px,4vw,40px); display:flex; flex-direction:column; justify-content:center; }
+  .case-card h3{ font-size:1.35rem; font-weight:700; letter-spacing:-.03em; margin:10px 0 0; }
+  .case-card p{ font-size:.98rem; line-height:1.6; color:var(--ink-2); margin:12px 0 0; }
+  .case-card .go{ margin-top:18px; font-size:14px; font-weight:600; }
+
+  .phases{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .phase{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start; padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .phase:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .phase-n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:4px; }
+  .phase h3{ font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .phase p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  .brief-list{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:clamp(24px,3vw,36px); }
+  @media (max-width:700px){ .brief-list{ grid-template-columns:1fr; } }
+  .brief-item{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); background:var(--surface); }
+  .brief-item b{ display:block; font-size:15px; font-weight:600; letter-spacing:-.01em; }
+  .brief-item span{ display:block; margin-top:4px; font-size:13px; line-height:1.5; color:var(--ink-2); }
+
+  .faqs{ display:grid; gap:12px; margin-top:clamp(28px,4vw,44px); }
+  .faq{ border:1px solid var(--hair-2); border-radius:var(--r-lg); background:var(--surface); }
+  .faq summary{
+    cursor:pointer; list-style:none; padding:20px 24px;
+    font-weight:600; font-size:1.05rem; letter-spacing:-.02em;
+  }
+  .faq summary::-webkit-details-marker{ display:none; }
+  .faq summary::marker{ content:""; }
+  .faq summary:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+  .faq p{ margin:0; padding:0 24px 20px; font-size:.97rem; line-height:1.65; color:var(--ink-2); }
+
+  .related{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  .related a{ display:block; padding:20px 22px; border-radius:var(--r-md); border:1px solid var(--hair-2); background:var(--surface); text-decoration:none; transition:transform .3s, box-shadow .3s; }
+  .related a:hover{ transform:translateY(-3px); box-shadow:var(--shadow-card); }
+  .related a h3{ font-size:1.02rem; font-weight:600; margin:0 0 6px; }
+  .related a p{ margin:0; font-size:14px; line-height:1.5; color:var(--ink-2); }
+
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:560px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; }
+    .offer:hover, .phase:hover, .related a:hover, .btn:hover, .btn-solid:hover, .btn-line:hover{ transform:none; }
+  }
+</style>
+<script src="/analytics.js" defer></script>
+</head>
+<body data-brand="andata">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="brand" href="../" aria-label="Andata Lab">
+    <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+  </a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="../#work" data-i18n="nav_work">Work</a>
+    <a class="is-here" href="./" data-i18n="nav_ii">Interactive Installations</a>
+    <a href="../projection-mapping/" data-i18n="nav_map">Projection Mapping</a>
+    <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+    <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-head reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Experiential Technology Studio · Interactive Systems</span></span>
+        <h1 data-i18n="hero_h1">Interactive Installations for Museums, Brands and Public Space</h1>
+        <p class="hero-sub" data-i18n="hero_sub">ANDATA LAB designs and produces interactive installations where the public can affect image, sound, light or digital content — from sensor-driven rooms to real-time generative environments.</p>
+        <p class="hero-studio" data-i18n="hero_studio">Immersive Experiences, Engineered.</p>
+        <div class="hero-cta">
+          <a class="btn-solid" href="../#contact"><span data-i18n="cta_btn">Start an Interactive Installation Project</span></a>
+          <a class="btn-line" href="#work" data-i18n="cta_work">See selected work</a>
+        </div>
+      </div>
+      <div class="hero-media reveal">
+        <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="../Imagenes/interactive-service-poster.jpg" width="1280" height="768" aria-label="Audience around a large LED canvas in an interactive installation by ANDATA LAB">
+          <source src="../videos/interactive-service.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="what-we-build">
+    <div class="wrap two-col reveal">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_offer">What we build</span></span>
+        <h2 class="sec-title" data-i18n="offer_title">Experiences the public can change.</h2>
+      </div>
+      <div class="prose">
+        <p data-i18n="offer_p1">We design and produce installations in which people are not spectators. Touch, presence, cameras and physical sensors can drive image, light and — when the brief asks for it — sound.</p>
+        <p data-i18n="offer_p2">The work is site-specific. Interaction, content and systems are built for the room, then installed and tested there. Related surfaces include <a href="../projection-mapping/">projection mapping</a> and <a href="../hospitality/">permanent hospitality environments</a>.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="offers">
+        <article class="offer reveal"><h3 data-i18n="o1_t">Sensor-driven rooms</h3><p data-i18n="o1_d">Themed spaces where walls, screens and exhibits react to the people inside them — as in the Museo Descubre renovation.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o2_t">Touch-responsive installations</h3><p data-i18n="o2_d">Hands, surfaces and capacitive inputs that trigger graphics, colour and media in real time.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o3_t">Motion and presence-based systems</h3><p data-i18n="o3_d">Motion tracking, Kinect and camera input so the body — not a button — can shape what appears.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o4_t">Real-time generative environments</h3><p data-i18n="o4_d">TouchDesigner engines and GLSL that generate visuals live from sensor data, rather than looping a finished file.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o5_t">Multi-screen interactive installations</h3><p data-i18n="o5_d">Composited canvases routed to several screens at once — as in Biointerface’s three-screen environment.</p></article>
+        <article class="offer reveal"><h3 data-i18n="o6_t">Interactive sound with picture</h3><p data-i18n="o6_d">When the brief requires it, sound can sit with the image — Museo Descubre’s sensor walls pair touch, sound and light.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="interact">
+    <div class="wrap two-col reveal">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_in">How people can interact</span></span>
+        <h2 class="sec-title" data-i18n="in_title">Inputs we already run.</h2>
+      </div>
+      <div class="prose">
+        <p data-i18n="in_p">What an installation responds to is chosen with the brief. Not every project uses every input. We do not use facial recognition on these systems.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="offers">
+        <article class="offer reveal"><h3 data-i18n="i1_t">Touch</h3><p data-i18n="i1_d">Hands on walls, tables and sensors. Museo Descubre uses touch and hand sensors; Biointerface uses capacitive touch on living plants.</p></article>
+        <article class="offer reveal"><h3 data-i18n="i2_t">Presence and movement</h3><p data-i18n="i2_d">People walking into a room, standing at a wall, or moving through a mapped field can change what the system shows.</p></article>
+        <article class="offer reveal"><h3 data-i18n="i3_t">Cameras and motion tracking</h3><p data-i18n="i3_d">Motion tracking on the museum floor; Kinect and camera input inside Biointerface.</p></article>
+        <article class="offer reveal"><h3 data-i18n="i4_t">Physical sensors</h3><p data-i18n="i4_d">Arduino and capacitive hardware wired into the show-control machine — custom electronics, not a product line of our own.</p></article>
+        <article class="offer reveal"><h3 data-i18n="i5_t">MIDI / OSC and real-time control</h3><p data-i18n="i5_d">Sensor and MIDI/OSC data mapped through TouchDesigner so operators and other systems can drive the same engine.</p></article>
+        <article class="offer reveal"><h3 data-i18n="i6_t">Biological and unconventional interfaces</h3><p data-i18n="i6_d">Biointerface wires living plants as capacitive instruments. That is a specific built example — not a claim that every brief uses biology.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="who">
+    <div class="wrap two-col reveal">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_who">Who it is for</span></span>
+        <h2 class="sec-title" data-i18n="who_title">Teams who need the public in the loop.</h2>
+      </div>
+      <div class="prose">
+        <p data-i18n="who_p">We work with agencies, brands, producers, museums, galleries, festivals, exhibitions and public spaces when the brief needs people to affect the media. We do not claim every industry or every scale. Scope follows the space, the interaction and the calendar.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="offers">
+        <article class="offer reveal"><h3 data-i18n="w1_t">Brands and agencies</h3><p data-i18n="w1_d">Spatial brand moments and partner productions. Museo Descubre was delivered with IPG Mediabrands and Nissan among the project partners.</p></article>
+        <article class="offer reveal"><h3 data-i18n="w2_t">Museums and cultural spaces</h3><p data-i18n="w2_d">Sensor-driven exhibits and rooms that teach through interaction — documented at Museo Descubre in Aguascalientes.</p></article>
+        <article class="offer reveal"><h3 data-i18n="w3_t">Exhibitions and galleries</h3><p data-i18n="w3_d">Interactive art systems with real-time generative visuals, as in Biointerface.</p></article>
+        <article class="offer reveal"><h3 data-i18n="w4_t">Festivals and live events</h3><p data-i18n="w4_d">Temporary interactive environments when the interaction, equipment and install window can be defined in advance.</p></article>
+        <article class="offer reveal"><h3 data-i18n="w5_t">Public and educational spaces</h3><p data-i18n="w5_d">Rooms built for repeat use by visitors — tested with real audiences before they open, as on the Museo Descubre floor.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_case">Selected work</span></span>
+        <h2 class="sec-title" data-i18n="case_title">Systems already built.</h2>
+        <p class="lead-note" data-i18n="case_note">The service is what we sell. These cases are what we can show in public today.</p>
+      </div>
+      <a class="case-card reveal" href="../el-umbral/">
+        <div class="media">
+          <img src="../el-umbral/img/cover.jpg" width="1280" height="720" alt="El Umbral — interactive AI wall at Plaza Camino Al Mar, Mazatlán" loading="lazy" decoding="async">
+        </div>
+        <div class="body">
+          <span class="ds-label" data-i18n="c0_kicker">Interactive Halloween experience · Plaza Camino Al Mar, Mazatlán</span>
+          <h3>El Umbral</h3>
+          <p data-i18n="c0_p">An AI wall that reads the body in real time — body tracking, TouchDesigner and generative visuals. Visitors step in and become part of the image.</p>
+          <span class="go" data-i18n="c0_go">Read the El Umbral case study →</span>
+        </div>
+      </a>
+      <a class="case-card reveal" href="../museo-descubre/">
+        <div class="media">
+          <img src="https://airolax.com/videos/museo/1.png" width="1280" height="720" alt="Interactive wall on the Museo Descubre floor in Aguascalientes" loading="lazy" decoding="async">
+        </div>
+        <div class="body">
+          <span class="ds-label" data-i18n="c1_kicker">Interactive museum exhibits · Aguascalientes</span>
+          <h3>Museo Descubre</h3>
+          <p data-i18n="c1_p">Creative direction, project management and interactive systems for the 2024 renovation — themed science zones, touch and hand sensors, motion tracking, sensor-driven walls and real-time graphics, installed and tested on the museum floor.</p>
+          <span class="go" data-i18n="c1_go">Read the Museo Descubre case study →</span>
+        </div>
+      </a>
+      <a class="case-card reveal" href="../biointerface/">
+        <div class="media">
+          <img src="../biointerface/img/render-room.png" width="1024" height="682" alt="Biointerface — plant-framed multi-screen installation with glowing touch tables" loading="lazy" decoding="async">
+        </div>
+        <div class="body">
+          <span class="ds-label" data-i18n="c2_kicker">Interactive art installation · sensors · real-time visuals</span>
+          <h3>Biointerface</h3>
+          <p data-i18n="c2_p">Living plants wired as capacitive inputs, Kinect and camera input, and a TouchDesigner engine with GLSL driving generative visuals across a three-screen canvas, routed over NDI / Spout.</p>
+          <span class="go" data-i18n="c2_go">Read the Biointerface case study →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_proc">Process</span></span>
+        <h2 class="sec-title" data-i18n="proc_title">From the room to a running system.</h2>
+        <p class="lead-note" data-i18n="proc_note">The steps are consistent. How deep each one goes depends on the space, the interaction, the existing equipment and the calendar. There is no universal timetable.</p>
+      </div>
+      <div class="phases">
+        <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Discovery and site requirements</h3><p data-i18n="p1_d">The space, audience, goal and what already exists on site — screens, projectors, sensors, power, geometry and light.</p></div></div>
+        <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Interaction concept</h3><p data-i18n="p2_d">What people do, what the system returns, and how that serves the story of the room.</p></div></div>
+        <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Prototype</h3><p data-i18n="p3_d">The interaction is developed and tested before it is installed at full scale — real-time studies, sensor behaviour and visual response.</p></div></div>
+        <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Content and system development</h3><p data-i18n="p4_d">Graphics, show control, sensors and playback engineered to run as one system — TouchDesigner, and Unity3D or Arduino when the brief needs them.</p></div></div>
+        <div class="phase reveal"><div class="phase-n">05</div><div><h3 data-i18n="p5_t">Integration and installation</h3><p data-i18n="p5_d">On-site assembly, mapping, wiring and calibration to the real geometry and lighting of the venue.</p></div></div>
+        <div class="phase reveal"><div class="phase-n">06</div><div><h3 data-i18n="p6_t">Testing and operation planning</h3><p data-i18n="p6_d">Systems are tested with real audiences where the project requires it, then handed over with a plan for how the room runs.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="tech">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_stack">Technologies</span></span>
+        <h2 class="sec-title" data-i18n="stack_title">Tools that serve the experience.</h2>
+        <p class="lead-note" data-i18n="stack_note">The stack is a means. We choose it so the public can change what they see, hear or touch — not to lead with software names.</p>
+      </div>
+      <div class="tags reveal">
+        <span class="tag">TouchDesigner</span>
+        <span class="tag">Arduino</span>
+        <span class="tag">Unity3D</span>
+        <span class="tag" data-i18n="t1">Kinect and camera input</span>
+        <span class="tag" data-i18n="t2">Capacitive sensors</span>
+        <span class="tag" data-i18n="t3">Motion tracking</span>
+        <span class="tag">GLSL</span>
+        <span class="tag">MIDI / OSC</span>
+        <span class="tag">NDI / Spout</span>
+        <span class="tag" data-i18n="t4">Real-time graphics</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="related">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Related capabilities</span></span>
+        <h2 class="sec-title" data-i18n="rel_title">The same studio, other surfaces.</h2>
+      </div>
+      <div class="related">
+        <a href="../projection-mapping/" class="reveal"><h3 data-i18n="r1_t">Projection mapping</h3><p data-i18n="r1_d">Architectural mapping, 3D content, TouchDesigner playback and on-site calibration.</p></a>
+        <a href="../hospitality/" class="reveal"><h3 data-i18n="r2_t">Hospitality environments</h3><p data-i18n="r2_d">Permanent responsive environments and interactive guest amenities for resorts.</p></a>
+        <a href="../museo-descubre/" class="reveal"><h3 data-i18n="r3_t">Interactive museum exhibits</h3><p data-i18n="r3_d">Sensor-driven rooms and interactive walls — Museo Descubre, Aguascalientes.</p></a>
+        <a href="../biointerface/" class="reveal"><h3 data-i18n="r4_t">Biointerface</h3><p data-i18n="r4_d">Plant sensors, Kinect and real-time generative visuals on a multi-screen canvas.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="brief">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_brief">Project brief</span></span>
+        <h2 class="sec-title" data-i18n="brief_title">What we need to start a conversation.</h2>
+        <p class="lead-note" data-i18n="brief_note">Send what you have. Incomplete information is still useful — we can say what else would help us evaluate the space.</p>
+      </div>
+      <div class="brief-list reveal">
+        <div class="brief-item"><b data-i18n="b1_t">Type of space</b><span data-i18n="b1_d">Museum, gallery, brand activation, festival, public or educational room.</span></div>
+        <div class="brief-item"><b data-i18n="b2_t">City</b><span data-i18n="b2_d">Where the installation will live.</span></div>
+        <div class="brief-item"><b data-i18n="b3_t">Date or approximate calendar</b><span data-i18n="b3_d">Openings, install windows or a season — even a range is enough to start.</span></div>
+        <div class="brief-item"><b data-i18n="b4_t">Audience</b><span data-i18n="b4_d">Who will use it, and whether the room is visited once or every day.</span></div>
+        <div class="brief-item"><b data-i18n="b5_t">Objective</b><span data-i18n="b5_d">What the experience should do for the visitor, the brand or the institution.</span></div>
+        <div class="brief-item"><b data-i18n="b6_t">Desired interaction</b><span data-i18n="b6_d">Touch, movement, cameras, plants, sound, multi-screen — or a question you want answered.</span></div>
+        <div class="brief-item"><b data-i18n="b7_t">Existing equipment</b><span data-i18n="b7_d">Screens, projectors, sensors or show-control already in the room, if any.</span></div>
+        <div class="brief-item"><b data-i18n="b8_t">Photographs, plans or measurements</b><span data-i18n="b8_d">Whatever exists. They help us read geometry, light and circulation.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap reveal">
+      <div class="cta-panel">
+        <h2 data-i18n="cta_title">Have a space the public should be able to change?</h2>
+        <p data-i18n="cta_sub">Tell us the space, the city, the calendar and the interaction you want. We can help define the system, the prototype and the install scope.</p>
+        <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start an Interactive Installation Project</span> →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_faq">FAQ</span></span>
+        <h2 class="sec-title" data-i18n="faq_title">Questions we are usually asked.</h2>
+      </div>
+      <div class="faqs">
+        <details class="faq reveal">
+          <summary data-i18n="q1_t">What can an interactive installation respond to?</summary>
+          <p data-i18n="q1_d">Touch, presence and movement, cameras and motion tracking, physical sensors, and MIDI / OSC for real-time control. Biointerface also uses living plants as capacitive inputs. We do not use facial recognition on these systems.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-i18n="q2_t">Can you work with existing screens, projectors or sensors?</summary>
+          <p data-i18n="q2_d">Yes, when they fit the interaction. Biointerface was routed to LED screens over NDI / Spout. Whether existing equipment can be used is decided after we see the space, the signal paths and the brief — not in advance for every room.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-i18n="q3_t">Do you prototype the interaction before installation?</summary>
+          <p data-i18n="q3_d">Yes. Interaction, sensor behaviour and real-time visuals are developed and tested before on-site installation. How far the prototype goes is set with the project, not as a fixed package.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-i18n="q4_t">Can an installation combine sound and real-time visuals?</summary>
+          <p data-i18n="q4_d">Yes, when the brief requires it. Museo Descubre’s sensor walls combine touch, sound and light. Biointerface maps MIDI / OSC into the same real-time engine as the visuals. Sound is designed with the picture, not added as an afterthought.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-i18n="q5_t">What information do you need to evaluate a space?</summary>
+          <p data-i18n="q5_d">Type of space, city, approximate calendar, audience, objective, the interaction you want, any existing equipment, and photographs, plans or measurements if they exist. Send what you have — we can say what else would help.</p>
+        </details>
+        <details class="faq reveal">
+          <summary data-i18n="q6_t">Do you work with agencies and production partners?</summary>
+          <p data-i18n="q6_d">Yes. Museo Descubre was delivered with agency, brand and public-sector partners. Roles and scope are agreed per project.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+    <div class="foot-links">
+      <a href="../" data-i18n="nav_home">Home</a>
+      <a href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../museo-descubre/" data-i18n="nav_museum">Museo Descubre</a>
+      <a href="../biointerface/" data-i18n="nav_bio">Biointerface</a>
+      <a href="../projection-mapping/" data-i18n="nav_map">Projection Mapping</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#contact" data-i18n="nav_contact">Contact</a>
+      <a href="https://www.instagram.com/andata_lab/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      <a href="https://www.youtube.com/@ANDATALAB" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "sameAs": [
+        "https://www.instagram.com/andata_lab/",
+        "https://www.youtube.com/@ANDATALAB"
+      ],
+      "name": "ANDATA LAB",
+      "alternateName": "Andata Lab",
+      "url": "https://www.andatalab.com/",
+      "email": "argel@andatalab.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
+      "description": "Experiential technology studio. Immersive experiences, projection mapping, interactive installations and real-time audiovisual systems. Mexico / Worldwide.",
+      "address": { "@type": "PostalAddress", "addressCountry": "MX" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.andatalab.com/#website",
+      "url": "https://www.andatalab.com/",
+      "name": "ANDATA LAB",
+      "publisher": { "@id": "https://www.andatalab.com/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/interactive-installations/#webpage",
+      "url": "https://www.andatalab.com/interactive-installations/",
+      "name": "Interactive Installations Studio | ANDATA LAB",
+      "description": "ANDATA LAB designs interactive installations for museums, brands and public spaces — sensor-driven rooms and real-time systems people can shape.",
+      "isPartOf": { "@id": "https://www.andatalab.com/#website" },
+      "about": { "@id": "https://www.andatalab.com/interactive-installations/#service" }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.andatalab.com/interactive-installations/#service",
+      "name": "Interactive Installations",
+      "serviceType": "Interactive installation design and production",
+      "description": "ANDATA LAB designs and produces interactive installations where the public can affect image, sound, light or digital content, using sensor-driven rooms, real-time graphics and systems installed on site.",
+      "url": "https://www.andatalab.com/interactive-installations/",
+      "provider": { "@id": "https://www.andatalab.com/#organization" },
+      "areaServed": { "@type": "Country", "name": "Mexico" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.andatalab.com/interactive-installations/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Interactive Installations", "item": "https://www.andatalab.com/interactive-installations/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>
+(function(){
+  'use strict';
+  var LANG_KEY = 'andata_lang';
+  var I18N = {
+    en: {
+      nav_home:'Home', nav_work:'Work', nav_ii:'Interactive Installations', nav_map:'Projection Mapping',
+      nav_hosp:'Hospitality', nav_museum:'Museo Descubre', nav_bio:'Biointerface',
+      nav_contact:'Contact', cta_start:'Start a project',
+      eyebrow:'Experiential Technology Studio · Interactive Systems',
+      hero_h1:'Interactive Installations for Museums, Brands and Public Space',
+      hero_sub:'ANDATA LAB designs and produces interactive installations where the public can affect image, sound, light or digital content — from sensor-driven rooms to real-time generative environments.',
+      hero_studio:'Immersive Experiences, Engineered.',
+      cta_btn:'Start an Interactive Installation Project',
+      cta_work:'See selected work',
+      e_offer:'What we build', offer_title:'Experiences the public can change.',
+      offer_p1:'We design and produce installations in which people are not spectators. Touch, presence, cameras and physical sensors can drive image, light and — when the brief asks for it — sound.',
+      offer_p2:'The work is site-specific. Interaction, content and systems are built for the room, then installed and tested there. Related surfaces include <a href="../projection-mapping/">projection mapping</a> and <a href="../hospitality/">permanent hospitality environments</a>.',
+      o1_t:'Sensor-driven rooms', o1_d:'Themed spaces where walls, screens and exhibits react to the people inside them — as in the Museo Descubre renovation.',
+      o2_t:'Touch-responsive installations', o2_d:'Hands, surfaces and capacitive inputs that trigger graphics, colour and media in real time.',
+      o3_t:'Motion and presence-based systems', o3_d:'Motion tracking, Kinect and camera input so the body — not a button — can shape what appears.',
+      o4_t:'Real-time generative environments', o4_d:'TouchDesigner engines and GLSL that generate visuals live from sensor data, rather than looping a finished file.',
+      o5_t:'Multi-screen interactive installations', o5_d:'Composited canvases routed to several screens at once — as in Biointerface’s three-screen environment.',
+      o6_t:'Interactive sound with picture', o6_d:'When the brief requires it, sound can sit with the image — Museo Descubre’s sensor walls pair touch, sound and light.',
+      e_in:'How people can interact', in_title:'Inputs we already run.',
+      in_p:'What an installation responds to is chosen with the brief. Not every project uses every input. We do not use facial recognition on these systems.',
+      i1_t:'Touch', i1_d:'Hands on walls, tables and sensors. Museo Descubre uses touch and hand sensors; Biointerface uses capacitive touch on living plants.',
+      i2_t:'Presence and movement', i2_d:'People walking into a room, standing at a wall, or moving through a mapped field can change what the system shows.',
+      i3_t:'Cameras and motion tracking', i3_d:'Motion tracking on the museum floor; Kinect and camera input inside Biointerface.',
+      i4_t:'Physical sensors', i4_d:'Arduino and capacitive hardware wired into the show-control machine — custom electronics, not a product line of our own.',
+      i5_t:'MIDI / OSC and real-time control', i5_d:'Sensor and MIDI/OSC data mapped through TouchDesigner so operators and other systems can drive the same engine.',
+      i6_t:'Biological and unconventional interfaces', i6_d:'Biointerface wires living plants as capacitive instruments. That is a specific built example — not a claim that every brief uses biology.',
+      e_who:'Who it is for', who_title:'Teams who need the public in the loop.',
+      who_p:'We work with agencies, brands, producers, museums, galleries, festivals, exhibitions and public spaces when the brief needs people to affect the media. We do not claim every industry or every scale. Scope follows the space, the interaction and the calendar.',
+      w1_t:'Brands and agencies', w1_d:'Spatial brand moments and partner productions. Museo Descubre was delivered with IPG Mediabrands and Nissan among the project partners.',
+      w2_t:'Museums and cultural spaces', w2_d:'Sensor-driven exhibits and rooms that teach through interaction — documented at Museo Descubre in Aguascalientes.',
+      w3_t:'Exhibitions and galleries', w3_d:'Interactive art systems with real-time generative visuals, as in Biointerface.',
+      w4_t:'Festivals and live events', w4_d:'Temporary interactive environments when the interaction, equipment and install window can be defined in advance.',
+      w5_t:'Public and educational spaces', w5_d:'Rooms built for repeat use by visitors — tested with real audiences before they open, as on the Museo Descubre floor.',
+      e_case:'Selected work', case_title:'Systems already built.',
+      case_note:'The service is what we sell. These cases are what we can show in public today.',
+      c0_kicker:'Interactive Halloween experience · Plaza Camino Al Mar, Mazatlán',
+      c0_p:'An AI wall that reads the body in real time — body tracking, TouchDesigner and generative visuals. Visitors step in and become part of the image.',
+      c0_go:'Read the El Umbral case study →',
+      c1_kicker:'Interactive museum exhibits · Aguascalientes',
+      c1_p:'Creative direction, project management and interactive systems for the 2024 renovation — themed science zones, touch and hand sensors, motion tracking, sensor-driven walls and real-time graphics, installed and tested on the museum floor.',
+      c1_go:'Read the Museo Descubre case study →',
+      c2_kicker:'Interactive art installation · sensors · real-time visuals',
+      c2_p:'Living plants wired as capacitive inputs, Kinect and camera input, and a TouchDesigner engine with GLSL driving generative visuals across a three-screen canvas, routed over NDI / Spout.',
+      c2_go:'Read the Biointerface case study →',
+      e_proc:'Process', proc_title:'From the room to a running system.',
+      proc_note:'The steps are consistent. How deep each one goes depends on the space, the interaction, the existing equipment and the calendar. There is no universal timetable.',
+      p1_t:'Discovery and site requirements', p1_d:'The space, audience, goal and what already exists on site — screens, projectors, sensors, power, geometry and light.',
+      p2_t:'Interaction concept', p2_d:'What people do, what the system returns, and how that serves the story of the room.',
+      p3_t:'Prototype', p3_d:'The interaction is developed and tested before it is installed at full scale — real-time studies, sensor behaviour and visual response.',
+      p4_t:'Content and system development', p4_d:'Graphics, show control, sensors and playback engineered to run as one system — TouchDesigner, and Unity3D or Arduino when the brief needs them.',
+      p5_t:'Integration and installation', p5_d:'On-site assembly, mapping, wiring and calibration to the real geometry and lighting of the venue.',
+      p6_t:'Testing and operation planning', p6_d:'Systems are tested with real audiences where the project requires it, then handed over with a plan for how the room runs.',
+      e_stack:'Technologies', stack_title:'Tools that serve the experience.',
+      stack_note:'The stack is a means. We choose it so the public can change what they see, hear or touch — not to lead with software names.',
+      t1:'Kinect and camera input', t2:'Capacitive sensors', t3:'Motion tracking', t4:'Real-time graphics',
+      e_rel:'Related capabilities', rel_title:'The same studio, other surfaces.',
+      r1_t:'Projection mapping', r1_d:'Architectural mapping, 3D content, TouchDesigner playback and on-site calibration.',
+      r2_t:'Hospitality environments', r2_d:'Permanent responsive environments and interactive guest amenities for resorts.',
+      r3_t:'Interactive museum exhibits', r3_d:'Sensor-driven rooms and interactive walls — Museo Descubre, Aguascalientes.',
+      r4_t:'Biointerface', r4_d:'Plant sensors, Kinect and real-time generative visuals on a multi-screen canvas.',
+      e_brief:'Project brief', brief_title:'What we need to start a conversation.',
+      brief_note:'Send what you have. Incomplete information is still useful — we can say what else would help us evaluate the space.',
+      b1_t:'Type of space', b1_d:'Museum, gallery, brand activation, festival, public or educational room.',
+      b2_t:'City', b2_d:'Where the installation will live.',
+      b3_t:'Date or approximate calendar', b3_d:'Openings, install windows or a season — even a range is enough to start.',
+      b4_t:'Audience', b4_d:'Who will use it, and whether the room is visited once or every day.',
+      b5_t:'Objective', b5_d:'What the experience should do for the visitor, the brand or the institution.',
+      b6_t:'Desired interaction', b6_d:'Touch, movement, cameras, plants, sound, multi-screen — or a question you want answered.',
+      b7_t:'Existing equipment', b7_d:'Screens, projectors, sensors or show-control already in the room, if any.',
+      b8_t:'Photographs, plans or measurements', b8_d:'Whatever exists. They help us read geometry, light and circulation.',
+      cta_title:'Have a space the public should be able to change?',
+      cta_sub:'Tell us the space, the city, the calendar and the interaction you want. We can help define the system, the prototype and the install scope.',
+      e_faq:'FAQ', faq_title:'Questions we are usually asked.',
+      q1_t:'What can an interactive installation respond to?',
+      q1_d:'Touch, presence and movement, cameras and motion tracking, physical sensors, and MIDI / OSC for real-time control. Biointerface also uses living plants as capacitive inputs. We do not use facial recognition on these systems.',
+      q2_t:'Can you work with existing screens, projectors or sensors?',
+      q2_d:'Yes, when they fit the interaction. Biointerface was routed to LED screens over NDI / Spout. Whether existing equipment can be used is decided after we see the space, the signal paths and the brief — not in advance for every room.',
+      q3_t:'Do you prototype the interaction before installation?',
+      q3_d:'Yes. Interaction, sensor behaviour and real-time visuals are developed and tested before on-site installation. How far the prototype goes is set with the project, not as a fixed package.',
+      q4_t:'Can an installation combine sound and real-time visuals?',
+      q4_d:'Yes, when the brief requires it. Museo Descubre’s sensor walls combine touch, sound and light. Biointerface maps MIDI / OSC into the same real-time engine as the visuals. Sound is designed with the picture, not added as an afterthought.',
+      q5_t:'What information do you need to evaluate a space?',
+      q5_d:'Type of space, city, approximate calendar, audience, objective, the interaction you want, any existing equipment, and photographs, plans or measurements if they exist. Send what you have — we can say what else would help.',
+      q6_t:'Do you work with agencies and production partners?',
+      q6_d:'Yes. Museo Descubre was delivered with agency, brand and public-sector partners. Roles and scope are agreed per project.',
+      rights:'All rights reserved.',
+      doc_title:'Interactive Installations Studio | ANDATA LAB'
+    },
+    es: {
+      nav_home:'Inicio', nav_work:'Proyectos', nav_ii:'Instalaciones interactivas', nav_map:'Projection Mapping',
+      nav_hosp:'Hospitality', nav_museum:'Museo Descubre', nav_bio:'Biointerface',
+      nav_contact:'Contacto', cta_start:'Inicia un proyecto',
+      eyebrow:'Estudio de tecnología experiencial · Sistemas interactivos',
+      hero_h1:'Instalaciones interactivas para museos, marcas y espacio público',
+      hero_sub:'ANDATA LAB diseña y produce instalaciones interactivas en las que el público puede afectar imagen, sonido, luz o contenido digital — de salas con sensores a entornos generativos en tiempo real.',
+      hero_studio:'Experiencias inmersivas, con ingeniería.',
+      cta_btn:'Iniciar un proyecto de instalación interactiva',
+      cta_work:'Ver trabajo seleccionado',
+      e_offer:'Qué construimos', offer_title:'Experiencias que el público puede cambiar.',
+      offer_p1:'Diseñamos y producimos instalaciones en las que las personas no son espectadoras. El tacto, la presencia, las cámaras y los sensores físicos pueden mover imagen, luz y — cuando el brief lo pide — sonido.',
+      offer_p2:'El trabajo es de sitio específico. La interacción, el contenido y los sistemas se construyen para la sala, y luego se instalan y se prueban ahí. Superficies relacionadas: <a href="../projection-mapping/">projection mapping</a> y <a href="../hospitality/">entornos permanentes de hospitality</a>.',
+      o1_t:'Salas accionadas por sensores', o1_d:'Espacios temáticos donde muros, pantallas y exhibiciones reaccionan a quienes están dentro — como en la renovación del Museo Descubre.',
+      o2_t:'Instalaciones que responden al tacto', o2_d:'Manos, superficies y entradas capacitivas que disparan gráficas, color y media en tiempo real.',
+      o3_t:'Sistemas de movimiento y presencia', o3_d:'Motion tracking, Kinect y cámara para que el cuerpo — no un botón — dé forma a lo que aparece.',
+      o4_t:'Entornos generativos en tiempo real', o4_d:'Motores en TouchDesigner y GLSL que generan visuales en vivo a partir de datos de sensores, no un archivo terminado en loop.',
+      o5_t:'Instalaciones interactivas multi-pantalla', o5_d:'Lienzos compuestos ruteados a varias pantallas a la vez — como el entorno de tres pantallas de Biointerface.',
+      o6_t:'Sonido interactivo con la imagen', o6_d:'Cuando el brief lo requiere, el sonido puede ir con la imagen — los muros con sensores del Museo Descubre unen tacto, sonido y luz.',
+      e_in:'Cómo puede interactuar el público', in_title:'Entradas que ya corremos.',
+      in_p:'A qué responde una instalación se decide con el brief. No todo proyecto usa todas las entradas. En estos sistemas no usamos reconocimiento facial.',
+      i1_t:'Tacto', i1_d:'Manos sobre muros, mesas y sensores. Museo Descubre usa sensores táctiles y de mano; Biointerface usa tacto capacitivo en plantas vivas.',
+      i2_t:'Presencia y movimiento', i2_d:'Quienes entran a una sala, se detienen en un muro o se mueven por un campo mapeado pueden cambiar lo que el sistema muestra.',
+      i3_t:'Cámaras y motion tracking', i3_d:'Motion tracking en el piso del museo; Kinect y cámara dentro de Biointerface.',
+      i4_t:'Sensores físicos', i4_d:'Arduino y hardware capacitivo cableado a la máquina de show-control — electrónica a medida, no una línea de producto propia.',
+      i5_t:'MIDI / OSC y control en tiempo real', i5_d:'Datos de sensores y MIDI/OSC mapeados en TouchDesigner para que operadores y otros sistemas muevan el mismo motor.',
+      i6_t:'Interfaces biológicas y no convencionales', i6_d:'Biointerface cablea plantas vivas como instrumentos capacitivos. Es un ejemplo construido — no una afirmación de que todo brief use biología.',
+      e_who:'Para quién', who_title:'Equipos que necesitan al público en el circuito.',
+      who_p:'Trabajamos con agencias, marcas, productores, museos, galerías, festivales, exhibiciones y espacios públicos cuando el brief necesita que las personas afecten la media. No afirmamos atender cualquier industria ni cualquier escala. El alcance sigue al espacio, a la interacción y al calendario.',
+      w1_t:'Marcas y agencias', w1_d:'Momentos de marca en el espacio y producciones en sociedad. Museo Descubre se entregó con IPG Mediabrands y Nissan entre los aliados del proyecto.',
+      w2_t:'Museos y espacios culturales', w2_d:'Exhibiciones y salas con sensores que enseñan a través de la interacción — documentadas en el Museo Descubre, Aguascalientes.',
+      w3_t:'Exhibiciones y galerías', w3_d:'Sistemas de arte interactivo con visuales generativos en tiempo real, como Biointerface.',
+      w4_t:'Festivales y eventos en vivo', w4_d:'Entornos interactivos temporales cuando la interacción, el equipo y la ventana de montaje se pueden definir de antemano.',
+      w5_t:'Espacios públicos y educativos', w5_d:'Salas hechas para uso repetido — probadas con público real antes de abrir, como en el piso del Museo Descubre.',
+      e_case:'Trabajo seleccionado', case_title:'Sistemas ya construidos.',
+      case_note:'El servicio es lo que vendemos. Estos casos son lo que podemos mostrar en público hoy.',
+      c0_kicker:'Experiencia interactiva de Halloween · Plaza Camino Al Mar, Mazatlán',
+      c0_p:'Un muro de IA que lee el cuerpo en tiempo real — body tracking, TouchDesigner y visuales generativos. Quien entra se vuelve parte de la imagen.',
+      c0_go:'Leer el caso El Umbral →',
+      c1_kicker:'Exhibiciones interactivas de museo · Aguascalientes',
+      c1_p:'Dirección creativa, gestión de proyecto y sistemas interactivos para la renovación 2024 — zonas temáticas de ciencia, sensores táctiles y de mano, motion tracking, muros con sensores y gráficos en tiempo real, instalados y probados en sala.',
+      c1_go:'Leer el caso Museo Descubre →',
+      c2_kicker:'Instalación de arte interactivo · sensores · visuales en tiempo real',
+      c2_p:'Plantas vivas cableadas como entradas capacitivas, Kinect y cámara, y un motor TouchDesigner con GLSL que mueve visuales generativos en un lienzo de tres pantallas, ruteado por NDI / Spout.',
+      c2_go:'Leer el caso Biointerface →',
+      e_proc:'Proceso', proc_title:'De la sala a un sistema en marcha.',
+      proc_note:'Los pasos son consistentes. Qué tan profundo llega cada uno depende del espacio, la interacción, el equipo existente y el calendario. No hay un tiempo universal.',
+      p1_t:'Descubrimiento y requerimientos de sitio', p1_d:'El espacio, el público, el objetivo y lo que ya existe en sitio — pantallas, proyectores, sensores, energía, geometría y luz.',
+      p2_t:'Concepto de interacción', p2_d:'Qué hace la gente, qué regresa el sistema, y cómo eso sirve a la historia de la sala.',
+      p3_t:'Prototipo', p3_d:'La interacción se desarrolla y se prueba antes de instalarse a escala — estudios en tiempo real, comportamiento de sensores y respuesta visual.',
+      p4_t:'Desarrollo de contenido y sistema', p4_d:'Gráficos, show control, sensores y playback ingenierizados para correr como un solo sistema — TouchDesigner, y Unity3D o Arduino cuando el brief lo necesita.',
+      p5_t:'Integración e instalación', p5_d:'Ensamble en sitio, mapeo, cableado y calibración a la geometría y la luz reales del recinto.',
+      p6_t:'Pruebas y plan de operación', p6_d:'Los sistemas se prueban con público real cuando el proyecto lo requiere, y se entregan con un plan de cómo corre la sala.',
+      e_stack:'Tecnologías', stack_title:'Herramientas al servicio de la experiencia.',
+      stack_note:'El stack es un medio. Lo elegimos para que el público pueda cambiar lo que ve, oye o toca — no para encabezar con nombres de software.',
+      t1:'Kinect y cámara', t2:'Sensores capacitivos', t3:'Motion tracking', t4:'Gráficos en tiempo real',
+      e_rel:'Capacidades relacionadas', rel_title:'El mismo estudio, otras superficies.',
+      r1_t:'Projection mapping', r1_d:'Mapping arquitectónico, contenido 3D, playback en TouchDesigner y calibración en sitio.',
+      r2_t:'Entornos de hospitality', r2_d:'Entornos permanentes responsivos y amenidades interactivas para resorts.',
+      r3_t:'Exhibiciones interactivas de museo', r3_d:'Salas con sensores y muros interactivos — Museo Descubre, Aguascalientes.',
+      r4_t:'Biointerface', r4_d:'Sensores en plantas, Kinect y visuales generativos en tiempo real en un lienzo multi-pantalla.',
+      e_brief:'Brief de proyecto', brief_title:'Qué necesitamos para iniciar una conversación.',
+      brief_note:'Envía lo que tengas. La información incompleta igual sirve — podemos decir qué más ayudaría a evaluar el espacio.',
+      b1_t:'Tipo de espacio', b1_d:'Museo, galería, activación de marca, festival, sala pública o educativa.',
+      b2_t:'Ciudad', b2_d:'Dónde vivirá la instalación.',
+      b3_t:'Fecha o calendario aproximado', b3_d:'Aperturas, ventanas de montaje o una temporada — un rango alcanza para empezar.',
+      b4_t:'Audiencia', b4_d:'Quién la usará, y si la sala se visita una vez o todos los días.',
+      b5_t:'Objetivo', b5_d:'Qué debe hacer la experiencia para el visitante, la marca o la institución.',
+      b6_t:'Interacción deseada', b6_d:'Tacto, movimiento, cámaras, plantas, sonido, multi-pantalla — o una pregunta que quieras resolver.',
+      b7_t:'Equipo existente', b7_d:'Pantallas, proyectores, sensores o show-control ya en la sala, si los hay.',
+      b8_t:'Fotografías, planos o medidas', b8_d:'Lo que exista. Ayudan a leer geometría, luz y circulación.',
+      cta_title:'¿Tienes un espacio que el público debería poder cambiar?',
+      cta_sub:'Cuéntanos el espacio, la ciudad, el calendario y la interacción que quieres. Podemos ayudar a definir el sistema, el prototipo y el alcance de montaje.',
+      e_faq:'Preguntas', faq_title:'Preguntas que suelen hacernos.',
+      q1_t:'¿A qué puede responder una instalación interactiva?',
+      q1_d:'Tacto, presencia y movimiento, cámaras y motion tracking, sensores físicos, y MIDI / OSC para control en tiempo real. Biointerface también usa plantas vivas como entradas capacitivas. En estos sistemas no usamos reconocimiento facial.',
+      q2_t:'¿Pueden trabajar con pantallas, proyectores o sensores existentes?',
+      q2_d:'Sí, cuando encajan con la interacción. Biointerface se ruteó a pantallas LED por NDI / Spout. Si el equipo existente se puede usar se decide al ver el espacio, las rutas de señal y el brief — no de antemano para cualquier sala.',
+      q3_t:'¿Prototipan la interacción antes de la instalación?',
+      q3_d:'Sí. La interacción, el comportamiento de los sensores y los visuales en tiempo real se desarrollan y se prueban antes del montaje en sitio. Hasta dónde llega el prototipo se define con el proyecto, no como un paquete fijo.',
+      q4_t:'¿Una instalación puede combinar sonido y visuales en tiempo real?',
+      q4_d:'Sí, cuando el brief lo requiere. Los muros con sensores del Museo Descubre unen tacto, sonido y luz. Biointerface mapea MIDI / OSC al mismo motor en tiempo real que los visuales. El sonido se diseña con la imagen, no se agrega al final.',
+      q5_t:'¿Qué información necesitan para evaluar un espacio?',
+      q5_d:'Tipo de espacio, ciudad, calendario aproximado, audiencia, objetivo, la interacción que quieres, el equipo existente, y fotografías, planos o medidas si existen. Envía lo que tengas — podemos decir qué más ayudaría.',
+      q6_t:'¿Trabajan con agencias y socios de producción?',
+      q6_d:'Sí. Museo Descubre se entregó con aliados de agencia, marca y sector público. Los roles y el alcance se acuerdan por proyecto.',
+      rights:'Todos los derechos reservados.',
+      doc_title:'Interactive Installations Studio | ANDATA LAB'
+    }
+  };
+
+  function pickLang(){
+    var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+    if(saved==='en'||saved==='es') return saved;
+    return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+  }
+  var lang = pickLang();
+
+  function apply(){
+    var dict = I18N[lang] || I18N.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(function(node){
+      var k = node.getAttribute('data-i18n');
+      if(dict[k]!=null) node.innerHTML = dict[k];
+    });
+    if(dict.doc_title) document.title = dict.doc_title;
+    var btn = document.getElementById('lang-toggle');
+    if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+  }
+  apply();
+
+  var toggle = document.getElementById('lang-toggle');
+  if(toggle) toggle.addEventListener('click', function(){
+    lang = (lang==='en') ? 'es' : 'en';
+    try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+    apply();
+  });
+
+  var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+  var reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    reveals.forEach(function(r){ io.observe(r); });
+  } else {
+    reveals.forEach(function(r){ r.classList.add('in'); });
+  }
+
+  var hero = document.getElementById('hero-video');
+  if(hero && window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    hero.removeAttribute('autoplay');
+    hero.pause();
+  }
+})();
+</script>
+</body>
+</html>

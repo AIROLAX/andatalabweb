@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en" data-default-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="index,follow">
+<title>El Umbral | Interactive Halloween AI Wall · ANDATA LAB</title>
+<meta name="description" content="El Umbral — an interactive Halloween wall at Plaza Camino Al Mar, Mazatlán. Body tracking, TouchDesigner and real-time AI visuals by ANDATA LAB. Who enters becomes part of the show.">
+<link rel="canonical" href="https://www.andatalab.com/el-umbral/">
+<link rel="icon" type="image/png" href="../Imagenes/logo-mark.png">
+<link rel="preload" as="image" href="img/hero-poster.jpg">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Andata Lab">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_MX">
+<meta property="og:title" content="El Umbral | Interactive Halloween AI Wall · ANDATA LAB">
+<meta property="og:description" content="An interactive Halloween wall at Plaza Camino Al Mar, Mazatlán: body tracking and real-time AI visuals. Visitors step in and become the image.">
+<meta property="og:url" content="https://www.andatalab.com/el-umbral/">
+<meta property="og:image" content="https://www.andatalab.com/el-umbral/img/og.jpg">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="Visitor silhouetted against El Umbral, an AI-generated wall of stars and a figure reaching toward the public at Plaza Camino Al Mar, Mazatlán">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="El Umbral | Interactive Halloween AI Wall · ANDATA LAB">
+<meta name="twitter:description" content="Body tracking and a live AI wall for Plaza Camino Al Mar, Mazatlán. Who enters becomes part of the show.">
+<meta name="twitter:image" content="https://www.andatalab.com/el-umbral/img/og.jpg">
+
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --maxw:1140px; --pad:clamp(20px,4vw,48px); --nav-h:64px;
+    --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; background:var(--bg); }
+  body{ color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  img,video{ display:block; }
+  ::selection{ background:rgba(60,220,255,.22); }
+  a{ color:inherit; text-decoration:none; }
+
+  header.nav{
+    position:fixed; inset:0 0 auto 0; z-index:60; height:var(--nav-h);
+    display:flex; align-items:center; gap:22px; padding:0 var(--pad);
+    background:rgba(255,255,255,.82); border-bottom:1px solid var(--hair-2);
+    backdrop-filter:blur(16px) saturate(1.2); -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  }
+  .brand{ display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600; letter-spacing:.04em; color:var(--ink); }
+  .brand-mark{ width:22px; height:22px; object-fit:contain; }
+  .brand-asterisk{ margin-left:-.07em; }
+  .nav-links{ display:flex; gap:24px; margin-left:auto; align-items:center; }
+  .nav-links a{ font-size:14px; color:var(--ink-2); transition:color .3s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.is-here{ color:var(--ink); }
+  .nav-links a.nav-cta{
+    font-family:inherit; font-size:13.5px; font-weight:600; letter-spacing:-.01em;
+    padding:8px 16px; border-radius:999px; white-space:nowrap;
+    border:1px solid var(--ink); background:var(--ink); color:#fff;
+  }
+  @media (max-width:860px){ .nav-cta{ display:none; } }
+  .lang-toggle{
+    font-family:inherit; font-size:12px; font-weight:600; letter-spacing:.08em;
+    width:40px; height:30px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--hair); background:var(--surface); color:var(--ink-2);
+    transition:all .3s cubic-bezier(.16,1,.3,1);
+  }
+  .lang-toggle:hover{ border-color:var(--ink); color:var(--ink); }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 var(--pad); }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:999px; background:var(--spectrum); box-shadow:0 0 8px rgba(60,220,255,.5); }
+
+  .back{
+    position:fixed; top:calc(var(--nav-h) + 14px + var(--safe-t)); left:var(--pad); z-index:55;
+    display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2);
+    padding:9px 15px; border-radius:999px; background:rgba(255,255,255,.7);
+    border:1px solid var(--hair-2); box-shadow:var(--shadow-card);
+    backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), color .3s, box-shadow .3s;
+  }
+  .back:hover{ transform:translateY(-2px); color:var(--ink); box-shadow:var(--shadow-lift); }
+  .back svg{ width:15px; height:15px; }
+
+  .hero{ padding:calc(var(--nav-h) + clamp(64px,12vh,120px)) 0 clamp(40px,7vh,72px); }
+  .hero-head{ max-width:840px; }
+  .hero h1{ font-size:clamp(2.6rem,7vw,5.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.02; margin:16px 0 0; text-wrap:balance; }
+  .hero-kicker{ font-size:clamp(1.12rem,2.2vw,1.4rem); font-weight:600; letter-spacing:-.02em; color:var(--ink); line-height:1.35; margin:14px 0 0; max-width:720px; }
+  .hero-aka{ font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin:10px 0 0; }
+  .hero-sub{ font-size:var(--fs-lead); color:var(--ink-2); line-height:1.55; margin:16px 0 0; max-width:720px; }
+  .hero-media{
+    position:relative; margin-top:clamp(32px,5vw,56px);
+    border-radius:var(--r-xl); overflow:hidden; background:#05060a;
+    aspect-ratio:16/9; box-shadow:var(--shadow-lift); cursor:pointer;
+  }
+  .hero-media .hero-fg{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0; transition:opacity .7s ease;
+  }
+  .hero-media .hero-fg.is-on{ opacity:1; }
+
+  .meta{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1px; background:var(--hair-2); border:1px solid var(--hair-2); border-radius:var(--r-lg); overflow:hidden; margin-top:clamp(28px,4vw,40px); }
+  .meta div{ background:var(--bg); padding:20px 22px; }
+  .meta dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .meta dd{ margin:0; font-size:15px; font-weight:600; letter-spacing:-.01em; color:var(--ink); }
+
+  section.block{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .sec-title{ font-size:clamp(1.6rem,3.4vw,2.4rem); font-weight:700; letter-spacing:-.03em; margin:14px 0 0; text-wrap:balance; }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,4vw,56px); align-items:start; }
+  @media (max-width:760px){ .two-col{ grid-template-columns:1fr; } }
+  .prose p{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); margin:0 0 16px; }
+  .prose p:last-child{ margin-bottom:0; }
+  .prose p strong{ color:var(--ink); font-weight:600; }
+  .prose a{ color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  .lead-note{ font-size:1.02rem; line-height:1.7; color:var(--ink-2); max-width:720px; margin:16px 0 0; }
+
+  .phases{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .phase{ display:grid; grid-template-columns:auto 1fr; gap:22px; align-items:start; padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .phase:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .phase-n{ font-size:13px; font-weight:700; letter-spacing:.1em; color:var(--ink-3); font-variant-numeric:tabular-nums; padding-top:4px; }
+  .phase h3{ font-size:1.12rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .phase p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:10px; margin-top:clamp(24px,3vw,36px); }
+  .tag{ padding:11px 20px; border-radius:999px; font-size:14px; font-weight:500; background:var(--surface); border:1px solid var(--hair-2); color:var(--ink); }
+
+  .plates{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:clamp(28px,4vw,44px); align-items:start; }
+  @media (max-width:760px){ .plates{ grid-template-columns:1fr; } }
+  .plate{ margin:clamp(28px,4vw,44px) 0 0; border-radius:var(--r-xl); overflow:hidden; background:#05060a; border:1px solid var(--hair-2); box-shadow:var(--shadow-card); }
+  .plates .plate{ margin-top:0; }
+  .plate--wide{ grid-column:1 / -1; }
+  .plate--diagram{ background:#F5F5F7; }
+  .plate img,.plate video{ width:100%; height:auto; object-fit:contain; background:#05060a; }
+  .plate--diagram img{ background:#F5F5F7; }
+  .plate[data-src]{ cursor:zoom-in; }
+  .plate figcaption{ padding:14px 18px; font-size:13px; color:var(--ink-2); border-top:1px solid var(--hair-2); background:var(--surface); }
+
+  .film{ position:relative; overflow:hidden; background:#05060a; }
+  .film--land{ aspect-ratio:16/9; }
+  .film-fg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .film-fg.lazy-vid{ opacity:0; transition:opacity .45s ease; }
+  .film-fg.lazy-vid.is-loaded{ opacity:1; }
+
+  .film-toggle{
+    position:absolute; z-index:3; left:12px; bottom:12px;
+    width:40px; height:40px; padding:0; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.22); background:rgba(5,6,10,.42); color:#fff;
+    display:grid; place-items:center;
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    transition:background .25s, transform .25s;
+  }
+  .film-toggle:hover{ background:rgba(5,6,10,.62); transform:scale(1.04); }
+  .film-toggle:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+  .film-toggle svg{ width:14px; height:14px; display:block; }
+  .hero-media .film-toggle{ left:16px; bottom:16px; }
+
+  .pair{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:clamp(28px,4vw,44px); align-items:start; }
+  @media (max-width:760px){ .pair{ grid-template-columns:1fr; } }
+  .pair .plate{ margin-top:0; }
+
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  @media (max-width:900px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .gallery{ grid-template-columns:1fr; } }
+  .shot{ position:relative; aspect-ratio:16/9; border-radius:var(--r-lg); overflow:hidden; background:var(--surface-2); box-shadow:var(--shadow-card); transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+  .shot:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .shot img,.shot video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s cubic-bezier(.16,1,.3,1); }
+  .shot:hover img,.shot:hover video{ transform:scale(1.05); }
+  .shot--wide{ grid-column:span 2; }
+  @media (max-width:560px){ .shot--wide{ grid-column:span 1; } }
+  .shot[data-src]{ cursor:zoom-in; }
+
+  .related-cards{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:clamp(24px,3vw,36px); }
+  @media (max-width:760px){ .related-cards{ grid-template-columns:1fr; } }
+  .related-card{
+    display:block; padding:22px 24px; border-radius:var(--r-lg);
+    border:1px solid var(--hair-2); background:var(--surface);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+  }
+  .related-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-lift); }
+  .related-card h3{ margin:0 0 8px; font-size:1.05rem; letter-spacing:-.02em; }
+  .related-card p{ margin:0; font-size:.95rem; color:var(--ink-2); line-height:1.5; }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .stat{ padding:28px 26px; border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .stat .big{ font-size:clamp(1.5rem,3vw,2.1rem); font-weight:800; letter-spacing:-.03em; line-height:1.05; }
+  .stat .cap{ margin-top:10px; font-size:14px; color:var(--ink-2); line-height:1.5; }
+
+  .credits{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:clamp(24px,3vw,36px); }
+  ul.tags{ list-style:none; padding:0; }
+  .faq{ display:grid; gap:16px; margin-top:clamp(28px,4vw,44px); }
+  .faq-item{ padding:24px clamp(20px,3vw,30px); border-radius:var(--r-lg); background:var(--surface); border:1px solid var(--hair-2); }
+  .faq-item h3{ font-size:1.08rem; font-weight:600; letter-spacing:-.02em; margin:0 0 8px; }
+  .faq-item p{ font-size:.97rem; line-height:1.6; color:var(--ink-2); margin:0; }
+  .credit{ padding:18px 20px; border-radius:var(--r-md); border:1px solid var(--hair-2); }
+  .credit dt{ font-size:var(--fs-label); letter-spacing:var(--tr-label); text-transform:uppercase; color:var(--ink-3); margin:0 0 6px; }
+  .credit dd{ margin:0; font-size:15px; font-weight:600; color:var(--ink); }
+
+  .cta{ padding:clamp(48px,8vh,96px) 0; border-top:1px solid var(--hair-2); }
+  .cta-panel{ position:relative; overflow:hidden; border-radius:var(--r-xl); padding:clamp(36px,6vw,72px); background:var(--ink); color:var(--on-accent); text-align:center; box-shadow:var(--shadow-lift); }
+  .cta-panel h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); font-weight:700; letter-spacing:-.03em; margin:0; color:#fff; text-wrap:balance; }
+  .cta-panel p{ color:rgba(255,255,255,.7); font-size:1.05rem; margin:16px auto 0; max-width:520px; }
+  .btn{ font-family:inherit; font-size:15px; font-weight:600; letter-spacing:-.01em; padding:15px 30px; border-radius:999px; cursor:pointer; border:1px solid #fff; background:#fff; color:#111; display:inline-flex; align-items:center; gap:8px; margin-top:28px; transition:transform .25s, box-shadow .25s; }
+  .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 40px rgba(0,0,0,.3); }
+
+  footer.foot{ border-top:1px solid var(--hair-2); padding:44px 0; }
+  .foot-inner{ display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; }
+  .foot-inner p{ font-size:13px; color:var(--ink-3); margin:0; }
+  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .foot-links a{ font-size:13px; font-weight:500; color:var(--ink-2); transition:color .3s; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  .lb{ position:fixed; inset:0; z-index:80; background:rgba(5,6,10,.94); display:flex; align-items:center; justify-content:center; padding:clamp(16px,4vw,48px); }
+  .lb[hidden]{ display:none !important; }
+  .lb video{ max-width:min(94vw,1120px); max-height:86vh; width:auto; height:auto; border-radius:var(--r-lg); background:#000; }
+  .lb-close{
+    position:absolute; top:max(16px, env(safe-area-inset-top)); right:max(16px, env(safe-area-inset-right));
+    z-index:2; width:44px; height:44px; border-radius:999px; cursor:pointer;
+    border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.08); color:#fff; display:grid; place-items:center;
+  }
+  .lb-close:hover{ background:rgba(255,255,255,.16); }
+  .lb-close svg{ width:18px; height:18px; }
+  body.lb-open{ overflow:hidden; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{ opacity:1; transform:none; }
+    .hero-media .hero-fg{ opacity:1; }
+    .film-toggle:hover{ transform:none; }
+  }
+</style>
+<script src="/analytics.js" defer></script>
+</head>
+<body data-brand="andata">
+
+  <header class="nav">
+    <a class="brand" href="../" aria-label="Andata Lab">
+      <img class="brand-mark" src="../Imagenes/logo-mark.png" width="22" height="22" alt="">Andata&nbsp;Lab<span class="brand-asterisk">*</span>
+    </a>
+    <nav class="nav-links">
+      <a class="is-here" href="../#work" data-i18n="nav_work">Work</a>
+      <a href="../dome-studio/" data-i18n="nav_dome">Dome Studio</a>
+      <a href="../hospitality/" data-i18n="nav_hosp">Hospitality</a>
+      <a href="../#process" data-i18n="nav_process">Process</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">ES</button>
+      <a class="nav-cta" href="../#contact" data-i18n="cta_start">Start a project</a>
+    </nav>
+  </header>
+
+  <a class="back" href="../#work">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span data-i18n="back">Back to work</span>
+  </a>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-head reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="eyebrow">Case study · Interactive Halloween experience</span></span>
+          <h1 data-i18n="hero_h1">El Umbral</h1>
+          <p class="hero-aka" data-i18n="hero_aka">The Threshold</p>
+          <p class="hero-kicker" data-i18n="hero_kicker">An AI wall that answers the body.</p>
+          <p class="hero-sub" data-i18n="hero_sub">At Plaza Camino Al Mar in Mazatlán, ANDATA LAB built a real-time wall where whoever walks in becomes part of the image — body tracking, generative visuals and a Halloween room the mall could film.</p>
+        </div>
+
+        <div class="hero-media reveal" id="hero-open" role="button" tabindex="0" aria-label="Open El Umbral film">
+          <video id="hero-video" class="hero-fg" muted loop playsinline preload="metadata" poster="img/hero-poster.jpg" width="1280" height="720">
+            <source src="media/hero.mp4" type="video/mp4">
+          </video>
+          <button class="film-toggle" type="button" data-film-toggle aria-label="Pause">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+          </button>
+        </div>
+
+        <dl class="meta reveal">
+          <div><dt data-i18n="m_client">Client</dt><dd>Plaza Camino Al Mar</dd></div>
+          <div><dt data-i18n="m_loc">Location</dt><dd data-i18n="m_loc_v">Mazatlán, MX</dd></div>
+          <div><dt data-i18n="m_year">Year</dt><dd>2026</dd></div>
+          <div><dt data-i18n="m_disc">Discipline</dt><dd data-i18n="m_disc_v">Interactive installation</dd></div>
+          <div><dt data-i18n="m_stack">Stack</dt><dd>TouchDesigner · Body tracking</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="block" id="brief">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_brief">The brief</span></span>
+          <h2 class="sec-title" data-i18n="brief_title">A mall that needed a night people would stay for.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="brief_p1">Plaza Camino Al Mar asked ANDATA LAB for a Halloween destination — not a looping video on a wall, but a room where whoever walked in changed what was on screen.</p>
+          <p data-i18n="brief_p2">The brief was a public venue, a seasonal window in Mazatlán, and an audience that would film it. The wall had to read the body instantly, run without an operator in every cycle, and hold a queue of mall visitors — families, teens, people in costume.</p>
+          <p data-i18n="brief_p3">Season window: 24 Oct – 2 Nov 2026. Room / wall size: 8 × 5 m room · 6.5 m projection wall.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="film">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_film">The film</span></span>
+          <h2 class="sec-title" data-i18n="film_title">Who enters becomes part of the show.</h2>
+          <p class="lead-note" data-i18n="film_note">The 48-second piece we send to venues — English or Spanish, with sound. Click to open it.</p>
+        </div>
+        <figure class="plate reveal" id="reel-plate" data-src="media/reel-en.mp4" data-src-en="media/reel-en.mp4" data-src-es="media/reel-es.mp4" data-sound="1" role="button" tabindex="0" aria-label="Open El Umbral film with sound">
+          <div class="film film--land">
+            <video id="reel-video" class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/reel.jpg" data-src="media/hero.mp4" width="1280" height="720"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption data-i18n="cap_reel">El Umbral — The Threshold. Plaza Camino Al Mar, Mazatlán.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="block" id="experience">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_exp">The experience</span></span>
+          <h2 class="sec-title" data-i18n="exp_title">Step in. The wall already has you.</h2>
+          <p class="lead-note" data-i18n="exp_note">A dark room, a wide projection, a figure in the image that is you. Particles, generated bodies and 3D objects move with the public. A skeleton waits at the edge of the light.</p>
+        </div>
+        <figure class="plate reveal" data-src="media/film-room.mp4" role="button" tabindex="0" aria-label="Open El Umbral room film">
+          <div class="film film--land">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-room.jpg" data-src="media/film-room.mp4" width="1280" height="720"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption data-i18n="cap_room">Inside the room — the wall holding a live body in a field of stars.</figcaption>
+        </figure>
+        <div class="pair">
+          <figure class="plate reveal" data-src="media/film-body.mp4" role="button" tabindex="0" aria-label="Open body-tracking film">
+            <div class="film film--land">
+              <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-body.jpg" data-src="media/film-body.mp4" width="1280" height="720"></video>
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <figcaption data-i18n="cap_body">Body tracking — raise an arm, the image raises an arm.</figcaption>
+          </figure>
+          <figure class="plate reveal" data-src="media/film-ai.mp4" role="button" tabindex="0" aria-label="Open AI wall film">
+            <div class="film film--land">
+              <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-ai.jpg" data-src="media/film-ai.mp4" width="1280" height="720"></video>
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <figcaption data-i18n="cap_ai">The AI wall — a generated figure answering the visitor in real time.</figcaption>
+          </figure>
+        </div>
+        <div class="pair">
+          <figure class="plate reveal" data-src="media/film-particles.mp4" role="button" tabindex="0" aria-label="Open particle film">
+            <div class="film film--land">
+              <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-particles.jpg" data-src="media/film-particles.mp4" width="1280" height="720"></video>
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <figcaption data-i18n="cap_part">Particle field — the silhouette becomes a living surface.</figcaption>
+          </figure>
+          <figure class="plate reveal" data-src="media/film-object.mp4" role="button" tabindex="0" aria-label="Open 3D object film">
+            <div class="film film--land">
+              <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-object.jpg" data-src="media/film-object.mp4" width="1280" height="720"></video>
+              <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+            </div>
+            <figcaption data-i18n="cap_obj">3D objects in the volume — the body as the controller, not a button on a wall.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="space">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_space">In the space</span></span>
+          <h2 class="sec-title" data-i18n="space_title">Camera study, Plaza Camino Al Mar.</h2>
+          <p class="lead-note" data-i18n="space_note">The wall in the mall — bodies in the field, the room holding a queue, the picture answering whoever stands in it.</p>
+        </div>
+        <figure class="plate reveal" data-src="media/film-plaza.mp4" role="button" tabindex="0" aria-label="Open plaza camera study">
+          <div class="film film--land">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-plaza.jpg" data-src="media/film-plaza.mp4" width="1280" height="720"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption data-i18n="cap_plaza">October camera study at Plaza Camino Al Mar — the public in front of the wall.</figcaption>
+        </figure>
+        <figure class="plate reveal" data-src="media/film-night.mp4" role="button" tabindex="0" aria-label="Open night camera study">
+          <div class="film film--land">
+            <video class="lazy-vid film-fg" muted loop playsinline preload="none" poster="img/film-night.jpg" data-src="media/film-night.mp4" width="1280" height="720"></video>
+            <button class="film-toggle" type="button" data-film-toggle aria-label="Play">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+          </div>
+          <figcaption data-i18n="cap_night">A second pass in the room — the wall as a destination, not a loop on a screen.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="block" id="look">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_look">The image</span></span>
+          <h2 class="sec-title" data-i18n="look_title">What the wall can look like.</h2>
+          <p class="lead-note" data-i18n="look_note">Frames from the Halloween language — portal, forest, creature, the moment the picture breaks. Generated live in the same engine.</p>
+        </div>
+        <div class="gallery reveal">
+          <div class="shot shot--wide"><img src="img/still-portal.jpg" alt="El Umbral — a glowing portal on the AI wall at Plaza Camino Al Mar" loading="lazy" decoding="async" width="1600" height="900"></div>
+          <div class="shot"><img src="img/still-crossed.jpg" alt="El Umbral — a figure that has crossed the threshold, held in the generated image" loading="lazy" decoding="async" width="1600" height="900"></div>
+          <div class="shot"><img src="img/still-forest.jpg" alt="El Umbral — a living forest field generated on the interactive wall" loading="lazy" decoding="async" width="1600" height="900"></div>
+          <div class="shot"><img src="img/still-creature.jpg" alt="El Umbral — a generated creature answering the visitor in the room" loading="lazy" decoding="async" width="1600" height="900"></div>
+          <div class="shot"><img src="img/still-attack.jpg" alt="El Umbral — generated attack beat on the Halloween AI wall" loading="lazy" decoding="async" width="1600" height="900"></div>
+          <div class="shot shot--wide"><img src="img/still-break.jpg" alt="El Umbral — the portal breaking as the visitor stands in the field" loading="lazy" decoding="async" width="1600" height="900"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="how">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_how">How it works</span></span>
+          <h2 class="sec-title" data-i18n="how_title">Camera, body, engine, wall.</h2>
+        </div>
+        <div class="plates">
+          <figure class="plate plate--diagram plate--wide reveal">
+            <img src="img/signal-flow.svg" alt="El Umbral signal flow — depth camera, body tracking, TouchDesigner, generative AI wall and show control" loading="lazy">
+            <figcaption data-i18n="cap_flow">Signal flow — camera to silhouette to engine to wall. No facial recognition.</figcaption>
+          </figure>
+          <figure class="plate plate--diagram reveal">
+            <img src="img/system-map.svg" alt="El Umbral room map — projection wall, projector, depth camera, interaction field and queue" loading="lazy">
+            <figcaption data-i18n="cap_map">Room map — 8 × 5 m, a 6.5 m wall, camera and a field the public can enter.</figcaption>
+          </figure>
+          <figure class="plate plate--diagram reveal">
+            <img src="img/system-architecture.svg" alt="El Umbral system architecture — inputs, real-time engine, show control and projection output" loading="lazy">
+            <figcaption data-i18n="cap_arch">Architecture — inputs, TouchDesigner, generative AI, show control, output.</figcaption>
+          </figure>
+        </div>
+        <div class="phases">
+          <div class="phase reveal"><div class="phase-n">01</div><div><h3 data-i18n="p1_t">Body tracking</h3><p data-i18n="p1_d">A depth / camera read of the people in front of the wall. No facial recognition. The silhouette is enough — pose, motion, how many bodies are in the field.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">02</div><div><h3 data-i18n="p2_t">Real-time engine</h3><p data-i18n="p2_d">TouchDesigner maps that signal into visuals that never wait on a render. If the sensor drops, the show still runs — the picture does not go black.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">03</div><div><h3 data-i18n="p3_t">Generative AI wall</h3><p data-i18n="p3_d">Live image generation sits on the same engine, so the figure on the wall can look back at the visitor without a pre-rendered loop.</p></div></div>
+          <div class="phase reveal"><div class="phase-n">04</div><div><h3 data-i18n="p4_t">Show control</h3><p data-i18n="p4_d">A cycle the mall can run through a night: wait state, start, interaction window, close. Content can be swapped for another event without rebuilding the room.</p></div></div>
+        </div>
+        <ul class="tags reveal">
+          <li class="tag">TouchDesigner</li>
+          <li class="tag" data-i18n="t_track">Body tracking</li>
+          <li class="tag" data-i18n="t_ai">Generative AI</li>
+          <li class="tag" data-i18n="t_rt">Real-time graphics</li>
+          <li class="tag" data-i18n="t_proj">Projection</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="results">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_results">Results</span></span>
+          <h2 class="sec-title" data-i18n="results_title">Built to be entered, not watched.</h2>
+        </div>
+        <div class="stats reveal">
+          <div class="stat"><div class="big" data-i18n="s1_v">4,800</div><div class="cap" data-i18n="s1_c">Visitors through the room over the Halloween window.</div></div>
+          <div class="stat"><div class="big" data-i18n="s2_v">Live</div><div class="cap" data-i18n="s2_c">The wall answers the body in the room. People film it because they are in it.</div></div>
+          <div class="stat"><div class="big" data-i18n="s3_v">Mall-ready</div><div class="cap" data-i18n="s3_c">A public cycle, not a gallery piece — designed for queues, costumes and a Halloween night.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="venue">
+      <div class="wrap two-col reveal">
+        <div>
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_venue">What this means for your venue</span></span>
+          <h2 class="sec-title" data-i18n="venue_title">The same wall, another night.</h2>
+        </div>
+        <div class="prose">
+          <p data-i18n="venue_p1">El Umbral is a Halloween room in a mall. The system underneath is a surface, a camera and a live engine — which is what a plaza, a trade venue or a brand activation needs when the content has to change and the public has to be in the picture.</p>
+          <p data-i18n="venue_p2">We design the interaction, the engine and the install. You bring the space, the calendar and the audience. If you have a wall and a night, we can tell you what the room needs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="credits">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_credits">Credits</span></span>
+          <h2 class="sec-title" data-i18n="credits_title">ANDATA LAB in the room.</h2>
+        </div>
+        <dl class="credits reveal">
+          <div class="credit"><dt data-i18n="c_studio">Studio</dt><dd>Andata Lab</dd></div>
+          <div class="credit"><dt data-i18n="c_client">Client</dt><dd>Plaza Camino Al Mar</dd></div>
+          <div class="credit"><dt data-i18n="c_loc">Location</dt><dd data-i18n="c_loc_v">Mazatlán, MX</dd></div>
+          <div class="credit"><dt data-i18n="c_role">Role</dt><dd data-i18n="c_role_v">Interactive system · body tracking · real-time visuals · show control</dd></div>
+          <div class="credit"><dt data-i18n="c_tech">Engineering</dt><dd>TouchDesigner · camera tracking · generative AI</dd></div>
+          <div class="credit"><dt data-i18n="c_more">Additional credits</dt><dd data-i18n="c_more_v">On-site operations · Plaza Camino Al Mar</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="block" id="faq">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_faq">FAQ</span></span>
+          <h2 class="sec-title" data-i18n="faq_title">Interactive walls for malls, plazas and events</h2>
+        </div>
+        <div class="faq">
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q1">Can you put an interactive AI wall in a mall or plaza?</h3>
+            <p data-i18n="faq_a1">Yes. El Umbral ran at Plaza Camino Al Mar in Mazatlán. The same stack — camera, TouchDesigner, a projection or LED surface — can live in a mall, a trade venue or a brand room. Send the space and the dates.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q2">Does the system use facial recognition?</h3>
+            <p data-i18n="faq_a2">No. El Umbral reads the body as a silhouette — pose and motion. We do not run facial recognition on this system.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q3">Can the content change for another event?</h3>
+            <p data-i18n="faq_a3">Yes. The wall is an engine, not a single film. Halloween was the first public night. The same room can carry another story if the brief, the calendar and the surface allow it.</p>
+          </div>
+          <div class="faq-item reveal">
+            <h3 data-i18n="faq_q4">How long does an install like this take?</h3>
+            <p data-i18n="faq_a4">It depends on the room, the throw, the sensor position and whether the surface already exists. El Umbral was three days on site. Tell us the space and we will say what the calendar needs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="related">
+      <div class="wrap">
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span><span class="ds-label" data-i18n="e_rel">Related</span></span>
+          <h2 class="sec-title" data-i18n="rel_title">The same engine language, other rooms.</h2>
+        </div>
+        <div class="related-cards">
+          <a class="related-card" href="../biointerface/">
+            <h3>Biointerface</h3>
+            <p data-i18n="rel_bio">Sensor-driven interactive installation — the body as input.</p>
+          </a>
+          <a class="related-card" href="../museo-descubre/">
+            <h3>Museo Descubre</h3>
+            <p data-i18n="rel_museo">Interactive museum exhibits with motion-tracked rooms.</p>
+          </a>
+          <a class="related-card" href="../interactive-installations/">
+            <h3 data-i18n="rel_ii_t">Interactive Installations</h3>
+            <p data-i18n="rel_ii">Sensor rooms, cameras and real-time systems the public can shape.</p>
+          </a>
+          <a class="related-card" href="../projection-mapping/">
+            <h3 data-i18n="rel_map_t">Projection Mapping</h3>
+            <p data-i18n="rel_map">Facades, rooms and events — from surface study to on-site calibration.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap reveal">
+        <div class="cta-panel">
+          <h2 data-i18n="cta_title">Have a wall the public should be able to enter?</h2>
+          <p data-i18n="cta_sub">We design interactive installations and real-time AI walls for malls, plazas, museums and brand nights. Tell us about the space.</p>
+          <a class="btn" href="../#contact"><span data-i18n="cta_btn">Start a project</span> →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lb" id="lightbox" hidden>
+    <button class="lb-close" type="button" id="lb-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <video id="lb-video" muted loop playsinline controls></video>
+  </div>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>© <span id="year">2026</span> Andata Lab. <span data-i18n="rights">All rights reserved.</span></p>
+      <div class="foot-links">
+        <a href="../#work" data-i18n="nav_work">Work</a>
+        <a href="../interactive-installations/" data-i18n="nav_ii">Interactive Installations</a>
+        <a href="../biointerface/" data-i18n="nav_bio">Biointerface</a>
+        <a href="../#contact" data-i18n="nav_contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.andatalab.com/#organization",
+      "name": "ANDATA LAB",
+      "url": "https://www.andatalab.com/",
+      "email": "argel@andatalab.com",
+      "logo": "https://www.andatalab.com/Imagenes/logo-mark.png",
+      "sameAs": [
+        "https://www.instagram.com/andata_lab/",
+        "https://www.youtube.com/@ANDATALAB"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.andatalab.com/el-umbral/#webpage",
+      "url": "https://www.andatalab.com/el-umbral/",
+      "inLanguage": "en",
+      "name": "El Umbral | Interactive Halloween AI Wall · ANDATA LAB",
+      "description": "El Umbral — an interactive Halloween wall at Plaza Camino Al Mar, Mazatlán. Body tracking, TouchDesigner and real-time AI visuals by ANDATA LAB.",
+      "isPartOf": { "@id": "https://www.andatalab.com/#organization" },
+      "mainEntity": [
+        { "@id": "https://www.andatalab.com/el-umbral/#work" },
+        { "@id": "https://www.andatalab.com/el-umbral/#faq" }
+      ]
+    },
+    {
+      "@type": "CreativeWork",
+      "@id": "https://www.andatalab.com/el-umbral/#work",
+      "name": "El Umbral",
+      "alternateName": "The Threshold",
+      "creator": { "@id": "https://www.andatalab.com/#organization" },
+      "producer": { "@id": "https://www.andatalab.com/#organization" },
+      "dateCreated": "2026",
+      "genre": "Interactive installation / body tracking / generative AI",
+      "description": "An interactive Halloween wall at Plaza Camino Al Mar, Mazatlán: body tracking and a real-time TouchDesigner engine driving generative AI visuals. Visitors become part of the image.",
+      "locationCreated": {
+        "@type": "Place",
+        "name": "Plaza Camino Al Mar",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Mazatlán",
+          "addressRegion": "Sinaloa",
+          "addressCountry": "MX"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "ANDATA LAB", "item": "https://www.andatalab.com/" },
+        { "@type": "ListItem", "position": 2, "name": "El Umbral", "item": "https://www.andatalab.com/el-umbral/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.andatalab.com/el-umbral/#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can you put an interactive AI wall in a mall or plaza?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. El Umbral ran at Plaza Camino Al Mar in Mazatlán. The same stack — camera, TouchDesigner, a projection or LED surface — can live in a mall, a trade venue or a brand room."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the system use facial recognition?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. El Umbral reads the body as a silhouette — pose and motion. We do not run facial recognition on this system."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can the content change for another event?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The wall is an engine, not a single film. Halloween was the first public night. The same room can carry another story if the brief, the calendar and the surface allow it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does an install like this take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the room, the throw, the sensor position and whether the surface already exists. El Umbral was three days on site. Tell us the space and we will say what the calendar needs."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+  <script>
+  (function(){
+    'use strict';
+    var LANG_KEY = 'andata_lang';
+    var I18N = {
+      en: {
+        nav_work:'Work', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Process',
+        nav_ii:'Interactive Installations', nav_bio:'Biointerface', nav_contact:'Contact',
+        cta_start:'Start a project', back:'Back to work',
+        eyebrow:'Case study · Interactive Halloween experience',
+        hero_h1:'El Umbral',
+        hero_aka:'The Threshold',
+        hero_kicker:'An AI wall that answers the body.',
+        hero_sub:'At Plaza Camino Al Mar in Mazatlán, ANDATA LAB built a real-time wall where whoever walks in becomes part of the image — body tracking, generative visuals and a Halloween room the mall could film.',
+        m_client:'Client', m_loc:'Location', m_loc_v:'Mazatlán, MX', m_year:'Year',
+        m_disc:'Discipline', m_disc_v:'Interactive installation', m_stack:'Stack',
+        e_brief:'The brief', brief_title:'A mall that needed a night people would stay for.',
+        brief_p1:'Plaza Camino Al Mar asked ANDATA LAB for a Halloween destination — not a looping video on a wall, but a room where whoever walked in changed what was on screen.',
+        brief_p2:'The brief was a public venue, a seasonal window in Mazatlán, and an audience that would film it. The wall had to read the body instantly, run without an operator in every cycle, and hold a queue of mall visitors — families, teens, people in costume.',
+        brief_p3:'Season window: 24 Oct – 2 Nov 2026. Room / wall size: 8 × 5 m room · 6.5 m projection wall.',
+        e_film:'The film', film_title:'Who enters becomes part of the show.',
+        film_note:'The 48-second piece we send to venues — English or Spanish, with sound. Click to open it.',
+        cap_reel:'El Umbral — The Threshold. Plaza Camino Al Mar, Mazatlán.',
+        e_exp:'The experience', exp_title:'Step in. The wall already has you.',
+        exp_note:'A dark room, a wide projection, a figure in the image that is you. Particles, generated bodies and 3D objects move with the public. A skeleton waits at the edge of the light.',
+        cap_room:'Inside the room — the wall holding a live body in a field of stars.',
+        cap_body:'Body tracking — raise an arm, the image raises an arm.',
+        cap_ai:'The AI wall — a generated figure answering the visitor in real time.',
+        cap_part:'Particle field — the silhouette becomes a living surface.',
+        cap_obj:'3D objects in the volume — the body as the controller, not a button on a wall.',
+        e_space:'In the space', space_title:'Camera study, Plaza Camino Al Mar.',
+        space_note:'The wall in the mall — bodies in the field, the room holding a queue, the picture answering whoever stands in it.',
+        cap_plaza:'October camera study at Plaza Camino Al Mar — the public in front of the wall.',
+        cap_night:'A second pass in the room — the wall as a destination, not a loop on a screen.',
+        e_look:'The image', look_title:'What the wall can look like.',
+        look_note:'Frames from the Halloween language — portal, forest, creature, the moment the picture breaks. Generated live in the same engine.',
+        e_how:'How it works', how_title:'Camera, body, engine, wall.',
+        cap_flow:'Signal flow — camera to silhouette to engine to wall. No facial recognition.',
+        cap_map:'Room map — 8 × 5 m, a 6.5 m wall, camera and a field the public can enter.',
+        cap_arch:'Architecture — inputs, TouchDesigner, generative AI, show control, output.',
+        p1_t:'Body tracking', p1_d:'A depth / camera read of the people in front of the wall. No facial recognition. The silhouette is enough — pose, motion, how many bodies are in the field.',
+        p2_t:'Real-time engine', p2_d:'TouchDesigner maps that signal into visuals that never wait on a render. If the sensor drops, the show still runs — the picture does not go black.',
+        p3_t:'Generative AI wall', p3_d:'Live image generation sits on the same engine, so the figure on the wall can look back at the visitor without a pre-rendered loop.',
+        p4_t:'Show control', p4_d:'A cycle the mall can run through a night: wait state, start, interaction window, close. Content can be swapped for another event without rebuilding the room.',
+        t_track:'Body tracking', t_ai:'Generative AI', t_rt:'Real-time graphics', t_proj:'Projection',
+        e_results:'Results', results_title:'Built to be entered, not watched.',
+        s1_v:'4,800', s1_c:'Visitors through the room over the Halloween window.',
+        s2_v:'Live', s2_c:'The wall answers the body in the room. People film it because they are in it.',
+        s3_v:'Mall-ready', s3_c:'A public cycle, not a gallery piece — designed for queues, costumes and a Halloween night.',
+        e_venue:'What this means for your venue', venue_title:'The same wall, another night.',
+        venue_p1:'El Umbral is a Halloween room in a mall. The system underneath is a surface, a camera and a live engine — which is what a plaza, a trade venue or a brand activation needs when the content has to change and the public has to be in the picture.',
+        venue_p2:'We design the interaction, the engine and the install. You bring the space, the calendar and the audience. If you have a wall and a night, we can tell you what the room needs.',
+        e_credits:'Credits', credits_title:'ANDATA LAB in the room.',
+        c_studio:'Studio', c_client:'Client', c_loc:'Location', c_loc_v:'Mazatlán, MX',
+        c_role:'Role', c_role_v:'Interactive system · body tracking · real-time visuals · show control',
+        c_tech:'Engineering', c_more:'Additional credits', c_more_v:'On-site operations · Plaza Camino Al Mar',
+        e_faq:'FAQ', faq_title:'Interactive walls for malls, plazas and events',
+        faq_q1:'Can you put an interactive AI wall in a mall or plaza?',
+        faq_a1:'Yes. El Umbral ran at Plaza Camino Al Mar in Mazatlán. The same stack — camera, TouchDesigner, a projection or LED surface — can live in a mall, a trade venue or a brand room. Send the space and the dates.',
+        faq_q2:'Does the system use facial recognition?',
+        faq_a2:'No. El Umbral reads the body as a silhouette — pose and motion. We do not run facial recognition on this system.',
+        faq_q3:'Can the content change for another event?',
+        faq_a3:'Yes. The wall is an engine, not a single film. Halloween was the first public night. The same room can carry another story if the brief, the calendar and the surface allow it.',
+        faq_q4:'How long does an install like this take?',
+        faq_a4:'It depends on the room, the throw, the sensor position and whether the surface already exists. El Umbral was three days on site. Tell us the space and we will say what the calendar needs.',
+        e_rel:'Related', rel_title:'The same engine language, other rooms.',
+        rel_bio:'Sensor-driven interactive installation — the body as input.',
+        rel_museo:'Interactive museum exhibits with motion-tracked rooms.',
+        rel_ii_t:'Interactive Installations',
+        rel_ii:'Sensor rooms, cameras and real-time systems the public can shape.',
+        rel_map_t:'Projection Mapping',
+        rel_map:'Facades, rooms and events — from surface study to on-site calibration.',
+        cta_title:'Have a wall the public should be able to enter?',
+        cta_sub:'We design interactive installations and real-time AI walls for malls, plazas, museums and brand nights. Tell us about the space.',
+        cta_btn:'Start a project',
+        rights:'All rights reserved.',
+        ui_play:'Play', ui_pause:'Pause',
+        meta_desc:'El Umbral — an interactive Halloween wall at Plaza Camino Al Mar, Mazatlán. Body tracking, TouchDesigner and real-time AI visuals by ANDATA LAB. Who enters becomes part of the show.',
+        doc_title:'El Umbral | Interactive Halloween AI Wall · ANDATA LAB'
+      },
+      es: {
+        nav_work:'Proyectos', nav_dome:'Dome Studio', nav_hosp:'Hospitality', nav_process:'Proceso',
+        nav_ii:'Instalaciones interactivas', nav_bio:'Biointerface', nav_contact:'Contacto',
+        cta_start:'Inicia un proyecto', back:'Volver a proyectos',
+        eyebrow:'Case study · Experiencia interactiva de Halloween',
+        hero_h1:'El Umbral',
+        hero_aka:'The Threshold',
+        hero_kicker:'Un muro de IA que responde al cuerpo.',
+        hero_sub:'En Plaza Camino Al Mar, Mazatlán, ANDATA LAB construyó un muro en tiempo real donde quien entra se vuelve parte de la imagen — body tracking, visuales generativos y una sala de Halloween que el mall podía filmar.',
+        m_client:'Cliente', m_loc:'Ubicación', m_loc_v:'Mazatlán, MX', m_year:'Año',
+        m_disc:'Disciplina', m_disc_v:'Instalación interactiva', m_stack:'Stack',
+        e_brief:'El brief', brief_title:'Un mall que necesitaba una noche para quedarse.',
+        brief_p1:'Plaza Camino Al Mar pidió a ANDATA LAB un destino de Halloween — no un video en loop en un muro, sino una sala donde quien entrara cambiara lo que se veía.',
+        brief_p2:'El brief era un recinto público, una ventana de temporada en Mazatlán y un público que lo iba a filmar. El muro tenía que leer el cuerpo al instante, correr sin operador en cada ciclo y sostener una fila de visitantes del mall — familias, adolescentes, gente disfrazada.',
+        brief_p3:'Ventana de temporada: 24 oct – 2 nov 2026. Medida de sala / muro: sala 8 × 5 m · muro de proyección 6.5 m.',
+        e_film:'El film', film_title:'Quien entra se vuelve parte del show.',
+        film_note:'La pieza de 48 segundos que mandamos a recintos — inglés o español, con sonido. Clic para abrirla.',
+        cap_reel:'El Umbral — The Threshold. Plaza Camino Al Mar, Mazatlán.',
+        e_exp:'La experiencia', exp_title:'Entra. El muro ya te tiene.',
+        exp_note:'Una sala oscura, una proyección ancha, una figura en la imagen que eres tú. Partículas, cuerpos generados y objetos 3D se mueven con el público. Un esqueleto espera al borde de la luz.',
+        cap_room:'Dentro de la sala — el muro sostiene un cuerpo vivo en un campo de estrellas.',
+        cap_body:'Body tracking — levantas un brazo, la imagen levanta un brazo.',
+        cap_ai:'El muro de IA — una figura generada que responde al visitante en tiempo real.',
+        cap_part:'Campo de partículas — la silueta se vuelve una superficie viva.',
+        cap_obj:'Objetos 3D en el volumen — el cuerpo como control, no un botón en el muro.',
+        e_space:'En el espacio', space_title:'Estudio de cámara, Plaza Camino Al Mar.',
+        space_note:'El muro en el mall — cuerpos en el campo, la sala sosteniendo una fila, la imagen respondiendo a quien se para frente a ella.',
+        cap_plaza:'Estudio de cámara de octubre en Plaza Camino Al Mar — el público frente al muro.',
+        cap_night:'Una segunda pasada en la sala — el muro como destino, no un loop en una pantalla.',
+        e_look:'La imagen', look_title:'Cómo puede verse el muro.',
+        look_note:'Fotogramas del lenguaje de Halloween — portal, bosque, criatura, el momento en que la imagen se rompe. Generados en vivo en el mismo motor.',
+        e_how:'Cómo funciona', how_title:'Cámara, cuerpo, motor, muro.',
+        cap_flow:'Flujo de señal — de la cámara a la silueta, al motor, al muro. Sin reconocimiento facial.',
+        cap_map:'Mapa de sala — 8 × 5 m, un muro de 6.5 m, cámara y un campo que el público puede entrar.',
+        cap_arch:'Arquitectura — entradas, TouchDesigner, IA generativa, show control, salida.',
+        p1_t:'Body tracking', p1_d:'Una lectura de profundidad / cámara de las personas frente al muro. Sin reconocimiento facial. Basta la silueta — pose, movimiento, cuántos cuerpos hay en el campo.',
+        p2_t:'Motor en tiempo real', p2_d:'TouchDesigner mapea esa señal a visuales que nunca esperan un render. Si el sensor cae, el show sigue — la imagen no se va a negro.',
+        p3_t:'Muro de IA generativa', p3_d:'La generación de imagen en vivo vive en el mismo motor, para que la figura del muro pueda devolver la mirada sin un loop prerenderizado.',
+        p4_t:'Show control', p4_d:'Un ciclo que el mall puede correr toda la noche: espera, inicio, ventana de interacción, cierre. El contenido se puede cambiar para otro evento sin reconstruir la sala.',
+        t_track:'Body tracking', t_ai:'IA generativa', t_rt:'Gráficos en tiempo real', t_proj:'Proyección',
+        e_results:'Resultados', results_title:'Hecho para entrar, no para mirar.',
+        s1_v:'4,800', s1_c:'Visitantes por la sala en la ventana de Halloween.',
+        s2_v:'En vivo', s2_c:'El muro responde al cuerpo en la sala. La gente lo filma porque está dentro.',
+        s3_v:'Listo para mall', s3_c:'Un ciclo público, no una pieza de galería — pensado para filas, disfraces y una noche de Halloween.',
+        e_venue:'Qué significa para tu recinto', venue_title:'El mismo muro, otra noche.',
+        venue_p1:'El Umbral es una sala de Halloween en un mall. El sistema debajo es una superficie, una cámara y un motor en vivo — lo que una plaza, un recinto ferial o una activación de marca necesita cuando el contenido tiene que cambiar y el público tiene que estar en la imagen.',
+        venue_p2:'Diseñamos la interacción, el motor y el montaje. Tú traes el espacio, el calendario y la audiencia. Si tienes un muro y una noche, te decimos qué necesita la sala.',
+        e_credits:'Créditos', credits_title:'ANDATA LAB en la sala.',
+        c_studio:'Estudio', c_client:'Cliente', c_loc:'Ubicación', c_loc_v:'Mazatlán, MX',
+        c_role:'Rol', c_role_v:'Sistema interactivo · body tracking · visuales en tiempo real · show control',
+        c_tech:'Ingeniería', c_more:'Créditos adicionales', c_more_v:'Operación en sitio · Plaza Camino Al Mar',
+        e_faq:'Preguntas', faq_title:'Muros interactivos para malls, plazas y eventos',
+        faq_q1:'¿Pueden poner un muro de IA interactivo en un mall o una plaza?',
+        faq_a1:'Sí. El Umbral corrió en Plaza Camino Al Mar, Mazatlán. El mismo stack — cámara, TouchDesigner, una superficie de proyección o LED — puede vivir en un mall, un recinto ferial o una sala de marca. Manda el espacio y las fechas.',
+        faq_q2:'¿El sistema usa reconocimiento facial?',
+        faq_a2:'No. El Umbral lee el cuerpo como silueta — pose y movimiento. En este sistema no corremos reconocimiento facial.',
+        faq_q3:'¿Se puede cambiar el contenido para otro evento?',
+        faq_a3:'Sí. El muro es un motor, no un solo film. Halloween fue la primera noche pública. La misma sala puede cargar otra historia si el brief, el calendario y la superficie lo permiten.',
+        faq_q4:'¿Cuánto tarda un montaje así?',
+        faq_a4:'Depende de la sala, el tiro, la posición del sensor y si la superficie ya existe. El Umbral fueron tres días en sitio. Cuéntanos el espacio y te decimos qué pide el calendario.',
+        e_rel:'Relacionado', rel_title:'El mismo lenguaje de motor, otras salas.',
+        rel_bio:'Instalación interactiva con sensores — el cuerpo como input.',
+        rel_museo:'Exhibiciones interactivas de museo con salas de motion tracking.',
+        rel_ii_t:'Instalaciones interactivas',
+        rel_ii:'Salas con sensores, cámaras y sistemas en tiempo real que el público puede cambiar.',
+        rel_map_t:'Projection Mapping',
+        rel_map:'Fachadas, salas y eventos — del estudio de superficie a la calibración en sitio.',
+        cta_title:'¿Tienes un muro que el público debería poder entrar?',
+        cta_sub:'Diseñamos instalaciones interactivas y muros de IA en tiempo real para malls, plazas, museos y noches de marca. Cuéntanos del espacio.',
+        cta_btn:'Inicia un proyecto',
+        rights:'Todos los derechos reservados.',
+        ui_play:'Reproducir', ui_pause:'Pausa',
+        meta_desc:'El Umbral — un muro interactivo de Halloween en Plaza Camino Al Mar, Mazatlán. Body tracking, TouchDesigner y visuales de IA en tiempo real por ANDATA LAB.',
+        doc_title:'El Umbral | Muro de IA interactivo de Halloween · ANDATA LAB'
+      }
+    };
+
+    function isBot(){
+      return /bot|crawl|spider|slurp|bingpreview|facebookexternalhit|whatsapp|linkedinbot|twitterbot/i.test(navigator.userAgent||'');
+    }
+    function pickLang(){
+      if(isBot()) return 'en';
+      var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
+      if(saved==='en'||saved==='es') return saved;
+      var def = document.documentElement.getAttribute('data-default-lang') || 'en';
+      return def === 'es' ? 'es' : 'en';
+    }
+    var lang = pickLang();
+
+    function apply(){
+      var dict = I18N[lang] || I18N.en;
+      document.documentElement.lang = (lang==='es') ? 'es-MX' : 'en';
+      document.querySelectorAll('[data-i18n]').forEach(function(node){
+        var k = node.getAttribute('data-i18n');
+        if(dict[k]!=null) node.innerHTML = dict[k];
+      });
+      if(dict.doc_title) document.title = dict.doc_title;
+      if(dict.meta_desc){
+        var meta = document.querySelector('meta[name="description"]');
+        if(meta) meta.setAttribute('content', dict.meta_desc);
+      }
+      var btn = document.getElementById('lang-toggle');
+      if(btn){ btn.textContent = (lang==='en') ? 'ES' : 'EN'; btn.setAttribute('aria-label', lang==='en'?'Cambiar a español':'Switch to English'); }
+      var reelPlate = document.getElementById('reel-plate');
+      if(reelPlate){
+        var reelSrc = reelPlate.getAttribute(lang==='es' ? 'data-src-es' : 'data-src-en') || 'media/reel-en.mp4';
+        reelPlate.setAttribute('data-src', reelSrc);
+      }
+      syncToggles();
+    }
+    apply();
+
+    var toggle = document.getElementById('lang-toggle');
+    if(toggle) toggle.addEventListener('click', function(){
+      lang = (lang==='en') ? 'es' : 'en';
+      try{ localStorage.setItem(LANG_KEY, lang); }catch(e){}
+      apply();
+    });
+
+    var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+
+    var reveals = document.querySelectorAll('.reveal');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+      }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+      reveals.forEach(function(r){ io.observe(r); });
+    } else {
+      reveals.forEach(function(r){ r.classList.add('in'); });
+    }
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ICON_PLAY = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+    var ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+    var hero = document.getElementById('hero-video');
+    var lazyVids = Array.prototype.slice.call(document.querySelectorAll('video.lazy-vid'));
+    var allVids = lazyVids.slice();
+    if (hero) allVids.unshift(hero);
+    var live = [];
+
+    function dict(){ return I18N[lang] || I18N.en; }
+
+    function filmOf(v){
+      return v.closest('.film, .hero-media');
+    }
+    function toggleOf(v){
+      var well = filmOf(v);
+      return well ? well.querySelector('[data-film-toggle]') : null;
+    }
+    function syncToggles(){
+      if (!allVids) return;
+      var d = dict();
+      allVids.forEach(function(v){
+        var btn = toggleOf(v);
+        if (!btn) return;
+        var playing = !v.paused && !v.ended;
+        btn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+        btn.setAttribute('aria-label', playing ? (d.ui_pause || 'Pause') : (d.ui_play || 'Play'));
+      });
+    }
+
+    function armVideo(v) {
+      var src = v.getAttribute('data-src');
+      if (src && v.getAttribute('src') !== src) {
+        v.setAttribute('src', src);
+        v.load();
+      }
+    }
+    function requestPlay(v) {
+      if (!v || reduce) return;
+      armVideo(v);
+      v.classList.add('is-loaded', 'is-on');
+      live = live.filter(function(x){ return x && x !== v && !x.paused; });
+      live.push(v);
+      while (live.length > 2) {
+        var drop = live.shift();
+        if (drop) drop.pause();
+      }
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+    }
+    function pauseVid(v) {
+      if (!v) return;
+      v.pause();
+      live = live.filter(function(x){ return x !== v; });
+    }
+
+    allVids.forEach(function(v){
+      v.addEventListener('play', syncToggles);
+      v.addEventListener('pause', syncToggles);
+      v.addEventListener('loadeddata', function(){ v.classList.add('is-loaded', 'is-on'); });
+    });
+
+    if (hero) {
+      if (hero.readyState >= 2) hero.classList.add('is-on');
+      if (!reduce) requestPlay(hero);
+      else hero.classList.add('is-on');
+    }
+
+    if ('IntersectionObserver' in window) {
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          var v = en.target;
+          if (en.isIntersecting) {
+            if (!reduce && v.getAttribute('data-held') !== '1') requestPlay(v);
+          } else {
+            pauseVid(v);
+          }
+        });
+      }, { rootMargin: '80px 0px', threshold: 0.2 });
+      if (hero) vio.observe(hero);
+      lazyVids.forEach(function(v){ vio.observe(v); });
+    } else if (!reduce) {
+      lazyVids.forEach(function(v){ v.classList.add('is-loaded'); });
+    } else {
+      lazyVids.forEach(function(v){ v.classList.add('is-loaded'); });
+    }
+
+    document.querySelectorAll('[data-film-toggle]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        var well = btn.closest('.film, .hero-media');
+        var v = well ? well.querySelector('video') : null;
+        if (!v) return;
+        if (v.paused) {
+          v.removeAttribute('data-held');
+          requestPlay(v);
+        } else {
+          v.setAttribute('data-held', '1');
+          pauseVid(v);
+        }
+      });
+    });
+
+    var lb = document.getElementById('lightbox');
+    var lbVid = document.getElementById('lb-video');
+    var shots = Array.prototype.slice.call(document.querySelectorAll('#hero-open, .plate[data-src]'));
+    function shotSrc(el) {
+      if (!el) return '';
+      if (el.id === 'hero-open') return 'media/hero.mp4';
+      return el.getAttribute('data-src') || '';
+    }
+    function openLb(src, withSound) {
+      if (!lb || !lbVid || !src) return;
+      allVids.forEach(pauseVid);
+      lbVid.muted = !withSound;
+      lbVid.loop = true;
+      lbVid.playsInline = true;
+      lbVid.src = src;
+      lb.hidden = false;
+      document.body.classList.add('lb-open');
+      var p = lbVid.play(); if (p && p.catch) p.catch(function(){});
+    }
+    function closeLb(){
+      if (!lb || !lbVid) return;
+      lb.hidden = true;
+      document.body.classList.remove('lb-open');
+      lbVid.pause();
+      lbVid.removeAttribute('src');
+      lbVid.load();
+    }
+    shots.forEach(function(el){
+      function go(e){
+        if (e && e.target && e.target.closest && e.target.closest('[data-film-toggle]')) return;
+        if (e) e.preventDefault();
+        openLb(shotSrc(el), el.getAttribute('data-sound') === '1');
+      }
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(e); }
+      });
+    });
+    var lbClose = document.getElementById('lb-close');
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function(e){ if (lb && !lb.hidden && e.key === 'Escape') closeLb(); });
+    syncToggles();
+  })();
+  </script>
+</body>
+</html>

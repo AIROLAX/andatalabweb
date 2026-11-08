@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="t d">
+  <title id="t">El Umbral room map</title>
+  <desc id="d">Plan of the 8 by 5 metre room: projection wall, throw, depth camera, interaction field and queue.</desc>
+  <rect width="1200" height="720" fill="#F5F5F7"/>
+  <defs>
+    <style>
+      .lab{ font-family: Inter, ui-sans-serif, system-ui, Helvetica, Arial, sans-serif; }
+    </style>
+  </defs>
+
+  <text class="lab" x="48" y="52" font-size="22" font-weight="700" fill="#111" letter-spacing="-0.4">Room map</text>
+  <text class="lab" x="48" y="78" font-size="14" fill="#6E6E73">Plaza Camino Al Mar · 8 × 5 m · projection wall 6.5 m</text>
+
+  <!-- room -->
+  <g transform="translate(48,110)">
+    <rect width="1104" height="560" rx="24" fill="#fff" stroke="#E5E5EA"/>
+
+    <!-- projection wall -->
+    <rect x="36" y="36" width="48" height="488" rx="8" fill="#111"/>
+    <text class="lab" x="60" y="280" fill="#fff" font-size="13" font-weight="700" letter-spacing="2" transform="rotate(-90 60 280)" text-anchor="middle">PROJECTION WALL  6.5 m</text>
+
+    <!-- throw -->
+    <line x1="96" y1="280" x2="430" y2="280" stroke="#111" stroke-width="1.4" stroke-dasharray="6 7"/>
+    <text class="lab" x="262" y="268" text-anchor="middle" font-size="12" fill="#6E6E73">Throw / mapping</text>
+
+    <!-- projector -->
+    <g transform="translate(430,236)">
+      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
+      <rect x="22" y="30" width="44" height="28" rx="4" fill="none" stroke="#111" stroke-width="2"/>
+      <circle cx="44" cy="44" r="7" fill="#3CDCFF" stroke="#111" stroke-width="1.2"/>
+      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Projector</text>
+    </g>
+
+    <!-- camera -->
+    <g transform="translate(430,80)">
+      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
+      <rect x="20" y="28" width="48" height="32" rx="6" fill="none" stroke="#111" stroke-width="2"/>
+      <circle cx="44" cy="44" r="9" fill="none" stroke="#111" stroke-width="2"/>
+      <circle cx="44" cy="44" r="3.5" fill="#111"/>
+      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Depth camera</text>
+    </g>
+
+    <!-- show control -->
+    <g transform="translate(430,400)">
+      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
+      <rect x="22" y="24" width="44" height="30" rx="3" fill="none" stroke="#111" stroke-width="2"/>
+      <rect x="30" y="58" width="28" height="8" rx="2" fill="#111"/>
+      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Show control</text>
+      <text class="lab" x="44" y="128" text-anchor="middle" font-size="11" fill="#6E6E73">TouchDesigner</text>
+    </g>
+
+    <!-- interaction field -->
+    <rect x="580" y="80" width="280" height="400" rx="16" fill="#F5F5F7" stroke="#111" stroke-width="1.4" stroke-dasharray="7 6"/>
+    <text class="lab" x="720" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#6E6E73" letter-spacing="1.4">INTERACTION FIELD</text>
+    <!-- people -->
+    <g fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round">
+      <g transform="translate(640,220)">
+        <circle cx="16" cy="10" r="8"/>
+        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
+      </g>
+      <g transform="translate(720,250)">
+        <circle cx="16" cy="10" r="8"/>
+        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
+      </g>
+      <g transform="translate(800,220)">
+        <circle cx="16" cy="10" r="8"/>
+        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
+      </g>
+    </g>
+    <text class="lab" x="720" y="430" text-anchor="middle" font-size="13" fill="#111">Visitors become the image</text>
+    <text class="lab" x="720" y="450" text-anchor="middle" font-size="12" fill="#6E6E73">Silhouette · pose · count</text>
+
+    <!-- queue -->
+    <g transform="translate(900,80)">
+      <rect width="160" height="400" rx="16" fill="#fff" stroke="#E5E5EA"/>
+      <text class="lab" x="80" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#6E6E73" letter-spacing="1.4">QUEUE</text>
+      <g fill="none" stroke="#6E6E73" stroke-width="1.8" stroke-linecap="round" opacity="0.9">
+        <g transform="translate(64,80)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
+        <g transform="translate(64,150)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
+        <g transform="translate(64,220)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
+        <g transform="translate(64,290)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
+      </g>
+    </g>
+
+    <text class="lab" x="552" y="532" text-anchor="middle" font-size="13" fill="#6E6E73">8 m depth  ·  5 m width  ·  mall-ready cycle</text>
+  </g>
+</svg>

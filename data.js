@@ -67,6 +67,7 @@
 
   // Per-work shared assets (id, video, poster), text added per language
   var WORK_MEDIA = [
+    { id: 'umbral', video: 'el-umbral/media/hero.mp4',        poster: 'el-umbral/img/cover.jpg',   url: 'el-umbral/' },
     { id: 'bio',    video: 'PROJECTS/0.mp4',                 poster: 'Imagenes/AI INSTA.jpg',     url: 'biointerface/' },
     { id: 'part',   video: 'videos/export11-lite.mp4',       poster: 'Imagenes/MOTION.webp',      url: 'particle-system/' }, // PERF: WebP 138 KB vs PNG 1.5 MB. REVERTIR: 'Imagenes/MOTION.png'
     { id: 'wavey-runway', video: 'wavey-tiktok-runway-show/media/hero.mp4', poster: 'wavey-tiktok-runway-show/img/hero-poster.jpg', url: 'wavey-tiktok-runway-show/' },
@@ -132,6 +133,7 @@
     ],
     servicesAccent: { h: 'Not sure where it fits?', p: "Bring us the space and the ambition. We'll shape the rest.", btn: 'Book a call →' },
     work: merge(WORK_MEDIA, [
+      { t: 'El Umbral',             client: 'Interactive Halloween experience · Plaza Camino Al Mar, Mazatlán', outcome: 'An AI wall that reads the body in real time — visitors become part of the show.' },
       { t: 'Biointerface',          client: 'Interactive Art Installation · Mexico City', outcome: 'Sensor-driven interactive system — real-time biometric data translated into living digital art.' },
       { t: 'Particle System Art',    client: 'Generative Art Work',                        outcome: 'Bioluminescent fluid dynamics rendered as real-time generative art.' },
       { t: 'WAVEY × TikTok',         client: 'Fashion Runway Visual Experience',           outcome: 'Real-time visuals and LED architecture for a runway show with TikTok México and Trident.' },
@@ -194,6 +196,7 @@
     ],
     servicesAccent: { h: '¿No sabes dónde encaja?', p: 'Tráenos el espacio y la ambición. Nosotros damos forma al resto.', btn: 'Agenda una llamada →' },
     work: merge(WORK_MEDIA, [
+      { t: 'El Umbral',                    client: 'Experiencia interactiva de Halloween · Plaza Camino Al Mar, Mazatlán', outcome: 'Un muro de IA que lee el cuerpo en tiempo real — quien entra se vuelve parte del show.' },
       { t: 'Biointerfaz',                   client: 'Instalación de arte interactivo · Ciudad de México', outcome: 'Sistema interactivo con sensores — datos biométricos en tiempo real traducidos en arte digital vivo.' },
       { t: 'Particle System Art',           client: 'Obra de Arte Generativo',                         outcome: 'Dinámica de fluidos bioluminiscente renderizada como arte generativo en tiempo real.' },
       { t: 'WAVEY × TikTok',                client: 'Experiencia visual de pasarela',                  outcome: 'Visuales en tiempo real y arquitectura LED para un show de pasarela con TikTok México y Trident.' },

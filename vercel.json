@@ -4,6 +4,14 @@
   "outputDirectory": ".",
   "headers": [
     {
+      "source": "/el-umbral",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    },
+    {
+      "source": "/el-umbral/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    },
+    {
       "source": "/conjunto-santander-yoga",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
     },
@@ -18,6 +26,8 @@
     { "source": "/work-1", "destination": "/", "permanent": true },
     { "source": "/work-1/", "destination": "/", "permanent": true },
     { "source": "/work-1/:path*", "destination": "/", "permanent": true },
+    { "source": "/work/el-umbral", "destination": "/el-umbral/", "permanent": true },
+    { "source": "/work/el-umbral/", "destination": "/el-umbral/", "permanent": true },
     { "source": "/work", "destination": "/", "permanent": true },
     { "source": "/work/", "destination": "/", "permanent": true },
     { "source": "/work/:path*", "destination": "/", "permanent": true },
