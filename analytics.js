@@ -100,7 +100,7 @@
      ============================================================ */
 
   var CASE_PATHS = [
-    '/el-umbral/',
+    '/immersive-ai-experience/',
     '/ajijic-mapping/',
     '/museo-descubre/',
     '/biointerface/',
