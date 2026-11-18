@@ -1,87 +1,90 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="t d">
-  <title id="t">El Umbral room map</title>
-  <desc id="d">Plan of the 8 by 5 metre room: projection wall, throw, depth camera, interaction field and queue.</desc>
-  <rect width="1200" height="720" fill="#F5F5F7"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="t d">
+  <title id="t">Room map - projection wall and Orbbec depth camera</title>
+  <desc id="d">Top view. The wall is the far side. The projector throws onto it. The Orbbec sits with the projector and looks out at the people standing in front of the wall.</desc>
+  <rect width="1200" height="700" fill="#F5F5F7"/>
   <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M0 1.1 L9 5 L0 8.9 Z" fill="#111"/>
+    </marker>
+    <marker id="dim" viewBox="0 0 10 10" refX="8.2" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 1.4 L9 5 L0 8.6 Z" fill="#6E6E73"/>
+    </marker>
     <style>
       .lab{ font-family: Inter, ui-sans-serif, system-ui, Helvetica, Arial, sans-serif; }
     </style>
   </defs>
 
-  <text class="lab" x="48" y="52" font-size="22" font-weight="700" fill="#111" letter-spacing="-0.4">Room map</text>
-  <text class="lab" x="48" y="78" font-size="14" fill="#6E6E73">Plaza Camino Al Mar · 8 × 5 m · projection wall 6.5 m</text>
+  <text class="lab" x="64" y="48" font-size="28" font-weight="700" fill="#111" letter-spacing="-0.4">Room map</text>
+  <text class="lab" x="64" y="76" font-size="18" fill="#6E6E73">Top view</text>
 
-  <!-- room -->
-  <g transform="translate(48,110)">
-    <rect width="1104" height="560" rx="24" fill="#fff" stroke="#E5E5EA"/>
-
-    <!-- projection wall -->
-    <rect x="36" y="36" width="48" height="488" rx="8" fill="#111"/>
-    <text class="lab" x="60" y="280" fill="#fff" font-size="13" font-weight="700" letter-spacing="2" transform="rotate(-90 60 280)" text-anchor="middle">PROJECTION WALL  6.5 m</text>
-
-    <!-- throw -->
-    <line x1="96" y1="280" x2="430" y2="280" stroke="#111" stroke-width="1.4" stroke-dasharray="6 7"/>
-    <text class="lab" x="262" y="268" text-anchor="middle" font-size="12" fill="#6E6E73">Throw / mapping</text>
-
-    <!-- projector -->
-    <g transform="translate(430,236)">
-      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
-      <rect x="22" y="30" width="44" height="28" rx="4" fill="none" stroke="#111" stroke-width="2"/>
-      <circle cx="44" cy="44" r="7" fill="#3CDCFF" stroke="#111" stroke-width="1.2"/>
-      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Projector</text>
-    </g>
-
-    <!-- camera -->
-    <g transform="translate(430,80)">
-      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
-      <rect x="20" y="28" width="48" height="32" rx="6" fill="none" stroke="#111" stroke-width="2"/>
-      <circle cx="44" cy="44" r="9" fill="none" stroke="#111" stroke-width="2"/>
-      <circle cx="44" cy="44" r="3.5" fill="#111"/>
-      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Depth camera</text>
-    </g>
-
-    <!-- show control -->
-    <g transform="translate(430,400)">
-      <rect width="88" height="88" rx="14" fill="#F5F5F7" stroke="#111" stroke-width="1.6"/>
-      <rect x="22" y="24" width="44" height="30" rx="3" fill="none" stroke="#111" stroke-width="2"/>
-      <rect x="30" y="58" width="28" height="8" rx="2" fill="#111"/>
-      <text class="lab" x="44" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#111">Show control</text>
-      <text class="lab" x="44" y="128" text-anchor="middle" font-size="11" fill="#6E6E73">TouchDesigner</text>
-    </g>
-
-    <!-- interaction field -->
-    <rect x="580" y="80" width="280" height="400" rx="16" fill="#F5F5F7" stroke="#111" stroke-width="1.4" stroke-dasharray="7 6"/>
-    <text class="lab" x="720" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#6E6E73" letter-spacing="1.4">INTERACTION FIELD</text>
-    <!-- people -->
-    <g fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round">
-      <g transform="translate(640,220)">
-        <circle cx="16" cy="10" r="8"/>
-        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
-      </g>
-      <g transform="translate(720,250)">
-        <circle cx="16" cy="10" r="8"/>
-        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
-      </g>
-      <g transform="translate(800,220)">
-        <circle cx="16" cy="10" r="8"/>
-        <path d="M16 20 V46 M4 30 H28 M8 72 L16 46 L24 72"/>
-      </g>
-    </g>
-    <text class="lab" x="720" y="430" text-anchor="middle" font-size="13" fill="#111">Visitors become the image</text>
-    <text class="lab" x="720" y="450" text-anchor="middle" font-size="12" fill="#6E6E73">Silhouette · pose · count</text>
-
-    <!-- queue -->
-    <g transform="translate(900,80)">
-      <rect width="160" height="400" rx="16" fill="#fff" stroke="#E5E5EA"/>
-      <text class="lab" x="80" y="36" text-anchor="middle" font-size="12" font-weight="700" fill="#6E6E73" letter-spacing="1.4">QUEUE</text>
-      <g fill="none" stroke="#6E6E73" stroke-width="1.8" stroke-linecap="round" opacity="0.9">
-        <g transform="translate(64,80)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
-        <g transform="translate(64,150)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
-        <g transform="translate(64,220)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
-        <g transform="translate(64,290)"><circle cx="16" cy="8" r="7"/><path d="M16 17 V38 M6 26 H26"/></g>
-      </g>
-    </g>
-
-    <text class="lab" x="552" y="532" text-anchor="middle" font-size="13" fill="#6E6E73">8 m depth  ·  5 m width  ·  mall-ready cycle</text>
+  <g fill="none" stroke="#6E6E73" stroke-width="1.6">
+    <line x1="150" y1="108" x2="150" y2="122"/>
+    <line x1="910" y1="108" x2="910" y2="122"/>
+    <line x1="158" y1="115" x2="902" y2="115" marker-start="url(#dim)" marker-end="url(#dim)"/>
   </g>
+  <text class="lab" x="530" y="104" text-anchor="middle" font-size="16" font-weight="600" fill="#6E6E73">8 m</text>
+
+  <g fill="none" stroke="#6E6E73" stroke-width="1.6">
+    <line x1="128" y1="140" x2="142" y2="140"/>
+    <line x1="128" y1="615" x2="142" y2="615"/>
+    <line x1="135" y1="148" x2="135" y2="607" marker-start="url(#dim)" marker-end="url(#dim)"/>
+  </g>
+  <text class="lab" x="112" y="378" text-anchor="middle" font-size="16" font-weight="600" fill="#6E6E73" transform="rotate(-90 112 378)">5 m</text>
+
+  <rect x="150" y="140" width="760" height="475" rx="18" fill="#fff"/>
+  <g fill="none" stroke="#D2D2D7" stroke-width="1.6">
+    <path d="M168 140 H892 a18 18 0 0 1 18 18 V400"/>
+    <path d="M910 500 V597 a18 18 0 0 1 -18 18 H168 a18 18 0 0 1 -18 -18 V158 a18 18 0 0 1 18 -18"/>
+  </g>
+  <g fill="none" stroke="#111" stroke-width="1.6" stroke-linecap="round">
+    <line x1="910" y1="400" x2="894" y2="400"/>
+    <line x1="910" y1="500" x2="894" y2="500"/>
+  </g>
+
+  <rect x="216" y="168" width="618" height="44" rx="8" fill="#111"/>
+  <text class="lab" x="525" y="197" text-anchor="middle" font-size="18" font-weight="700" fill="#fff" letter-spacing="1.2">WALL  6.5 m</text>
+
+  <!-- projector, under the wall -->
+  <line x1="390" y1="268" x2="390" y2="220" stroke="#111" stroke-width="2.4" marker-end="url(#arr)"/>
+  <text class="lab" x="404" y="250" font-size="15" font-weight="600" fill="#111">Throw</text>
+  <g transform="translate(346,276)" fill="none" stroke="#111" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="8" y="6" width="72" height="36" rx="8"/>
+    <circle cx="44" cy="24" r="9"/>
+    <circle cx="44" cy="24" r="3.5" fill="#111" stroke="none"/>
+    <path d="M26 50 H62" stroke-linecap="round"/>
+    <path d="M44 42 V50"/>
+  </g>
+  <text class="lab" x="390" y="354" text-anchor="middle" font-size="16" font-weight="700" fill="#111">Projector</text>
+
+  <!-- camera sits with the projector, aimed out at the people -->
+  <g transform="translate(560,276)" fill="none" stroke="#111" stroke-width="2.2" stroke-linejoin="round">
+    <rect x="6" y="8" width="70" height="38" rx="8"/>
+    <circle cx="41" cy="27" r="10"/>
+    <circle cx="41" cy="27" r="3.5" fill="#111" stroke="none"/>
+    <path d="M24 8 L30 0 H52 L58 8"/>
+  </g>
+  <text class="lab" x="601" y="354" text-anchor="middle" font-size="16" font-weight="700" fill="#111">Orbbec</text>
+  <line x1="601" y1="368" x2="601" y2="448" stroke="#111" stroke-width="2.4" marker-end="url(#arr)"/>
+
+  <!-- standing field, people face the wall -->
+  <rect x="300" y="456" width="460" height="120" rx="16" fill="none" stroke="#C7C7CC" stroke-width="1.6" stroke-dasharray="6 6"/>
+  <text class="lab" x="530" y="482" text-anchor="middle" font-size="13" font-weight="700" fill="#6E6E73" letter-spacing="1.6">FIELD</text>
+  <g fill="#111">
+    <g transform="translate(430,530)">
+      <circle cx="0" cy="-8" r="6"/>
+      <path d="M-14 2 Q0 -6 14 2 Q10 14 -10 14 Z"/>
+    </g>
+    <g transform="translate(560,534)">
+      <circle cx="0" cy="-8" r="6"/>
+      <path d="M-14 2 Q0 -6 14 2 Q10 14 -10 14 Z"/>
+    </g>
+    <g transform="translate(690,528)">
+      <circle cx="0" cy="-8" r="6"/>
+      <path d="M-14 2 Q0 -6 14 2 Q10 14 -10 14 Z"/>
+    </g>
+  </g>
+
+  <line x1="1040" y1="450" x2="770" y2="450" stroke="#111" stroke-width="2.4" marker-end="url(#arr)"/>
+  <text class="lab" x="1040" y="430" text-anchor="middle" font-size="16" font-weight="600" fill="#111">Enter</text>
+  <text class="lab" x="1040" y="490" text-anchor="middle" font-size="16" font-weight="700" fill="#111">Queue</text>
 </svg>

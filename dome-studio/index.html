@@ -2621,7 +2621,7 @@
     var saved = null;
     try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
     if (saved === 'en' || saved === 'es') return saved;
-    return (navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en';
+    return 'en';
   }
   var lang = pickLang();
 

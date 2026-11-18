@@ -302,13 +302,13 @@
       </div>
       <a class="case-card reveal" href="../el-umbral/">
         <div class="media">
-          <img src="../el-umbral/img/cover.jpg" width="1280" height="720" alt="El Umbral — interactive AI wall at Plaza Camino Al Mar, Mazatlán" loading="lazy" decoding="async">
+          <img src="../el-umbral/img/cover.jpg" width="1280" height="720" alt="TouchDesigner interactive wall at Plaza Camino Al Mar, Mazatlán, with an Orbbec depth camera" loading="lazy" decoding="async">
         </div>
         <div class="body">
-          <span class="ds-label" data-i18n="c0_kicker">Interactive Halloween experience · Plaza Camino Al Mar, Mazatlán</span>
-          <h3>El Umbral</h3>
-          <p data-i18n="c0_p">An AI wall that reads the body in real time — body tracking, TouchDesigner and generative visuals. Visitors step in and become part of the image.</p>
-          <span class="go" data-i18n="c0_go">Read the El Umbral case study →</span>
+          <span class="ds-label" data-i18n="c0_kicker">Orbbec · NVIDIA RTX · Plaza Camino Al Mar, Mazatlán</span>
+          <h3 data-i18n="c0_t">TouchDesigner interactive wall</h3>
+          <p data-i18n="c0_p">A TouchDesigner wall on an Orbbec depth camera and an NVIDIA RTX. Visitors step in and become the image.</p>
+          <span class="go" data-i18n="c0_go">Read the case study →</span>
         </div>
       </a>
       <a class="case-card reveal" href="../museo-descubre/">
@@ -572,9 +572,10 @@
       w5_t:'Public and educational spaces', w5_d:'Rooms built for repeat use by visitors — tested with real audiences before they open, as on the Museo Descubre floor.',
       e_case:'Selected work', case_title:'Systems already built.',
       case_note:'The service is what we sell. These cases are what we can show in public today.',
-      c0_kicker:'Interactive Halloween experience · Plaza Camino Al Mar, Mazatlán',
-      c0_p:'An AI wall that reads the body in real time — body tracking, TouchDesigner and generative visuals. Visitors step in and become part of the image.',
-      c0_go:'Read the El Umbral case study →',
+      c0_kicker:'Orbbec · NVIDIA RTX · Plaza Camino Al Mar, Mazatlán',
+      c0_t:'TouchDesigner interactive wall',
+      c0_p:'A TouchDesigner wall on an Orbbec depth camera and an NVIDIA RTX. Visitors step in and become the image.',
+      c0_go:'Read the case study →',
       c1_kicker:'Interactive museum exhibits · Aguascalientes',
       c1_p:'Creative direction, project management and interactive systems for the 2024 renovation — themed science zones, touch and hand sensors, motion tracking, sensor-driven walls and real-time graphics, installed and tested on the museum floor.',
       c1_go:'Read the Museo Descubre case study →',
@@ -661,9 +662,10 @@
       w5_t:'Espacios públicos y educativos', w5_d:'Salas hechas para uso repetido — probadas con público real antes de abrir, como en el piso del Museo Descubre.',
       e_case:'Trabajo seleccionado', case_title:'Sistemas ya construidos.',
       case_note:'El servicio es lo que vendemos. Estos casos son lo que podemos mostrar en público hoy.',
-      c0_kicker:'Experiencia interactiva de Halloween · Plaza Camino Al Mar, Mazatlán',
-      c0_p:'Un muro de IA que lee el cuerpo en tiempo real — body tracking, TouchDesigner y visuales generativos. Quien entra se vuelve parte de la imagen.',
-      c0_go:'Leer el caso El Umbral →',
+      c0_kicker:'Orbbec · NVIDIA RTX · Plaza Camino Al Mar, Mazatlán',
+      c0_t:'Muro interactivo en TouchDesigner',
+      c0_p:'Un muro en TouchDesigner con cámara de profundidad Orbbec y una NVIDIA RTX. Quien entra se vuelve la imagen.',
+      c0_go:'Leer el caso →',
       c1_kicker:'Exhibiciones interactivas de museo · Aguascalientes',
       c1_p:'Dirección creativa, gestión de proyecto y sistemas interactivos para la renovación 2024 — zonas temáticas de ciencia, sensores táctiles y de mano, motion tracking, muros con sensores y gráficos en tiempo real, instalados y probados en sala.',
       c1_go:'Leer el caso Museo Descubre →',
@@ -719,7 +721,7 @@
   function pickLang(){
     var saved=null; try{ saved=localStorage.getItem(LANG_KEY); }catch(e){}
     if(saved==='en'||saved==='es') return saved;
-    return (navigator.language||'en').toLowerCase().indexOf('es')===0 ? 'es' : 'en';
+    return 'en';
   }
   var lang = pickLang();
 

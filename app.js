@@ -12,8 +12,7 @@
     var saved = null;
     try { saved = localStorage.getItem(LANG_KEY); } catch (e) {}
     if (saved === 'en' || saved === 'es') return saved;
-    var n = (navigator.language || 'en').toLowerCase();
-    return n.indexOf('es') === 0 ? 'es' : 'en';
+    return 'en';
   }
   var lang = pickLang();
   var SITE = CONTENT[lang] || CONTENT.en || {};
